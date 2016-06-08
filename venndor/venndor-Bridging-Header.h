@@ -9,10 +9,13 @@
 #ifndef venndor_Bridging_Header_h
 #define venndor_Bridging_Header_h
 
+#import <FBSDKCoreKit/FBSDKCorekit.h>
+#import <FBSDKLoginKit/FBSDKLoginKit.h>
+#import <FBSDKShareKit/FBSDKShareKit.h>
 
 #endif /* venndor_Bridging_Header_h */
 
-#import "FBSDKAccessToken.h"
+/*#import "FBSDKAccessToken.h"
 #import "FBSDKAppEvents.h"
 #import "FBSDKApplicationDelegate.h"
 #import "FBSDKAppLinkResolver.h"
@@ -39,4 +42,4 @@
 #import "FBSDKLoginManager.h"
 #import "FBSDKLoginTooltopView.h"
 #import "FBSDKTooltopView.h"
-#import "FBSDKLoginManagerLoginResult.h"
+#import "FBSDKLoginManagerLoginResult.h"*/

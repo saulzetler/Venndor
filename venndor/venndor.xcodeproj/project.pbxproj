@@ -444,14 +444,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$PROJECT_DIR)/venndor/Framework/FBSDKShareKit.framework/Headers",
-					"$PROJECT_DIR)/venndor/Framework/FBSDKLoginKit.framework/Headers",
-					"$PROJECT_DIR)/venndor/Framework/FBSDKCoreKit.framework/Headers",
 				);
 				INFOPLIST_FILE = venndor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";
 			};
 			name = Debug;
 		};
@@ -462,14 +460,12 @@
 				FRAMEWORK_SEARCH_PATHS = (
 					"$(inherited)",
 					"$(PROJECT_DIR)",
-					"$PROJECT_DIR)/venndor/Framework/FBSDKShareKit.framework/Headers",
-					"$PROJECT_DIR)/venndor/Framework/FBSDKLoginKit.framework/Headers",
-					"$PROJECT_DIR)/venndor/Framework/FBSDKCoreKit.framework/Headers",
 				);
 				INFOPLIST_FILE = venndor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
+				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";
 			};
 			name = Release;
 		};
@@ -540,6 +536,7 @@
 				10ADC9D11D0749700028A999 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		10ADC9D21D0749700028A999 /* Build configuration list for PBXNativeTarget "venndorTests" */ = {
 			isa = XCConfigurationList;
@@ -548,6 +545,7 @@
 				10ADC9D41D0749700028A999 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 		10ADC9D51D0749700028A999 /* Build configuration list for PBXNativeTarget "venndorUITests" */ = {
 			isa = XCConfigurationList;
@@ -556,6 +554,7 @@
 				10ADC9D71D0749700028A999 /* Release */,
 			);
 			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
 		};
 /* End XCConfigurationList section */
 
