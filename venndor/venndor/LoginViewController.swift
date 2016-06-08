@@ -10,7 +10,7 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class ViewController: UIViewController, FBSDKLoginButtonDelegate {
+class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     let loginButton : FBSDKLoginButton = FBSDKLoginButton()
     
     override func viewDidLoad() {
@@ -21,21 +21,30 @@ class ViewController: UIViewController, FBSDKLoginButtonDelegate {
         loginButton.center = self.view.center
         loginButton.readPermissions = ["public_profile", "email"]
         loginButton.delegate = self
-
+        
         
         if (FBSDKAccessToken.currentAccessToken() != nil)
         {
             // User is already logged in, do work such as go to next view controller.
+            //fetchProfile()
             self.performSegueWithIdentifier("showNew", sender: self)
-
+            
         }
         else
         {
             print("Already logged in")
         }
-
+        
         
     }
+/*    func fetchProfile() {
+        print("fetch profile")
+        
+        let parameters = ["fields": "email, first_name, last_name, picture.type(large)"]
+        
+        FBSDKGraphRequest(graphPath: "me", parameters: parameters).startWithCompletionHandler {(
+            connection)}
+    }*/
     
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
