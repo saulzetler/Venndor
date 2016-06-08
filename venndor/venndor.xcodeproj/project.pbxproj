@@ -1,0 +1,576 @@
+// !$*UTF8*$!
+{
+	archiveVersion = 1;
+	classes = {
+	};
+	objectVersion = 46;
+	objects = {
+
+/* Begin PBXBuildFile section */
+		10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9A71D0749700028A999 /* AppDelegate.swift */; };
+		10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9A91D0749700028A999 /* ViewController.swift */; };
+		10ADC9AD1D0749700028A999 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10ADC9AB1D0749700028A999 /* Main.storyboard */; };
+		10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9AE1D0749700028A999 /* venndor.xcdatamodeld */; };
+		10ADC9B21D0749700028A999 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10ADC9B11D0749700028A999 /* Assets.xcassets */; };
+		10ADC9B51D0749700028A999 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10ADC9B31D0749700028A999 /* LaunchScreen.storyboard */; };
+		10ADC9C01D0749700028A999 /* venndorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9BF1D0749700028A999 /* venndorTests.swift */; };
+		10ADC9CB1D0749700028A999 /* venndorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9CA1D0749700028A999 /* venndorUITests.swift */; };
+		10ADC9DF1D074CA40028A999 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DC1D074CA40028A999 /* FBSDKCoreKit.framework */; };
+		10ADC9E01D074CA40028A999 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
+		10ADC9E11D074CA40028A999 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */; };
+/* End PBXBuildFile section */
+
+/* Begin PBXContainerItemProxy section */
+		10ADC9BC1D0749700028A999 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 10ADC99C1D0749700028A999 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 10ADC9A31D0749700028A999;
+			remoteInfo = venndor;
+		};
+		10ADC9C71D0749700028A999 /* PBXContainerItemProxy */ = {
+			isa = PBXContainerItemProxy;
+			containerPortal = 10ADC99C1D0749700028A999 /* Project object */;
+			proxyType = 1;
+			remoteGlobalIDString = 10ADC9A31D0749700028A999;
+			remoteInfo = venndor;
+		};
+/* End PBXContainerItemProxy section */
+
+/* Begin PBXFileReference section */
+		10ADC9A41D0749700028A999 /* venndor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = venndor.app; sourceTree = BUILT_PRODUCTS_DIR; };
+		10ADC9A71D0749700028A999 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
+		10ADC9A91D0749700028A999 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		10ADC9AC1D0749700028A999 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
+		10ADC9AF1D0749700028A999 /* venndor.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = venndor.xcdatamodel; sourceTree = "<group>"; };
+		10ADC9B11D0749700028A999 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
+		10ADC9B41D0749700028A999 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
+		10ADC9B61D0749700028A999 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		10ADC9BB1D0749700028A999 /* venndorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = venndorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		10ADC9BF1D0749700028A999 /* venndorTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = venndorTests.swift; sourceTree = "<group>"; };
+		10ADC9C11D0749700028A999 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		10ADC9C61D0749700028A999 /* venndorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = venndorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
+		10ADC9CA1D0749700028A999 /* venndorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = venndorUITests.swift; sourceTree = "<group>"; };
+		10ADC9CC1D0749700028A999 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		10ADC9DC1D074CA40028A999 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
+		10ADC9E51D0750CA0028A999 /* venndor-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "venndor-Bridging-Header.h"; sourceTree = "<group>"; };
+/* End PBXFileReference section */
+
+/* Begin PBXFrameworksBuildPhase section */
+		10ADC9A11D0749700028A999 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10ADC9E01D074CA40028A999 /* FBSDKLoginKit.framework in Frameworks */,
+				10ADC9DF1D074CA40028A999 /* FBSDKCoreKit.framework in Frameworks */,
+				10ADC9E11D074CA40028A999 /* FBSDKShareKit.framework in Frameworks */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10ADC9B81D0749700028A999 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10ADC9C31D0749700028A999 /* Frameworks */ = {
+			isa = PBXFrameworksBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXFrameworksBuildPhase section */
+
+/* Begin PBXGroup section */
+		10ADC99B1D0749700028A999 = {
+			isa = PBXGroup;
+			children = (
+				10ADC9E51D0750CA0028A999 /* venndor-Bridging-Header.h */,
+				10ADC9DB1D074C6F0028A999 /* Framework */,
+				10ADC9A61D0749700028A999 /* venndor */,
+				10ADC9BE1D0749700028A999 /* venndorTests */,
+				10ADC9C91D0749700028A999 /* venndorUITests */,
+				10ADC9A51D0749700028A999 /* Products */,
+			);
+			sourceTree = "<group>";
+		};
+		10ADC9A51D0749700028A999 /* Products */ = {
+			isa = PBXGroup;
+			children = (
+				10ADC9A41D0749700028A999 /* venndor.app */,
+				10ADC9BB1D0749700028A999 /* venndorTests.xctest */,
+				10ADC9C61D0749700028A999 /* venndorUITests.xctest */,
+			);
+			name = Products;
+			sourceTree = "<group>";
+		};
+		10ADC9A61D0749700028A999 /* venndor */ = {
+			isa = PBXGroup;
+			children = (
+				10ADC9E21D074D430028A999 /* SupportingFiles */,
+				10ADC9D81D0749DA0028A999 /* Network */,
+				10ADC9A71D0749700028A999 /* AppDelegate.swift */,
+				10ADC9A91D0749700028A999 /* ViewController.swift */,
+				10ADC9AB1D0749700028A999 /* Main.storyboard */,
+				10ADC9B11D0749700028A999 /* Assets.xcassets */,
+				10ADC9B31D0749700028A999 /* LaunchScreen.storyboard */,
+				10ADC9AE1D0749700028A999 /* venndor.xcdatamodeld */,
+			);
+			path = venndor;
+			sourceTree = "<group>";
+		};
+		10ADC9BE1D0749700028A999 /* venndorTests */ = {
+			isa = PBXGroup;
+			children = (
+				10ADC9BF1D0749700028A999 /* venndorTests.swift */,
+				10ADC9C11D0749700028A999 /* Info.plist */,
+			);
+			path = venndorTests;
+			sourceTree = "<group>";
+		};
+		10ADC9C91D0749700028A999 /* venndorUITests */ = {
+			isa = PBXGroup;
+			children = (
+				10ADC9CA1D0749700028A999 /* venndorUITests.swift */,
+				10ADC9CC1D0749700028A999 /* Info.plist */,
+			);
+			path = venndorUITests;
+			sourceTree = "<group>";
+		};
+		10ADC9D81D0749DA0028A999 /* Network */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			name = Network;
+			sourceTree = "<group>";
+		};
+		10ADC9DB1D074C6F0028A999 /* Framework */ = {
+			isa = PBXGroup;
+			children = (
+				10ADC9DC1D074CA40028A999 /* FBSDKCoreKit.framework */,
+				10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */,
+				10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */,
+			);
+			name = Framework;
+			sourceTree = "<group>";
+		};
+		10ADC9E21D074D430028A999 /* SupportingFiles */ = {
+			isa = PBXGroup;
+			children = (
+				10ADC9B61D0749700028A999 /* Info.plist */,
+			);
+			name = SupportingFiles;
+			sourceTree = "<group>";
+		};
+/* End PBXGroup section */
+
+/* Begin PBXNativeTarget section */
+		10ADC9A31D0749700028A999 /* venndor */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 10ADC9CF1D0749700028A999 /* Build configuration list for PBXNativeTarget "venndor" */;
+			buildPhases = (
+				10ADC9A01D0749700028A999 /* Sources */,
+				10ADC9A11D0749700028A999 /* Frameworks */,
+				10ADC9A21D0749700028A999 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+			);
+			name = venndor;
+			productName = venndor;
+			productReference = 10ADC9A41D0749700028A999 /* venndor.app */;
+			productType = "com.apple.product-type.application";
+		};
+		10ADC9BA1D0749700028A999 /* venndorTests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 10ADC9D21D0749700028A999 /* Build configuration list for PBXNativeTarget "venndorTests" */;
+			buildPhases = (
+				10ADC9B71D0749700028A999 /* Sources */,
+				10ADC9B81D0749700028A999 /* Frameworks */,
+				10ADC9B91D0749700028A999 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				10ADC9BD1D0749700028A999 /* PBXTargetDependency */,
+			);
+			name = venndorTests;
+			productName = venndorTests;
+			productReference = 10ADC9BB1D0749700028A999 /* venndorTests.xctest */;
+			productType = "com.apple.product-type.bundle.unit-test";
+		};
+		10ADC9C51D0749700028A999 /* venndorUITests */ = {
+			isa = PBXNativeTarget;
+			buildConfigurationList = 10ADC9D51D0749700028A999 /* Build configuration list for PBXNativeTarget "venndorUITests" */;
+			buildPhases = (
+				10ADC9C21D0749700028A999 /* Sources */,
+				10ADC9C31D0749700028A999 /* Frameworks */,
+				10ADC9C41D0749700028A999 /* Resources */,
+			);
+			buildRules = (
+			);
+			dependencies = (
+				10ADC9C81D0749700028A999 /* PBXTargetDependency */,
+			);
+			name = venndorUITests;
+			productName = venndorUITests;
+			productReference = 10ADC9C61D0749700028A999 /* venndorUITests.xctest */;
+			productType = "com.apple.product-type.bundle.ui-testing";
+		};
+/* End PBXNativeTarget section */
+
+/* Begin PBXProject section */
+		10ADC99C1D0749700028A999 /* Project object */ = {
+			isa = PBXProject;
+			attributes = {
+				LastSwiftUpdateCheck = 0720;
+				LastUpgradeCheck = 0720;
+				ORGANIZATIONNAME = Venndor;
+				TargetAttributes = {
+					10ADC9A31D0749700028A999 = {
+						CreatedOnToolsVersion = 7.2.1;
+					};
+					10ADC9BA1D0749700028A999 = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 10ADC9A31D0749700028A999;
+					};
+					10ADC9C51D0749700028A999 = {
+						CreatedOnToolsVersion = 7.2.1;
+						TestTargetID = 10ADC9A31D0749700028A999;
+					};
+				};
+			};
+			buildConfigurationList = 10ADC99F1D0749700028A999 /* Build configuration list for PBXProject "venndor" */;
+			compatibilityVersion = "Xcode 3.2";
+			developmentRegion = English;
+			hasScannedForEncodings = 0;
+			knownRegions = (
+				en,
+				Base,
+			);
+			mainGroup = 10ADC99B1D0749700028A999;
+			productRefGroup = 10ADC9A51D0749700028A999 /* Products */;
+			projectDirPath = "";
+			projectRoot = "";
+			targets = (
+				10ADC9A31D0749700028A999 /* venndor */,
+				10ADC9BA1D0749700028A999 /* venndorTests */,
+				10ADC9C51D0749700028A999 /* venndorUITests */,
+			);
+		};
+/* End PBXProject section */
+
+/* Begin PBXResourcesBuildPhase section */
+		10ADC9A21D0749700028A999 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10ADC9B51D0749700028A999 /* LaunchScreen.storyboard in Resources */,
+				10ADC9B21D0749700028A999 /* Assets.xcassets in Resources */,
+				10ADC9AD1D0749700028A999 /* Main.storyboard in Resources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10ADC9B91D0749700028A999 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10ADC9C41D0749700028A999 /* Resources */ = {
+			isa = PBXResourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXResourcesBuildPhase section */
+
+/* Begin PBXSourcesBuildPhase section */
+		10ADC9A01D0749700028A999 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */,
+				10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */,
+				10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10ADC9B71D0749700028A999 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10ADC9C01D0749700028A999 /* venndorTests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+		10ADC9C21D0749700028A999 /* Sources */ = {
+			isa = PBXSourcesBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+				10ADC9CB1D0749700028A999 /* venndorUITests.swift in Sources */,
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+		};
+/* End PBXSourcesBuildPhase section */
+
+/* Begin PBXTargetDependency section */
+		10ADC9BD1D0749700028A999 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 10ADC9A31D0749700028A999 /* venndor */;
+			targetProxy = 10ADC9BC1D0749700028A999 /* PBXContainerItemProxy */;
+		};
+		10ADC9C81D0749700028A999 /* PBXTargetDependency */ = {
+			isa = PBXTargetDependency;
+			target = 10ADC9A31D0749700028A999 /* venndor */;
+			targetProxy = 10ADC9C71D0749700028A999 /* PBXContainerItemProxy */;
+		};
+/* End PBXTargetDependency section */
+
+/* Begin PBXVariantGroup section */
+		10ADC9AB1D0749700028A999 /* Main.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				10ADC9AC1D0749700028A999 /* Base */,
+			);
+			name = Main.storyboard;
+			sourceTree = "<group>";
+		};
+		10ADC9B31D0749700028A999 /* LaunchScreen.storyboard */ = {
+			isa = PBXVariantGroup;
+			children = (
+				10ADC9B41D0749700028A999 /* Base */,
+			);
+			name = LaunchScreen.storyboard;
+			sourceTree = "<group>";
+		};
+/* End PBXVariantGroup section */
+
+/* Begin XCBuildConfiguration section */
+		10ADC9CD1D0749700028A999 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = dwarf;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				ENABLE_TESTABILITY = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_DYNAMIC_NO_PIC = NO;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_OPTIMIZATION_LEVEL = 0;
+				GCC_PREPROCESSOR_DEFINITIONS = (
+					"DEBUG=1",
+					"$(inherited)",
+				);
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = YES;
+				ONLY_ACTIVE_ARCH = YES;
+				SDKROOT = iphoneos;
+				SWIFT_OPTIMIZATION_LEVEL = "-Onone";
+				TARGETED_DEVICE_FAMILY = "1,2";
+			};
+			name = Debug;
+		};
+		10ADC9CE1D0749700028A999 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_CXX_LANGUAGE_STANDARD = "gnu++0x";
+				CLANG_CXX_LIBRARY = "libc++";
+				CLANG_ENABLE_MODULES = YES;
+				CLANG_ENABLE_OBJC_ARC = YES;
+				CLANG_WARN_BOOL_CONVERSION = YES;
+				CLANG_WARN_CONSTANT_CONVERSION = YES;
+				CLANG_WARN_DIRECT_OBJC_ISA_USAGE = YES_ERROR;
+				CLANG_WARN_EMPTY_BODY = YES;
+				CLANG_WARN_ENUM_CONVERSION = YES;
+				CLANG_WARN_INT_CONVERSION = YES;
+				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
+				CLANG_WARN_UNREACHABLE_CODE = YES;
+				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
+				COPY_PHASE_STRIP = NO;
+				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
+				ENABLE_NS_ASSERTIONS = NO;
+				ENABLE_STRICT_OBJC_MSGSEND = YES;
+				GCC_C_LANGUAGE_STANDARD = gnu99;
+				GCC_NO_COMMON_BLOCKS = YES;
+				GCC_WARN_64_TO_32_BIT_CONVERSION = YES;
+				GCC_WARN_ABOUT_RETURN_TYPE = YES_ERROR;
+				GCC_WARN_UNDECLARED_SELECTOR = YES;
+				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
+				GCC_WARN_UNUSED_FUNCTION = YES;
+				GCC_WARN_UNUSED_VARIABLE = YES;
+				IPHONEOS_DEPLOYMENT_TARGET = 9.2;
+				MTL_ENABLE_DEBUG_INFO = NO;
+				SDKROOT = iphoneos;
+				TARGETED_DEVICE_FAMILY = "1,2";
+				VALIDATE_PRODUCT = YES;
+			};
+			name = Release;
+		};
+		10ADC9D01D0749700028A999 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$PROJECT_DIR)/venndor/Framework/FBSDKShareKit.framework/Headers",
+					"$PROJECT_DIR)/venndor/Framework/FBSDKLoginKit.framework/Headers",
+					"$PROJECT_DIR)/venndor/Framework/FBSDKCoreKit.framework/Headers",
+				);
+				INFOPLIST_FILE = venndor/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Debug;
+		};
+		10ADC9D11D0749700028A999 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				ASSETCATALOG_COMPILER_APPICON_NAME = AppIcon;
+				FRAMEWORK_SEARCH_PATHS = (
+					"$(inherited)",
+					"$(PROJECT_DIR)",
+					"$PROJECT_DIR)/venndor/Framework/FBSDKShareKit.framework/Headers",
+					"$PROJECT_DIR)/venndor/Framework/FBSDKLoginKit.framework/Headers",
+					"$PROJECT_DIR)/venndor/Framework/FBSDKCoreKit.framework/Headers",
+				);
+				INFOPLIST_FILE = venndor/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndor;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+			};
+			name = Release;
+		};
+		10ADC9D31D0749700028A999 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = venndorTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/venndor.app/venndor";
+			};
+			name = Debug;
+		};
+		10ADC9D41D0749700028A999 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				BUNDLE_LOADER = "$(TEST_HOST)";
+				INFOPLIST_FILE = venndorTests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndorTests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_HOST = "$(BUILT_PRODUCTS_DIR)/venndor.app/venndor";
+			};
+			name = Release;
+		};
+		10ADC9D61D0749700028A999 /* Debug */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = venndorUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndorUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = venndor;
+				USES_XCTRUNNER = YES;
+			};
+			name = Debug;
+		};
+		10ADC9D71D0749700028A999 /* Release */ = {
+			isa = XCBuildConfiguration;
+			buildSettings = {
+				INFOPLIST_FILE = venndorUITests/Info.plist;
+				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks @loader_path/Frameworks";
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndorUITests;
+				PRODUCT_NAME = "$(TARGET_NAME)";
+				TEST_TARGET_NAME = venndor;
+				USES_XCTRUNNER = YES;
+			};
+			name = Release;
+		};
+/* End XCBuildConfiguration section */
+
+/* Begin XCConfigurationList section */
+		10ADC99F1D0749700028A999 /* Build configuration list for PBXProject "venndor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10ADC9CD1D0749700028A999 /* Debug */,
+				10ADC9CE1D0749700028A999 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+			defaultConfigurationName = Release;
+		};
+		10ADC9CF1D0749700028A999 /* Build configuration list for PBXNativeTarget "venndor" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10ADC9D01D0749700028A999 /* Debug */,
+				10ADC9D11D0749700028A999 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		10ADC9D21D0749700028A999 /* Build configuration list for PBXNativeTarget "venndorTests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10ADC9D31D0749700028A999 /* Debug */,
+				10ADC9D41D0749700028A999 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+		10ADC9D51D0749700028A999 /* Build configuration list for PBXNativeTarget "venndorUITests" */ = {
+			isa = XCConfigurationList;
+			buildConfigurations = (
+				10ADC9D61D0749700028A999 /* Debug */,
+				10ADC9D71D0749700028A999 /* Release */,
+			);
+			defaultConfigurationIsVisible = 0;
+		};
+/* End XCConfigurationList section */
+
+/* Begin XCVersionGroup section */
+		10ADC9AE1D0749700028A999 /* venndor.xcdatamodeld */ = {
+			isa = XCVersionGroup;
+			children = (
+				10ADC9AF1D0749700028A999 /* venndor.xcdatamodel */,
+			);
+			currentVersion = 10ADC9AF1D0749700028A999 /* venndor.xcdatamodel */;
+			path = venndor.xcdatamodeld;
+			sourceTree = "<group>";
+			versionGroupType = wrapper.xcdatamodel;
+		};
+/* End XCVersionGroup section */
+	};
+	rootObject = 10ADC99C1D0749700028A999 /* Project object */;
+}
