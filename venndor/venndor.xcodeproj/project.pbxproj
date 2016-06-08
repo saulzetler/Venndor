@@ -18,6 +18,7 @@
 		10ADC9DF1D074CA40028A999 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DC1D074CA40028A999 /* FBSDKCoreKit.framework */; };
 		10ADC9E01D074CA40028A999 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		10ADC9E11D074CA40028A999 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */; };
+		10ADC9E91D088EC90028A999 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9E81D088EC90028A999 /* LoginController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -56,6 +57,7 @@
 		10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		10ADC9E51D0750CA0028A999 /* venndor-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "venndor-Bridging-Header.h"; sourceTree = "<group>"; };
+		10ADC9E81D088EC90028A999 /* LoginController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -111,6 +113,7 @@
 		10ADC9A61D0749700028A999 /* venndor */ = {
 			isa = PBXGroup;
 			children = (
+				10ADC9E71D088EB70028A999 /* Controllers */,
 				10ADC9E21D074D430028A999 /* SupportingFiles */,
 				10ADC9D81D0749DA0028A999 /* Network */,
 				10ADC9A71D0749700028A999 /* AppDelegate.swift */,
@@ -164,6 +167,14 @@
 				10ADC9B61D0749700028A999 /* Info.plist */,
 			);
 			name = SupportingFiles;
+			sourceTree = "<group>";
+		};
+		10ADC9E71D088EB70028A999 /* Controllers */ = {
+			isa = PBXGroup;
+			children = (
+				10ADC9E81D088EC90028A999 /* LoginController.swift */,
+			);
+			name = Controllers;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -298,6 +309,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */,
+				10ADC9E91D088EC90028A999 /* LoginController.swift in Sources */,
 				10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */,
 				10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */,
 			);
