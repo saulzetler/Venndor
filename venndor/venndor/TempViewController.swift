@@ -10,28 +10,16 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
-class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
-    let loginButton : FBSDKLoginButton = FBSDKLoginButton()
+class TempViewController: UIViewController, FBSDKLoginButtonDelegate {
+    let loginButton2 : FBSDKLoginButton = FBSDKLoginButton()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         // Do any additional setup after loading the view, typically from a nib.
-        self.view.addSubview(loginButton)
-        loginButton.center = self.view.center
-        loginButton.readPermissions = ["public_profile", "email"]
-        loginButton.delegate = self
-        
-        if (FBSDKAccessToken.currentAccessToken() != nil)
-        {
-            print("Already logged in")
-            fetchProfile()
-            self.performSegueWithIdentifier("showNew", sender: self)
-        }
-        else
-        {
-            
-            print("not logged in")
-        }
+        self.view.addSubview(loginButton2)
+        loginButton2.center = self.view.center
+        loginButton2.readPermissions = ["public_profile", "email"]
+        loginButton2.delegate = self
     }
     
     func fetchProfile() {
@@ -61,12 +49,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         if error == nil
         {
             print("Login complete")
             fetchProfile()
-            self.performSegueWithIdentifier("showNew", sender: self)
         }
         else
         {
@@ -77,6 +65,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     //FACEBOOK LOGIN DELEGATES
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         print("logged out")
+        self.performSegueWithIdentifier("goToStart", sender: self)
     }
     
 }
