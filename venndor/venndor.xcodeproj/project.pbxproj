@@ -9,9 +9,6 @@
 /* Begin PBXBuildFile section */
 		105FCB011D08A5C70073E3AE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB001D08A5C70073E3AE /* LoginViewController.swift */; };
 		105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB021D08AB790073E3AE /* TempViewController.swift */; };
-		105FCB051D08B2750073E3AE /* RESTEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB041D08B2750073E3AE /* RESTEngine.swift */; };
-		105FCB091D08B2930073E3AE /* NIKApiInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB071D08B2930073E3AE /* NIKApiInvoker.swift */; };
-		105FCB0A1D08B2930073E3AE /* NIKFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB081D08B2930073E3AE /* NIKFile.swift */; };
 		10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9A71D0749700028A999 /* AppDelegate.swift */; };
 		10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9A91D0749700028A999 /* ViewController.swift */; };
 		10ADC9AD1D0749700028A999 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10ADC9AB1D0749700028A999 /* Main.storyboard */; };
@@ -45,9 +42,6 @@
 /* Begin PBXFileReference section */
 		105FCB001D08A5C70073E3AE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		105FCB021D08AB790073E3AE /* TempViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempViewController.swift; sourceTree = "<group>"; };
-		105FCB041D08B2750073E3AE /* RESTEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTEngine.swift; sourceTree = "<group>"; };
-		105FCB071D08B2930073E3AE /* NIKApiInvoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKApiInvoker.swift; sourceTree = "<group>"; };
-		105FCB081D08B2930073E3AE /* NIKFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKFile.swift; sourceTree = "<group>"; };
 		10ADC9A41D0749700028A999 /* venndor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = venndor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10ADC9A71D0749700028A999 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		10ADC9A91D0749700028A999 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -105,19 +99,9 @@
 			name = ViewControllers;
 			sourceTree = "<group>";
 		};
-		105FCB061D08B2880073E3AE /* API */ = {
-			isa = PBXGroup;
-			children = (
-				105FCB071D08B2930073E3AE /* NIKApiInvoker.swift */,
-				105FCB081D08B2930073E3AE /* NIKFile.swift */,
-			);
-			name = API;
-			sourceTree = "<group>";
-		};
 		10ADC99B1D0749700028A999 = {
 			isa = PBXGroup;
 			children = (
-				105FCB061D08B2880073E3AE /* API */,
 				10ADC9E51D0750CA0028A999 /* venndor-Bridging-Header.h */,
 				10ADC9DB1D074C6F0028A999 /* Framework */,
 				10ADC9A61D0749700028A999 /* venndor */,
@@ -143,7 +127,6 @@
 				105FCAFF1D08A5490073E3AE /* ViewControllers */,
 				10ADC9E71D088EB70028A999 /* Controllers */,
 				10ADC9E21D074D430028A999 /* SupportingFiles */,
-				10ADC9D81D0749DA0028A999 /* Network */,
 				10ADC9A71D0749700028A999 /* AppDelegate.swift */,
 				10ADC9A91D0749700028A999 /* ViewController.swift */,
 				10ADC9AB1D0749700028A999 /* Main.storyboard */,
@@ -170,14 +153,6 @@
 				10ADC9CC1D0749700028A999 /* Info.plist */,
 			);
 			path = venndorUITests;
-			sourceTree = "<group>";
-		};
-		10ADC9D81D0749DA0028A999 /* Network */ = {
-			isa = PBXGroup;
-			children = (
-				105FCB041D08B2750073E3AE /* RESTEngine.swift */,
-			);
-			name = Network;
 			sourceTree = "<group>";
 		};
 		10ADC9DB1D074C6F0028A999 /* Framework */ = {
@@ -338,12 +313,9 @@
 			files = (
 				105FCB011D08A5C70073E3AE /* LoginViewController.swift in Sources */,
 				105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */,
-				105FCB0A1D08B2930073E3AE /* NIKFile.swift in Sources */,
 				10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */,
 				10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */,
 				10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */,
-				105FCB091D08B2930073E3AE /* NIKApiInvoker.swift in Sources */,
-				105FCB051D08B2750073E3AE /* RESTEngine.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
