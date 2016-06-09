@@ -11,8 +11,18 @@ import FBSDKCoreKit
 import FBSDKLoginKit
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
+    
+    
     let loginButton : FBSDKLoginButton = FBSDKLoginButton()
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
+        let backgroundImage = UIImageView(frame: UIScreen.mainScreen().bounds)
+        backgroundImage.image = UIImage(named: "app landing page background.png")
+        self.view.insertSubview(backgroundImage, atIndex: 0)
+    }
+    
+    
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
