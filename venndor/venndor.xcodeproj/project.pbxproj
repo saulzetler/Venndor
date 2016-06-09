@@ -13,7 +13,6 @@
 		10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9A91D0749700028A999 /* ViewController.swift */; };
 		10ADC9AD1D0749700028A999 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10ADC9AB1D0749700028A999 /* Main.storyboard */; };
 		10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9AE1D0749700028A999 /* venndor.xcdatamodeld */; };
-		10ADC9B21D0749700028A999 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 10ADC9B11D0749700028A999 /* Assets.xcassets */; };
 		10ADC9B51D0749700028A999 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10ADC9B31D0749700028A999 /* LaunchScreen.storyboard */; };
 		10ADC9C01D0749700028A999 /* venndorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9BF1D0749700028A999 /* venndorTests.swift */; };
 		10ADC9CB1D0749700028A999 /* venndorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9CA1D0749700028A999 /* venndorUITests.swift */; };
@@ -24,6 +23,7 @@
 		E49051A61D09AF7B0045D5C0 /* DraggableViewBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A31D09AF7B0045D5C0 /* DraggableViewBackground.swift */; };
 		E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A41D09AF7B0045D5C0 /* OverlayView.swift */; };
 		E49051A91D09B0250045D5C0 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A81D09B0250045D5C0 /* BrowseViewController.swift */; };
+		E49051AB1D09B5040045D5C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E49051AA1D09B5040045D5C0 /* Images.xcassets */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -51,7 +51,6 @@
 		10ADC9A91D0749700028A999 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
 		10ADC9AC1D0749700028A999 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		10ADC9AF1D0749700028A999 /* venndor.xcdatamodel */ = {isa = PBXFileReference; lastKnownFileType = wrapper.xcdatamodel; path = venndor.xcdatamodel; sourceTree = "<group>"; };
-		10ADC9B11D0749700028A999 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		10ADC9B41D0749700028A999 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		10ADC9B61D0749700028A999 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		10ADC9BB1D0749700028A999 /* venndorTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = venndorTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -68,6 +67,7 @@
 		E49051A31D09AF7B0045D5C0 /* DraggableViewBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableViewBackground.swift; sourceTree = "<group>"; };
 		E49051A41D09AF7B0045D5C0 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		E49051A81D09B0250045D5C0 /* BrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
+		E49051AA1D09B5040045D5C0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -140,7 +140,7 @@
 				10ADC9A71D0749700028A999 /* AppDelegate.swift */,
 				10ADC9A91D0749700028A999 /* ViewController.swift */,
 				10ADC9AB1D0749700028A999 /* Main.storyboard */,
-				10ADC9B11D0749700028A999 /* Assets.xcassets */,
+				E49051AA1D09B5040045D5C0 /* Images.xcassets */,
 				10ADC9B31D0749700028A999 /* LaunchScreen.storyboard */,
 				10ADC9AE1D0749700028A999 /* venndor.xcdatamodeld */,
 			);
@@ -305,7 +305,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				10ADC9B51D0749700028A999 /* LaunchScreen.storyboard in Resources */,
-				10ADC9B21D0749700028A999 /* Assets.xcassets in Resources */,
+				E49051AB1D09B5040045D5C0 /* Images.xcassets in Resources */,
 				10ADC9AD1D0749700028A999 /* Main.storyboard in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
