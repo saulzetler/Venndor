@@ -26,6 +26,7 @@
 		E49051AD1D09B6690045D5C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E49051AC1D09B6690045D5C0 /* Images.xcassets */; };
 		E49051B01D09C0C90045D5C0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E49051AF1D09C0C90045D5C0 /* SWRevealViewController.m */; };
 		E49051B21D09E5E80045D5C0 /* SideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051B11D09E5E80045D5C0 /* SideMenuController.swift */; };
+		E49051B41D0A006B0045D5C0 /* app landing page background.png in Resources */ = {isa = PBXBuildFile; fileRef = E49051B31D0A006B0045D5C0 /* app landing page background.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -73,6 +74,7 @@
 		E49051AE1D09C0C90045D5C0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		E49051AF1D09C0C90045D5C0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		E49051B11D09E5E80045D5C0 /* SideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuController.swift; sourceTree = "<group>"; };
+		E49051B31D0A006B0045D5C0 /* app landing page background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app landing page background.png"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -185,6 +187,7 @@
 		10ADC9E21D074D430028A999 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
+				E49051B31D0A006B0045D5C0 /* app landing page background.png */,
 				E49051AC1D09B6690045D5C0 /* Images.xcassets */,
 				10ADC9B61D0749700028A999 /* Info.plist */,
 			);
@@ -313,6 +316,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E49051AD1D09B6690045D5C0 /* Images.xcassets in Resources */,
+				E49051B41D0A006B0045D5C0 /* app landing page background.png in Resources */,
 				10ADC9B51D0749700028A999 /* LaunchScreen.storyboard in Resources */,
 				10ADC9AD1D0749700028A999 /* Main.storyboard in Resources */,
 			);

@@ -13,9 +13,13 @@ class BrowseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
-
+        let backgroundImage = UIImageView(frame: UIScreen.mainScreen().bounds)
+        backgroundImage.image = UIImage(named: "app landing page background.png")
+        
         let draggableBackground: DraggableViewBackground = DraggableViewBackground(frame: self.view.frame)
         self.view.addSubview(draggableBackground)
+        draggableBackground.insertSubview(backgroundImage, atIndex: 0)
+
         
         if revealViewController() != nil {
 //            left.target = revealViewController()
