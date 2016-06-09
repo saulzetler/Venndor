@@ -16,10 +16,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         // Do any additional setup after loading the view, typically from a nib.
-        self.view.addSubview(loginButton)
-        loginButton.center = self.view.center
-        loginButton.readPermissions = ["public_profile", "email"]
-        loginButton.delegate = self
+
         
         if (FBSDKAccessToken.currentAccessToken() != nil)
         {
@@ -30,7 +27,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         else
         {
             print("not logged in")
+            self.view.addSubview(loginButton)
+            loginButton.center = self.view.center
+            loginButton.readPermissions = ["public_profile", "email"]
+            loginButton.delegate = self
         }
+        
     }
     
     func fetchProfile() {
@@ -58,9 +60,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         if error == nil
         {
+            self.view.hidden = true
+            self.performSegueWithIdentifier("showNew", sender: self)
             print("Login complete")
             fetchProfile()
-            self.performSegueWithIdentifier("showNew", sender: self)
+            //self.performSegueWithIdentifier("showNew", sender: self)
         }
         else
         {
