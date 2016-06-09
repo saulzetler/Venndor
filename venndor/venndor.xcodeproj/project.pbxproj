@@ -20,6 +20,10 @@
 		10ADC9DF1D074CA40028A999 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DC1D074CA40028A999 /* FBSDKCoreKit.framework */; };
 		10ADC9E01D074CA40028A999 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		10ADC9E11D074CA40028A999 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */; };
+		E49051A51D09AF7B0045D5C0 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A21D09AF7B0045D5C0 /* DraggableView.swift */; };
+		E49051A61D09AF7B0045D5C0 /* DraggableViewBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A31D09AF7B0045D5C0 /* DraggableViewBackground.swift */; };
+		E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A41D09AF7B0045D5C0 /* OverlayView.swift */; };
+		E49051A91D09B0250045D5C0 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A81D09B0250045D5C0 /* BrowseViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -60,6 +64,10 @@
 		10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		10ADC9E51D0750CA0028A999 /* venndor-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "venndor-Bridging-Header.h"; sourceTree = "<group>"; };
+		E49051A21D09AF7B0045D5C0 /* DraggableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
+		E49051A31D09AF7B0045D5C0 /* DraggableViewBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableViewBackground.swift; sourceTree = "<group>"; };
+		E49051A41D09AF7B0045D5C0 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
+		E49051A81D09B0250045D5C0 /* BrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -93,6 +101,7 @@
 		105FCAFF1D08A5490073E3AE /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				E49051A81D09B0250045D5C0 /* BrowseViewController.swift */,
 				105FCB001D08A5C70073E3AE /* LoginViewController.swift */,
 				105FCB021D08AB790073E3AE /* TempViewController.swift */,
 			);
@@ -124,6 +133,7 @@
 		10ADC9A61D0749700028A999 /* venndor */ = {
 			isa = PBXGroup;
 			children = (
+				E49051A11D09AF6B0045D5C0 /* Views */,
 				105FCAFF1D08A5490073E3AE /* ViewControllers */,
 				10ADC9E71D088EB70028A999 /* Controllers */,
 				10ADC9E21D074D430028A999 /* SupportingFiles */,
@@ -178,6 +188,16 @@
 			children = (
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		E49051A11D09AF6B0045D5C0 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				E49051A21D09AF7B0045D5C0 /* DraggableView.swift */,
+				E49051A31D09AF7B0045D5C0 /* DraggableViewBackground.swift */,
+				E49051A41D09AF7B0045D5C0 /* OverlayView.swift */,
+			);
+			name = Views;
 			sourceTree = "<group>";
 		};
 /* End PBXGroup section */
@@ -311,9 +331,13 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E49051A61D09AF7B0045D5C0 /* DraggableViewBackground.swift in Sources */,
+				E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */,
+				E49051A51D09AF7B0045D5C0 /* DraggableView.swift in Sources */,
 				105FCB011D08A5C70073E3AE /* LoginViewController.swift in Sources */,
 				105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */,
 				10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */,
+				E49051A91D09B0250045D5C0 /* BrowseViewController.swift in Sources */,
 				10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */,
 				10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */,
 			);
