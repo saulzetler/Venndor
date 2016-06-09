@@ -16,6 +16,15 @@ class BrowseViewController: UIViewController {
 
         let draggableBackground: DraggableViewBackground = DraggableViewBackground(frame: self.view.frame)
         self.view.addSubview(draggableBackground)
+        
+        if revealViewController() != nil {
+//            revealViewController().rightViewRevealWidth = 70
+//            left.target = revealViewController()
+//            left.action = "revealToggle:"
+            revealViewController().rearViewRevealWidth = 70
+            self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
+        }
+        
     }
 
     override func didReceiveMemoryWarning() {

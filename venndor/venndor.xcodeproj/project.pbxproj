@@ -24,6 +24,7 @@
 		E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A41D09AF7B0045D5C0 /* OverlayView.swift */; };
 		E49051A91D09B0250045D5C0 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A81D09B0250045D5C0 /* BrowseViewController.swift */; };
 		E49051AD1D09B6690045D5C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E49051AC1D09B6690045D5C0 /* Images.xcassets */; };
+		E49051B01D09C0C90045D5C0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E49051AF1D09C0C90045D5C0 /* SWRevealViewController.m */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -68,6 +69,8 @@
 		E49051A41D09AF7B0045D5C0 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		E49051A81D09B0250045D5C0 /* BrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 		E49051AC1D09B6690045D5C0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
+		E49051AE1D09C0C90045D5C0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
+		E49051AF1D09C0C90045D5C0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -167,6 +170,8 @@
 		10ADC9DB1D074C6F0028A999 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				E49051AE1D09C0C90045D5C0 /* SWRevealViewController.h */,
+				E49051AF1D09C0C90045D5C0 /* SWRevealViewController.m */,
 				10ADC9DC1D074CA40028A999 /* FBSDKCoreKit.framework */,
 				10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */,
 				10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */,
@@ -338,6 +343,7 @@
 				105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */,
 				10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */,
 				E49051A91D09B0250045D5C0 /* BrowseViewController.swift in Sources */,
+				E49051B01D09C0C90045D5C0 /* SWRevealViewController.m in Sources */,
 				10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */,
 				10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */,
 			);
