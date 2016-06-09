@@ -13,8 +13,8 @@ import FBSDKLoginKit
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     let loginButton : FBSDKLoginButton = FBSDKLoginButton()
     
-    override func viewDidLoad() {
-        super.viewDidLoad()
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
         // Do any additional setup after loading the view, typically from a nib.
         self.view.addSubview(loginButton)
         loginButton.center = self.view.center
@@ -29,7 +29,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         }
         else
         {
-            
             print("not logged in")
         }
     }
@@ -46,13 +45,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 return
             }
             if let email = result["email"] as? String {
-                print(email)
-            }
-            if let firstName = result["first_name"] as? String {
-                print(firstName)
-            }
-            if let lastName = result["last_name"] as? String {
-                print(lastName)
+                currentUser = email
             }
         }
     }
@@ -61,6 +54,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         if error == nil
         {

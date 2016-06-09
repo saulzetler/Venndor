@@ -10,6 +10,8 @@ import UIKit
 import CoreData
 import FBSDKCoreKit
 
+var currentUser: String!
+
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
