@@ -18,10 +18,9 @@ class BrowseViewController: UIViewController {
         self.view.addSubview(draggableBackground)
         
         if revealViewController() != nil {
-//            revealViewController().rightViewRevealWidth = 70
 //            left.target = revealViewController()
 //            left.action = "revealToggle:"
-            revealViewController().rearViewRevealWidth = 70
+            revealViewController().rearViewRevealWidth = 100
             self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
         }
         

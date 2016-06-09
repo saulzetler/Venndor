@@ -66,10 +66,10 @@
             </objects>
             <point key="canvasLocation" x="699" y="323"/>
         </scene>
-        <!--Table View Controller-->
+        <!--Side Menu Controller-->
         <scene sceneID="Fk5-ft-0rT">
             <objects>
-                <tableViewController id="iSZ-II-anh" sceneMemberID="viewController">
+                <tableViewController id="iSZ-II-anh" customClass="SideMenuController" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
                     <tableView key="view" clipsSubviews="YES" contentMode="scaleToFill" alwaysBounceVertical="YES" dataMode="static" style="plain" separatorStyle="default" rowHeight="44" sectionHeaderHeight="28" sectionFooterHeight="28" id="8xK-PC-D6B">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
@@ -83,6 +83,15 @@
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bRs-Vj-jyd" id="lYu-lh-IpD">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="43.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <subviews>
+                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7DP-A3-tsc">
+                                                    <rect key="frame" x="32" y="5" width="64" height="30.5"/>
+                                                    <state key="normal" title="Log Out"/>
+                                                    <connections>
+                                                        <action selector="logOut:" destination="iSZ-II-anh" eventType="touchUpInside" id="OFn-cT-Ft0"/>
+                                                    </connections>
+                                                </button>
+                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" id="ejt-ts-N7L">
@@ -109,10 +118,13 @@
                             <outlet property="delegate" destination="iSZ-II-anh" id="0xa-Nt-qhb"/>
                         </connections>
                     </tableView>
+                    <connections>
+                        <segue destination="dSk-Eg-Ksm" kind="show" identifier="showLogin" id="Uky-sU-Niy"/>
+                    </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="51h-Li-2ey" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1220" y="1386"/>
+            <point key="canvasLocation" x="1264" y="1242"/>
         </scene>
     </scenes>
 </document>
