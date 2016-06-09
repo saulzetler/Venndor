@@ -25,6 +25,7 @@
 		E49051A91D09B0250045D5C0 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A81D09B0250045D5C0 /* BrowseViewController.swift */; };
 		E49051AD1D09B6690045D5C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E49051AC1D09B6690045D5C0 /* Images.xcassets */; };
 		E49051B01D09C0C90045D5C0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E49051AF1D09C0C90045D5C0 /* SWRevealViewController.m */; };
+		E49051B21D09E5E80045D5C0 /* SideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051B11D09E5E80045D5C0 /* SideMenuController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -71,6 +72,7 @@
 		E49051AC1D09B6690045D5C0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
 		E49051AE1D09C0C90045D5C0 /* SWRevealViewController.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SWRevealViewController.h; sourceTree = "<group>"; };
 		E49051AF1D09C0C90045D5C0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
+		E49051B11D09E5E80045D5C0 /* SideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -107,6 +109,7 @@
 				E49051A81D09B0250045D5C0 /* BrowseViewController.swift */,
 				105FCB001D08A5C70073E3AE /* LoginViewController.swift */,
 				105FCB021D08AB790073E3AE /* TempViewController.swift */,
+				E49051B11D09E5E80045D5C0 /* SideMenuController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -337,6 +340,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E49051A61D09AF7B0045D5C0 /* DraggableViewBackground.swift in Sources */,
+				E49051B21D09E5E80045D5C0 /* SideMenuController.swift in Sources */,
 				E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */,
 				E49051A51D09AF7B0045D5C0 /* DraggableView.swift in Sources */,
 				105FCB011D08A5C70073E3AE /* LoginViewController.swift in Sources */,
