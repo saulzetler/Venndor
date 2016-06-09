@@ -12,13 +12,11 @@ import FBSDKLoginKit
 
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     let loginButton : FBSDKLoginButton = FBSDKLoginButton()
-    
-    
+
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
         // Do any additional setup after loading the view, typically from a nib.
-
         
         if (FBSDKAccessToken.currentAccessToken() != nil)
         {
@@ -62,11 +60,13 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
         if error == nil
         {
-            self.view.hidden = true
-            self.performSegueWithIdentifier("showNew", sender: self)
-            print("Login complete")
-            fetchProfile()
-            //self.performSegueWithIdentifier("showNew", sender: self)
+            if (FBSDKAccessToken.currentAccessToken() != nil)
+            {
+                loginButton.hidden = true
+                print("Login complete")
+                fetchProfile()
+                self.performSegueWithIdentifier("showNew", sender: self)
+            }
         }
         else
         {
