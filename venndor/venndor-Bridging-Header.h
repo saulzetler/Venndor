@@ -12,6 +12,7 @@
 #import <FBSDKCoreKit/FBSDKCorekit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
+#import "SWRevealViewController.h"
 
 #endif /* venndor_Bridging_Header_h */
 
