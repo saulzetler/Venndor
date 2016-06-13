@@ -27,6 +27,8 @@
 		E49051B01D09C0C90045D5C0 /* SWRevealViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = E49051AF1D09C0C90045D5C0 /* SWRevealViewController.m */; };
 		E49051B21D09E5E80045D5C0 /* SideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051B11D09E5E80045D5C0 /* SideMenuController.swift */; };
 		E49051B41D0A006B0045D5C0 /* app landing page background.png in Resources */ = {isa = PBXBuildFile; fileRef = E49051B31D0A006B0045D5C0 /* app landing page background.png */; };
+		E49051B61D0B245C0045D5C0 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051B51D0B245C0045D5C0 /* PostViewController.swift */; };
+		E49051B81D0B29F20045D5C0 /* ItemDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051B71D0B29F20045D5C0 /* ItemDescriptionView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -75,6 +77,8 @@
 		E49051AF1D09C0C90045D5C0 /* SWRevealViewController.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SWRevealViewController.m; sourceTree = "<group>"; };
 		E49051B11D09E5E80045D5C0 /* SideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuController.swift; sourceTree = "<group>"; };
 		E49051B31D0A006B0045D5C0 /* app landing page background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app landing page background.png"; sourceTree = "<group>"; };
+		E49051B51D0B245C0045D5C0 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
+		E49051B71D0B29F20045D5C0 /* ItemDescriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDescriptionView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -112,6 +116,7 @@
 				105FCB001D08A5C70073E3AE /* LoginViewController.swift */,
 				105FCB021D08AB790073E3AE /* TempViewController.swift */,
 				E49051B11D09E5E80045D5C0 /* SideMenuController.swift */,
+				E49051B51D0B245C0045D5C0 /* PostViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -207,6 +212,7 @@
 				E49051A21D09AF7B0045D5C0 /* DraggableView.swift */,
 				E49051A31D09AF7B0045D5C0 /* DraggableViewBackground.swift */,
 				E49051A41D09AF7B0045D5C0 /* OverlayView.swift */,
+				E49051B71D0B29F20045D5C0 /* ItemDescriptionView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -343,6 +349,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E49051B61D0B245C0045D5C0 /* PostViewController.swift in Sources */,
 				E49051A61D09AF7B0045D5C0 /* DraggableViewBackground.swift in Sources */,
 				E49051B21D09E5E80045D5C0 /* SideMenuController.swift in Sources */,
 				E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */,
@@ -354,6 +361,7 @@
 				E49051B01D09C0C90045D5C0 /* SWRevealViewController.m in Sources */,
 				10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */,
 				10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */,
+				E49051B81D0B29F20045D5C0 /* ItemDescriptionView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
