@@ -11,13 +11,15 @@ import FBSDKLoginKit
 
 class SideMenuController: UITableViewController {
     
-    
-    
     @IBAction func logOut(sender: UIButton) {
         let loginManager = FBSDKLoginManager()
         loginManager.logOut()
         self.performSegueWithIdentifier("showLogin", sender: self)
         
+    }
+    
+    @IBAction func postItem() {
+        self.performSegueWithIdentifier("postInfo", sender: self)
     }
     
 }

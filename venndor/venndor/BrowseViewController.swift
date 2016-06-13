@@ -24,7 +24,7 @@ class BrowseViewController: UIViewController {
         if revealViewController() != nil {
 //            left.target = revealViewController()
 //            left.action = "revealToggle:"
-            revealViewController().rearViewRevealWidth = 100
+            revealViewController().rearViewRevealWidth = 150
             self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
         }
         
