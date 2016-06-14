@@ -27,6 +27,7 @@ class BrowseViewController: UIViewController {
         self.view.addSubview(headerView)
         self.view.bringSubviewToFront(headerView)
         
+        //MiniMyMatches button at bottom of browse.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let miniMatchesImage = UIImage(named: "ic_menu_white.png");
         miniMatches = UIButton(type: UIButtonType.Custom) as UIButton
@@ -36,11 +37,8 @@ class BrowseViewController: UIViewController {
         miniMatches.setImage(miniMatchesImage, forState: .Normal)
         miniMatches.tag = 1
         self.view.addSubview(miniMatches)
-        
-        
-        
+        miniMatches.addTarget(self, action: "showAlert()", forControlEvents: UIControlEvents.TouchUpInside)
 
-        
         if revealViewController() != nil {
 //            left.target = revealViewController()
 //            left.action = "revealToggle:"
@@ -53,6 +51,9 @@ class BrowseViewController: UIViewController {
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
+    }
+    func showAlert() {
+        print("buttonpress")
     }
 
     
