@@ -13,9 +13,11 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
     var exampleCardLabels: [String]!
     var allCards: [DraggableView]!
 
+//    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    
     let MAX_BUFFER_SIZE = 2
-    let CARD_HEIGHT: CGFloat = 386
-    let CARD_WIDTH: CGFloat = 290
+//    let CARD_HEIGHT: CGFloat = 386
+//    let CARD_WIDTH: CGFloat = 290
 
     var cardsLoadedIndex: Int!
     var loadedCards: [DraggableView]!
@@ -42,19 +44,22 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
     func setupView() -> Void {
         self.backgroundColor = UIColor(red: 0.92, green: 0.93, blue: 0.95, alpha: 1)
 
-        xButton = UIButton(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2 + 35, self.frame.size.height/2 + CARD_HEIGHT/2 + 10, 59, 59))
-        xButton.setImage(UIImage(named: "xButton"), forState: UIControlState.Normal)
-        xButton.addTarget(self, action: "swipeLeft", forControlEvents: UIControlEvents.TouchUpInside)
-
-        checkButton = UIButton(frame: CGRectMake(self.frame.size.width/2 + CARD_WIDTH/2 - 85, self.frame.size.height/2 + CARD_HEIGHT/2 + 10, 59, 59))
-        checkButton.setImage(UIImage(named: "checkButton"), forState: UIControlState.Normal)
-        checkButton.addTarget(self, action: "swipeRight", forControlEvents: UIControlEvents.TouchUpInside)
-
-        self.addSubview(xButton)
-        self.addSubview(checkButton)
+//        xButton = UIButton(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2 + 35, self.frame.size.height/2 + CARD_HEIGHT/2 + 10, 59, 59))
+//        xButton.setImage(UIImage(named: "xButton"), forState: UIControlState.Normal)
+//        xButton.addTarget(self, action: "swipeLeft", forControlEvents: UIControlEvents.TouchUpInside)
+//
+//        checkButton = UIButton(frame: CGRectMake(self.frame.size.width/2 + CARD_WIDTH/2 - 85, self.frame.size.height/2 + CARD_HEIGHT/2 + 10, 59, 59))
+//        checkButton.setImage(UIImage(named: "checkButton"), forState: UIControlState.Normal)
+//        checkButton.addTarget(self, action: "swipeRight", forControlEvents: UIControlEvents.TouchUpInside)
+//
+//        self.addSubview(xButton)
+//        self.addSubview(checkButton)
     }
 
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let CARD_HEIGHT: CGFloat = screenSize.height*0.8
+        let CARD_WIDTH: CGFloat = screenSize.width*0.9
         let draggableView = DraggableView(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2, (self.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT))
         draggableView.information.text = exampleCardLabels[index]
         draggableView.delegate = self

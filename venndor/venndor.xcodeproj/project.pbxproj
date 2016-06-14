@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		101F43CE1D107A55007E0ADE /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F43CD1D107A55007E0ADE /* HeaderView.swift */; };
 		105FCB011D08A5C70073E3AE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB001D08A5C70073E3AE /* LoginViewController.swift */; };
 		105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB021D08AB790073E3AE /* TempViewController.swift */; };
 		10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9A71D0749700028A999 /* AppDelegate.swift */; };
@@ -49,6 +50,7 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
+		101F43CD1D107A55007E0ADE /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		105FCB001D08A5C70073E3AE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		105FCB021D08AB790073E3AE /* TempViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempViewController.swift; sourceTree = "<group>"; };
 		10ADC9A41D0749700028A999 /* venndor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = venndor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -213,6 +215,7 @@
 				E49051A31D09AF7B0045D5C0 /* DraggableViewBackground.swift */,
 				E49051A41D09AF7B0045D5C0 /* OverlayView.swift */,
 				E49051B71D0B29F20045D5C0 /* ItemDescriptionView.swift */,
+				101F43CD1D107A55007E0ADE /* HeaderView.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -362,6 +365,7 @@
 				10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */,
 				10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */,
 				E49051B81D0B29F20045D5C0 /* ItemDescriptionView.swift in Sources */,
+				101F43CE1D107A55007E0ADE /* HeaderView.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
