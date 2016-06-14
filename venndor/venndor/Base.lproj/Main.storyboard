@@ -1,5 +1,5 @@
-<?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
+ <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -18,7 +18,59 @@
                     <view key="view" contentMode="scaleToFill" id="goE-03-9rn">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AqT-ZL-8E1">
+                                <rect key="frame" x="154" y="424" width="292" height="36"/>
+                                <accessibility key="accessibilityConfiguration" identifier="fbButton"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="36" id="nLM-dp-GU7"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
+                                <state key="normal" title="Log In Through Facebook Now!">
+                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                                <connections>
+                                    <action selector="loginButton2:" destination="dSk-Eg-Ksm" eventType="touchUpInside" id="MiA-Gd-ciw"/>
+                                </connections>
+                            </button>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app landing page background.png" translatesAutoresizingMaskIntoConstraints="NO" id="owN-2m-UxM">
+                                <rect key="frame" x="200" y="123" width="200" height="200"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="200" id="pCu-zR-tJJ"/>
+                                    <constraint firstAttribute="width" constant="200" id="xo9-LT-qd4"/>
+                                </constraints>
+                            </imageView>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop haggling, get a better deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCF-6j-UE0">
+                                <rect key="frame" x="175" y="359" width="250" height="21"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="250" id="paB-WF-92G"/>
+                                    <constraint firstAttribute="height" constant="21" id="tq2-5a-0Yv"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venndor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwX-UI-2IX">
+                                <rect key="frame" x="225" y="7.5" width="151.5" height="45.5"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="151.5" id="EfJ-PH-cgk"/>
+                                    <constraint firstAttribute="height" constant="45.5" id="nyC-hi-MHR"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="40"/>
+                                <color key="textColor" cocoaTouchSystemColor="darkTextColor"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="owN-2m-UxM" firstAttribute="centerX" secondItem="goE-03-9rn" secondAttribute="centerX" id="QSX-DA-Gov"/>
+                            <constraint firstItem="AqT-ZL-8E1" firstAttribute="centerX" secondItem="goE-03-9rn" secondAttribute="centerX" id="SWL-1I-lFr"/>
+                            <constraint firstItem="iAg-b6-NyB" firstAttribute="top" secondItem="AqT-ZL-8E1" secondAttribute="bottom" constant="140" id="W2l-28-j1p"/>
+                            <constraint firstItem="owN-2m-UxM" firstAttribute="top" secondItem="gwX-UI-2IX" secondAttribute="bottom" constant="70" id="gHW-of-u2S"/>
+                            <constraint firstItem="gwX-UI-2IX" firstAttribute="centerX" secondItem="goE-03-9rn" secondAttribute="centerX" id="hUb-4f-pbT"/>
+                            <constraint firstItem="QCF-6j-UE0" firstAttribute="top" secondItem="owN-2m-UxM" secondAttribute="bottom" constant="35.5" id="kSy-He-tGM"/>
+                            <constraint firstItem="AqT-ZL-8E1" firstAttribute="top" secondItem="QCF-6j-UE0" secondAttribute="bottom" constant="44" id="p6f-5D-lA0"/>
+                            <constraint firstItem="QCF-6j-UE0" firstAttribute="centerX" secondItem="goE-03-9rn" secondAttribute="centerX" id="r5X-EJ-RTa"/>
+                        </constraints>
                     </view>
                     <connections>
                         <segue destination="5Q4-WU-6Zg" kind="presentation" identifier="showNew" id="HFC-zK-5g7"/>
