@@ -44,6 +44,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         if (FBSDKAccessToken.currentAccessToken() != nil)
         {
+            let subViews = self.view.subviews
+            for subView in subViews {
+                subView.removeFromSuperview()
+            }
             print("Already logged in")
             fetchProfile()
             self.performSegueWithIdentifier("showNew", sender: self)
@@ -85,7 +89,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         {
             if (FBSDKAccessToken.currentAccessToken() != nil)
             {
-                loginButton.hidden = true
+                let subViews = self.view.subviews
+                for subView in subViews {
+                    subView.removeFromSuperview()
+                }
+                
                 print("Login complete")
                 fetchProfile()
                 self.performSegueWithIdentifier("showNew", sender: self)
