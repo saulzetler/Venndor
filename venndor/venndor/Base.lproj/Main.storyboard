@@ -1,4 +1,4 @@
- <?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
 <document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
     <dependencies>
         <deployment identifier="iOS"/>
@@ -64,7 +64,7 @@
                         <constraints>
                             <constraint firstItem="owN-2m-UxM" firstAttribute="centerX" secondItem="goE-03-9rn" secondAttribute="centerX" id="QSX-DA-Gov"/>
                             <constraint firstItem="AqT-ZL-8E1" firstAttribute="centerX" secondItem="goE-03-9rn" secondAttribute="centerX" id="SWL-1I-lFr"/>
-                            <constraint firstItem="iAg-b6-NyB" firstAttribute="top" secondItem="AqT-ZL-8E1" secondAttribute="bottom" constant="140" id="W2l-28-j1p"/>
+                            <constraint firstAttribute="top" secondItem="AqT-ZL-8E1" secondAttribute="bottom" constant="-460" id="W2l-28-j1p"/>
                             <constraint firstItem="owN-2m-UxM" firstAttribute="top" secondItem="gwX-UI-2IX" secondAttribute="bottom" constant="70" id="gHW-of-u2S"/>
                             <constraint firstItem="gwX-UI-2IX" firstAttribute="centerX" secondItem="goE-03-9rn" secondAttribute="centerX" id="hUb-4f-pbT"/>
                             <constraint firstItem="QCF-6j-UE0" firstAttribute="top" secondItem="owN-2m-UxM" secondAttribute="bottom" constant="35.5" id="kSy-He-tGM"/>
@@ -285,7 +285,10 @@
             <point key="canvasLocation" x="1400" y="1249.9999999999998"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="app landing page background.png" width="822" height="1407"/>
+    </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hrt-cp-q1Q"/>
+        <segue reference="HFC-zK-5g7"/>
     </inferredMetricsTieBreakers>
 </document>
