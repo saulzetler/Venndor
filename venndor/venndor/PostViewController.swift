@@ -27,9 +27,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.performSegueWithIdentifier("backToBrowse", sender: self)
     }
     
-    
-    
-    
     @IBAction func imageTapped(sender: UITapGestureRecognizer) {
         let myPickerController = UIImagePickerController()
         myPickerController.delegate = self;
