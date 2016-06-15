@@ -22,6 +22,9 @@
 		10ADC9E11D074CA40028A999 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */; };
 		E44C15181D11B5D00006EBAD /* Shopping Cart Loaded-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */; };
 		E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15171D11B5D00006EBAD /* Megaphone-50.png */; };
+		E44C151C1D11B9650006EBAD /* Settings-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C151A1D11B9650006EBAD /* Settings-50.png */; };
+		E44C151F1D11B9B90006EBAD /* New Product-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C151E1D11B9B90006EBAD /* New Product-50.png */; };
+		E44C15211D11B9F90006EBAD /* Home-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15201D11B9F90006EBAD /* Home-50.png */; };
 		E49051A51D09AF7B0045D5C0 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A21D09AF7B0045D5C0 /* DraggableView.swift */; };
 		E49051A61D09AF7B0045D5C0 /* DraggableViewBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A31D09AF7B0045D5C0 /* DraggableViewBackground.swift */; };
 		E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A41D09AF7B0045D5C0 /* OverlayView.swift */; };
@@ -74,6 +77,9 @@
 		10ADC9E51D0750CA0028A999 /* venndor-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "venndor-Bridging-Header.h"; sourceTree = "<group>"; };
 		E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shopping Cart Loaded-50.png"; sourceTree = "<group>"; };
 		E44C15171D11B5D00006EBAD /* Megaphone-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Megaphone-50.png"; sourceTree = "<group>"; };
+		E44C151A1D11B9650006EBAD /* Settings-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-50.png"; sourceTree = "<group>"; };
+		E44C151E1D11B9B90006EBAD /* New Product-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "New Product-50.png"; sourceTree = "<group>"; };
+		E44C15201D11B9F90006EBAD /* Home-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Home-50.png"; sourceTree = "<group>"; };
 		E49051A21D09AF7B0045D5C0 /* DraggableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
 		E49051A31D09AF7B0045D5C0 /* DraggableViewBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableViewBackground.swift; sourceTree = "<group>"; };
 		E49051A41D09AF7B0045D5C0 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
@@ -201,6 +207,9 @@
 				E49051B31D0A006B0045D5C0 /* app landing page background.png */,
 				E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */,
 				E44C15171D11B5D00006EBAD /* Megaphone-50.png */,
+				E44C151A1D11B9650006EBAD /* Settings-50.png */,
+				E44C151E1D11B9B90006EBAD /* New Product-50.png */,
+				E44C15201D11B9F90006EBAD /* Home-50.png */,
 				E49051AC1D09B6690045D5C0 /* Images.xcassets */,
 				10ADC9B61D0749700028A999 /* Info.plist */,
 			);
@@ -330,7 +339,10 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E44C15211D11B9F90006EBAD /* Home-50.png in Resources */,
+				E44C151C1D11B9650006EBAD /* Settings-50.png in Resources */,
 				E49051AD1D09B6690045D5C0 /* Images.xcassets in Resources */,
+				E44C151F1D11B9B90006EBAD /* New Product-50.png in Resources */,
 				E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */,
 				E49051B41D0A006B0045D5C0 /* app landing page background.png in Resources */,
 				10ADC9B51D0749700028A999 /* LaunchScreen.storyboard in Resources */,
