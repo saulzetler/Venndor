@@ -33,6 +33,8 @@ class SettingsViewController: UIViewController {
         let headerView: HeaderView = HeaderView(frame: self.view.frame)
         headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
         
+        headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
+        
         self.view.addSubview(headerView)
         self.view.bringSubviewToFront(headerView)
         
