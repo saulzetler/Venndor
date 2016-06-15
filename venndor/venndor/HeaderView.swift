@@ -22,21 +22,27 @@ class HeaderView: UIView, UITextFieldDelegate {
     
     var menuButton: UIButton!
     var categoryButton: UIButton!
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setUpView()
+        self.setUpViewFrame()
+        self.setUpViewText()
+        self.setUpViewMenu()
+        self.setUpViewCategory()
     }
     
-    func setUpView() -> Void {
+    func setUpViewFrame() -> Void {
         //initial view frame
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
+
         self.frame = CGRectMake(0, 0, screenSize.width, 64)
         self.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
-        
+    }
+    
+    func setUpViewText() -> Void {
         //setup textfield
         let sampleTextField = UITextField(frame: CGRectMake(screenSize.width*0.25, 24, screenSize.width*0.5, 30))
         sampleTextField.backgroundColor = UIColorFromHex(0x123456, alpha: 0.05)
@@ -60,7 +66,8 @@ class HeaderView: UIView, UITextFieldDelegate {
         sampleTextField.leftViewMode = UITextFieldViewMode.Always
         imageView.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
         self.addSubview(imageView)
-        
+    }
+    func setUpViewMenu() -> Void {
         //setup menu button
         let menuImage = UIImage(named: "ic_menu_white.png");
         menuButton   = UIButton(type: UIButtonType.Custom) as UIButton
@@ -68,21 +75,47 @@ class HeaderView: UIView, UITextFieldDelegate {
         menuButton.setImage(menuImage, forState: .Normal)
         menuButton.tag = 1
         self.addSubview(menuButton)
-        
+    }
+    func setUpViewCategory() -> Void {
+    
         //setup category button
         let categoryImage = UIImage(named: "ic_dashboard_white.png");
         categoryButton = UIButton(type: UIButtonType.Custom) as UIButton
         categoryButton.frame = CGRectMake(screenSize.width*0.8, 24, screenSize.width*0.2, 30)
         categoryButton.setImage(categoryImage, forState: .Normal)
-        categoryButton.tag = 1
+        categoryButton.tag = 2
         self.addSubview(categoryButton)
         
+    }
+    func setUpViewCancel() -> Void {
+        let cancelImage = UIImage(named: "ic_clear_white.png");
+        let cancelButton = UIButton(type: UIButtonType.Custom) as UIButton
+        cancelButton.frame = CGRectMake(screenSize.width*0.8, 24, screenSize.width*0.2, 30)
+        cancelButton.setImage(cancelImage, forState: .Normal)
+        cancelButton.tag = 3
+        cancelButton.addTarget(self, action: "buttonPress:", forControlEvents: .TouchUpInside)
+        self.addSubview(cancelButton)
     }
 
     
     // MARK:- ---> Textfield Delegates
     func textFieldDidBeginEditing(textField: UITextField) {
         print("TextField did begin editing method called")
+        let subViews = self.subviews
+        for subView in subViews {
+            if subView == categoryButton || subView == menuButton {
+                subView.removeFromSuperview()
+            }
+            else {
+                UIView.animateWithDuration(0.5, animations: {
+                    subView.frame = CGRect(x: self.screenSize.width*0.05, y: 24, width: self.screenSize.width*0.7, height: 30)
+                })
+                if let textField = subView as? UITextField {
+                    textField.attributedPlaceholder =  NSAttributedString(string:"Search", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+                }
+                self.setUpViewCancel()
+            }
+        }
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
@@ -116,6 +149,14 @@ class HeaderView: UIView, UITextFieldDelegate {
     }
     
     // MARK: Textfield Delegates <---
-    
+    func buttonPress(sender: UIButton!) {
+        let subViews = self.subviews
+        for subView in subViews {
+            subView.removeFromSuperview()
+        }
+        self.setUpViewText()
+        self.setUpViewMenu()
+        self.setUpViewCategory()
+    }
 
 }
