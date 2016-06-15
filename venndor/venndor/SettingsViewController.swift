@@ -28,6 +28,14 @@ class SettingsViewController: UIViewController {
         label.text = "Settings"
         self.view.addSubview(label)
         
+        
+        //add header
+        let headerView: HeaderView = HeaderView(frame: self.view.frame)
+        headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.view.addSubview(headerView)
+        self.view.bringSubviewToFront(headerView)
+        
     }
     
     

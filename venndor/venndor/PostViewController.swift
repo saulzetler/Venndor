@@ -44,6 +44,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemDescription.delegate = self
         itemName.clearsOnBeginEditing = true
         
+        let headerView: HeaderView = HeaderView(frame: self.view.frame)
+        headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.view.addSubview(headerView)
+        self.view.bringSubviewToFront(headerView)
+        
     }
     
     override func didReceiveMemoryWarning() {
