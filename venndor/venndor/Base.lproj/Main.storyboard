@@ -210,7 +210,7 @@
                     </connections>
                 </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2125" y="292"/>
+            <point key="canvasLocation" x="2213" y="1232"/>
         </scene>
         <!--Side Menu Controller-->
         <scene sceneID="Fk5-ft-0rT">
@@ -354,7 +354,7 @@
                                             </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="RnH-ph-BVQ" kind="presentation" identifier="postInfo" id="IDX-rP-9Sf"/>
+                                            <segue destination="RnH-ph-BVQ" kind="custom" identifier="postInfo" customClass="SWRevealViewControllerSeguePushController" id="RP7-Xh-7ML"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -384,6 +384,6 @@
         <image name="app landing page background.png" width="822" height="1407"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="HFC-zK-5g7"/>
+        <segue reference="hrt-cp-q1Q"/>
     </inferredMetricsTieBreakers>
 </document>
