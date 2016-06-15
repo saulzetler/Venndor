@@ -37,6 +37,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if revealViewController() != nil {
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
         itemDescription.delegate = self
         itemName.clearsOnBeginEditing = true
         
