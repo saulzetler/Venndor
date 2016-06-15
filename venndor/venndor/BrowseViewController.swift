@@ -21,8 +21,10 @@ class BrowseViewController: UIViewController {
         let draggableBackground: DraggableViewBackground = DraggableViewBackground(frame: self.view.frame)
         self.view.addSubview(draggableBackground)
         draggableBackground.insertSubview(backgroundImage, atIndex: 0)
+        
         let headerView: HeaderView = HeaderView(frame: self.view.frame)
         headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
+        headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
         
         self.view.addSubview(headerView)
         self.view.bringSubviewToFront(headerView)
@@ -40,9 +42,8 @@ class BrowseViewController: UIViewController {
         miniMatches.addTarget(self, action: "showAlert()", forControlEvents: UIControlEvents.TouchUpInside)
 
         if revealViewController() != nil {
-//            left.target = revealViewController()
-//            left.action = "revealToggle:"
-            revealViewController().rearViewRevealWidth = 150
+            revealViewController().rightViewRevealWidth = 100
+            revealViewController().rearViewRevealWidth = 170
             self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
         }
         
