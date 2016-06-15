@@ -21,6 +21,12 @@ class MyPostsViewController: UIViewController {
         label.textAlignment = NSTextAlignment.Center
         label.text = "My Posts"
         self.view.addSubview(label)
+        
+        let headerView: HeaderView = HeaderView(frame: self.view.frame)
+        headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.view.addSubview(headerView)
+        self.view.bringSubviewToFront(headerView)
     }
     
 }
