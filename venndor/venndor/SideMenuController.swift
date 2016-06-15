@@ -45,7 +45,7 @@ class SideMenuController: UITableViewController {
         profilePic?.clipsToBounds = true
 //        profilePic?.image = UIImage(named: "app landing page background.png")
         
-        browseIconButton.setImage(UIImage(named: "Settings-50"), forState: UIControlState.Normal)
+        browseIconButton.setImage(UIImage(named: "Home-50"), forState: UIControlState.Normal)
         myMatchesIconButton.setImage(UIImage(named: "Shopping Cart Loaded-50"), forState: UIControlState.Normal)
         myPostsIconButton.setImage(UIImage(named: "New Product-50"), forState: UIControlState.Normal)
         notificationsIconButton.setImage(UIImage(named: "Megaphone-50"), forState: UIControlState.Normal)
