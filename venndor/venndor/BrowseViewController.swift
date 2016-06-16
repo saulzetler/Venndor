@@ -11,6 +11,8 @@ import UIKit
 class BrowseViewController: UIViewController {
     
     var miniMatches: UIButton!
+    var menuTransitionManager = MenuTransitionManager()
+    let fadeOut = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,6 +24,8 @@ class BrowseViewController: UIViewController {
         self.view.addSubview(draggableBackground)
         draggableBackground.insertSubview(backgroundImage, atIndex: 0)
         
+        
+        //add the header
         let headerView: HeaderView = HeaderView(frame: self.view.frame)
         headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
         headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -39,7 +43,7 @@ class BrowseViewController: UIViewController {
         miniMatches.setImage(miniMatchesImage, forState: .Normal)
         miniMatches.tag = 1
         self.view.addSubview(miniMatches)
-        miniMatches.addTarget(self, action: "showAlert()", forControlEvents: UIControlEvents.TouchUpInside)
+        miniMatches.addTarget(self, action: "showAlert:", forControlEvents: UIControlEvents.TouchUpInside)
 
         if revealViewController() != nil {
             revealViewController().rightViewRevealWidth = 100
@@ -48,13 +52,34 @@ class BrowseViewController: UIViewController {
         }
         
     }
+    override func viewDidAppear(animated: Bool) {
+        let subViews = self.view.subviews
+        for subView in subViews {
+            if subView == fadeOut {
+                subView.removeFromSuperview()
+            }
+        }
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func showAlert() {
+    func showAlert(sender: UIButton) {
         print("buttonpress")
+        self.performSegueWithIdentifier("MiniMatchSegue", sender: self)
+    }
+    @IBAction func unwindToHome(segue: UIStoryboardSegue) {
+    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "MiniMatchSegue" {
+            let MiniMatchViewController = segue.destinationViewController as! MiniMyMatchesViewController
+            fadeOut.frame = self.view.frame
+            fadeOut.backgroundColor = UIColorFromHex(0xFFFFFF, alpha: 0.6)
+            view.addSubview(fadeOut)
+            MiniMatchViewController.transitioningDelegate = self.menuTransitionManager
+        }
     }
 
     
