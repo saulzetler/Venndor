@@ -18,8 +18,7 @@ private let kBaseInstanceUrl = "http://ec2-52-53-217-174.us-west-1.compute.amazo
 private let kDbServiceName = "venndor/_table"
 private let kContainerName = "item_images"
 
-typealias JSON = [String: AnyObject]
-typealias JSONArray = [JSON]
+
 
 typealias SuccessClosure = (JSON?) -> Void
 typealias ErrorClosure = (NSError) -> Void

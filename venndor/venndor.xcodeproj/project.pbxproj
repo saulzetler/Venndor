@@ -24,6 +24,8 @@
 		63859A131D13347C004F4968 /* NIKApiInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A101D13347C004F4968 /* NIKApiInvoker.swift */; };
 		63859A141D13347C004F4968 /* NIKFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A111D13347C004F4968 /* NIKFile.swift */; };
 		63859A151D13347C004F4968 /* RESTEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A121D13347C004F4968 /* RESTEngine.swift */; };
+		63859A191D133545004F4968 /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A181D133545004F4968 /* User.swift */; };
+		63859A1B1D13354B004F4968 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A1A1D13354B004F4968 /* Item.swift */; };
 		E44C15181D11B5D00006EBAD /* Shopping Cart Loaded-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */; };
 		E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15171D11B5D00006EBAD /* Megaphone-50.png */; };
 		E44C151C1D11B9650006EBAD /* Settings-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C151A1D11B9650006EBAD /* Settings-50.png */; };
@@ -95,6 +97,8 @@
 		63859A101D13347C004F4968 /* NIKApiInvoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKApiInvoker.swift; sourceTree = "<group>"; };
 		63859A111D13347C004F4968 /* NIKFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKFile.swift; sourceTree = "<group>"; };
 		63859A121D13347C004F4968 /* RESTEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTEngine.swift; sourceTree = "<group>"; };
+		63859A181D133545004F4968 /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = User.swift; sourceTree = "<group>"; };
+		63859A1A1D13354B004F4968 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shopping Cart Loaded-50.png"; sourceTree = "<group>"; };
 		E44C15171D11B5D00006EBAD /* Megaphone-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Megaphone-50.png"; sourceTree = "<group>"; };
 		E44C151A1D11B9650006EBAD /* Settings-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-50.png"; sourceTree = "<group>"; };
@@ -196,6 +200,7 @@
 		10ADC9A61D0749700028A999 /* venndor */ = {
 			isa = PBXGroup;
 			children = (
+				63859A171D13353F004F4968 /* Model */,
 				63859A161D13348C004F4968 /* Backend */,
 				E49051A11D09AF6B0045D5C0 /* Views */,
 				105FCAFF1D08A5490073E3AE /* ViewControllers */,
@@ -265,6 +270,15 @@
 				63859A121D13347C004F4968 /* RESTEngine.swift */,
 			);
 			name = Backend;
+			sourceTree = "<group>";
+		};
+		63859A171D13353F004F4968 /* Model */ = {
+			isa = PBXGroup;
+			children = (
+				63859A181D133545004F4968 /* User.swift */,
+				63859A1A1D13354B004F4968 /* Item.swift */,
+			);
+			name = Model;
 			sourceTree = "<group>";
 		};
 		E44C153E1D11E04F0006EBAD /* Icons */ = {
@@ -448,6 +462,7 @@
 				E49051B21D09E5E80045D5C0 /* SideMenuController.swift in Sources */,
 				E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */,
 				E49051A51D09AF7B0045D5C0 /* DraggableView.swift in Sources */,
+				63859A1B1D13354B004F4968 /* Item.swift in Sources */,
 				63859A131D13347C004F4968 /* NIKApiInvoker.swift in Sources */,
 				63859A151D13347C004F4968 /* RESTEngine.swift in Sources */,
 				E44C15291D11C8680006EBAD /* MyPostsViewController.swift in Sources */,
@@ -463,6 +478,7 @@
 				10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */,
 				E44C152F1D11D7410006EBAD /* CategoriesMenuController.swift in Sources */,
 				10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */,
+				63859A191D133545004F4968 /* User.swift in Sources */,
 				E49051B81D0B29F20045D5C0 /* ItemDescriptionView.swift in Sources */,
 				101F43CE1D107A55007E0ADE /* HeaderView.swift in Sources */,
 				E44C15271D11C7150006EBAD /* NotificationsViewController.swift in Sources */,
