@@ -21,6 +21,9 @@
 		10ADC9DF1D074CA40028A999 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DC1D074CA40028A999 /* FBSDKCoreKit.framework */; };
 		10ADC9E01D074CA40028A999 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		10ADC9E11D074CA40028A999 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */; };
+		63859A131D13347C004F4968 /* NIKApiInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A101D13347C004F4968 /* NIKApiInvoker.swift */; };
+		63859A141D13347C004F4968 /* NIKFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A111D13347C004F4968 /* NIKFile.swift */; };
+		63859A151D13347C004F4968 /* RESTEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A121D13347C004F4968 /* RESTEngine.swift */; };
 		E44C15181D11B5D00006EBAD /* Shopping Cart Loaded-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */; };
 		E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15171D11B5D00006EBAD /* Megaphone-50.png */; };
 		E44C151C1D11B9650006EBAD /* Settings-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C151A1D11B9650006EBAD /* Settings-50.png */; };
@@ -89,6 +92,9 @@
 		10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		10ADC9E51D0750CA0028A999 /* venndor-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "venndor-Bridging-Header.h"; sourceTree = "<group>"; };
+		63859A101D13347C004F4968 /* NIKApiInvoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKApiInvoker.swift; sourceTree = "<group>"; };
+		63859A111D13347C004F4968 /* NIKFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKFile.swift; sourceTree = "<group>"; };
+		63859A121D13347C004F4968 /* RESTEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTEngine.swift; sourceTree = "<group>"; };
 		E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shopping Cart Loaded-50.png"; sourceTree = "<group>"; };
 		E44C15171D11B5D00006EBAD /* Megaphone-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Megaphone-50.png"; sourceTree = "<group>"; };
 		E44C151A1D11B9650006EBAD /* Settings-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-50.png"; sourceTree = "<group>"; };
@@ -190,6 +196,7 @@
 		10ADC9A61D0749700028A999 /* venndor */ = {
 			isa = PBXGroup;
 			children = (
+				63859A161D13348C004F4968 /* Backend */,
 				E49051A11D09AF6B0045D5C0 /* Views */,
 				105FCAFF1D08A5490073E3AE /* ViewControllers */,
 				10ADC9E71D088EB70028A999 /* Controllers */,
@@ -248,6 +255,16 @@
 			children = (
 			);
 			name = Controllers;
+			sourceTree = "<group>";
+		};
+		63859A161D13348C004F4968 /* Backend */ = {
+			isa = PBXGroup;
+			children = (
+				63859A101D13347C004F4968 /* NIKApiInvoker.swift */,
+				63859A111D13347C004F4968 /* NIKFile.swift */,
+				63859A121D13347C004F4968 /* RESTEngine.swift */,
+			);
+			name = Backend;
 			sourceTree = "<group>";
 		};
 		E44C153E1D11E04F0006EBAD /* Icons */ = {
@@ -431,10 +448,13 @@
 				E49051B21D09E5E80045D5C0 /* SideMenuController.swift in Sources */,
 				E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */,
 				E49051A51D09AF7B0045D5C0 /* DraggableView.swift in Sources */,
+				63859A131D13347C004F4968 /* NIKApiInvoker.swift in Sources */,
+				63859A151D13347C004F4968 /* RESTEngine.swift in Sources */,
 				E44C15291D11C8680006EBAD /* MyPostsViewController.swift in Sources */,
 				E44C152D1D11CC300006EBAD /* MyMatchesViewController.swift in Sources */,
 				105FCB011D08A5C70073E3AE /* LoginViewController.swift in Sources */,
 				105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */,
+				63859A141D13347C004F4968 /* NIKFile.swift in Sources */,
 				101F43D01D11A203007E0ADE /* TutorialViewController.swift in Sources */,
 				10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */,
 				E44C15231D11C3910006EBAD /* SettingsViewController.swift in Sources */,
