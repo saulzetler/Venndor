@@ -8,13 +8,14 @@
 
 import UIKit
 
-class BrowseViewController: UIViewController {
+class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
     var miniMatches: UIButton!
 
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
         self.view.backgroundColor = UIColorFromHex(0xe6f2ff, alpha: 1)
         let backgroundImage = UIImageView(frame: UIScreen.mainScreen().bounds)
         
@@ -28,6 +29,7 @@ class BrowseViewController: UIViewController {
         
         self.view.addSubview(headerView)
         self.view.bringSubviewToFront(headerView)
+
         
         //MiniMyMatches button at bottom of browse.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -39,7 +41,7 @@ class BrowseViewController: UIViewController {
         miniMatches.setImage(miniMatchesImage, forState: .Normal)
         miniMatches.tag = 1
         self.view.addSubview(miniMatches)
-        miniMatches.addTarget(self, action: "showAlert()", forControlEvents: UIControlEvents.TouchUpInside)
+        miniMatches.addTarget(self, action: "showAlert:", forControlEvents: UIControlEvents.TouchUpInside)
 
         if revealViewController() != nil {
             revealViewController().rightViewRevealWidth = 100
@@ -53,10 +55,11 @@ class BrowseViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func showAlert() {
+    
+    func showAlert(sender: UIButton) {
         print("buttonpress")
     }
-
     
+
 }
 
