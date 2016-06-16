@@ -9,6 +9,9 @@
 /* Begin PBXBuildFile section */
 		101F43CE1D107A55007E0ADE /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F43CD1D107A55007E0ADE /* HeaderView.swift */; };
 		101F43D01D11A203007E0ADE /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F43CF1D11A203007E0ADE /* TutorialViewController.swift */; };
+		101F43D51D1317E3007E0ADE /* MiniMyMatchesViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F43D41D1317E3007E0ADE /* MiniMyMatchesViewController.swift */; };
+		101F43D71D13189F007E0ADE /* TestViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F43D61D13189F007E0ADE /* TestViewController.swift */; };
+		102331941D13267B002C6B3C /* MiniMatchTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */; };
 		105FCB011D08A5C70073E3AE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB001D08A5C70073E3AE /* LoginViewController.swift */; };
 		105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB021D08AB790073E3AE /* TempViewController.swift */; };
 		10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9A71D0749700028A999 /* AppDelegate.swift */; };
@@ -75,6 +78,9 @@
 /* Begin PBXFileReference section */
 		101F43CD1D107A55007E0ADE /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		101F43CF1D11A203007E0ADE /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
+		101F43D41D1317E3007E0ADE /* MiniMyMatchesViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniMyMatchesViewController.swift; sourceTree = "<group>"; };
+		101F43D61D13189F007E0ADE /* TestViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TestViewController.swift; sourceTree = "<group>"; };
+		102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniMatchTransitionManager.swift; sourceTree = "<group>"; };
 		105FCB001D08A5C70073E3AE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		105FCB021D08AB790073E3AE /* TempViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempViewController.swift; sourceTree = "<group>"; };
 		10ADC9A41D0749700028A999 /* venndor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = venndor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -171,6 +177,8 @@
 				E44C15281D11C8680006EBAD /* MyPostsViewController.swift */,
 				E44C152C1D11CC300006EBAD /* MyMatchesViewController.swift */,
 				E44C152E1D11D7410006EBAD /* CategoriesMenuController.swift */,
+				101F43D41D1317E3007E0ADE /* MiniMyMatchesViewController.swift */,
+				101F43D61D13189F007E0ADE /* TestViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -258,6 +266,7 @@
 		10ADC9E71D088EB70028A999 /* Controllers */ = {
 			isa = PBXGroup;
 			children = (
+				102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -459,6 +468,7 @@
 			files = (
 				E49051B61D0B245C0045D5C0 /* PostViewController.swift in Sources */,
 				E49051A61D09AF7B0045D5C0 /* DraggableViewBackground.swift in Sources */,
+				101F43D71D13189F007E0ADE /* TestViewController.swift in Sources */,
 				E49051B21D09E5E80045D5C0 /* SideMenuController.swift in Sources */,
 				E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */,
 				E49051A51D09AF7B0045D5C0 /* DraggableView.swift in Sources */,
@@ -472,6 +482,7 @@
 				63859A141D13347C004F4968 /* NIKFile.swift in Sources */,
 				101F43D01D11A203007E0ADE /* TutorialViewController.swift in Sources */,
 				10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */,
+				101F43D51D1317E3007E0ADE /* MiniMyMatchesViewController.swift in Sources */,
 				E44C15231D11C3910006EBAD /* SettingsViewController.swift in Sources */,
 				E49051A91D09B0250045D5C0 /* BrowseViewController.swift in Sources */,
 				E49051B01D09C0C90045D5C0 /* SWRevealViewController.m in Sources */,
@@ -481,6 +492,7 @@
 				63859A191D133545004F4968 /* User.swift in Sources */,
 				E49051B81D0B29F20045D5C0 /* ItemDescriptionView.swift in Sources */,
 				101F43CE1D107A55007E0ADE /* HeaderView.swift in Sources */,
+				102331941D13267B002C6B3C /* MiniMatchTransitionManager.swift in Sources */,
 				E44C15271D11C7150006EBAD /* NotificationsViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

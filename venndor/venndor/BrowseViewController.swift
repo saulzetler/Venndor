@@ -11,6 +11,8 @@ import UIKit
 class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
     var miniMatches: UIButton!
+    var menuTransitionManager = MenuTransitionManager()
+    let fadeOut = UIView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -23,6 +25,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         self.view.addSubview(draggableBackground)
         draggableBackground.insertSubview(backgroundImage, atIndex: 0)
         
+        
+        //add the header
         let headerView: HeaderView = HeaderView(frame: self.view.frame)
         headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
         headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -50,14 +54,35 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         }
         
     }
+    override func viewDidAppear(animated: Bool) {
+        let subViews = self.view.subviews
+        for subView in subViews {
+            if subView == fadeOut {
+                subView.removeFromSuperview()
+            }
+        }
+    }
+
 
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
+
     func showAlert(sender: UIButton) {
         print("buttonpress")
+        self.performSegueWithIdentifier("MiniMatchSegue", sender: self)
+    }
+    @IBAction func unwindToHome(segue: UIStoryboardSegue) {
+    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "MiniMatchSegue" {
+            let MiniMatchViewController = segue.destinationViewController as! MiniMyMatchesViewController
+            fadeOut.frame = self.view.frame
+            fadeOut.backgroundColor = UIColorFromHex(0xFFFFFF, alpha: 0.6)
+            view.addSubview(fadeOut)
+            MiniMatchViewController.transitioningDelegate = self.menuTransitionManager
+        }
     }
     
 
