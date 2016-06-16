@@ -98,6 +98,82 @@
             </objects>
             <point key="canvasLocation" x="-231" y="1346"/>
         </scene>
+        <!--Tutorial View Controller-->
+        <scene sceneID="83t-Pb-6F1">
+            <objects>
+                <viewController id="DO8-qQ-SBg" customClass="TutorialViewController" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="urZ-za-7lP"/>
+                        <viewControllerLayoutGuide type="bottom" id="Dmk-Ot-XAB"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="p19-4c-GiM">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <scrollView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="Qgc-Ga-rqh">
+                                <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                            </scrollView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="icon" translatesAutoresizingMaskIntoConstraints="NO" id="0q1-al-gDr">
+                                <rect key="frame" x="245" y="120" width="109" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="128" id="N4k-h0-R2d"/>
+                                    <constraint firstAttribute="width" constant="109" id="nM1-4w-OYX"/>
+                                </constraints>
+                            </imageView>
+                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" userInteractionEnabled="NO" contentMode="scaleToFill" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="oFX-bu-fhB">
+                                <rect key="frame" x="200" y="265" width="200" height="100"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="200" id="0fk-9c-gUt"/>
+                                    <constraint firstAttribute="height" constant="100" id="JVM-ht-2oW"/>
+                                </constraints>
+                                <string key="text">text view text test view text text text view text test view text text text view text test view text text v v text view text test view text texttext view text test view text textvvtext view text test view text texttext view text test view text text</string>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
+                            </textView>
+                            <pageControl opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" numberOfPages="4" translatesAutoresizingMaskIntoConstraints="NO" id="2NC-a3-CLT">
+                                <rect key="frame" x="265" y="408" width="70" height="37"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="37" id="tUA-1r-TYp"/>
+                                    <constraint firstAttribute="width" constant="70" id="zbO-sr-Bdm"/>
+                                </constraints>
+                            </pageControl>
+                            <button opaque="NO" alpha="0.0" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="GUo-Lx-WJ9">
+                                <rect key="frame" x="225" y="455" width="150" height="60"/>
+                                <color key="backgroundColor" red="1" green="0.54256794590000001" blue="0.001330525038" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="150" id="Q5f-S1-91C"/>
+                                    <constraint firstAttribute="height" constant="60" id="nDm-ja-b4H"/>
+                                </constraints>
+                                <state key="normal" title="Button"/>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="GUo-Lx-WJ9" firstAttribute="centerX" secondItem="p19-4c-GiM" secondAttribute="centerX" id="0bS-LN-7TU"/>
+                            <constraint firstAttribute="trailing" secondItem="Qgc-Ga-rqh" secondAttribute="trailing" id="1kZ-nT-eLY"/>
+                            <constraint firstItem="0q1-al-gDr" firstAttribute="top" secondItem="urZ-za-7lP" secondAttribute="bottom" constant="100" id="5QF-hT-c3b"/>
+                            <constraint firstItem="oFX-bu-fhB" firstAttribute="centerX" secondItem="p19-4c-GiM" secondAttribute="centerX" id="WVY-hb-d4z"/>
+                            <constraint firstItem="Dmk-Ot-XAB" firstAttribute="top" secondItem="Qgc-Ga-rqh" secondAttribute="bottom" id="Ygq-Yz-hoG"/>
+                            <constraint firstItem="0q1-al-gDr" firstAttribute="centerX" secondItem="p19-4c-GiM" secondAttribute="centerX" id="bGQ-zT-iAQ"/>
+                            <constraint firstItem="oFX-bu-fhB" firstAttribute="top" secondItem="p19-4c-GiM" secondAttribute="topMargin" constant="265" id="exJ-c0-fTJ"/>
+                            <constraint firstItem="2NC-a3-CLT" firstAttribute="centerX" secondItem="p19-4c-GiM" secondAttribute="centerX" id="pnS-dX-zJJ"/>
+                            <constraint firstItem="GUo-Lx-WJ9" firstAttribute="top" secondItem="oFX-bu-fhB" secondAttribute="bottom" constant="90" id="suw-H0-5FB"/>
+                            <constraint firstItem="Qgc-Ga-rqh" firstAttribute="top" secondItem="urZ-za-7lP" secondAttribute="bottom" constant="-20" id="wZA-bp-KYs"/>
+                            <constraint firstItem="Qgc-Ga-rqh" firstAttribute="leading" secondItem="p19-4c-GiM" secondAttribute="leading" id="wZq-Qn-3S6"/>
+                            <constraint firstItem="2NC-a3-CLT" firstAttribute="top" secondItem="0q1-al-gDr" secondAttribute="bottom" constant="160" id="xJe-Gg-ux8"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="pageControl" destination="2NC-a3-CLT" id="Wbw-Fh-2ag"/>
+                        <outlet property="scrollView" destination="Qgc-Ga-rqh" id="oat-r4-AOa"/>
+                        <outlet property="startButton" destination="GUo-Lx-WJ9" id="UfE-8h-jgv"/>
+                        <outlet property="textView" destination="oFX-bu-fhB" id="KX3-NW-5ba"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="p5B-FF-z40" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="317" y="-499"/>
+        </scene>
         <!--Reveal View Controller-->
         <scene sceneID="pX2-bc-5Qm">
             <objects>
@@ -287,6 +363,7 @@
     </scenes>
     <resources>
         <image name="app landing page background.png" width="822" height="1407"/>
+        <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="HFC-zK-5g7"/>
