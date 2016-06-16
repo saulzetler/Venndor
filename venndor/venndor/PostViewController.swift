@@ -27,9 +27,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.performSegueWithIdentifier("backToBrowse", sender: self)
     }
     
-    
-    
-    
     @IBAction func imageTapped(sender: UITapGestureRecognizer) {
         let myPickerController = UIImagePickerController()
         myPickerController.delegate = self;
@@ -40,8 +37,20 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        if revealViewController() != nil {
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+        
         itemDescription.delegate = self
         itemName.clearsOnBeginEditing = true
+        
+        let headerView: HeaderView = HeaderView(frame: self.view.frame)
+        headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.view.addSubview(headerView)
+        self.view.bringSubviewToFront(headerView)
         
     }
     

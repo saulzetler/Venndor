@@ -78,8 +78,10 @@ class DraggableView: UIView {
             let rotationAngle = ROTATION_ANGLE * rotationStrength
             let scale = max(1 - fabsf(rotationStrength) / SCALE_STRENGTH, SCALE_MAX)
 
-            self.center = CGPointMake(self.originPoint.x + CGFloat(xFromCenter), self.originPoint.y + CGFloat(yFromCenter))
+//            self.center = CGPointMake(self.originPoint.x + CGFloat(xFromCenter), self.originPoint.y + CGFloat(yFromCenter))
 
+            self.center = CGPointMake(self.originPoint.x + CGFloat(xFromCenter), self.originPoint.y)
+            
             let transform = CGAffineTransformMakeRotation(CGFloat(rotationAngle))
             let scaleTransform = CGAffineTransformScale(transform, CGFloat(scale), CGFloat(scale))
             self.transform = scaleTransform
@@ -108,17 +110,41 @@ class DraggableView: UIView {
 
     func afterSwipeAction() -> Void {
         let floatXFromCenter = Float(xFromCenter)
+        let floatYFromCenter = Float(yFromCenter)
         if floatXFromCenter > ACTION_MARGIN {
             self.rightAction()
         } else if floatXFromCenter < -ACTION_MARGIN {
             self.leftAction()
-        } else {
-            UIView.animateWithDuration(0.3, animations: {() -> Void in
-                self.center = self.originPoint
-                self.transform = CGAffineTransformMakeRotation(0)
-                self.overlayView.alpha = 0
-            })
         }
+        else if floatYFromCenter < -ACTION_MARGIN {
+            self.upAction()
+        }
+        else if floatYFromCenter > ACTION_MARGIN {
+            self.downAction()
+        }
+        else {
+            resetView()
+        }
+    }
+    
+    func resetView() {
+        UIView.animateWithDuration(0.3, animations: {() -> Void in
+            self.center = self.originPoint
+            self.transform = CGAffineTransformMakeRotation(0)
+            self.overlayView.alpha = 0
+        })
+    }
+    
+    func upAction() -> Void {
+        //use this function to go to next picture
+        print("swiped up")
+        resetView()
+    }
+    
+    func downAction() -> Void {
+        //use this function to go to previous picture
+        print("swiped down")
+        resetView()
     }
     
     func rightAction() -> Void {
