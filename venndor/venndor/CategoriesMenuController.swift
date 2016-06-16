@@ -30,6 +30,16 @@ class CategoriesMenuController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        allCell.selectionStyle = UITableViewCellSelectionStyle.None
+        furnitureCell.selectionStyle = UITableViewCellSelectionStyle.None
+        householdCell.selectionStyle = UITableViewCellSelectionStyle.None
+        kitchenCell.selectionStyle = UITableViewCellSelectionStyle.None
+        electronicsCell.selectionStyle = UITableViewCellSelectionStyle.None
+        booksCell.selectionStyle = UITableViewCellSelectionStyle.None
+        clothingCell.selectionStyle = UITableViewCellSelectionStyle.None
+        otherCell.selectionStyle = UITableViewCellSelectionStyle.None
+        
+        
         let allButton = UIButton(frame: CGRect(x: 80, y: 0, width: 50, height: 50))
         allButton.addTarget(self, action: "toggleSelected:", forControlEvents: UIControlEvents.TouchUpInside)
         let origAll = UIImage(named: "Home-50")

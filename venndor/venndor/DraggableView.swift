@@ -57,6 +57,7 @@ class DraggableView: UIView {
 
         xFromCenter = 0
         yFromCenter = 0
+    
     }
 
     func setupView() -> Void {
