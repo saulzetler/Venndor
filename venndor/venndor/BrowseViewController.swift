@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowseViewController: UIViewController {
+class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
     var miniMatches: UIButton!
     var menuTransitionManager = MenuTransitionManager()
@@ -17,6 +17,7 @@ class BrowseViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        
         self.view.backgroundColor = UIColorFromHex(0xe6f2ff, alpha: 1)
         let backgroundImage = UIImageView(frame: UIScreen.mainScreen().bounds)
         
@@ -32,6 +33,7 @@ class BrowseViewController: UIViewController {
         
         self.view.addSubview(headerView)
         self.view.bringSubviewToFront(headerView)
+
         
         //MiniMyMatches button at bottom of browse.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -66,6 +68,7 @@ class BrowseViewController: UIViewController {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+
     func showAlert(sender: UIButton) {
         print("buttonpress")
         self.performSegueWithIdentifier("MiniMatchSegue", sender: self)
@@ -81,7 +84,7 @@ class BrowseViewController: UIViewController {
             MiniMatchViewController.transitioningDelegate = self.menuTransitionManager
         }
     }
-
     
+
 }
 
