@@ -11,72 +11,58 @@ import UIKit
 
 class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
     
-    let itemDescription: UITextView!
-    let itemName: UITextField!
-    let imageView: UIImageView!
-    let postButton: UIButton!
+    
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    var itemDescription: UITextView!
+    var itemName: UITextField!
+    var imageView: UIImageView!
+    var postButton: UIButton!
+    
+    
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if revealViewController() != nil {
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
-        
-        itemDescription.delegate = self
+        setupItemName()
+        setupItemDescription()
+        sideMenuGestureSetup()
+        addHeader()
+    }
+    
+    func setupItemName() {
+        itemName = UITextField(frame: CGRectMake(10, 80, self.screenSize.width*0.95, 30))
+        itemName.text = "Name"
         itemName.clearsOnBeginEditing = true
-        
-        let headerView: HeaderView = HeaderView(frame: self.view.frame)
-        headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        self.view.addSubview(headerView)
-        self.view.bringSubviewToFront(headerView)
-        
+        self.view.addSubview(itemName)
+        let boarderColor : UIColor = UIColor.blackColor()
+        itemName.layer.borderColor = boarderColor.CGColor
+        itemName.layer.borderWidth = 2.0
+        itemName.layer.cornerRadius = 8.0
+        itemName.layer.masksToBounds = true
+    }
+    
+    func setupItemDescription() {
+        itemDescription = UITextView(frame: CGRectMake(10, 120, self.screenSize.width*0.95, 100))
+        itemDescription.text = "Description"
+        itemDescription.delegate = self
+        self.view.addSubview(itemDescription)
+        let boarderColor : UIColor = UIColor.blackColor()
+        itemDescription.layer.borderColor = boarderColor.CGColor
+        itemDescription.layer.borderWidth = 2.0
+        itemDescription.layer.cornerRadius = 8.0
+        itemDescription.layer.masksToBounds = true
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
         itemDescription.text = ""
     }
     
-    
-    
-    @IBAction func cancelPost(sender: UIButton) {
-        self.performSegueWithIdentifier("backToBrowse", sender: self)
-    }
-    
-    @IBAction func postToServer(sender: UIButton) {
-        self.performSegueWithIdentifier("backToBrowse", sender: self)
-    }
-    
-    @IBAction func imageTapped(sender: UITapGestureRecognizer) {
+    func imageTapped(sender: UITapGestureRecognizer) {
         let myPickerController = UIImagePickerController()
         myPickerController.delegate = self;
         myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         
         self.presentViewController(myPickerController, animated: true, completion: nil)
     }
-    
-    
-    
-    
-    @IBAction func postButtonTapped(sender: AnyObject) {
-        
-    }
-    
-    
-    /*
-    
-    @IBAction func selectPhotoButtonTapped(sender: AnyObject) {
-        let myPickerController = UIImagePickerController()
-        myPickerController.delegate = self;
-        myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-       
-        self.presentViewController(myPickerController, animated: true, completion: nil)
-        
-    }
-
-    */
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
