@@ -43,7 +43,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         miniMatches.layer.cornerRadius = 0.5 * miniMatches.bounds.size.width
         miniMatches.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
         miniMatches.setImage(miniMatchesImage, forState: .Normal)
-        miniMatches.tag = 1
         self.view.addSubview(miniMatches)
         miniMatches.addTarget(self, action: "showAlert:", forControlEvents: UIControlEvents.TouchUpInside)
 
@@ -68,7 +67,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-
     func showAlert(sender: UIButton) {
         print("buttonpress")
         self.performSegueWithIdentifier("MiniMatchSegue", sender: self)
