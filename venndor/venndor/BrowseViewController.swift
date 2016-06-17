@@ -33,18 +33,14 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         //MiniMyMatches button at bottom of browse.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-        let miniMatchesImage = UIImage(named: "ic_menu_white.png");
-        miniMatches = UIButton(type: UIButtonType.Custom) as UIButton
-        miniMatches.frame = CGRectMake(screenSize.width*0.435, screenSize.height*0.91, screenSize.width*0.13, screenSize.width*0.13)
-        miniMatches.layer.cornerRadius = 0.5 * miniMatches.bounds.size.width
-        miniMatches.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
-        miniMatches.setImage(miniMatchesImage, forState: .Normal)
+        let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
+        miniMatches = makeButton("ic_menu_white.png", frame: buttonSize, target: "showAlert:", tinted: false, circle: true, backgroundColor: 0x3498db, backgroundAlpha: 1)
         self.view.addSubview(miniMatches)
-        miniMatches.addTarget(self, action: "showAlert:", forControlEvents: UIControlEvents.TouchUpInside)
+
 
         if revealViewController() != nil {
             revealViewController().rightViewRevealWidth = 100
-            revealViewController().rearViewRevealWidth = 170
+            revealViewController().rearViewRevealWidth = 280
             self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
         }
         
