@@ -11,29 +11,10 @@ import UIKit
 
 class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
     
-    
-    
-    @IBOutlet weak var itemDescription: UITextView!
-    
-    @IBOutlet weak var itemName: UITextField!
-    
-    @IBOutlet weak var firstImageView: UIImageView!
-    
-    @IBAction func cancelPost(sender: UIButton) {
-        self.performSegueWithIdentifier("backToBrowse", sender: self)
-    }
-    
-    @IBAction func postToServer(sender: UIButton) {
-        self.performSegueWithIdentifier("backToBrowse", sender: self)
-    }
-    
-    @IBAction func imageTapped(sender: UITapGestureRecognizer) {
-        let myPickerController = UIImagePickerController()
-        myPickerController.delegate = self;
-        myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        
-        self.presentViewController(myPickerController, animated: true, completion: nil)
-    }
+    let itemDescription: UITextView!
+    let itemName: UITextField!
+    let imageView: UIImageView!
+    let postButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -54,16 +35,29 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
-    }
-    
-//    func
-    
     func textViewDidBeginEditing(textView: UITextView) {
         itemDescription.text = ""
     }
+    
+    
+    
+    @IBAction func cancelPost(sender: UIButton) {
+        self.performSegueWithIdentifier("backToBrowse", sender: self)
+    }
+    
+    @IBAction func postToServer(sender: UIButton) {
+        self.performSegueWithIdentifier("backToBrowse", sender: self)
+    }
+    
+    @IBAction func imageTapped(sender: UITapGestureRecognizer) {
+        let myPickerController = UIImagePickerController()
+        myPickerController.delegate = self;
+        myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
+        
+        self.presentViewController(myPickerController, animated: true, completion: nil)
+    }
+    
+    
     
     
     @IBAction func postButtonTapped(sender: AnyObject) {
@@ -86,7 +80,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        firstImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        imageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
