@@ -604,9 +604,13 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="122.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                             <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rKZ-Xu-MdT">
-                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="108.5"/>
+                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rKZ-Xu-MdT">
+                                                    <rect key="frame" x="-12" y="34.5" width="300" height="100"/>
                                                     <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                                    <constraints>
+                                                        <constraint firstAttribute="width" constant="300" id="iIe-g5-GSK"/>
+                                                        <constraint firstAttribute="height" constant="100" id="yNc-HV-H0a"/>
+                                                    </constraints>
                                                     <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                                     <state key="normal" title="SELL"/>
                                                     <connections>
@@ -614,6 +618,10 @@
                                                     </connections>
                                                 </button>
                                             </subviews>
+                                            <constraints>
+                                                <constraint firstAttribute="bottomMargin" secondItem="rKZ-Xu-MdT" secondAttribute="bottom" constant="-20" id="1d8-Ja-4XW"/>
+                                                <constraint firstItem="rKZ-Xu-MdT" firstAttribute="leading" secondItem="lYu-lh-IpD" secondAttribute="leadingMargin" constant="-20" id="wsJ-9l-kBO"/>
+                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="RnH-ph-BVQ" kind="custom" identifier="postInfo" customClass="SWRevealViewControllerSeguePushController" id="RP7-Xh-7ML"/>
@@ -648,5 +656,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="dlm-GT-Iep"/>
         <segue reference="hrt-cp-q1Q"/>
+        <segue reference="fH8-HC-wrA"/>
+        <segue reference="HFC-zK-5g7"/>
     </inferredMetricsTieBreakers>
 </document>
