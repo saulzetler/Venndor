@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
+class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate {
     
     
     let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -32,9 +32,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func setupItemName() {
         itemName = UITextField(frame: CGRectMake(10, 80, self.screenSize.width*0.95, 30))
         itemName.text = "Name"
+        itemName.delegate = self
         itemName.clearsOnBeginEditing = true
         self.view.addSubview(itemName)
         createBoarder(itemName)
+        itemName.returnKeyType = .Done
+
     }
     
     func setupItemDescription() {
@@ -43,10 +46,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemDescription.delegate = self
         self.view.addSubview(itemDescription)
         createBoarder(itemDescription)
-        
+        itemDescription.returnKeyType = .Done
     }
-    
-    
     
     func setupImageViews() {
         imageView1 = UIImageView(frame: CGRectMake(10, 230, self.screenSize.width*0.3, self.screenSize.width*0.3))
@@ -73,37 +74,44 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         view.layer.masksToBounds = true
     }
     
+//    func textViewDidBeginEditing(textView: UITextView) {
+//        itemDescription.text = ""
+//    }
+    
+//    func textViewDidEndEditing(textView: UITextView) {
+//        print("end editing")
+//        
+//    }
+    
+//    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+//        print("Should end Editing")
+//        textView.endEditing(true)
+//        return true
+//    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {        
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
+    
     func textViewDidBeginEditing(textView: UITextView) {
-        itemDescription.text = ""
+        textView.text = ""
     }
     
     func textViewDidEndEditing(textView: UITextView) {
-        print("end editing")
-        textView.endEditing(true)
+        textView.resignFirstResponder()
     }
     
-    func textFieldShouldReturn(textField: UITextField!) -> Bool {
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
         textField.resignFirstResponder()
+        self.view.endEditing(true)
         return true
     }
     
     func image1Tapped(sender: UIImageView) {
-        let myPickerController = UIImagePickerController()
-        myPickerController.delegate = self;
-        myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        
-        self.presentViewController(myPickerController, animated: true, completion: nil)
-    }
-    
-    func image2Tapped(sender: UIImageView) {
-        let myPickerController = UIImagePickerController()
-        myPickerController.delegate = self;
-        myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        
-        self.presentViewController(myPickerController, animated: true, completion: nil)
-    }
-    
-    func image3Tapped(sender: UIImageView) {
         let myPickerController = UIImagePickerController()
         myPickerController.delegate = self;
         myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
