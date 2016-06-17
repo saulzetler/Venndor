@@ -27,6 +27,7 @@ class HeaderView: UIView, UITextFieldDelegate {
     let categoryImage = UIImage(named: "ic_dashboard_white.png")
     let cancelImage = UIImage(named: "ic_clear_white.png")
     let cancelButton = UIButton(type: UIButtonType.Custom) as UIButton
+    var sampleTextField: UITextField!
     
     
     required init?(coder aDecoder: NSCoder) {
@@ -38,6 +39,7 @@ class HeaderView: UIView, UITextFieldDelegate {
         self.setUpViewText()
         self.setUpViewMenu()
         self.setUpViewCategory()
+        self.setUpViewCancel()
     }
     
     func setUpViewFrame() -> Void {
@@ -49,7 +51,7 @@ class HeaderView: UIView, UITextFieldDelegate {
     
     func setUpViewText() -> Void {
         //setup textfield
-        let sampleTextField = UITextField(frame: CGRectMake(screenSize.width*0.25, 24, screenSize.width*0.5, 30))
+        sampleTextField = UITextField(frame: CGRectMake(screenSize.width*0.25, 24, screenSize.width*0.5, 30))
         sampleTextField.backgroundColor = UIColorFromHex(0x123456, alpha: 0.05)
         sampleTextField.attributedPlaceholder = NSAttributedString(string:"Venndor", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
         sampleTextField.font = UIFont.systemFontOfSize(17)
@@ -78,7 +80,6 @@ class HeaderView: UIView, UITextFieldDelegate {
         menuButton   = UIButton(type: UIButtonType.Custom) as UIButton
         menuButton.frame = CGRectMake(screenSize.width*0, 24, screenSize.width*0.2, 30)
         menuButton.setImage(menuImage, forState: .Normal)
-        menuButton.tag = 1
         self.addSubview(menuButton)
     }
     
@@ -88,7 +89,6 @@ class HeaderView: UIView, UITextFieldDelegate {
         categoryButton = UIButton(type: UIButtonType.Custom) as UIButton
         categoryButton.frame = CGRectMake(screenSize.width*0.8, 24, screenSize.width*0.2, 30)
         categoryButton.setImage(categoryImage, forState: .Normal)
-        categoryButton.tag = 2
         self.addSubview(categoryButton)
         
     }
@@ -96,8 +96,8 @@ class HeaderView: UIView, UITextFieldDelegate {
     func setUpViewCancel() -> Void {
         cancelButton.frame = CGRectMake(screenSize.width*0.8, 24, screenSize.width*0.2, 30)
         cancelButton.setImage(cancelImage, forState: .Normal)
-        cancelButton.tag = 3
         cancelButton.addTarget(self, action: "buttonPress:", forControlEvents: .TouchUpInside)
+        cancelButton.hidden = true
         self.addSubview(cancelButton)
     }
 
@@ -108,7 +108,10 @@ class HeaderView: UIView, UITextFieldDelegate {
         let subViews = self.subviews
         for subView in subViews {
             if subView == categoryButton || subView == menuButton {
-                subView.removeFromSuperview()
+                subView.hidden = true
+            }
+            else if subView == cancelButton{
+                subView.hidden = false
             }
             else {
                 UIView.animateWithDuration(0.5, animations: {
@@ -117,7 +120,7 @@ class HeaderView: UIView, UITextFieldDelegate {
                 if let textField = subView as? UITextField {
                     textField.attributedPlaceholder =  NSAttributedString(string:"Search", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
                 }
-                self.setUpViewCancel()
+
             }
         }
     }
@@ -125,12 +128,23 @@ class HeaderView: UIView, UITextFieldDelegate {
     func textFieldDidEndEditing(textField: UITextField) {
         print("TextField did end editing method called")
         
-        UIView.animateWithDuration(0.5, animations: {
-            textField.frame = CGRect(x: self.screenSize.width*0.25, y: 24, width: self.screenSize.width*0.5, height: 30);
-            self.addSubview(self.menuButton);
-            self.addSubview(self.categoryButton);
-        })
-        cancelButton.removeFromSuperview()
+        let subViews = self.subviews
+        for subView in subViews {
+            if subView == categoryButton || subView == menuButton {
+                subView.hidden = false
+            }
+            else if subView == cancelButton {
+                subView.hidden = true
+            }
+            else {
+                UIView.animateWithDuration(0.2, animations: {
+                    subView.frame = CGRect(x: self.screenSize.width*0.25,y: 24,width: self.screenSize.width*0.5,height: 30)
+                })
+                if let textField = subView as? UITextField {
+                    textField.attributedPlaceholder =  NSAttributedString(string:"Venndor", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
+                }
+            }
+        }
     }
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
@@ -161,13 +175,9 @@ class HeaderView: UIView, UITextFieldDelegate {
     
     // MARK: Textfield Delegates <---
     func buttonPress(sender: UIButton!) {
-        let subViews = self.subviews
-        for subView in subViews {
-            subView.removeFromSuperview()
-        }
-        self.setUpViewText()
-        self.setUpViewMenu()
-        self.setUpViewCategory()
+        sampleTextField.text = ""
+        self.endEditing(true)
+        textFieldDidEndEditing(sampleTextField)
     }
 
 }
