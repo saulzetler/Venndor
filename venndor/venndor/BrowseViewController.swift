@@ -13,6 +13,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var miniMatches: UIButton!
     var menuTransitionManager = MenuTransitionManager()
     let fadeOut = UIView()
+    var headerView: HeaderView!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -27,12 +28,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         
         //add the header
-        let headerView: HeaderView = HeaderView(frame: self.view.frame)
-        headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
-        headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        self.view.addSubview(headerView)
-        self.view.bringSubviewToFront(headerView)
+        headerView = HeaderView(frame: self.view.frame)
 
         
         //MiniMyMatches button at bottom of browse.
@@ -60,6 +56,11 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 subView.removeFromSuperview()
             }
         }
+        headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
+        headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.view.addSubview(headerView)
+        self.view.bringSubviewToFront(headerView)
     }
 
 
