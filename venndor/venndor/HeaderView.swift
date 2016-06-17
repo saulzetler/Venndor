@@ -23,6 +23,11 @@ class HeaderView: UIView, UITextFieldDelegate {
     var menuButton: UIButton!
     var categoryButton: UIButton!
     let screenSize: CGRect = UIScreen.mainScreen().bounds
+    let menuImage = UIImage(named: "ic_menu_white.png")
+    let categoryImage = UIImage(named: "ic_dashboard_white.png")
+    let cancelImage = UIImage(named: "ic_clear_white.png")
+    let cancelButton = UIButton(type: UIButtonType.Custom) as UIButton
+    
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -67,19 +72,19 @@ class HeaderView: UIView, UITextFieldDelegate {
         imageView.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
         self.addSubview(imageView)
     }
+    
     func setUpViewMenu() -> Void {
         //setup menu button
-        let menuImage = UIImage(named: "ic_menu_white.png");
         menuButton   = UIButton(type: UIButtonType.Custom) as UIButton
         menuButton.frame = CGRectMake(screenSize.width*0, 24, screenSize.width*0.2, 30)
         menuButton.setImage(menuImage, forState: .Normal)
         menuButton.tag = 1
         self.addSubview(menuButton)
     }
+    
     func setUpViewCategory() -> Void {
     
         //setup category button
-        let categoryImage = UIImage(named: "ic_dashboard_white.png");
         categoryButton = UIButton(type: UIButtonType.Custom) as UIButton
         categoryButton.frame = CGRectMake(screenSize.width*0.8, 24, screenSize.width*0.2, 30)
         categoryButton.setImage(categoryImage, forState: .Normal)
@@ -87,9 +92,8 @@ class HeaderView: UIView, UITextFieldDelegate {
         self.addSubview(categoryButton)
         
     }
+    
     func setUpViewCancel() -> Void {
-        let cancelImage = UIImage(named: "ic_clear_white.png");
-        let cancelButton = UIButton(type: UIButtonType.Custom) as UIButton
         cancelButton.frame = CGRectMake(screenSize.width*0.8, 24, screenSize.width*0.2, 30)
         cancelButton.setImage(cancelImage, forState: .Normal)
         cancelButton.tag = 3
@@ -120,6 +124,13 @@ class HeaderView: UIView, UITextFieldDelegate {
     
     func textFieldDidEndEditing(textField: UITextField) {
         print("TextField did end editing method called")
+        
+        UIView.animateWithDuration(0.5, animations: {
+            textField.frame = CGRect(x: self.screenSize.width*0.25, y: 24, width: self.screenSize.width*0.5, height: 30);
+            self.addSubview(self.menuButton);
+            self.addSubview(self.categoryButton);
+        })
+        cancelButton.removeFromSuperview()
     }
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
