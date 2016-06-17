@@ -35,9 +35,28 @@ extension UIViewController {
         
         return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
     }
+    
+    func addHeader() {
+        let headerView: HeaderView = HeaderView(frame: self.view.frame)
+        headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.view.addSubview(headerView)
+        self.view.bringSubviewToFront(headerView)
+    }
+    
+    func sideMenuGestureSetup() {
+        if revealViewController() != nil {
+            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+        }
+    }
+    
 }
 
 class ViewController: UIViewController {
 
+    
+    
 }
 
