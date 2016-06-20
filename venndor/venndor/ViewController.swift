@@ -32,7 +32,7 @@ extension UIViewController {
         let button = UIButton(frame: frame)
         button.addTarget(self, action: target, forControlEvents: .TouchUpInside)
         button.setTitle(text, forState: .Normal)
-        button.setTitleColor(UIColor.blackColor(), forState: .Normal)
+        button.setTitleColor(UIColorFromHex(0x3498db, alpha: 1), forState: .Normal)
         return button
     }
     

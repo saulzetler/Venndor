@@ -11,6 +11,7 @@ import Foundation
 
 class CategoriesMenuController: UITableViewController {
     
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     @IBOutlet var table: UITableView!
     
@@ -59,7 +60,7 @@ class CategoriesMenuController: UITableViewController {
     }
     
     func setupButtons() {
-        let buttonSize = CGRect(x: 80, y: 0, width: 50, height: 50)
+        let buttonSize = CGRect(x: screenSize.width * 0.25, y: screenSize.height * 0.007, width: screenSize.width * 0.15, height: screenSize.width * 0.15)
         
         allButton = makeImageButton("Home-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         allCell.addSubview(allButton)
