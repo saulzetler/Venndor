@@ -8,7 +8,7 @@
 
 extension UIViewController {
     
-    func makeButton(imageName: String, frame: CGRect, target: Selector, tinted: Bool, circle: Bool, backgroundColor: UInt32, backgroundAlpha: Double) -> UIButton {
+    func makeImageButton(imageName: String, frame: CGRect, target: Selector, tinted: Bool, circle: Bool, backgroundColor: UInt32, backgroundAlpha: Double) -> UIButton {
         let button = UIButton(frame: frame)
         button.addTarget(self, action: target, forControlEvents: UIControlEvents.TouchUpInside)
         if imageName != "" {
@@ -25,6 +25,14 @@ extension UIViewController {
         if backgroundAlpha != 0 {
             button.backgroundColor = UIColorFromHex(backgroundColor, alpha: backgroundAlpha)
         }
+        return button
+    }
+    
+    func makeTextButton(text: String, frame: CGRect, target: Selector) -> UIButton {
+        let button = UIButton(frame: frame)
+        button.addTarget(self, action: target, forControlEvents: .TouchUpInside)
+        button.setTitle(text, forState: .Normal)
+        button.setTitleColor(UIColor.blackColor(), forState: .Normal)
         return button
     }
     
