@@ -11,6 +11,9 @@ import Foundation
 
 class CategoriesMenuController: UITableViewController {
     
+    
+    @IBOutlet var table: UITableView!
+    
     @IBOutlet weak var allCell: UITableViewCell!
     
     @IBOutlet weak var furnitureCell: UITableViewCell!
@@ -27,9 +30,24 @@ class CategoriesMenuController: UITableViewController {
     
     @IBOutlet weak var otherCell: UITableViewCell!
     
+    var allButton: UIButton!
+    var furnitureButton: UIButton!
+    var householdButton: UIButton!
+    var kitchenButton: UIButton!
+    var electronicsButton: UIButton!
+    var booksButton: UIButton!
+    var clothingButton: UIButton!
+    var otherButton: UIButton!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        setupCells()
+        setupButtons()
+        
+    }
+    
+    func setupCells() {
         allCell.selectionStyle = UITableViewCellSelectionStyle.None
         furnitureCell.selectionStyle = UITableViewCellSelectionStyle.None
         householdCell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -38,53 +56,48 @@ class CategoriesMenuController: UITableViewController {
         booksCell.selectionStyle = UITableViewCellSelectionStyle.None
         clothingCell.selectionStyle = UITableViewCellSelectionStyle.None
         otherCell.selectionStyle = UITableViewCellSelectionStyle.None
-        
+    }
+    
+    func setupButtons() {
         let buttonSize = CGRect(x: 80, y: 0, width: 50, height: 50)
         
-        let allButton = makeButton("Home-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        allButton = makeImageButton("Home-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         allCell.addSubview(allButton)
         
-        let furnitureButton = makeButton("Chair-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        furnitureButton = makeImageButton("Chair-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         furnitureCell.addSubview(furnitureButton)
         
-        let householdButton = makeButton("Lamp-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        householdButton = makeImageButton("Lamp-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         householdCell.addSubview(householdButton)
         
-        let kitchenButton = makeButton("Kitchen-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        kitchenButton = makeImageButton("Kitchen-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         kitchenCell.addSubview(kitchenButton)
         
-        let electronicsButton = makeButton("Multiple Devices-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        electronicsButton = makeImageButton("Multiple Devices-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         electronicsCell.addSubview(electronicsButton)
         
-        let booksButton = makeButton("Generic Book File Type-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        booksButton = makeImageButton("Generic Book File Type-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         booksCell.addSubview(booksButton)
         
-        let clothingButton = makeButton("Clothes-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        clothingButton = makeImageButton("Clothes-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         clothingCell.addSubview(clothingButton)
         
-        let otherButton = makeButton("More-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        otherButton = makeImageButton("More-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         otherCell.addSubview(otherButton)
-    
         
     }
     
     func toggleSelected(sender: UIButton) {
+        allButton.selected = false
+        furnitureButton.selected = false
+        householdButton.selected = false
+        kitchenButton.selected = false
+        electronicsButton.selected = false
+        booksButton.selected = false
+        clothingButton.selected = false
+        otherButton.selected = false
         
-//        for cell in self.tableView.visibleCells as [UIView] {
-//            if let btn = cell.subviews as? UIButton{
-//                btn.selected = false
-//                print("called")
-//            }
-//        }
-        
-        if sender.selected == false {
-            sender.selected = true
-        }
-        else {
-            sender.selected = false
-        }
-        
-        
+        sender.selected = true
     }
     
 }
