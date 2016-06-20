@@ -18,6 +18,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var imageView1: UIImageView!
     var imageView2: UIImageView!
     var imageView3: UIImageView!
+    var currentImgView: UIImageView!
     var postButton: UIButton!
     
     override func viewDidLoad() {
@@ -30,7 +31,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setupItemName() {
-        itemName = UITextField(frame: CGRectMake(10, 80, self.screenSize.width*0.95, 30))
+        itemName = ItemNameTextField(frame: CGRectMake(10, 80, self.screenSize.width*0.95, 30))
         itemName.text = "Name"
         itemName.delegate = self
         itemName.clearsOnBeginEditing = true
@@ -50,20 +51,24 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setupImageViews() {
-        imageView1 = UIImageView(frame: CGRectMake(10, 230, self.screenSize.width*0.3, self.screenSize.width*0.3))
-        imageView2 = UIImageView(frame: CGRectMake(145, 230, self.screenSize.width*0.3, self.screenSize.width*0.3))
-        imageView3 = UIImageView(frame: CGRectMake(280, 230, self.screenSize.width*0.3, self.screenSize.width*0.3))
+        imageView1 = UIImageView(frame: CGRectMake(screenSize.width*0.03, screenSize.height*0.4, screenSize.width*0.3, screenSize.width*0.3))
+        imageView2 = UIImageView(frame: CGRectMake(screenSize.width*0.35, screenSize.height*0.4, screenSize.width*0.3, screenSize.width*0.3))
+        imageView3 = UIImageView(frame: CGRectMake(screenSize.width*0.67, screenSize.height*0.4, screenSize.width*0.3, screenSize.width*0.3))
         self.view.addSubview(imageView1)
         self.view.addSubview(imageView2)
         self.view.addSubview(imageView3)
         createBoarder(imageView1)
         createBoarder(imageView2)
         createBoarder(imageView3)
-        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("image1Tapped:"))
+        let tapGestureRecognizer1 = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
+        let tapGestureRecognizer2 = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
+        let tapGestureRecognizer3 = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
         imageView1.userInteractionEnabled = true
         imageView2.userInteractionEnabled = true
         imageView3.userInteractionEnabled = true
-        imageView1.addGestureRecognizer(tapGestureRecognizer)
+        imageView1.addGestureRecognizer(tapGestureRecognizer1)
+        imageView2.addGestureRecognizer(tapGestureRecognizer2)
+        imageView3.addGestureRecognizer(tapGestureRecognizer3)
     }
     
     func createBoarder(view: UIView) {
@@ -73,21 +78,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         view.layer.cornerRadius = 8.0
         view.layer.masksToBounds = true
     }
-    
-//    func textViewDidBeginEditing(textView: UITextView) {
-//        itemDescription.text = ""
-//    }
-    
-//    func textViewDidEndEditing(textView: UITextView) {
-//        print("end editing")
-//        
-//    }
-    
-//    func textViewShouldEndEditing(textView: UITextView) -> Bool {
-//        print("Should end Editing")
-//        textView.endEditing(true)
-//        return true
-//    }
     
     func textFieldShouldClear(textField: UITextField) -> Bool {
         if textField.text == "Name" {
@@ -130,17 +120,19 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         return true
     }
     
-    func image1Tapped(sender: UIImageView) {
+    func imageTapped(sender: AnyObject) {
+        currentImgView = sender.view as! UIImageView
         let myPickerController = UIImagePickerController()
         myPickerController.delegate = self;
         myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        
         self.presentViewController(myPickerController, animated: true, completion: nil)
     }
     
+    
+    
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        imageView1.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        currentImgView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
