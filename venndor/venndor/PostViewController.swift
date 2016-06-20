@@ -9,84 +9,119 @@
 import Foundation
 import UIKit
 
-class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate {
+class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate {
     
     
-    
-    @IBOutlet weak var itemDescription: UITextView!
-    
-    @IBOutlet weak var itemName: UITextField!
-    
-    @IBOutlet weak var firstImageView: UIImageView!
-    
-    @IBAction func cancelPost(sender: UIButton) {
-        self.performSegueWithIdentifier("backToBrowse", sender: self)
-    }
-    
-    @IBAction func postToServer(sender: UIButton) {
-        self.performSegueWithIdentifier("backToBrowse", sender: self)
-    }
-    
-    @IBAction func imageTapped(sender: UITapGestureRecognizer) {
-        let myPickerController = UIImagePickerController()
-        myPickerController.delegate = self;
-        myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        
-        self.presentViewController(myPickerController, animated: true, completion: nil)
-    }
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    var itemDescription: UITextView!
+    var itemName: UITextField!
+    var imageView1: UIImageView!
+    var imageView2: UIImageView!
+    var imageView3: UIImageView!
+    var postButton: UIButton!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        if revealViewController() != nil {
-            view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
-        }
-        
-        itemDescription.delegate = self
+        setupItemName()
+        setupItemDescription()
+        sideMenuGestureSetup()
+        addHeader()
+        setupImageViews()
+    }
+    
+    func setupItemName() {
+        itemName = UITextField(frame: CGRectMake(10, 80, self.screenSize.width*0.95, 30))
+        itemName.text = "Name"
+        itemName.delegate = self
         itemName.clearsOnBeginEditing = true
-        
-        let headerView: HeaderView = HeaderView(frame: self.view.frame)
-        headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        self.view.addSubview(headerView)
-        self.view.bringSubviewToFront(headerView)
-        
+        self.view.addSubview(itemName)
+        createBoarder(itemName)
+        itemName.returnKeyType = .Done
+
     }
     
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        
+    func setupItemDescription() {
+        itemDescription = UITextView(frame: CGRectMake(10, 120, self.screenSize.width*0.95, 100))
+        itemDescription.text = "Description"
+        itemDescription.delegate = self
+        self.view.addSubview(itemDescription)
+        createBoarder(itemDescription)
+        itemDescription.returnKeyType = .Done
     }
     
-//    func
+    func setupImageViews() {
+        imageView1 = UIImageView(frame: CGRectMake(10, 230, self.screenSize.width*0.3, self.screenSize.width*0.3))
+        imageView2 = UIImageView(frame: CGRectMake(145, 230, self.screenSize.width*0.3, self.screenSize.width*0.3))
+        imageView3 = UIImageView(frame: CGRectMake(280, 230, self.screenSize.width*0.3, self.screenSize.width*0.3))
+        self.view.addSubview(imageView1)
+        self.view.addSubview(imageView2)
+        self.view.addSubview(imageView3)
+        createBoarder(imageView1)
+        createBoarder(imageView2)
+        createBoarder(imageView3)
+        let tapGestureRecognizer = UITapGestureRecognizer(target:self, action:Selector("image1Tapped:"))
+        imageView1.userInteractionEnabled = true
+        imageView2.userInteractionEnabled = true
+        imageView3.userInteractionEnabled = true
+        imageView1.addGestureRecognizer(tapGestureRecognizer)
+    }
+    
+    func createBoarder(view: UIView) {
+        let boarderColor : UIColor = UIColor.blackColor()
+        view.layer.borderColor = boarderColor.CGColor
+        view.layer.borderWidth = 2.0
+        view.layer.cornerRadius = 8.0
+        view.layer.masksToBounds = true
+    }
+    
+//    func textViewDidBeginEditing(textView: UITextView) {
+//        itemDescription.text = ""
+//    }
+    
+//    func textViewDidEndEditing(textView: UITextView) {
+//        print("end editing")
+//        
+//    }
+    
+//    func textViewShouldEndEditing(textView: UITextView) -> Bool {
+//        print("Should end Editing")
+//        textView.endEditing(true)
+//        return true
+//    }
+    
+    func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {        
+        if(text == "\n") {
+            textView.resignFirstResponder()
+            return false
+        }
+        return true
+    }
     
     func textViewDidBeginEditing(textView: UITextView) {
-        itemDescription.text = ""
+        textView.text = ""
     }
     
-    
-    @IBAction func postButtonTapped(sender: AnyObject) {
-        
+    func textViewDidEndEditing(textView: UITextView) {
+        textView.resignFirstResponder()
     }
     
+    func textFieldShouldReturn(textField: UITextField) -> Bool {
+        textField.resignFirstResponder()
+        self.view.endEditing(true)
+        return true
+    }
     
-    /*
-    
-    @IBAction func selectPhotoButtonTapped(sender: AnyObject) {
+    func image1Tapped(sender: UIImageView) {
         let myPickerController = UIImagePickerController()
         myPickerController.delegate = self;
         myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-       
-        self.presentViewController(myPickerController, animated: true, completion: nil)
         
+        self.presentViewController(myPickerController, animated: true, completion: nil)
     }
-
-    */
     
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
         
-        firstImageView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
+        imageView1.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }

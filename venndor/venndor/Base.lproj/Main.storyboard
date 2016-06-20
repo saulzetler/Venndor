@@ -1,9 +1,8 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
-        <capability name="Aspect ratio constraints" minToolsVersion="5.1"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -290,6 +289,7 @@
                         <outlet property="householdCell" destination="r0d-kg-Guv" id="jB1-92-rS5"/>
                         <outlet property="kitchenCell" destination="8rb-bG-HZx" id="Dh5-FA-FUC"/>
                         <outlet property="otherCell" destination="NJh-LH-X02" id="dx7-KW-EjK"/>
+                        <outlet property="table" destination="wNR-L6-gTK" id="irT-7b-ghw"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GnR-k2-Gd4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -307,86 +307,15 @@
                     <view key="view" contentMode="scaleToFill" id="fOd-9O-QT2">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YO4-hT-5DQ">
-                                <rect key="frame" x="36" y="550" width="48" height="30"/>
-                                <color key="backgroundColor" red="1" green="0.10228759915436647" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Cancel"/>
-                                <connections>
-                                    <action selector="cancelPost:" destination="RnH-ph-BVQ" eventType="touchUpInside" id="GQK-1H-aeZ"/>
-                                </connections>
-                            </button>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="SpO-fC-BEq">
-                                <rect key="frame" x="520" y="550" width="48" height="30"/>
-                                <color key="backgroundColor" red="0.28441467037333701" green="1" blue="0.0068588658584455287" alpha="1" colorSpace="calibratedRGB"/>
-                                <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <state key="normal" title="Post"/>
-                                <connections>
-                                    <action selector="postToServer:" destination="RnH-ph-BVQ" eventType="touchUpInside" id="97T-U4-gaW"/>
-                                </connections>
-                            </button>
-                            <textView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" text="Item Description" textAlignment="natural" translatesAutoresizingMaskIntoConstraints="NO" id="mNy-Qc-yqO">
-                                <rect key="frame" x="36" y="255" width="532" height="130"/>
-                                <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="130" id="xby-pR-iYH"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits" autocapitalizationType="sentences"/>
-                            </textView>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" text="Item Name" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="gcX-qT-3Yj">
-                                <rect key="frame" x="36" y="191" width="532" height="30"/>
-                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
-                                <textInputTraits key="textInputTraits"/>
-                            </textField>
-                            <imageView contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="iKh-Xq-7kY">
-                                <rect key="frame" x="236" y="28" width="128" height="128"/>
-                                <color key="backgroundColor" red="0.93725490199999995" green="0.93725490199999995" blue="0.95686274510000002" alpha="1" colorSpace="calibratedRGB"/>
-                                <gestureRecognizers/>
-                                <constraints>
-                                    <constraint firstAttribute="width" secondItem="iKh-Xq-7kY" secondAttribute="height" multiplier="1:1" id="KJT-xw-a1l"/>
-                                    <constraint firstAttribute="width" constant="128" id="v5i-p6-vbS"/>
-                                </constraints>
-                                <connections>
-                                    <outletCollection property="gestureRecognizers" destination="9n7-J0-GJP" appends="YES" id="mEQ-uB-m6R"/>
-                                </connections>
-                            </imageView>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="SpO-fC-BEq" firstAttribute="width" secondItem="YO4-hT-5DQ" secondAttribute="width" id="1Ik-VO-jS2"/>
-                            <constraint firstItem="IEf-D0-xnJ" firstAttribute="top" secondItem="YO4-hT-5DQ" secondAttribute="bottom" constant="20" id="2kX-t0-8mX"/>
-                            <constraint firstItem="IEf-D0-xnJ" firstAttribute="top" secondItem="SpO-fC-BEq" secondAttribute="bottom" constant="20" id="Hgf-As-ZT6"/>
-                            <constraint firstItem="mNy-Qc-yqO" firstAttribute="width" secondItem="gcX-qT-3Yj" secondAttribute="width" id="Ly5-JC-yka"/>
-                            <constraint firstItem="iKh-Xq-7kY" firstAttribute="top" secondItem="7Sa-lU-8wl" secondAttribute="bottom" constant="8" id="ZvO-RH-sVG"/>
-                            <constraint firstItem="SpO-fC-BEq" firstAttribute="height" secondItem="YO4-hT-5DQ" secondAttribute="height" id="aVJ-qF-wJY"/>
-                            <constraint firstItem="iKh-Xq-7kY" firstAttribute="centerX" secondItem="fOd-9O-QT2" secondAttribute="centerX" id="b9K-l7-bQP"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="SpO-fC-BEq" secondAttribute="trailing" constant="12" id="ekw-kh-oWh"/>
-                            <constraint firstItem="gcX-qT-3Yj" firstAttribute="leading" secondItem="fOd-9O-QT2" secondAttribute="leadingMargin" constant="16" id="fIn-Ie-tEA"/>
-                            <constraint firstItem="YO4-hT-5DQ" firstAttribute="leading" secondItem="fOd-9O-QT2" secondAttribute="leadingMargin" constant="16" id="n6J-qx-ea9"/>
-                            <constraint firstItem="mNy-Qc-yqO" firstAttribute="top" secondItem="gcX-qT-3Yj" secondAttribute="bottom" constant="34" id="o6k-9w-W2l"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="gcX-qT-3Yj" secondAttribute="trailing" constant="12" id="qAB-xJ-O57"/>
-                            <constraint firstItem="mNy-Qc-yqO" firstAttribute="leading" secondItem="fOd-9O-QT2" secondAttribute="leadingMargin" constant="16" id="yeh-I6-Vl4"/>
-                            <constraint firstItem="gcX-qT-3Yj" firstAttribute="top" secondItem="iKh-Xq-7kY" secondAttribute="bottom" constant="35" id="zQG-Up-eJ9"/>
-                            <constraint firstAttribute="trailingMargin" secondItem="mNy-Qc-yqO" secondAttribute="trailing" constant="12" id="zWT-Ts-NJF"/>
-                        </constraints>
                     </view>
                     <connections>
-                        <outlet property="firstImageView" destination="iKh-Xq-7kY" id="aDL-ew-vyM"/>
-                        <outlet property="itemDescription" destination="mNy-Qc-yqO" id="uJO-9u-aki"/>
-                        <outlet property="itemName" destination="gcX-qT-3Yj" id="kmz-2Y-3g8"/>
                         <segue destination="5Q4-WU-6Zg" kind="show" identifier="backToBrowse" id="hrt-cp-q1Q"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1EY-Q8-0hP" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <tapGestureRecognizer id="9n7-J0-GJP">
-                    <connections>
-                        <action selector="imageTapped:" destination="RnH-ph-BVQ" id="U6u-0l-rSi"/>
-                    </connections>
-                </tapGestureRecognizer>
             </objects>
-            <point key="canvasLocation" x="2333" y="2196"/>
+            <point key="canvasLocation" x="2249" y="2202"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="La8-7z-czq">
@@ -424,7 +353,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7zY-uR-K97" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-509" y="2207"/>
+            <point key="canvasLocation" x="-513" y="2191"/>
         </scene>
         <!--Notifications View Controller-->
         <scene sceneID="87C-xJ-6jb">
@@ -491,188 +420,78 @@
                         <sections>
                             <tableViewSection id="emv-b7-0Ma">
                                 <cells>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="245" id="ctk-YQ-JFI">
-                                        <rect key="frame" x="0.0" y="0.0" width="600" height="245"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="250" id="bRs-Vj-jyd">
+                                        <rect key="frame" x="0.0" y="0.0" width="600" height="250"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ctk-YQ-JFI" id="T0r-qO-afe">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="244.5"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bRs-Vj-jyd" id="lYu-lh-IpD">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="249.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="Q9l-db-DGE">
-                                                    <rect key="frame" x="0.0" y="0.0" width="150" height="154"/>
-                                                </imageView>
-                                                <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" text="Name" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="hN8-ht-UIM">
-                                                    <rect key="frame" x="0.0" y="162" width="150" height="34"/>
-                                                    <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                                    <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <nil key="highlightedColor"/>
-                                                </label>
-                                            </subviews>
                                         </tableViewCellContentView>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="ejt-ts-N7L">
-                                        <rect key="frame" x="0.0" y="245" width="600" height="50"/>
+                                        <rect key="frame" x="0.0" y="250" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ejt-ts-N7L" id="G58-8E-e9k">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7d4-S0-UqL">
-                                                    <rect key="frame" x="50" y="0.0" width="100" height="50"/>
-                                                    <state key="normal" title="Browse"/>
-                                                    <connections>
-                                                        <action selector="browsePage:" destination="iSZ-II-anh" eventType="touchUpInside" id="tJ4-jd-msD"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="egw-15-Ew7">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <connections>
-                                                        <action selector="browsePage:" destination="iSZ-II-anh" eventType="touchUpInside" id="Lsa-9m-Bbs"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="yti-rD-WXZ" kind="custom" identifier="toBrowse" customClass="SWRevealViewControllerSeguePushController" id="fH8-HC-wrA"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="uOA-Gq-RVK">
-                                        <rect key="frame" x="0.0" y="295" width="600" height="50"/>
+                                        <rect key="frame" x="0.0" y="300" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="uOA-Gq-RVK" id="heQ-S5-nBo">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="cTl-Em-UNV">
-                                                    <rect key="frame" x="50" y="0.0" width="100" height="50"/>
-                                                    <state key="normal" title="My Matches"/>
-                                                    <connections>
-                                                        <action selector="myMatchesPage:" destination="iSZ-II-anh" eventType="touchUpInside" id="Eis-lN-xzU"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="eFe-HD-uvi">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <connections>
-                                                        <action selector="myMatchesPage:" destination="iSZ-II-anh" eventType="touchUpInside" id="5fC-nI-pmt"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="q8m-ke-uIK" kind="custom" identifier="toMyMatches" customClass="SWRevealViewControllerSeguePushController" id="Al0-8C-Npd"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="jSE-w3-eGF">
-                                        <rect key="frame" x="0.0" y="345" width="600" height="50"/>
+                                        <rect key="frame" x="0.0" y="350" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="jSE-w3-eGF" id="omN-mr-vzM">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="lLU-WR-y7v">
-                                                    <rect key="frame" x="50" y="-1" width="100" height="50"/>
-                                                    <state key="normal" title="My Posts"/>
-                                                    <connections>
-                                                        <action selector="myPostsPage:" destination="iSZ-II-anh" eventType="touchUpInside" id="JjK-fb-BMy"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="hBO-21-Ibr">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <connections>
-                                                        <action selector="myPostsPage:" destination="iSZ-II-anh" eventType="touchUpInside" id="2fY-O4-P7L"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="UaQ-m2-eNN" kind="custom" identifier="toMyPosts" customClass="SWRevealViewControllerSeguePushController" id="MCb-AK-BNF"/>
                                         </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Vjk-h9-A2d">
-                                        <rect key="frame" x="0.0" y="395" width="600" height="50"/>
+                                        <rect key="frame" x="0.0" y="400" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vjk-h9-A2d" id="2tB-Y3-ihp">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uVr-7F-ike">
-                                                    <rect key="frame" x="50" y="-1" width="100" height="50"/>
-                                                    <state key="normal" title="Notifications"/>
-                                                    <connections>
-                                                        <action selector="notificationsPage:" destination="iSZ-II-anh" eventType="touchUpInside" id="NxE-TX-lpq"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="uIf-DQ-7FY">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <connections>
-                                                        <action selector="notificationsPage:" destination="iSZ-II-anh" eventType="touchUpInside" id="UB1-7e-YLe"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="Hti-UJ-K0L" kind="custom" identifier="toNotifications" customClass="SWRevealViewControllerSeguePushController" id="JNf-ts-iwV"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="17O-B4-1Yi">
-                                        <rect key="frame" x="0.0" y="445" width="600" height="50"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="ctk-YQ-JFI">
+                                        <rect key="frame" x="0.0" y="450" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="17O-B4-1Yi" id="wre-TV-gca">
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ctk-YQ-JFI" id="T0r-qO-afe">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="7DP-A3-tsc">
-                                                    <rect key="frame" x="50" y="0.0" width="100" height="50"/>
-                                                    <state key="normal" title="Settings"/>
-                                                    <connections>
-                                                        <action selector="settingsPage:" destination="iSZ-II-anh" eventType="touchUpInside" id="L2g-Gj-3uA"/>
-                                                    </connections>
-                                                </button>
-                                                <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="t36-pL-AgG">
-                                                    <rect key="frame" x="0.0" y="0.0" width="50" height="50"/>
-                                                    <color key="tintColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <connections>
-                                                        <action selector="settingsPage:" destination="iSZ-II-anh" eventType="touchUpInside" id="umD-H1-ITK"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="xZd-1d-xuv" kind="custom" identifier="toSettings" customClass="SWRevealViewControllerSeguePushController" id="vcr-yR-3MK"/>
+                                            <segue destination="xZd-1d-xuv" kind="custom" identifier="toSettings" customClass="SWRevealViewControllerSeguePushController" id="Fiw-wm-Civ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="123" id="bRs-Vj-jyd">
-                                        <rect key="frame" x="0.0" y="495" width="600" height="123"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="17O-B4-1Yi">
+                                        <rect key="frame" x="0.0" y="500" width="600" height="100"/>
                                         <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="bRs-Vj-jyd" id="lYu-lh-IpD">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="122.5"/>
+                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="17O-B4-1Yi" id="wre-TV-gca">
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
-                                            <subviews>
-                                                <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="rKZ-Xu-MdT">
-                                                    <rect key="frame" x="-12" y="34.5" width="300" height="100"/>
-                                                    <color key="backgroundColor" red="0.0" green="0.47843137250000001" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                                    <constraints>
-                                                        <constraint firstAttribute="width" constant="300" id="iIe-g5-GSK"/>
-                                                        <constraint firstAttribute="height" constant="100" id="yNc-HV-H0a"/>
-                                                    </constraints>
-                                                    <color key="tintColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                                                    <state key="normal" title="SELL"/>
-                                                    <connections>
-                                                        <action selector="postItem" destination="iSZ-II-anh" eventType="touchUpInside" id="zg6-LO-dGM"/>
-                                                    </connections>
-                                                </button>
-                                            </subviews>
-                                            <constraints>
-                                                <constraint firstAttribute="bottomMargin" secondItem="rKZ-Xu-MdT" secondAttribute="bottom" constant="-20" id="1d8-Ja-4XW"/>
-                                                <constraint firstItem="rKZ-Xu-MdT" firstAttribute="leading" secondItem="lYu-lh-IpD" secondAttribute="leadingMargin" constant="-20" id="wsJ-9l-kBO"/>
-                                            </constraints>
                                         </tableViewCellContentView>
                                         <connections>
-                                            <segue destination="RnH-ph-BVQ" kind="custom" identifier="postInfo" customClass="SWRevealViewControllerSeguePushController" id="RP7-Xh-7ML"/>
+                                            <segue destination="RnH-ph-BVQ" kind="custom" identifier="toSellPage" customClass="SWRevealViewControllerSeguePushController" id="Ms6-Cq-UGc"/>
                                         </connections>
                                     </tableViewCell>
                                 </cells>
@@ -684,12 +503,13 @@
                         </connections>
                     </tableView>
                     <connections>
-                        <outlet property="browseIconButton" destination="egw-15-Ew7" id="WGS-gR-0yO"/>
-                        <outlet property="myMatchesIconButton" destination="eFe-HD-uvi" id="ykj-Jp-1LU"/>
-                        <outlet property="myPostsIconButton" destination="hBO-21-Ibr" id="IyF-WT-qF1"/>
-                        <outlet property="notificationsIconButton" destination="uIf-DQ-7FY" id="U0I-7r-kQd"/>
-                        <outlet property="profilePic" destination="Q9l-db-DGE" id="K93-UY-deR"/>
-                        <outlet property="settingsIconButton" destination="t36-pL-AgG" id="uaf-G3-zha"/>
+                        <outlet property="browseCell" destination="ejt-ts-N7L" id="a2Q-cV-enF"/>
+                        <outlet property="myMatchesCell" destination="uOA-Gq-RVK" id="eyJ-fR-krJ"/>
+                        <outlet property="myPostsCell" destination="jSE-w3-eGF" id="rfX-Zp-Zeu"/>
+                        <outlet property="notificationsCell" destination="Vjk-h9-A2d" id="VfS-vY-NFj"/>
+                        <outlet property="profileCell" destination="bRs-Vj-jyd" id="ySU-ve-mPC"/>
+                        <outlet property="sellCell" destination="17O-B4-1Yi" id="yox-l6-aFZ"/>
+                        <outlet property="settingsCell" destination="ctk-YQ-JFI" id="mmx-bt-a3B"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="51h-Li-2ey" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -703,6 +523,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="HFC-zK-5g7"/>
+        <segue reference="hrt-cp-q1Q"/>
         <segue reference="fH8-HC-wrA"/>
     </inferredMetricsTieBreakers>
 </document>
