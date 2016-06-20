@@ -62,8 +62,19 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 print(error)
                 return
             }
-            if let email = result["email"] as? String {
-                currentUser = email
+            if let firstName = result["first_name"] as? String, lastName = result["last_name"] as? String, email = result["email"] as? String {
+                let userManager = UserManager()
+                userManager.createUser(firstName, last: lastName, email: email) { user, error in
+                    guard error == nil else {
+                        print("Error creating user: \(error)")
+                        return
+                    }
+                    if let user = user {
+                        LocalUser.user = user
+
+                    }
+                    print("\(LocalUser.user.firstName) \(LocalUser.user.lastName)")
+                }
             }
         }
     }

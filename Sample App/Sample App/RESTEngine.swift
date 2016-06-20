@@ -14,7 +14,7 @@ let kAppVersion = "1.0.1"
 
 // API key for your app goes here, see apps tab in admin console
 private let kApiKey = "ed76c96fa75228ffc12fd2d14f0394ea0077f792cb27e95a469cbea640d986b2"
-private let kBaseInstanceUrl = "https://ec2-52-53-217-174.us-west-1.compute.amazonaws.com/api/v2"
+private let kBaseInstanceUrl = "http://ec2-52-53-217-174.us-west-1.compute.amazonaws.com/api/v2"
 private let kDbServiceName = "venndor/_table"
 private let kContainerName = "item_images"
 
@@ -97,11 +97,12 @@ final class RESTEngine {
     
     //MARK: - User methods
     
-    func registerUser(email: String, firstName: String, lastName: String, success: SuccessClosure, failure: ErrorClosure) {
+    func registerUser(email: String, firstName: String, lastName: String, age: Int, success: SuccessClosure, failure: ErrorClosure) {
         
         let details: [String: AnyObject] = ["email": email,
             "first_name": firstName,
             "last_name": lastName,
+            "age": age,
             "rating": 0.0,
             "nuMatches": 0,
             "nuItemsSold": 0,

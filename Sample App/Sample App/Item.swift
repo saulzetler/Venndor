@@ -21,7 +21,7 @@ class Item: NSObject {
     
     init(json: JSON) {
         name = json["name"] as! String
-        details = json["details"] as! String
+        details = json["detail"] as! String
         id = json["_id"] as! String
         owner = json["owner"] as! String 
     }
