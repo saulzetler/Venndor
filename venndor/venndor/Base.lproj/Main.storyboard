@@ -313,6 +313,7 @@
                         <outlet property="householdCell" destination="r0d-kg-Guv" id="jB1-92-rS5"/>
                         <outlet property="kitchenCell" destination="8rb-bG-HZx" id="Dh5-FA-FUC"/>
                         <outlet property="otherCell" destination="NJh-LH-X02" id="dx7-KW-EjK"/>
+                        <outlet property="table" destination="wNR-L6-gTK" id="irT-7b-ghw"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GnR-k2-Gd4" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -654,9 +655,7 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="dlm-GT-Iep"/>
-        <segue reference="hrt-cp-q1Q"/>
-        <segue reference="fH8-HC-wrA"/>
         <segue reference="HFC-zK-5g7"/>
+        <segue reference="fH8-HC-wrA"/>
     </inferredMetricsTieBreakers>
 </document>

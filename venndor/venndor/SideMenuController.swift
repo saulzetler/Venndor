@@ -37,10 +37,7 @@ class SideMenuController: UITableViewController {
     }
     
     
-    
-    
-    @IBOutlet weak var profilePic = UIImageView(frame: CGRectMake(0, 0, 50, 50))
-    
+    @IBOutlet weak var profilePic = UIImageView(frame: CGRectMake(30, 0, 50, 50))
     
     @IBOutlet weak var browseIconButton: UIButton!
     
@@ -57,7 +54,7 @@ class SideMenuController: UITableViewController {
         super.viewDidLoad()
         profilePic?.layer.borderWidth = 2.0
         profilePic?.layer.masksToBounds = false
-        profilePic?.layer.borderColor = UIColor.whiteColor().CGColor
+        profilePic?.layer.borderColor = UIColor.blackColor().CGColor
         profilePic?.layer.cornerRadius = (profilePic?.frame.size.width)!/2
         profilePic?.clipsToBounds = true
 //        profilePic?.image = UIImage(named: "app landing page background.png")
