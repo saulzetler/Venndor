@@ -79,28 +79,6 @@
             </objects>
             <point key="canvasLocation" x="-253" y="322.99999999999994"/>
         </scene>
-        <!--Mini My Matches View Controller-->
-        <scene sceneID="hp6-BC-7vk">
-            <objects>
-                <viewController id="kIQ-vZ-UuK" customClass="MiniMyMatchesViewController" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="Mni-aa-OZR"/>
-                        <viewControllerLayoutGuide type="bottom" id="OIU-XP-At1"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="ezA-Pd-QFT">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                    <connections>
-                        <segue destination="fsH-rl-3Vw" kind="unwind" identifier="ExitMiniMatch" unwindAction="unwindToHome:" id="DJE-SP-43q"/>
-                    </connections>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="Sqz-ah-b9k" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <exit id="fsH-rl-3Vw" userLabel="Exit" sceneMemberID="exit"/>
-            </objects>
-            <point key="canvasLocation" x="-1130" y="676"/>
-        </scene>
         <!--BrowseViewController-->
         <scene sceneID="MF2-K3-bZl">
             <objects>
@@ -114,9 +92,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <connections>
-                        <segue destination="kIQ-vZ-UuK" kind="presentation" identifier="MiniMatchSegue" id="h7G-7C-ay3"/>
-                    </connections>
+                    <navigationItem key="navigationItem" id="pI1-Me-Ycj"/>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9j-p1-Ii5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -546,6 +522,7 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="HFC-zK-5g7"/>
         <segue reference="hrt-cp-q1Q"/>
         <segue reference="fH8-HC-wrA"/>
     </inferredMetricsTieBreakers>

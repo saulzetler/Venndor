@@ -16,6 +16,7 @@ class MenuTransitionManager: NSObject, UIViewControllerAnimatedTransitioning, UI
         return duration
     }
     
+    
     func animateTransition(transitionContext: UIViewControllerContextTransitioning) {
         
         // Get reference to our fromView, toView and the container view
