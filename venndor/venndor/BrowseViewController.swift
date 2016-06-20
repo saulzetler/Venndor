@@ -37,19 +37,20 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         miniMatches = makeButton("ic_menu_white.png", frame: buttonSize, target: "showAlert:", tinted: false, circle: true, backgroundColor: 0x3498db, backgroundAlpha: 1)
         self.view.addSubview(miniMatches)
 
-
         if revealViewController() != nil {
             revealViewController().rightViewRevealWidth = 100
             revealViewController().rearViewRevealWidth = 280
             self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
         }
-        
     }
     override func viewDidAppear(animated: Bool) {
         let subViews = self.view.subviews
         for subView in subViews {
             if subView == fadeOut {
                 subView.removeFromSuperview()
+            }
+            else if subView == miniMatches {
+                subView.hidden = false
             }
         }
         headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
@@ -64,22 +65,33 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    func showAlert(sender: UIButton) {
-        print("buttonpress")
-        self.performSegueWithIdentifier("MiniMatchSegue", sender: self)
-    }
-    @IBAction func unwindToHome(segue: UIStoryboardSegue) {
-    }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "MiniMatchSegue" {
-            let MiniMatchViewController = segue.destinationViewController as! MiniMyMatchesViewController
-            fadeOut.frame = self.view.frame
-            fadeOut.backgroundColor = UIColorFromHex(0xFFFFFF, alpha: 0.6)
-            view.addSubview(fadeOut)
-            MiniMatchViewController.transitioningDelegate = self.menuTransitionManager
-        }
-    }
     
+    
+    func showAlert(sender: UIButton) {
+        
+        let alertController = UIAlertController(title: "\n\n\n\n", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        
+        let rect = CGRectMake(-10, 0, alertController.view.bounds.size.width, 165.0)
+        let customView = UIView(frame: rect)
+        let customViewTwo = UIView(frame: CGRect(x: -10, y: 125, width: alertController.view.bounds.size.width+10, height: 75))
+        customViewTwo.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
 
+        let arrowView = UIView(frame: CGRect(x: (alertController.view.bounds.size.width)/2-23, y: 145, width: 30, height: 30))
+        arrowView.backgroundColor = UIColor(patternImage: UIImage(named: "ic_keyboard_arrow_down_white.png")!)
+
+        customView.backgroundColor = UIColorFromHex(0xe6e6e6)
+        
+        customView.layer.cornerRadius = 15
+
+        alertController.view.addSubview(customView)
+        alertController.view.addSubview(customViewTwo)
+        alertController.view.addSubview(arrowView)
+        
+        let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(alert: UIAlertAction!) in print("cancel")})
+        alertController.addAction(cancelAction)
+        
+        self.presentViewController(alertController, animated: true, completion:{})
+        
+    }
 }
 
