@@ -17,6 +17,7 @@ class User: NSObject {
     var lastName: String!
     var id: String!
     var email: String!
+    var age: Int?
     var rating: Double!
     var nuMatches: Int!
     var nuItemsSold: Int!
