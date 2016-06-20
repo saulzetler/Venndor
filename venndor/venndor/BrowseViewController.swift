@@ -10,6 +10,7 @@ import UIKit
 
 class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
     var miniMatches: UIButton!
     var menuTransitionManager = MenuTransitionManager()
     let fadeOut = UIView()
@@ -39,8 +40,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 
 
         if revealViewController() != nil {
-            revealViewController().rightViewRevealWidth = 100
-            revealViewController().rearViewRevealWidth = 280
+            revealViewController().rightViewRevealWidth = screenSize.width*0.3
+            revealViewController().rearViewRevealWidth = screenSize.width*0.6
             self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
         }
         
