@@ -89,6 +89,20 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 //        return true
 //    }
     
+    func textFieldShouldClear(textField: UITextField) -> Bool {
+        if textField.text == "Name" {
+            return true
+        } else {
+            return false
+        }
+    }
+    
+    func textFieldDidEndEditing(textField: UITextField) {
+        if textField.text == "" {
+            textField.text = "Name"
+        }
+    }
+    
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {        
         if(text == "\n") {
             textView.resignFirstResponder()
@@ -98,11 +112,16 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
+        if textView.text == "Description" {
         textView.text = ""
+        }
     }
     
     func textViewDidEndEditing(textView: UITextView) {
         textView.resignFirstResponder()
+        if textView.text == "" {
+            textView.text = "Description"
+        }
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
