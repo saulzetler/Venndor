@@ -522,7 +522,6 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="HFC-zK-5g7"/>
         <segue reference="hrt-cp-q1Q"/>
         <segue reference="fH8-HC-wrA"/>
     </inferredMetricsTieBreakers>
