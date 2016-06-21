@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -72,12 +72,45 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="5Q4-WU-6Zg" kind="presentation" identifier="showNew" id="HFC-zK-5g7"/>
+                        <segue destination="gEg-Gc-bT8" kind="show" identifier="showSplash" id="iyp-kX-1XF"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RRf-bf-PBa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-253" y="322.99999999999994"/>
+            <point key="canvasLocation" x="-926" y="310"/>
+        </scene>
+        <!--Splash View Controller-->
+        <scene sceneID="nnJ-hU-Qtr">
+            <objects>
+                <viewController id="gEg-Gc-bT8" customClass="SplashViewController" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="RfM-dB-v3S"/>
+                        <viewControllerLayoutGuide type="bottom" id="CZz-kX-AU8"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Ibf-aM-pjS">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZj-Qb-7hl">
+                                <rect key="frame" x="233.5" y="279" width="134.5" height="41"/>
+                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="34"/>
+                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                        </subviews>
+                        <color key="backgroundColor" red="0.96862751250000001" green="0.69411766529999996" blue="0.17254902420000001" alpha="1" colorSpace="deviceRGB"/>
+                        <constraints>
+                            <constraint firstItem="SZj-Qb-7hl" firstAttribute="centerX" secondItem="Ibf-aM-pjS" secondAttribute="centerX" id="hdI-oJ-Qhx"/>
+                            <constraint firstItem="SZj-Qb-7hl" firstAttribute="centerY" secondItem="Ibf-aM-pjS" secondAttribute="centerY" id="yat-P8-tWa"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <segue destination="5Q4-WU-6Zg" kind="presentation" identifier="showBrowse" id="84e-Pz-pkc"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="qux-n2-rnO" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-87" y="310"/>
         </scene>
         <!--BrowseViewController-->
         <scene sceneID="MF2-K3-bZl">
@@ -195,7 +228,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Cpq-Up-CHc" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="699" y="322.99999999999994"/>
+            <point key="canvasLocation" x="705" y="310"/>
         </scene>
         <!--Categories Menu Controller-->
         <scene sceneID="nfP-D6-2yz">
@@ -294,7 +327,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GnR-k2-Gd4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1776" y="311"/>
+            <point key="canvasLocation" x="1776" y="322"/>
         </scene>
         <!--Post View Controller-->
         <scene sceneID="654-hN-fOH">
@@ -353,7 +386,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7zY-uR-K97" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-513" y="2191"/>
+            <point key="canvasLocation" x="-1711" y="2202"/>
         </scene>
         <!--Notifications View Controller-->
         <scene sceneID="87C-xJ-6jb">
@@ -514,7 +547,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="51h-Li-2ey" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1099" y="1163"/>
+            <point key="canvasLocation" x="1353" y="1210"/>
         </scene>
     </scenes>
     <resources>
@@ -524,5 +557,7 @@
     <inferredMetricsTieBreakers>
         <segue reference="hrt-cp-q1Q"/>
         <segue reference="fH8-HC-wrA"/>
+        <segue reference="84e-Pz-pkc"/>
+        <segue reference="dlm-GT-Iep"/>
     </inferredMetricsTieBreakers>
 </document>

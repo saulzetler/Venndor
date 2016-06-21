@@ -10,6 +10,9 @@ import Foundation
 
 struct LocalUser {
     static var user: User!
+    static var firstName: String!
+    static var lastName: String!
+    static var email: String! 
 }
 
 class User: NSObject {
