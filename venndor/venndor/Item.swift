@@ -9,7 +9,6 @@
 import Foundation
 
 struct GlobalItems {
-    var item: Item!
     static var items = [Item]()
 }
 

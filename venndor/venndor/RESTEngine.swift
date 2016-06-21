@@ -14,7 +14,7 @@ let kAppVersion = "1.0.1"
 
 // API key for your app goes here, see apps tab in admin console
 private let kApiKey = "ed76c96fa75228ffc12fd2d14f0394ea0077f792cb27e95a469cbea640d986b2"
-private let kBaseInstanceUrl = "https://ec2-52-53-217-174.us-west-1.compute.amazonaws.com/api/v2"
+private let kBaseInstanceUrl = "http://ec2-52-53-217-174.us-west-1.compute.amazonaws.com/api/v2"
 private let kDbServiceName = "venndor/_table"
 private let kContainerName = "item_images"
 
@@ -105,7 +105,10 @@ final class RESTEngine {
             "rating": 0.0,
             "nuMatches": 0,
             "nuItemsSold": 0,
-            "nuItemsBought": 0]
+            "nuItemsBought": 0,
+            "soldItems": [String](),
+            "ads": [String](),
+            "matches": [String]()]
         let requestBody: [String: AnyObject] = ["resource": details]
         
         callApiWithPath(Routing.Service(tableName: "users").path, method: "POST", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)

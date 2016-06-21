@@ -39,7 +39,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             }
             print("Already logged in")
             fetchProfile()
-            self.performSegueWithIdentifier("showNew", sender: self)
         }
         else
         {
@@ -63,18 +62,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 return
             }
             if let firstName = result["first_name"] as? String, lastName = result["last_name"] as? String, email = result["email"] as? String {
-                let userManager = UserManager()
-                userManager.createUser(firstName, last: lastName, email: email) { user, error in
-                    guard error == nil else {
-                        print("Error creating user: \(error)")
-                        return
-                    }
-                    if let user = user {
-                        LocalUser.user = user
-
-                    }
-                    print("\(LocalUser.user.firstName) \(LocalUser.user.lastName)")
-                }
+                LocalUser.firstName = firstName
+                LocalUser.lastName = lastName
+                LocalUser.email = email
+                self.performSegueWithIdentifier("showSplash", sender: self)
             }
         }
     }
@@ -96,7 +87,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 
                 print("Login complete")
                 fetchProfile()
-                self.performSegueWithIdentifier("showNew", sender: self)
+                
             }
         }
         else
