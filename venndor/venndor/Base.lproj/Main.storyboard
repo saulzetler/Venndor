@@ -555,6 +555,8 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="hrt-cp-q1Q"/>
+        <segue reference="fH8-HC-wrA"/>
         <segue reference="84e-Pz-pkc"/>
         <segue reference="dlm-GT-Iep"/>
     </inferredMetricsTieBreakers>
