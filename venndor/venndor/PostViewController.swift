@@ -22,6 +22,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var imageView1: UIImageView!
     var imageView2: UIImageView!
     var imageView3: UIImageView!
+    var imageView4: UIImageView!
+    var imageView5: UIImageView!
     var currentImgView: UIImageView!
     var postButton: UIButton!
     
@@ -78,14 +80,19 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func setupImageViews() {
         
+        imageView1 = UIImageView(frame: CGRectMake(screenSize.width*0.15, screenSize.height*0.13, screenSize.width*0.7, screenSize.width*0.7))
+        imageView2 = UIImageView(frame: CGRectMake(screenSize.width*0.15, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3))
+        imageView3 = UIImageView(frame: CGRectMake(screenSize.width*0.55, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3))
+        imageView4 = UIImageView(frame: CGRectMake(screenSize.width*0.15, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3))
+        imageView5 = UIImageView(frame: CGRectMake(screenSize.width*0.55, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3))
         
-        imageView1 = UIImageView(frame: CGRectMake(screenSize.width*0.03, screenSize.height*0.4, screenSize.width*0.3, screenSize.width*0.3))
-        imageView2 = UIImageView(frame: CGRectMake(screenSize.width*0.35, screenSize.height*0.4, screenSize.width*0.3, screenSize.width*0.3))
-        imageView3 = UIImageView(frame: CGRectMake(screenSize.width*0.67, screenSize.height*0.4, screenSize.width*0.3, screenSize.width*0.3))
+        
         
         containerView.addSubview(imageView1)
         containerView.addSubview(imageView2)
         containerView.addSubview(imageView3)
+        containerView.addSubview(imageView4)
+        containerView.addSubview(imageView5)
         
 //        self.view.addSubview(imageView1)
 //        self.view.addSubview(imageView2)
@@ -93,15 +100,23 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         createBoarder(imageView1)
         createBoarder(imageView2)
         createBoarder(imageView3)
+        createBoarder(imageView4)
+        createBoarder(imageView5)
         let tapGestureRecognizer1 = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
         let tapGestureRecognizer2 = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
         let tapGestureRecognizer3 = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
+        let tapGestureRecognizer4 = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
+        let tapGestureRecognizer5 = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
         imageView1.userInteractionEnabled = true
         imageView2.userInteractionEnabled = true
         imageView3.userInteractionEnabled = true
+        imageView4.userInteractionEnabled = true
+        imageView5.userInteractionEnabled = true
         imageView1.addGestureRecognizer(tapGestureRecognizer1)
         imageView2.addGestureRecognizer(tapGestureRecognizer2)
         imageView3.addGestureRecognizer(tapGestureRecognizer3)
+        imageView4.addGestureRecognizer(tapGestureRecognizer4)
+        imageView5.addGestureRecognizer(tapGestureRecognizer5)
     }
     
     func createBoarder(view: UIView) {
