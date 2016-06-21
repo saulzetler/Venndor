@@ -35,11 +35,11 @@ class HeaderView: UIView, UITextFieldDelegate {
     }
     override init(frame: CGRect) {
         super.init(frame: frame)
-        self.setUpViewFrame()
-        self.setUpViewText()
-        self.setUpViewMenu()
-        self.setUpViewCategory()
-        self.setUpViewCancel()
+        setUpViewFrame()
+        setUpViewText()
+        setUpViewMenu()
+        setUpViewCategory()
+        setUpViewCancel()
     }
     
     func setUpViewFrame() -> Void {
@@ -66,13 +66,14 @@ class HeaderView: UIView, UITextFieldDelegate {
         self.addSubview(sampleTextField)
         
         //setup icon for search
-        let imageView = UIImageView();
-        let image = UIImage(named: "ic_search_white.png");
-        imageView.image = image;
-        sampleTextField.leftView = imageView;
+        let imageView = UIImageView()
+        let image = UIImage(named: "ic_search_white.png")
+        imageView.image = image
+        sampleTextField.leftView = imageView
         sampleTextField.leftViewMode = UITextFieldViewMode.Always
         imageView.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
-        self.addSubview(imageView)
+        imageView.layer.zPosition = 1
+        sampleTextField.addSubview(imageView)
     }
     
     func setUpViewMenu() -> Void {
