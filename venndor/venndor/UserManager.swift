@@ -23,7 +23,7 @@ struct UserManager {
                     let params: JSON =
                     ["first_name": "\(first)",
                         "last_name": "\(last)",
-                        "id": id as! String,
+                        "_id": id as! String,
                         "email": email,
                         "rating": 0.0,
                         "nuMatches": 0,
@@ -45,9 +45,17 @@ struct UserManager {
     func retrieveUserById(id: String, completionHandler: (User?, ErrorType?) -> () ) {
         RESTEngine.sharedEngine.getUserById(id,
             success: { response in
-                if let response = response {
-                    let user = User(json: response)
-                    completionHandler(user, nil)
+                
+                //deconstruct the response into a "results" array
+                if let response = response, result = response["resource"] {
+                    //if the array is empty, then the user does not exist in the database. Return nil
+                    if (result.isEmpty != nil) {
+                        completionHandler(nil, nil)
+                    }
+                    else {
+                        let user = User(json: response)
+                        completionHandler(user, nil)
+                    }
                 }
             }, failure: { error in
                 completionHandler(nil, error)

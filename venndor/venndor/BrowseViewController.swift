@@ -18,6 +18,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view, typically from a nib.
+        let user = LocalUser.user
+        let items = GlobalItems.items
+        
+ 
         
         self.view.backgroundColor = UIColorFromHex(0xe6f2ff, alpha: 1)
         let backgroundImage = UIImageView(frame: UIScreen.mainScreen().bounds)
@@ -36,6 +40,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
         miniMatches = makeImageButton("ic_menu_white.png", frame: buttonSize, target: "showAlert:", tinted: false, circle: true, backgroundColor: 0x3498db, backgroundAlpha: 1)
         self.view.addSubview(miniMatches)
+        
 
         if revealViewController() != nil {
             revealViewController().rightViewRevealWidth = 100
@@ -44,6 +49,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         }
     }
     override func viewDidAppear(animated: Bool) {
+        
         let subViews = self.view.subviews
         for subView in subViews {
             if subView == fadeOut {
