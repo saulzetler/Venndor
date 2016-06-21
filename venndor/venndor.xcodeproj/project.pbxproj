@@ -7,11 +7,6 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
-		1018F2881D19E96900260D9F /* ic_keyboard_arrow_down_white.imageset in Resources */ = {isa = PBXBuildFile; fileRef = 1018F2871D19E96900260D9F /* ic_keyboard_arrow_down_white.imageset */; };
-		1018F28D1D19E97D00260D9F /* ic_clear_white_24dp in Resources */ = {isa = PBXBuildFile; fileRef = 1018F2891D19E97D00260D9F /* ic_clear_white_24dp */; };
-		1018F28E1D19E97D00260D9F /* ic_dashboard_white_24dp in Resources */ = {isa = PBXBuildFile; fileRef = 1018F28A1D19E97D00260D9F /* ic_dashboard_white_24dp */; };
-		1018F28F1D19E97D00260D9F /* ic_menu_white_24dp in Resources */ = {isa = PBXBuildFile; fileRef = 1018F28B1D19E97D00260D9F /* ic_menu_white_24dp */; };
-		1018F2901D19E97D00260D9F /* ic_search_white_24dp in Resources */ = {isa = PBXBuildFile; fileRef = 1018F28C1D19E97D00260D9F /* ic_search_white_24dp */; };
 		101F43CE1D107A55007E0ADE /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F43CD1D107A55007E0ADE /* HeaderView.swift */; };
 		101F43D01D11A203007E0ADE /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F43CF1D11A203007E0ADE /* TutorialViewController.swift */; };
 		102331941D13267B002C6B3C /* MiniMatchTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */; };
@@ -84,11 +79,6 @@
 /* End PBXContainerItemProxy section */
 
 /* Begin PBXFileReference section */
-		1018F2871D19E96900260D9F /* ic_keyboard_arrow_down_white.imageset */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ic_keyboard_arrow_down_white.imageset; sourceTree = "<group>"; };
-		1018F2891D19E97D00260D9F /* ic_clear_white_24dp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ic_clear_white_24dp; sourceTree = "<group>"; };
-		1018F28A1D19E97D00260D9F /* ic_dashboard_white_24dp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ic_dashboard_white_24dp; sourceTree = "<group>"; };
-		1018F28B1D19E97D00260D9F /* ic_menu_white_24dp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ic_menu_white_24dp; sourceTree = "<group>"; };
-		1018F28C1D19E97D00260D9F /* ic_search_white_24dp */ = {isa = PBXFileReference; lastKnownFileType = folder; path = ic_search_white_24dp; sourceTree = "<group>"; };
 		101F43CD1D107A55007E0ADE /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		101F43CF1D11A203007E0ADE /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniMatchTransitionManager.swift; sourceTree = "<group>"; };
@@ -179,18 +169,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		1018F2861D19E90900260D9F /* BrowseImgs */ = {
-			isa = PBXGroup;
-			children = (
-				1018F2891D19E97D00260D9F /* ic_clear_white_24dp */,
-				1018F28A1D19E97D00260D9F /* ic_dashboard_white_24dp */,
-				1018F28B1D19E97D00260D9F /* ic_menu_white_24dp */,
-				1018F28C1D19E97D00260D9F /* ic_search_white_24dp */,
-				1018F2871D19E96900260D9F /* ic_keyboard_arrow_down_white.imageset */,
-			);
-			name = BrowseImgs;
-			sourceTree = "<group>";
-		};
 		105FCAFF1D08A5490073E3AE /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
@@ -283,7 +261,6 @@
 		10ADC9E21D074D430028A999 /* SupportingFiles */ = {
 			isa = PBXGroup;
 			children = (
-				1018F2861D19E90900260D9F /* BrowseImgs */,
 				E44C153E1D11E04F0006EBAD /* Icons */,
 				E49051AC1D09B6690045D5C0 /* Images.xcassets */,
 				10ADC9B61D0749700028A999 /* Info.plist */,
@@ -458,7 +435,6 @@
 			isa = PBXResourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				1018F28E1D19E97D00260D9F /* ic_dashboard_white_24dp in Resources */,
 				E44C15391D11E0430006EBAD /* Generic Book File Type-50.png in Resources */,
 				E44C15211D11B9F90006EBAD /* Home-50.png in Resources */,
 				E44C151C1D11B9650006EBAD /* Settings-50.png in Resources */,
@@ -468,17 +444,13 @@
 				E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */,
 				E44C15381D11E0430006EBAD /* Chair-50.png in Resources */,
 				E49051B41D0A006B0045D5C0 /* app landing page background.png in Resources */,
-				1018F2881D19E96900260D9F /* ic_keyboard_arrow_down_white.imageset in Resources */,
-				1018F28D1D19E97D00260D9F /* ic_clear_white_24dp in Resources */,
 				10ADC9B51D0749700028A999 /* LaunchScreen.storyboard in Resources */,
-				1018F2901D19E97D00260D9F /* ic_search_white_24dp in Resources */,
 				E44C153D1D11E0430006EBAD /* Lamp-50.png in Resources */,
 				E44C153B1D11E0430006EBAD /* Multiple Devices-50.png in Resources */,
 				E44C15371D11E0430006EBAD /* More-50.png in Resources */,
 				E44C15181D11B5D00006EBAD /* Shopping Cart Loaded-50.png in Resources */,
 				E44C153A1D11E0430006EBAD /* Clothes-50.png in Resources */,
 				10ADC9AD1D0749700028A999 /* Main.storyboard in Resources */,
-				1018F28F1D19E97D00260D9F /* ic_menu_white_24dp in Resources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
