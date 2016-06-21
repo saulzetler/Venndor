@@ -11,6 +11,7 @@ import FBSDKLoginKit
 
 class SideMenuController: UITableViewController {
     
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
     
     @IBOutlet weak var profileCell: UITableViewCell!
     
@@ -26,7 +27,7 @@ class SideMenuController: UITableViewController {
     
     @IBOutlet weak var sellCell: UITableViewCell!
     
-    var profilePic: UIImageView! = UIImageView(frame: CGRectMake(55, 20, 150, 150))
+    var postButton: UIButton!
     
     var browseButton: UIButton!
     var myMatchesButton: UIButton!
@@ -44,6 +45,7 @@ class SideMenuController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        let profilePic: UIImageView! = UIImageView(frame: CGRectMake(screenSize.width*0.05, screenSize.height*0.02, screenSize.width*0.4, screenSize.width*0.4))
         
         profilePic.layer.borderWidth = 2.0
         profilePic.layer.masksToBounds = false
@@ -53,19 +55,15 @@ class SideMenuController: UITableViewController {
         profileCell.selectionStyle = .None
         profileCell.addSubview(profilePic)
         
+        setupCells()
         setupButtons()
     
     }
     
     func setupButtons() {
-        let imageButtonSize = CGRect(x: 10, y: 0, width: 45, height: 45)
-        let textButtonSize = CGRect(x: 55, y: 0, width: 200, height: 50)
-        
-//        browseButton
-//        myMatchesButton
-//        myPostsButton
-//        notifacationsButton
-//        settingsButton
+        let imageButtonSize = CGRect(x: screenSize.width*0.04, y: screenSize.height*0.01, width: screenSize.width*0.1, height: screenSize.width*0.1)
+        let textButtonSize = CGRect(x: screenSize.width*0.2, y: screenSize.height*0.01, width: screenSize.width*0.4, height: screenSize.width*0.1)
+        let postButtonSize = CGRect(x: 0, y: 0, width: screenSize.width*0.6, height: screenSize.width*0.3)
         
         // text buttons
         
@@ -84,6 +82,13 @@ class SideMenuController: UITableViewController {
         settingsButton = makeTextButton("Settings", frame: textButtonSize, target: "settingsPage:")
         settingsCell.addSubview(settingsButton)
         
+        postButton = makeTextButton("Sell", frame: postButtonSize, target: "sellPage:")
+        postButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        postButton.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+        sellCell.addSubview(postButton)
+        
+        
+        
         // image buttons
         
         browseIconButton = makeImageButton("Home-50", frame: imageButtonSize, target: "browsePage:", tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
@@ -101,31 +106,39 @@ class SideMenuController: UITableViewController {
         settingsIconButton = makeImageButton("Settings-50", frame: imageButtonSize, target: "settingsPage:", tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         settingsCell.addSubview(settingsIconButton)
         
+        
+        
     }
     
-        func sellPage() {
-            self.performSegueWithIdentifier("toSellPage", sender: self)
-        }
     
-        func settingsPage(sender: UIButton) {
-            self.performSegueWithIdentifier("toSettings", sender: self)
-        }
+    func setupCells() {
+        
+    }
     
-        func notificationsPage(sender: UIButton) {
-            self.performSegueWithIdentifier("toNotifications", sender: self)
-        }
     
-        func myPostsPage(sender: UIButton) {
-            self.performSegueWithIdentifier("toMyPosts", sender: self)
-        }
+    func sellPage(sender: UIButton) {
+        self.performSegueWithIdentifier("toSellPage", sender: self)
+    }
     
-        func myMatchesPage(sender: UIButton) {
-            self.performSegueWithIdentifier("toMyMatches", sender: self)
-        }
+    func settingsPage(sender: UIButton) {
+        self.performSegueWithIdentifier("toSettings", sender: self)
+    }
     
-        func browsePage(sender: UIButton) {
-            self.performSegueWithIdentifier("toBrowse", sender: self)
-        }
+    func notificationsPage(sender: UIButton) {
+        self.performSegueWithIdentifier("toNotifications", sender: self)
+    }
+    
+    func myPostsPage(sender: UIButton) {
+        self.performSegueWithIdentifier("toMyPosts", sender: self)
+    }
+    
+    func myMatchesPage(sender: UIButton) {
+        self.performSegueWithIdentifier("toMyMatches", sender: self)
+    }
+    
+    func browsePage(sender: UIButton) {
+        self.performSegueWithIdentifier("toBrowse", sender: self)
+    }
     
     
     
