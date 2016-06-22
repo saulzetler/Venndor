@@ -33,6 +33,7 @@ class Item: NSObject {
     var photos: [UIImage]?
     var photoStrings: [String]!
     var owner: String
+    let parser = ParserManager()
     
     //init from the server
     init(json: JSON) {
@@ -40,7 +41,7 @@ class Item: NSObject {
         details = json["details"] as! String
         id = json["_id"] as! String
         owner = json["owner"] as! String
-        photoStrings = json["photoStrings"] as! [String]
+        photoStrings = parser.getArray(json["photoStrings"]!)
     }
     
     //init from the app 
@@ -51,17 +52,17 @@ class Item: NSObject {
         self.photos = photos
     }
     
-    func getImagesFromStrings(imageStrings: [String]) -> [UIImage] {
+    func getImagesFromStrings(imageStrings: [String]) {
         var images = [UIImage]()
         for str in imageStrings {
             let data = NSData(base64EncodedString: str, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
             let img = UIImage(data: data!)
             images.append(img!)
         }
-        return images
+        self.photos = images
     }
     
-    func getStringsFromImages(images: [UIImage]) -> [String] {
+    func getStringsFromImages(images: [UIImage]) {
         var imageStrings = [String]()
         for img in images {
             let imgData = UIImageJPEGRepresentation(img, 1.0)
@@ -74,6 +75,6 @@ class Item: NSObject {
                 imageStrings.append(str)
             }
         }
-        return imageStrings
+        self.photoStrings = imageStrings
     }
 }

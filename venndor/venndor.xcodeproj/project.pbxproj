@@ -28,11 +28,11 @@
 		63088BAD1D187CBA00F67931 /* Item.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63088BAA1D187CBA00F67931 /* Item.swift */; };
 		63088BAE1D187CBA00F67931 /* Match.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63088BAB1D187CBA00F67931 /* Match.swift */; };
 		63088BB01D187CCF00F67931 /* RESTEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63088BAF1D187CCF00F67931 /* RESTEngine.swift */; };
+		631069271D1B27B8004A3ADD /* ParserManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631069261D1B27B8004A3ADD /* ParserManager.swift */; };
 		63859A131D13347C004F4968 /* NIKApiInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A101D13347C004F4968 /* NIKApiInvoker.swift */; };
 		63859A141D13347C004F4968 /* NIKFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A111D13347C004F4968 /* NIKFile.swift */; };
 		63C8F7331D189E3D00FFC1E2 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */; };
 		63C8F7351D19C01500FFC1E2 /* hellscreams.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63C8F7341D19C01500FFC1E2 /* hellscreams.jpg */; };
-
 		E43C92B51D189C67003E9CF5 /* ItemNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */; };
 		E44C15181D11B5D00006EBAD /* Shopping Cart Loaded-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */; };
 		E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15171D11B5D00006EBAD /* Megaphone-50.png */; };
@@ -109,11 +109,11 @@
 		63088BAA1D187CBA00F67931 /* Item.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Item.swift; sourceTree = "<group>"; };
 		63088BAB1D187CBA00F67931 /* Match.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Match.swift; sourceTree = "<group>"; };
 		63088BAF1D187CCF00F67931 /* RESTEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTEngine.swift; sourceTree = "<group>"; };
+		631069261D1B27B8004A3ADD /* ParserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParserManager.swift; sourceTree = "<group>"; };
 		63859A101D13347C004F4968 /* NIKApiInvoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKApiInvoker.swift; sourceTree = "<group>"; };
 		63859A111D13347C004F4968 /* NIKFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKFile.swift; sourceTree = "<group>"; };
 		63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		63C8F7341D19C01500FFC1E2 /* hellscreams.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hellscreams.jpg; sourceTree = "<group>"; };
-
 		E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemNameTextField.swift; sourceTree = "<group>"; };
 		E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shopping Cart Loaded-50.png"; sourceTree = "<group>"; };
 		E44C15171D11B5D00006EBAD /* Megaphone-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Megaphone-50.png"; sourceTree = "<group>"; };
@@ -278,6 +278,7 @@
 			children = (
 				63088BA51D187CA900F67931 /* UserManager.swift */,
 				63088BA61D187CA900F67931 /* ItemManager.swift */,
+				631069261D1B27B8004A3ADD /* ParserManager.swift */,
 				102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */,
 			);
 			name = Controllers;
@@ -501,6 +502,7 @@
 				63088BA71D187CA900F67931 /* UserManager.swift in Sources */,
 				E49051A91D09B0250045D5C0 /* BrowseViewController.swift in Sources */,
 				63088BB01D187CCF00F67931 /* RESTEngine.swift in Sources */,
+				631069271D1B27B8004A3ADD /* ParserManager.swift in Sources */,
 				E49051B01D09C0C90045D5C0 /* SWRevealViewController.m in Sources */,
 				63088BAC1D187CBA00F67931 /* User.swift in Sources */,
 				10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */,

@@ -13,12 +13,11 @@ struct ItemManager {
     static let globalManager = ItemManager()
     
     func createItem(item: Item, completionHandler: (ErrorType?) -> () ) {
-        var imageStrings = [String]()
         if let photos = item.photos {
-            imageStrings = item.getStringsFromImages(photos)
+            item.getStringsFromImages(photos)
         }
         
-        let params = ["name": item.name, "details": item.details, "owner": item.owner, "photoStrings": imageStrings]
+        let params = ["name": item.name, "details": item.details, "owner": item.owner, "photoStrings": item.photoStrings]
         RESTEngine.sharedEngine.addItemToServerWithDetails(params as! JSON,
             success: { response in
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
@@ -35,9 +34,8 @@ struct ItemManager {
         RESTEngine.sharedEngine.getItemById(id,
             success: { response in
                 if let response = response {
-                    let imageStrings = response["photos"] as! [String]
                     let item = Item(json: response)
-                    item.photos = item.getImagesFromStrings(imageStrings)
+                    item.getImagesFromStrings(item.photoStrings)
                     completionHandler(item, nil)
                 }
             }, failure: { error in
@@ -63,8 +61,9 @@ struct ItemManager {
                 completionHandler(nil, error)
         })
     }
-
+    
 }
+
 
 
 

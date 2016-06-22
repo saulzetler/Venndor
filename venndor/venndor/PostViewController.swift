@@ -24,6 +24,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var imageView3: UIImageView!
     var imageView4: UIImageView!
     var imageView5: UIImageView!
+    var imageViewArray: [UIImageView]!
     var currentImgView: UIImageView!
     var postButton: UIButton!
     
@@ -80,11 +81,13 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func setupImageViews() {
         
+
         imageView1 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.13, screenSize.width*0.7, screenSize.width*0.7), action: "imageTapped:", superView: containerView)
         imageView2 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
         imageView3 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
         imageView4 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
         imageView5 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
+
     }
 
     
@@ -192,11 +195,23 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     //button targets
     
     func postItem(sender: UIButton) {
-        print("button pressed")
+        if let name = itemName.text, details = itemDescription.text {
+            var images = [UIImage]()
+            for imgView in imageViewArray {
+                if let img = imgView.image {
+                    images.append(img)
+                }
+            }
+            
+            let item = Item(name: name, description: details, owner: LocalUser.user.id, photos: images)
+            let manager = ItemManager()
+            manager.createItem(item) { error in
+                guard error == nil else {
+                    print("GOOD FUCKING JOB BUDDY YOU BROKE EVERYTHING i fucking hate u")
+                    return
+                }
+                print("YAAAAA BOYZ")
+            }
+        }
     }
-    
-    
- 
-    
-    
 }
