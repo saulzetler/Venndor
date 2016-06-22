@@ -37,12 +37,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
             for subView in subViews {
                 subView.removeFromSuperview()
             }
-            print("Already logged in")
             fetchProfile()
         }
         else
         {
-            print("not logged in")
 //            self.view.addSubview(loginButton)
             loginButton.readPermissions = ["public_profile", "email"]
             loginButton.delegate = self
@@ -51,7 +49,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     }
     
     func fetchProfile() {
-        print("fetch profile")
         
         let parameters = ["fields": "email, first_name, last_name, picture.type(large)"]
         

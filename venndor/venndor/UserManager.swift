@@ -68,21 +68,22 @@ struct UserManager {
             success: { response in
                 if let response = response, result = response["resource"] {
                     if (result.isEmpty != nil) {
+                        completionHandler(nil, nil)
+                    } else {
                         let userData = result[0]
                         let user = User(json: userData as! JSON)
                         completionHandler(user, nil)
+
                     }
-                    else {
-                        completionHandler(nil, nil)
-                    }
-                    
                 }
-            
             }, failure: { error in
                 completionHandler(nil, error)
         })
     }
-    
+}
+
+    /*
+
     func updateUser(user: User, type: UpdateType?, completionHandler: (String?, ErrorType?) -> () ) {
         
         var userInfo: JSON!
@@ -118,7 +119,10 @@ struct UserManager {
                 completionHandler(nil, error)
         })
     }
-}
+*/
+
+
+
 
 
 
