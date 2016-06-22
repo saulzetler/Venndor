@@ -87,19 +87,26 @@ class DraggableView: UIView, UIScrollViewDelegate {
         self.addSubview(scrollView)
     }
     
+    /*
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView){
+        print("decel")
+        adjustPage()
+    }
+    */
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        adjustPage()
+    }
+    
     func adjustPage() {
         
-        /*
         // Test the offset and calculate the current page after scrolling ends
         let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
-        let currentPage:CGFloat = floor((scrollView.contentOffset.y-pageHeight/3)/pageHeight)+1
+        let currentPage:CGFloat = floor((scrollView.contentOffset.y-pageHeight/4)/pageHeight)+1
         // Change the indicator
         picNum = Int(currentPage)
         self.pageControl.currentPage = picNum
-        */
-        
-        let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
-        
+
         switch picNum {
         case 0:
             print("pic 1")
@@ -201,7 +208,6 @@ class DraggableView: UIView, UIScrollViewDelegate {
     
     func upAction() -> Void {
         //use this function to go to next picture
-        picNum
         print("swiped up")
         adjustPage()
         resetView()
