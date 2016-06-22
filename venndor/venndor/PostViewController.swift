@@ -221,8 +221,9 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-
     
+    
+ 
     
     
 }
