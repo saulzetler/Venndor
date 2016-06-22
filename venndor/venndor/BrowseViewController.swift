@@ -53,6 +53,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         self.view.bringSubviewToFront(headerView)
 
     }
+    
     override func viewDidAppear(animated: Bool) {
         
         let subViews = self.view.subviews
