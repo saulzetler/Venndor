@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -72,7 +72,7 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="gEg-Gc-bT8" kind="show" identifier="showSplash" id="iyp-kX-1XF"/>
+                        <segue destination="gEg-Gc-bT8" kind="presentation" identifier="showSplash" id="T4w-aX-c8F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RRf-bf-PBa" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -105,12 +105,12 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="5Q4-WU-6Zg" kind="show" identifier="showBrowse" id="84e-Pz-pkc"/>
+                        <segue destination="5Q4-WU-6Zg" kind="presentation" identifier="showBrowse" id="XwR-UP-4A2"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qux-n2-rnO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-87" y="310"/>
+            <point key="canvasLocation" x="-119" y="248"/>
         </scene>
         <!--BrowseViewController-->
         <scene sceneID="MF2-K3-bZl">
@@ -555,7 +555,7 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="84e-Pz-pkc"/>
+        <segue reference="XwR-UP-4A2"/>
         <segue reference="dlm-GT-Iep"/>
     </inferredMetricsTieBreakers>
 </document>
