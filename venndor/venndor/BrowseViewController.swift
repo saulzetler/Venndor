@@ -29,24 +29,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         }
         */
         
-        let item1 = Item(name: "Dusty Pan", description: "This is a dusty as fuck pan bro.", owner: LocalUser.user.id, photos: nil)
-        let item2 = Item(name: "Dishwasher", description: "This is a dishwasher", owner: LocalUser.user.id, photos: nil)
-        let item3 = Item(name: "Dish soap", description: "This is some dishsoap", owner: LocalUser.user.id, photos: nil)
-        let item4 = Item(name: "Couch", description: "Trust me you don't want this couch", owner: LocalUser.user.id, photos: nil)
-        let item5 = Item(name: "TV", description: "The most fuckign beautiful tv you've ever seen", owner: LocalUser.user.id, photos: nil)
-        let item6 = Item(name: "PS4", description: "PS4 Master Race, gg", owner: LocalUser.user.id, photos: nil)
-
-        let items = [item1, item2, item3, item4, item5, item6]
-        let manager = ItemManager()
-        for item in items {
-            manager.createItem(item) { error in
-                guard error == nil else {
-                    print("Error creating item: \(error)")
-                    return
-                }
-            }
-        }
-        
         self.view.backgroundColor = UIColorFromHex(0xe6f2ff, alpha: 1)
         let backgroundImage = UIImageView(frame: UIScreen.mainScreen().bounds)
         
