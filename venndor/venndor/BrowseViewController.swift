@@ -18,13 +18,16 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        let globalItems = GlobalItems()
+        
+        globalItems.loadNextItem()
         // Do any additional setup after loading the view, typically from a nib.	
 //        let user = LocalUser.user
 //        let items = GlobalItems.items
         
  
-        let manager = ImageManager()
-        manager.pullImageFromServer("57699883e0e4a810b963dfa7")
+//        let manager = ImageManager()
+//        manager.pullImageFromServer("57699883e0e4a810b963dfa7")
         /*
         let image = UIImage(named: "arthas.jpg")
         if let img = image {
