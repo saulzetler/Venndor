@@ -25,6 +25,7 @@ class SplashViewController: UIViewController {
             
             if user != nil {
                 LocalUser.user = user
+                print("\(LocalUser.user.email)")
             }
             else {
                 userManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email) { user, error in

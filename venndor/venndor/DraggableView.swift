@@ -21,7 +21,7 @@ protocol DraggableViewDelegate {
     func cardSwipedRight(card: UIView) -> Void
 }
 
-class DraggableView: UIView {
+class DraggableView: UIView, UIScrollViewDelegate {
     var delegate: DraggableViewDelegate!
     var panGestureRecognizer: UIPanGestureRecognizer!
     var originPoint: CGPoint!
@@ -29,6 +29,12 @@ class DraggableView: UIView {
     var information: UILabel!
     var xFromCenter: Float!
     var yFromCenter: Float!
+    
+    //for scroll view
+    var scrollView: UIScrollView!
+    var containerView = UIView()
+    var pageControl: UIPageControl! = UIPageControl()
+    
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -38,6 +44,7 @@ class DraggableView: UIView {
         super.init(frame: frame)
 
         self.setupView()
+        setupScrollView()
 
         information = UILabel(frame: CGRectMake(0, 50, self.frame.size.width, 100))
         information.text = "no info given"
@@ -58,6 +65,22 @@ class DraggableView: UIView {
         xFromCenter = 0
         yFromCenter = 0
     
+    }
+    
+    //scroll view funcs
+    func setupScrollView() {
+        scrollView = UIScrollView()
+        let cardWidth = self.frame.width
+        let cardHeight = self.frame.height
+        scrollView.delegate = self
+        scrollView.frame = CGRectMake(0, 0, cardWidth, cardHeight)
+        scrollView.contentSize = CGSizeMake(cardWidth, cardHeight*5)
+        scrollView.decelerationRate = 0.1
+        pageControl.currentPage = 0
+        containerView.frame = CGRectMake(0, 0, cardWidth, cardHeight*5)
+        
+        scrollView.addSubview(containerView)
+        self.addSubview(scrollView)
     }
 
     func setupView() -> Void {
