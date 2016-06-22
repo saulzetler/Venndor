@@ -12,10 +12,16 @@ struct ItemManager {
     
     static let globalManager = ItemManager()
     
+    
+    
     func createItem(item: Item, completionHandler: (ErrorType?) -> () ) {
-        let params = ["name": item.name, "details": item.details, "owner": item.owner, "_id": item.id]
-        RESTEngine.sharedEngine.addItemToServerWithDetails(params,
+        let params = ["name": item.name, "details": item.details, "owner": item.owner, "photos": [String]()]
+        RESTEngine.sharedEngine.addItemToServerWithDetails(params as! JSON,
             success: { response in
+                if let response = response, result = response["resource"], id = result[0]["_id"] {
+                    item.id = id as! String
+                }
+                
                 completionHandler(nil)
             }, failure: { error in
                 completionHandler(error)

@@ -42,4 +42,6 @@ class User: NSObject {
         matches = json["matches"] as! [String]
     }
     
+    
+    
 }

@@ -66,10 +66,16 @@ struct UserManager {
     func retrieveUserByEmail(email: String, completionHandler: (User?, ErrorType?) ->() ) {
         RESTEngine.sharedEngine.getUserByEmail(email,
             success: { response in
-                if let response = response, result = response["resource"], userData = result[0] {
-                    let user = User(json: userData as! JSON)
-                    completionHandler(user, nil)
-                }
+                if let response = response, result = response["resource"] {
+                    if (result.isEmpty != nil) {
+                        completionHandler(nil, nil)
+                    } else {
+                        let userData = result[0]
+                        let user = User(json: userData as! JSON)
+                        completionHandler(user, nil)
+
+                    }
+                                    }
             
             }, failure: { error in
                 completionHandler(nil, error)

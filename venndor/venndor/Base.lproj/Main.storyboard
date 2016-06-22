@@ -327,7 +327,7 @@
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="GnR-k2-Gd4" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1776" y="322"/>
+            <point key="canvasLocation" x="1784" y="310"/>
         </scene>
         <!--Post View Controller-->
         <scene sceneID="654-hN-fOH">
@@ -440,7 +440,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4iD-go-TVo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1571" y="2184"/>
+            <point key="canvasLocation" x="1557" y="2202"/>
         </scene>
         <!--Side Menu Controller-->
         <scene sceneID="Fk5-ft-0rT">
@@ -555,7 +555,7 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="84e-Pz-pkc"/>
-        <segue reference="dlm-GT-Iep"/>
+        <segue reference="hrt-cp-q1Q"/>
+        <segue reference="fH8-HC-wrA"/>
     </inferredMetricsTieBreakers>
 </document>
