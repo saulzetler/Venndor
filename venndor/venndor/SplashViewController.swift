@@ -34,7 +34,7 @@ class SplashViewController: UIViewController {
                 }
             }
             
-            itemManager.retrieveMultipleItems(3, filter: nil) { items, error in
+            itemManager.retrieveMultipleItems(10, filter: nil) { items, error in
                 guard error == nil else {
                     print("Error retrieving items from server: \(error)")
                     return

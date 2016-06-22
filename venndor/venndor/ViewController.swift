@@ -32,7 +32,8 @@ extension UIViewController {
         let button = UIButton(frame: frame)
         button.addTarget(self, action: target, forControlEvents: .TouchUpInside)
         button.setTitle(text, forState: .Normal)
-        button.setTitleColor(UIColorFromHex(0x3498db, alpha: 1), forState: .Normal)
+        button.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
+        button.setTitleColor(UIColorFromHex(0x3498db, alpha: 1), forState: UIControlState.Selected)
         return button
     }
     
@@ -58,6 +59,25 @@ extension UIViewController {
         if revealViewController() != nil {
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
         }
+    }
+    
+    //generic scroll view functions
+    func createBoarder(view: UIView) {
+        let boarderColor : UIColor = UIColor.blackColor()
+        view.layer.borderColor = boarderColor.CGColor
+        view.layer.borderWidth = 2.0
+        view.layer.cornerRadius = 8.0
+        view.layer.masksToBounds = true
+    }
+    
+    func createImgView(frame: CGRect, action: Selector, superView: UIView) -> UIImageView {
+        let imgView = UIImageView(frame: frame)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: action)
+        imgView.userInteractionEnabled = true
+        imgView.addGestureRecognizer(tapGestureRecognizer)
+        createBoarder(imgView)
+        superView.addSubview(imgView)
+        return imgView
     }
     
 }
