@@ -49,12 +49,12 @@ struct UserManager {
                 //deconstruct the response into a "results" array
                 if let response = response, result = response["resource"] {
                     //if the array is empty, then the user does not exist in the database. Return nil
-                    if (result.isEmpty != nil) {
-                        completionHandler(nil, nil)
-                    }
-                    else {
+                    if (result.count>0) {
                         let user = User(json: response)
                         completionHandler(user, nil)
+                    }
+                    else {
+                        completionHandler(nil, nil)
                     }
                 }
             }, failure: { error in
@@ -67,12 +67,13 @@ struct UserManager {
         RESTEngine.sharedEngine.getUserByEmail(email,
             success: { response in
                 if let response = response, result = response["resource"] {
-                    if (result.isEmpty != nil) {
-                        completionHandler(nil, nil)
-                    } else {
+                    if (result.count>0) {
                         let userData = result[0]
                         let user = User(json: userData as! JSON)
                         completionHandler(user, nil)
+                    } else {
+                        completionHandler(nil, nil)
+                        
 
                     }
                 }
