@@ -10,8 +10,8 @@ import UIKit
 
 class SplashViewController: UIViewController {
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
+    override func viewDidLoad() {
+        super.viewDidLoad()
         
         let userManager = UserManager()
         let itemManager = ItemManager()
@@ -40,10 +40,14 @@ class SplashViewController: UIViewController {
                 
                 if items != nil {
                     GlobalItems.items = items!
-                    self.performSegueWithIdentifier("showBrowse", sender: self)
+                    self.triggerSegue()
                 }
             }
         }
+    }
+    
+    func triggerSegue(){
+        self.performSegueWithIdentifier("showBrowse", sender: self)
     }
     
 }
