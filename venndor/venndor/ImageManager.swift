@@ -30,7 +30,7 @@ struct ImageManager {
                 if let response = response, dataString = response["arthas"] {
                     let data = NSData(base64EncodedString: dataString as! String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
                     let image = UIImage(data: data!)
-                    print("Image Shiet")
+
                 }
 
             }, failure: { error in
