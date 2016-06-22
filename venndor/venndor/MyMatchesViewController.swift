@@ -38,7 +38,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         boughtBar = UIView(frame: CGRect(x: screenSize.width/2, y: 32, width: screenSize.width/2, height: 3))
         let matchesButtonFrame = CGRectMake(0, 0, screenSize.width/2, 32)
         let boughtButtonFrame = CGRectMake(screenSize.width/2, 0, screenSize.width/2, 32)
-        buttonBar.backgroundColor = UIColor.clearColor()
+        buttonBar.backgroundColor = UIColor.whiteColor()
         matchesButton = makeTextButton("Matches", frame: matchesButtonFrame, target: "matchesPressed:")
         boughtButton = makeTextButton("Bought", frame: boughtButtonFrame, target: "boughtPressed:")
         matchesButton.selected = true
@@ -51,21 +51,27 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func addImages() {
-        createImgView(CGRect(x: screenSize.width*0.05, y: screenSize.height*0.18, width: screenSize.width*0.3, height: screenSize.width*0.3), action: "none:", superView: containerView)
+        let matchContainer = UIView(frame: CGRect(x: 0, y: screenSize.height*0.17, width: screenSize.width, height: screenSize.height*0.4))
+        createImgView(CGRect(x: screenSize.width*0.05, y: 5, width: screenSize.width*0.3, height: screenSize.width*0.3), action: "none:", superView: matchContainer)
+        let priceContainer = UIView(frame: CGRect(x: screenSize.width*0.27, y: -8, width: screenSize.width*0.12, height: screenSize.width*0.08))
+        priceContainer.backgroundColor = UIColorFromHex(0x2ecc71)
+        createBoarder(priceContainer)
+        matchContainer.addSubview(priceContainer)
+        containerView.addSubview(matchContainer)
     }
     
     func matchesPressed(sender: UIButton) {
         print("matches pressed")
         matchesButton.selected = true
         boughtButton.selected = false
-        boughtBar.backgroundColor = UIColor.clearColor()
+        boughtBar.backgroundColor = UIColor.whiteColor()
         matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)    }
     
     func boughtPressed(sender: UIButton) {
         print("bought pressed")
         boughtButton.selected = true
         matchesButton.selected = false
-        matchesBar.backgroundColor = UIColor.clearColor()
+        matchesBar.backgroundColor = UIColor.whiteColor()
         boughtBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
     }
     
