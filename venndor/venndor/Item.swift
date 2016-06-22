@@ -13,8 +13,15 @@ struct GlobalItems {
     static var items = [Item]()
     
     func loadNextItem() -> Void {
+//        let itemManager = ItemManager()
+        
         for x in 0...9 {
-            print(x)
+            if x < 9 {
+                GlobalItems.items[x] = GlobalItems.items[x+1]
+            }
+            else {
+                
+            }
         }
     }
 }
