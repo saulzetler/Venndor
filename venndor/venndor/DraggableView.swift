@@ -34,6 +34,7 @@ class DraggableView: UIView, UIScrollViewDelegate {
     var scrollView: UIScrollView!
     var containerView = UIView()
     var pageControl: UIPageControl! = UIPageControl()
+    var picNum: Int!
     
 
     required init?(coder aDecoder: NSCoder) {
@@ -78,9 +79,55 @@ class DraggableView: UIView, UIScrollViewDelegate {
         scrollView.decelerationRate = 0.1
         pageControl.currentPage = 0
         containerView.frame = CGRectMake(0, 0, cardWidth, cardHeight*5)
+        scrollView.decelerationRate = 0.1
+        pageControl.currentPage = 0
+        picNum = 0
         
         scrollView.addSubview(containerView)
         self.addSubview(scrollView)
+    }
+    
+    /*
+    func scrollViewDidEndDecelerating(scrollView: UIScrollView){
+        print("decel")
+        adjustPage()
+    }
+    */
+    
+    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+        adjustPage()
+    }
+    
+    func adjustPage() {
+        
+        // Test the offset and calculate the current page after scrolling ends
+        let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
+        let currentPage:CGFloat = floor((scrollView.contentOffset.y-pageHeight/4)/pageHeight)+1
+        // Change the indicator
+        picNum = Int(currentPage)
+        self.pageControl.currentPage = picNum
+
+        switch picNum {
+        case 0:
+            print("pic 1")
+        case 1:
+            print("pic 2")
+        case 2:
+            print("pic 3")
+        case 3:
+            print("pic 4")
+        case 4:
+            print("pic 5")
+        default:
+            break
+        }
+        
+        for y in 0...6 {
+            if y == picNum {
+                let yOffset = CGPointMake(0, pageHeight*CGFloat(y));
+                self.scrollView.setContentOffset(yOffset, animated: true)
+            }
+        }
     }
 
     func setupView() -> Void {
@@ -162,12 +209,14 @@ class DraggableView: UIView, UIScrollViewDelegate {
     func upAction() -> Void {
         //use this function to go to next picture
         print("swiped up")
+        adjustPage()
         resetView()
     }
     
     func downAction() -> Void {
         //use this function to go to previous picture
         print("swiped down")
+        adjustPage()
         resetView()
     }
     

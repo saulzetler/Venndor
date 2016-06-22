@@ -11,6 +11,12 @@ import UIKit
 
 struct GlobalItems {
     static var items = [Item]()
+    
+    func loadNextItem() -> Void {
+        for x in 0...9 {
+            print(x)
+        }
+    }
 }
 
 class Item: NSObject {

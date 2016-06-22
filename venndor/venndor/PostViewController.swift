@@ -35,6 +35,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         sideMenuGestureSetup()
         setupImageViews()
         setupScrollView()
+        setupPostButton()
         addHeader()
     }
     
@@ -125,6 +126,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         view.layer.borderWidth = 2.0
         view.layer.cornerRadius = 8.0
         view.layer.masksToBounds = true
+    }
+    
+    func setupPostButton() {
+        let buttonFrame = CGRectMake(screenSize.width*0.4, screenSize.height*2.7, screenSize.width*0.2, screenSize.height*0.1)
+        postButton = makeTextButton("Post!", frame: buttonFrame, target: "postItem:")
+        containerView.addSubview(postButton)
     }
     
     //delegate functions
@@ -220,6 +227,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         currentImgView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         
         self.dismissViewControllerAnimated(true, completion: nil)
+    }
+
+    //button targets
+    
+    func postItem(sender: UIButton) {
+        print("button pressed")
     }
     
     

@@ -32,7 +32,7 @@
 		63859A141D13347C004F4968 /* NIKFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A111D13347C004F4968 /* NIKFile.swift */; };
 		63C8F7331D189E3D00FFC1E2 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */; };
 		63C8F7351D19C01500FFC1E2 /* hellscreams.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63C8F7341D19C01500FFC1E2 /* hellscreams.jpg */; };
-		63C8F7391D19C8CF00FFC1E2 /* arthas.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63C8F7381D19C8CF00FFC1E2 /* arthas.jpg */; };
+
 		E43C92B51D189C67003E9CF5 /* ItemNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */; };
 		E44C15181D11B5D00006EBAD /* Shopping Cart Loaded-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */; };
 		E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15171D11B5D00006EBAD /* Megaphone-50.png */; };
@@ -113,7 +113,7 @@
 		63859A111D13347C004F4968 /* NIKFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKFile.swift; sourceTree = "<group>"; };
 		63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		63C8F7341D19C01500FFC1E2 /* hellscreams.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hellscreams.jpg; sourceTree = "<group>"; };
-		63C8F7381D19C8CF00FFC1E2 /* arthas.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = arthas.jpg; sourceTree = "<group>"; };
+
 		E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemNameTextField.swift; sourceTree = "<group>"; };
 		E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shopping Cart Loaded-50.png"; sourceTree = "<group>"; };
 		E44C15171D11B5D00006EBAD /* Megaphone-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Megaphone-50.png"; sourceTree = "<group>"; };
@@ -176,7 +176,6 @@
 		105FCAFF1D08A5490073E3AE /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				63C8F7381D19C8CF00FFC1E2 /* arthas.jpg */,
 				105FCB001D08A5C70073E3AE /* LoginViewController.swift */,
 				63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */,
 				E49051A81D09B0250045D5C0 /* BrowseViewController.swift */,
@@ -449,7 +448,6 @@
 				E44C151F1D11B9B90006EBAD /* New Product-50.png in Resources */,
 				E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */,
 				E44C15381D11E0430006EBAD /* Chair-50.png in Resources */,
-				63C8F7391D19C8CF00FFC1E2 /* arthas.jpg in Resources */,
 				E49051B41D0A006B0045D5C0 /* app landing page background.png in Resources */,
 				63C8F7351D19C01500FFC1E2 /* hellscreams.jpg in Resources */,
 				10ADC9B51D0749700028A999 /* LaunchScreen.storyboard in Resources */,
