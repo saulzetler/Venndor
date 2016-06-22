@@ -76,6 +76,15 @@ struct UserManager {
 
                     }
                                     }
+                        let userData = result[0]
+                        let user = User(json: userData as! JSON)
+                        completionHandler(user, nil)
+                    }
+                    else {
+                        completionHandler(nil, nil)
+                    }
+                    
+                }
             
             }, failure: { error in
                 completionHandler(nil, error)

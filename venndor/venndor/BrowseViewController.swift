@@ -18,7 +18,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        // Do any additional setup after loading the view, typically from a nib.
+        // Do any additional setup after loading the view, typically from a nib.	
+//        let user = LocalUser.user
+//        let items = GlobalItems.items
         
  
         let manager = ImageManager()
@@ -57,6 +59,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             revealViewController().rearViewRevealWidth = screenSize.width*0.6
             self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
         }
+        self.view.addSubview(headerView)
+        self.view.bringSubviewToFront(headerView)
+
     }
     override func viewDidAppear(animated: Bool) {
         
@@ -71,9 +76,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         }
         headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
         headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
-        
-        self.view.addSubview(headerView)
-        self.view.bringSubviewToFront(headerView)
     }
 
 
