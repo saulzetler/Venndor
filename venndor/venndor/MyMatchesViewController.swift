@@ -13,6 +13,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var matchesButton: UIButton!
     var boughtButton: UIButton!
+    var matchesBar: UIView!
+    var boughtBar: UIView!
     
     var scrollView: UIScrollView!
     var containerView = UIView()
@@ -21,14 +23,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-       
-        /*
-        let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
-        label.center = CGPointMake(160, 284)
-        label.textAlignment = NSTextAlignment.Center
-        label.text = "My Matches"
-        self.view.addSubview(label)
-        */
         
         setupScrollView()
         addImages()
@@ -39,31 +33,40 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     } 
     
     func setupButtons() {
-        let buttonBar = UIView(frame: CGRect(x: 0, y: 64, width: screenSize.width, height: 32))
+        let buttonBar = UIView(frame: CGRect(x: 0, y: 64, width: screenSize.width, height: 35))
+        matchesBar = UIView(frame: CGRect(x: 0, y: 32, width: screenSize.width/2, height: 3))
+        boughtBar = UIView(frame: CGRect(x: screenSize.width/2, y: 32, width: screenSize.width/2, height: 3))
         let matchesButtonFrame = CGRectMake(0, 0, screenSize.width/2, 32)
         let boughtButtonFrame = CGRectMake(screenSize.width/2, 0, screenSize.width/2, 32)
-        buttonBar.backgroundColor = UIColor.lightGrayColor()
+        buttonBar.backgroundColor = UIColor.clearColor()
         matchesButton = makeTextButton("Matches", frame: matchesButtonFrame, target: "matchesPressed:")
         boughtButton = makeTextButton("Bought", frame: boughtButtonFrame, target: "boughtPressed:")
+        matchesButton.selected = true
+        matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+        buttonBar.addSubview(matchesBar)
+        buttonBar.addSubview(boughtBar)
         buttonBar.addSubview(matchesButton)
         buttonBar.addSubview(boughtButton)
         self.view.addSubview(buttonBar)
     }
     
     func addImages() {
-        createImgView(CGRect(x: screenSize.width*0.1, y: screenSize.height*0.5, width: screenSize.width*0.3, height: screenSize.width*0.3), action: "none:", superView: containerView)
+        createImgView(CGRect(x: screenSize.width*0.05, y: screenSize.height*0.18, width: screenSize.width*0.3, height: screenSize.width*0.3), action: "none:", superView: containerView)
     }
     
     func matchesPressed(sender: UIButton) {
         print("matches pressed")
         matchesButton.selected = true
         boughtButton.selected = false
-    }
+        boughtBar.backgroundColor = UIColor.clearColor()
+        matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)    }
     
     func boughtPressed(sender: UIButton) {
         print("bought pressed")
         boughtButton.selected = true
         matchesButton.selected = false
+        matchesBar.backgroundColor = UIColor.clearColor()
+        boughtBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
     }
     
     //hard coded for now but we can change to size scroll view based on number of matches
