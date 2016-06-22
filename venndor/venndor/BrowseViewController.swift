@@ -25,12 +25,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 //        let user = LocalUser.user
 //        let items = GlobalItems.items
         
-        let image = UIImage(named: "arthas.jpg")
-        if let img = image {
-            manager.saveImagetoServer(img)
-        }
-        */
-        
         self.view.backgroundColor = UIColorFromHex(0xe6f2ff, alpha: 1)
         let backgroundImage = UIImageView(frame: UIScreen.mainScreen().bounds)
         
