@@ -29,6 +29,7 @@ class SplashViewController: UIViewController {
             else {
                 userManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email) { user, error in
                     LocalUser.user = user
+                    self.triggerSegueTutorial()
                 }
             }
             
@@ -48,6 +49,9 @@ class SplashViewController: UIViewController {
     
     func triggerSegue(){
         self.performSegueWithIdentifier("showBrowse", sender: self)
+    }
+    func triggerSegueTutorial(){
+        self.performSegueWithIdentifier("goTutorial", sender: self)
     }
     
 }

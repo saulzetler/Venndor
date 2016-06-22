@@ -14,6 +14,9 @@ class TutorialViewController: UIViewController, UIScrollViewDelegate {
     @IBOutlet var textView: UITextView!
     @IBOutlet var pageControl: UIPageControl!
     @IBOutlet var startButton: UIButton!
+    @IBAction func goToBrowse(sender: UIButton) {
+        self.performSegueWithIdentifier("goBrowse", sender: self)
+    }
     
     override func viewDidLoad() {
         super.viewDidLoad()

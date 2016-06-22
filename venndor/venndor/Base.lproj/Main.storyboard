@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -106,6 +106,7 @@
                     </view>
                     <connections>
                         <segue destination="5Q4-WU-6Zg" kind="presentation" identifier="showBrowse" id="XwR-UP-4A2"/>
+                        <segue destination="DO8-qQ-SBg" kind="presentation" identifier="goTutorial" id="ww2-Jc-2vI"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qux-n2-rnO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -178,6 +179,9 @@
                                     <constraint firstAttribute="height" constant="60" id="nDm-ja-b4H"/>
                                 </constraints>
                                 <state key="normal" title="Button"/>
+                                <connections>
+                                    <action selector="goToBrowse:" destination="DO8-qQ-SBg" eventType="touchUpInside" id="R32-Rs-SIq"/>
+                                </connections>
                             </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
@@ -201,6 +205,7 @@
                         <outlet property="scrollView" destination="Qgc-Ga-rqh" id="oat-r4-AOa"/>
                         <outlet property="startButton" destination="GUo-Lx-WJ9" id="UfE-8h-jgv"/>
                         <outlet property="textView" destination="oFX-bu-fhB" id="KX3-NW-5ba"/>
+                        <segue destination="5Q4-WU-6Zg" kind="presentation" identifier="goBrowse" id="NQb-tI-6ve"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="p5B-FF-z40" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -555,7 +560,7 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="XwR-UP-4A2"/>
+        <segue reference="NQb-tI-6ve"/>
         <segue reference="dlm-GT-Iep"/>
     </inferredMetricsTieBreakers>
 </document>
