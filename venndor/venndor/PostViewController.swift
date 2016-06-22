@@ -63,7 +63,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemName.delegate = self
         itemName.clearsOnBeginEditing = true
         containerView.addSubview(itemName)
-//        self.view.addSubview(itemName)
         createBoarder(itemName)
         itemName.returnKeyType = .Done
 
@@ -74,59 +73,20 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemDescription.text = "Description"
         itemDescription.delegate = self
         containerView.addSubview(itemDescription)
-//        self.view.addSubview(itemDescription)
         createBoarder(itemDescription)
         itemDescription.returnKeyType = .Done
     }
+
     
     func setupImageViews() {
         
-        imageView1 = UIImageView(frame: CGRectMake(screenSize.width*0.15, screenSize.height*0.13, screenSize.width*0.7, screenSize.width*0.7))
-        imageView2 = UIImageView(frame: CGRectMake(screenSize.width*0.15, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3))
-        imageView3 = UIImageView(frame: CGRectMake(screenSize.width*0.55, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3))
-        imageView4 = UIImageView(frame: CGRectMake(screenSize.width*0.15, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3))
-        imageView5 = UIImageView(frame: CGRectMake(screenSize.width*0.55, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3))
-        
-        
-        
-        containerView.addSubview(imageView1)
-        containerView.addSubview(imageView2)
-        containerView.addSubview(imageView3)
-        containerView.addSubview(imageView4)
-        containerView.addSubview(imageView5)
-        
-//        self.view.addSubview(imageView1)
-//        self.view.addSubview(imageView2)
-//        self.view.addSubview(imageView3)
-        createBoarder(imageView1)
-        createBoarder(imageView2)
-        createBoarder(imageView3)
-        createBoarder(imageView4)
-        createBoarder(imageView5)
-        let tapGestureRecognizer1 = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
-        let tapGestureRecognizer2 = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
-        let tapGestureRecognizer3 = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
-        let tapGestureRecognizer4 = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
-        let tapGestureRecognizer5 = UITapGestureRecognizer(target:self, action:Selector("imageTapped:"))
-        imageView1.userInteractionEnabled = true
-        imageView2.userInteractionEnabled = true
-        imageView3.userInteractionEnabled = true
-        imageView4.userInteractionEnabled = true
-        imageView5.userInteractionEnabled = true
-        imageView1.addGestureRecognizer(tapGestureRecognizer1)
-        imageView2.addGestureRecognizer(tapGestureRecognizer2)
-        imageView3.addGestureRecognizer(tapGestureRecognizer3)
-        imageView4.addGestureRecognizer(tapGestureRecognizer4)
-        imageView5.addGestureRecognizer(tapGestureRecognizer5)
+        imageView1 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.13, screenSize.width*0.7, screenSize.width*0.7), action: "imageTapped:", superView: containerView)
+        imageView2 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
+        imageView3 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
+        imageView4 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
+        imageView5 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
     }
-    
-    func createBoarder(view: UIView) {
-        let boarderColor : UIColor = UIColor.blackColor()
-        view.layer.borderColor = boarderColor.CGColor
-        view.layer.borderWidth = 2.0
-        view.layer.cornerRadius = 8.0
-        view.layer.masksToBounds = true
-    }
+
     
     func setupPostButton() {
         let buttonFrame = CGRectMake(screenSize.width*0.4, screenSize.height*2.7, screenSize.width*0.2, screenSize.height*0.1)
