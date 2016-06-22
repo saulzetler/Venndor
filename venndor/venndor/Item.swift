@@ -23,24 +23,28 @@ class Item: NSObject {
     var name: String
     var details: String
     var id: String!
-    var photos: [UIImage]!
+    var photos: [UIImage]?
+    var photoStrings: [String]!
     var owner: String
     
+    //init from the server
     init(json: JSON) {
         name = json["name"] as! String
         details = json["details"] as! String
         id = json["_id"] as! String
-        owner = json["owner"] as! String 
+        owner = json["owner"] as! String
+        photoStrings = json["photoStrings"] as! [String]
     }
     
-    init(name: String, description: String, owner: String, photos: [UIImage]) {
+    //init from the app 
+    init(name: String, description: String, owner: String, photos: [UIImage]?) {
         self.name = name
         self.details = description
         self.owner = owner
         self.photos = photos
     }
     
-    func getImagesFromString(imageStrings: [String]) -> [UIImage] {
+    func getImagesFromStrings(imageStrings: [String]) -> [UIImage] {
         var images = [UIImage]()
         for str in imageStrings {
             let data = NSData(base64EncodedString: str, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)

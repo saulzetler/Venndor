@@ -32,7 +32,7 @@
 		63859A141D13347C004F4968 /* NIKFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A111D13347C004F4968 /* NIKFile.swift */; };
 		63C8F7331D189E3D00FFC1E2 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */; };
 		63C8F7351D19C01500FFC1E2 /* hellscreams.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63C8F7341D19C01500FFC1E2 /* hellscreams.jpg */; };
-		63C8F7371D19C4E500FFC1E2 /* ImageManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F7361D19C4E500FFC1E2 /* ImageManager.swift */; };
+
 		E43C92B51D189C67003E9CF5 /* ItemNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */; };
 		E44C15181D11B5D00006EBAD /* Shopping Cart Loaded-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */; };
 		E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15171D11B5D00006EBAD /* Megaphone-50.png */; };
@@ -113,7 +113,7 @@
 		63859A111D13347C004F4968 /* NIKFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKFile.swift; sourceTree = "<group>"; };
 		63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		63C8F7341D19C01500FFC1E2 /* hellscreams.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hellscreams.jpg; sourceTree = "<group>"; };
-		63C8F7361D19C4E500FFC1E2 /* ImageManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ImageManager.swift; sourceTree = "<group>"; };
+
 		E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemNameTextField.swift; sourceTree = "<group>"; };
 		E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shopping Cart Loaded-50.png"; sourceTree = "<group>"; };
 		E44C15171D11B5D00006EBAD /* Megaphone-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Megaphone-50.png"; sourceTree = "<group>"; };
@@ -278,7 +278,6 @@
 			children = (
 				63088BA51D187CA900F67931 /* UserManager.swift */,
 				63088BA61D187CA900F67931 /* ItemManager.swift */,
-				63C8F7361D19C4E500FFC1E2 /* ImageManager.swift */,
 				102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */,
 			);
 			name = Controllers;
@@ -493,7 +492,6 @@
 				E44C152D1D11CC300006EBAD /* MyMatchesViewController.swift in Sources */,
 				63C8F7331D189E3D00FFC1E2 /* SplashViewController.swift in Sources */,
 				E43C92B51D189C67003E9CF5 /* ItemNameTextField.swift in Sources */,
-				63C8F7371D19C4E500FFC1E2 /* ImageManager.swift in Sources */,
 				105FCB011D08A5C70073E3AE /* LoginViewController.swift in Sources */,
 				105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */,
 				63859A141D13347C004F4968 /* NIKFile.swift in Sources */,

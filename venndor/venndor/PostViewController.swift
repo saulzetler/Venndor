@@ -228,14 +228,15 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
         self.dismissViewControllerAnimated(true, completion: nil)
     }
-    
+
     //button targets
     
     func postItem(sender: UIButton) {
         print("button pressed")
     }
-
     
+    
+ 
     
     
 }
