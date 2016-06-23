@@ -18,6 +18,8 @@ struct ItemManager {
         }
         
         let params = ["name": item.name, "details": item.details, "owner": item.owner, "photoStrings": item.photoStrings]
+
+        
         RESTEngine.sharedEngine.addItemToServerWithDetails(params as! JSON,
             success: { response in
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
