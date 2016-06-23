@@ -55,6 +55,17 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
 //        self.addSubview(xButton)
 //        self.addSubview(checkButton)
     }
+    
+    func createDraggableViewFromItem(item: Item) -> DraggableView {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let CARD_HEIGHT: CGFloat = screenSize.height*0.8
+        let CARD_WIDTH: CGFloat = screenSize.width*0.9
+        let draggableView = DraggableView(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2, (self.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT))
+        draggableView.information.text = item.name
+        draggableView.delegate = self
+        return draggableView
+
+    }
 
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
