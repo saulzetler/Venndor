@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 class DraggableViewBackground: UIView, DraggableViewDelegate {
-    var exampleCardLabels: [String]!
+    var exampleCardLabels: [Item]!
     var allCards: [DraggableView]!
 
 //    let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -34,7 +34,7 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
         super.init(frame: frame)
         super.layoutSubviews()
         self.setupView()
-        exampleCardLabels = ["first", "second", "third", "fourth", "last"]
+        exampleCardLabels = GlobalItems.items
         allCards = []
         loadedCards = []
         cardsLoadedIndex = 0
@@ -61,7 +61,7 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
         let CARD_HEIGHT: CGFloat = screenSize.height*0.8
         let CARD_WIDTH: CGFloat = screenSize.width*0.9
         let draggableView = DraggableView(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2, (self.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT))
-        draggableView.information.text = exampleCardLabels[index]
+        draggableView.information.text = exampleCardLabels[index].name
         draggableView.delegate = self
         return draggableView
     }
@@ -87,6 +87,12 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
             }
         }
     }
+    
+//    func loadAnotherCard() -> Void {
+//        let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(1)
+//        loadedCards.append(newCard)
+//        self.insertSubview(loadedCards[loadedCards.endIndex-1], belowSubview: loadedCards[loadedCards.endIndex-2])
+//    }
 
     func cardSwipedLeft(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
@@ -96,6 +102,8 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
             cardsLoadedIndex = cardsLoadedIndex + 1
             self.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
         }
+        
+//        self.loadAnotherCard()
     }
     
     func cardSwipedRight(card: UIView) -> Void {
@@ -106,6 +114,7 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
             cardsLoadedIndex = cardsLoadedIndex + 1
             self.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
         }
+//        self.loadAnotherCard()
     }
 
     func swipeRight() -> Void {
