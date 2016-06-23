@@ -13,8 +13,8 @@ let kAppVersion = "1.0.1"
 // change kApiKey and kBaseInstanceUrl to match your app and instance
 
 // API key for your app goes here, see apps tab in admin console
-private let kApiKey = "e10ab3fdb324aad37d14fd263a2065f52bc1c883d121d643c4913bf46f59609c"
-private let kBaseInstanceUrl = "http://bitnami-dreamfactory-a50a.cloudapp.net/api/v2"
+private let kApiKey = "f8af5d8a7de063db867f02839c13bfa791c2e79ac19fb2decec669a835028561"
+private let kBaseInstanceUrl = "http://ec2-54-172-155-11.compute-1.amazonaws.com/api/v2"
 private let kDbServiceName = "venndor/_table"
 private let kContainerName = "item_images"
 
