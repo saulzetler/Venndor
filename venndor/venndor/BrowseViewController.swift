@@ -18,6 +18,11 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        //add the header
+        headerView = HeaderView(frame: self.view.frame)
+        self.view.addSubview(headerView)
+        
+        
         let globalItems = GlobalItems()
         
         globalItems.loadNextItem()
@@ -32,16 +37,13 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         self.view.addSubview(draggableBackground)
         draggableBackground.insertSubview(backgroundImage, atIndex: 0)
         
-        
-        //add the header
-        headerView = HeaderView(frame: self.view.frame)
-
-        
         //MiniMyMatches button at bottom of browse.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
         miniMatches = makeImageButton("ic_menu_white.png", frame: buttonSize, target: "showAlert:", tinted: false, circle: true, backgroundColor: 0x3498db, backgroundAlpha: 1)
         self.view.addSubview(miniMatches)
+        
+        self.view.bringSubviewToFront(headerView)
         
 
         if revealViewController() != nil {
@@ -49,8 +51,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             revealViewController().rearViewRevealWidth = screenSize.width*0.6
             self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
         }
-        self.view.addSubview(headerView)
-        self.view.bringSubviewToFront(headerView)
 
     }
     
