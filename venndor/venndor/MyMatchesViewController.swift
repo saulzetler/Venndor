@@ -27,7 +27,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         setupScrollView()
         addImages()
         addHeader()
-        sideMenuGestureSetup()
+        addGestureRecognizer()
         setupButtons()
         
     } 
@@ -62,17 +62,22 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     
     func matchesPressed(sender: UIButton) {
         print("matches pressed")
-        matchesButton.selected = true
-        boughtButton.selected = false
-        boughtBar.backgroundColor = UIColor.whiteColor()
-        matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)    }
+        toggleView(true)
+    }
     
     func boughtPressed(sender: UIButton) {
         print("bought pressed")
-        boughtButton.selected = true
-        matchesButton.selected = false
-        matchesBar.backgroundColor = UIColor.whiteColor()
-        boughtBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+        toggleView(false)
+    }
+    
+    func addGestureRecognizer() {
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
+        self.view.addGestureRecognizer(swipeRight)
+        
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
+        self.view.addGestureRecognizer(swipeLeft)
     }
     
     //hard coded for now but we can change to size scroll view based on number of matches
@@ -91,8 +96,39 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         view.addSubview(scrollView)
     }
     
+    func toggleView(toMatches: Bool) {
+        if toMatches {
+            matchesButton.selected = true
+            boughtButton.selected = false
+            boughtBar.backgroundColor = UIColor.whiteColor()
+            matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+        }
+        else {
+            boughtButton.selected = true
+            matchesButton.selected = false
+            matchesBar.backgroundColor = UIColor.whiteColor()
+            boughtBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+        }
+    }
+    
     func none(sender: UIButton) {
         
+    }
+    
+    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
+        
+        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
+            switch swipeGesture.direction {
+            case UISwipeGestureRecognizerDirection.Right:
+                print("Swiped right")
+                toggleView(true)
+            case UISwipeGestureRecognizerDirection.Left:
+                print("Swiped left")
+                toggleView(false)
+            default:
+                break
+            }
+        }
     }
     
 }

@@ -71,9 +71,6 @@ final class NIKApiInvoker {
         let date = NSDate()
         NSURLConnection.sendAsynchronousRequest(request, queue: queue) {(response, response_data, var response_error) -> Void in
             self.stopLoad()
-            if let data = response_data {
-                print("\(data)")
-            }
             if let response_error = response_error {
                 if let response_data = response_data {
                     let results = try? NSJSONSerialization.JSONObjectWithData(response_data, options: [])
