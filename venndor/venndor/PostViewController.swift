@@ -88,6 +88,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         imageView4 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
         imageView5 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
 
+        imageViewArray = [imageView1, imageView2, imageView3, imageView4, imageView5]
+    
     }
 
     

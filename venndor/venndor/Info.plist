@@ -6,7 +6,7 @@
     <dict>
         <key>NSExceptionDomains</key>
         <dict>
-            <key>ec2-52-53-217-174.us-west-1.compute.amazonaws.com</key>
+            <key>bitnami-dreamfactory-a50a.cloudapp.net</key>
             <dict>
                 <key>NSIncludesSubdomains</key>
                 <true/>
