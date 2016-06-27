@@ -60,7 +60,7 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let CARD_HEIGHT: CGFloat = screenSize.height*0.8
         let CARD_WIDTH: CGFloat = screenSize.width*0.9
-        let draggableView = DraggableView(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2, (self.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT))
+        let draggableView = DraggableView(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2, (self.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), photos: item.photos!)
         draggableView.information.text = item.name
         draggableView.delegate = self
         return draggableView
@@ -71,7 +71,7 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let CARD_HEIGHT: CGFloat = screenSize.height*0.8
         let CARD_WIDTH: CGFloat = screenSize.width*0.9
-        let draggableView = DraggableView(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2, (self.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT))
+        let draggableView = DraggableView(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2, (self.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), photos: exampleCardLabels[index].photos!)
         draggableView.information.text = exampleCardLabels[index].name
         draggableView.delegate = self
         return draggableView
@@ -101,7 +101,7 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
     
 //    func loadAnotherCard() -> Void {
 //        let itemManager = ItemManager()
-//        itemManager.retrieveMultipleItems(1, filter: nil) { items, error in
+//        itemManager.retrieveMultipleItems(1, offset:  filter: nil) { items, error in
 //            guard error == nil else {
 //                print("Error retrieving items from server: \(error)")
 //                return
@@ -122,7 +122,7 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
             loadedCards.append(allCards[cardsLoadedIndex])
             cardsLoadedIndex = cardsLoadedIndex + 1
             self.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
-            
+
 //            loadAnotherCard()
         }
     }

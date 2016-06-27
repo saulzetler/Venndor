@@ -560,7 +560,6 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="XwR-UP-4A2"/>
         <segue reference="hrt-cp-q1Q"/>
         <segue reference="dlm-GT-Iep"/>
     </inferredMetricsTieBreakers>

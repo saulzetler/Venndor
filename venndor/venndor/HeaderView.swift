@@ -74,6 +74,7 @@ class HeaderView: UIView, UITextFieldDelegate {
         imageView.frame = CGRect(x: 0, y: 0, width: 25, height: 25)
         imageView.layer.zPosition = 1
         sampleTextField.addSubview(imageView)
+        sampleTextField.bringSubviewToFront(imageView)
     }
     
     func setUpViewMenu() -> Void {

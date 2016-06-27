@@ -20,7 +20,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         super.viewDidLoad()
         //add the header
         headerView = HeaderView(frame: self.view.frame)
-        self.view.addSubview(headerView)
+
         
         
         let globalItems = GlobalItems()
@@ -31,30 +31,34 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 //        let items = GlobalItems.items
         
         self.view.backgroundColor = UIColorFromHex(0xe6f2ff, alpha: 1)
+        
+        
+        //MiniMyMatches button at bottom of browse.
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
+        miniMatches = makeImageButton("ic_menu_white.png", frame: buttonSize, target: "showAlert:", tinted: false, circle: true, backgroundColor: 0x3498db, backgroundAlpha: 1)
+        
+        if revealViewController() != nil {
+            revealViewController().rightViewRevealWidth = screenSize.width*0.3
+            revealViewController().rearViewRevealWidth = screenSize.width*0.6
+            self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
+        }
+        self.view.addSubview(headerView)
+        
+
+
+    }
+    
+    override func viewDidAppear(animated: Bool) {
         let backgroundImage = UIImageView(frame: UIScreen.mainScreen().bounds)
         
         let draggableBackground: DraggableViewBackground = DraggableViewBackground(frame: self.view.frame)
         self.view.addSubview(draggableBackground)
         draggableBackground.insertSubview(backgroundImage, atIndex: 0)
         
-        //MiniMyMatches button at bottom of browse.
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
-        miniMatches = makeImageButton("ic_menu_white.png", frame: buttonSize, target: "showAlert:", tinted: false, circle: true, backgroundColor: 0x3498db, backgroundAlpha: 1)
-        self.view.addSubview(miniMatches)
-        
         self.view.bringSubviewToFront(headerView)
         
-
-        if revealViewController() != nil {
-            revealViewController().rightViewRevealWidth = screenSize.width*0.3
-            revealViewController().rearViewRevealWidth = screenSize.width*0.6
-            self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
-        }
-
-    }
-    
-    override func viewDidAppear(animated: Bool) {
+        self.view.addSubview(miniMatches)
         
         let subViews = self.view.subviews
         for subView in subViews {

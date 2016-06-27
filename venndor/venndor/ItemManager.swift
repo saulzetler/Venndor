@@ -55,7 +55,7 @@ struct ItemManager {
                                 if let content = response!["content"] as? NSString {
                                     let fileData = NSData(base64EncodedString: content as String, options: [NSDataBase64DecodingOptions.IgnoreUnknownCharacters])
                                     let img = UIImage(data: fileData!)
-                                    item.photos?.append(img!)
+                                    item.photos = [img!]
                                     print("YYYYYYAARRGHGHHHHHHHH!")
                                 }
                             }, failure: { error in

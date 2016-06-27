@@ -197,7 +197,7 @@ final class RESTEngine {
         var queryParameters: [String: AnyObject] = ["limit": "\(count)"]
         
         if let offset = offset {
-            queryParameters["offset"] = offset
+            queryParameters["offset"] = "\(offset)"
         }
         
         if let filter = filter {

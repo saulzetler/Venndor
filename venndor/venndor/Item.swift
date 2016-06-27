@@ -40,7 +40,7 @@ class Item: NSObject {
         details = json["details"] as! String
         id = json["_id"] as! String
         owner = json["owner"] as! String
-        photos = [UIImage]()
+        //photos = [UIImage]()
     }
     
     //init from the app
