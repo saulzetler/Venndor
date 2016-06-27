@@ -17,10 +17,10 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     var soldBar: UIView!
     
     var scrollView: UIScrollView!
-    var containerView = UIView()
-    var pageControl: UIPageControl! = UIPageControl()
-    var pageNum: Int!
-
+    var postsContainerView = UIView()
+    var soldContainerView = UIView()
+    
+    var onPosts: Bool!
     
     
     override func viewDidLoad() {
@@ -57,7 +57,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         priceContainer.backgroundColor = UIColorFromHex(0x2ecc71)
         createBoarder(priceContainer)
         matchContainer.addSubview(priceContainer)
-        containerView.addSubview(matchContainer)
+        postsContainerView.addSubview(matchContainer)
     }
     
     func matchesPressed(sender: UIButton) {
@@ -89,25 +89,34 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         let scrollViewHeight: CGFloat = scrollView.frame.height
         scrollView.contentSize = CGSizeMake(scrollViewWidth, scrollViewHeight*3)
         scrollView.decelerationRate = 0.1
-        pageControl.currentPage = 0
-        containerView.frame = CGRectMake(0, 0, scrollViewWidth, scrollViewHeight*3)
-        
-        scrollView.addSubview(containerView)
-        view.addSubview(scrollView)
+        postsContainerView.frame = CGRectMake(0, 0, scrollViewWidth, scrollViewHeight*3)
+        onPosts = true
+        scrollView.addSubview(postsContainerView)
+        self.view.addSubview(scrollView)
     }
     
     func toggleView(toPosts: Bool) {
         if toPosts {
-            postsButton.selected = true
-            soldButton.selected = false
-            soldBar.backgroundColor = UIColor.whiteColor()
-            postsBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+            if onPosts == false {
+                postsButton.selected = true
+                soldButton.selected = false
+                soldBar.backgroundColor = UIColor.whiteColor()
+                postsBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+                soldContainerView.removeFromSuperview()
+                scrollView.addSubview(postsContainerView)
+                onPosts = true
+            }
         }
         else {
-            soldButton.selected = true
-            postsButton.selected = false
-            postsBar.backgroundColor = UIColor.whiteColor()
-            soldBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+            if onPosts == true {
+                soldButton.selected = true
+                postsButton.selected = false
+                postsBar.backgroundColor = UIColor.whiteColor()
+                soldBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+                postsContainerView.removeFromSuperview()
+                scrollView.addSubview(soldContainerView)
+                onPosts = false
+            }
         }
     }
     

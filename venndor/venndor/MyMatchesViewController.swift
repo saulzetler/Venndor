@@ -17,19 +17,17 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     var boughtBar: UIView!
     
     var scrollView: UIScrollView!
-    var containerView = UIView()
-    var pageControl: UIPageControl! = UIPageControl()
-    var pageNum: Int!
+    var matchContainerView = UIView()
+    var boughtContainerView = UIView()
+    var onMatches: Bool!
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         setupScrollView()
         addImages()
         addHeader()
         addGestureRecognizer()
         setupButtons()
-        
     } 
     
     func setupButtons() {
@@ -57,7 +55,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         priceContainer.backgroundColor = UIColorFromHex(0x2ecc71)
         createBoarder(priceContainer)
         matchContainer.addSubview(priceContainer)
-        containerView.addSubview(matchContainer)
+        matchContainerView.addSubview(matchContainer)
     }
     
     func matchesPressed(sender: UIButton) {
@@ -89,25 +87,34 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         let scrollViewHeight: CGFloat = scrollView.frame.height
         scrollView.contentSize = CGSizeMake(scrollViewWidth, scrollViewHeight*3)
         scrollView.decelerationRate = 0.1
-        pageControl.currentPage = 0
-        containerView.frame = CGRectMake(0, 0, scrollViewWidth, scrollViewHeight*3)
-        
-        scrollView.addSubview(containerView)
+        matchContainerView.frame = CGRectMake(0, 0, scrollViewWidth, scrollViewHeight*3)
+        onMatches = true
+        scrollView.addSubview(matchContainerView)
         view.addSubview(scrollView)
     }
     
     func toggleView(toMatches: Bool) {
         if toMatches {
-            matchesButton.selected = true
-            boughtButton.selected = false
-            boughtBar.backgroundColor = UIColor.whiteColor()
-            matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+            if onMatches == false {
+                matchesButton.selected = true
+                boughtButton.selected = false
+                boughtBar.backgroundColor = UIColor.whiteColor()
+                matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+                boughtContainerView.removeFromSuperview()
+                scrollView.addSubview(matchContainerView)
+                onMatches = true
+            }
         }
         else {
-            boughtButton.selected = true
-            matchesButton.selected = false
-            matchesBar.backgroundColor = UIColor.whiteColor()
-            boughtBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+            if onMatches == true {
+                boughtButton.selected = true
+                matchesButton.selected = false
+                matchesBar.backgroundColor = UIColor.whiteColor()
+                boughtBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+                matchContainerView.removeFromSuperview()
+                scrollView.addSubview(boughtContainerView)
+                onMatches = false
+            }
         }
     }
     

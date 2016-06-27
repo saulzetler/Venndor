@@ -77,7 +77,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RRf-bf-PBa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-926" y="310"/>
+            <point key="canvasLocation" x="-928" y="273"/>
         </scene>
         <!--Splash View Controller-->
         <scene sceneID="nnJ-hU-Qtr">
@@ -561,6 +561,7 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="XwR-UP-4A2"/>
+        <segue reference="hrt-cp-q1Q"/>
         <segue reference="dlm-GT-Iep"/>
     </inferredMetricsTieBreakers>
 </document>
