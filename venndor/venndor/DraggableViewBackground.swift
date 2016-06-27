@@ -100,9 +100,19 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
     }
     
 //    func loadAnotherCard() -> Void {
-//        let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(1)
-//        loadedCards.append(newCard)
-//        self.insertSubview(loadedCards[loadedCards.endIndex-1], belowSubview: loadedCards[loadedCards.endIndex-2])
+//        let itemManager = ItemManager()
+//        itemManager.retrieveMultipleItems(1, filter: nil) { items, error in
+//            guard error == nil else {
+//                print("Error retrieving items from server: \(error)")
+//                return
+//            }
+//            
+//            if items != nil {
+//                let tempItem = items!
+//                self.cardsLoadedIndex = self.cardsLoadedIndex - 1
+//                self.allCards[self.cardsLoadedIndex] = self.createDraggableViewFromItem(tempItem[0])
+//            }
+//        }
 //    }
 
     func cardSwipedLeft(card: UIView) -> Void {
@@ -112,9 +122,9 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
             loadedCards.append(allCards[cardsLoadedIndex])
             cardsLoadedIndex = cardsLoadedIndex + 1
             self.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
+            
+//            loadAnotherCard()
         }
-        
-//        self.loadAnotherCard()
     }
     
     func cardSwipedRight(card: UIView) -> Void {
@@ -124,8 +134,9 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
             loadedCards.append(allCards[cardsLoadedIndex])
             cardsLoadedIndex = cardsLoadedIndex + 1
             self.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
+            
+//            loadAnotherCard()
         }
-//        self.loadAnotherCard()
     }
 
     func swipeRight() -> Void {
