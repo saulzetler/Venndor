@@ -35,22 +35,19 @@ class SplashViewController: UIViewController {
                     self.triggerSegueTutorial()
                 }
             }
-            /*
-            itemManager.retrieveMultipleItems(10, filter: nil) { items, error in
+
+            itemManager.retrieveMultipleItems(10, offset: nil, filter: nil) { items, error in
                 guard error == nil else {
                     print("Error retrieving items from server: \(error)")
                     return
                 }
                 
                 if items != nil {
-                    for item in items! {
-                        
-                    }
                     GlobalItems.items = items!
                     self.triggerSegue()
                 }
             }
-            */
+
         }
     }
     
