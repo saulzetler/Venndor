@@ -13,13 +13,14 @@ struct ItemManager {
     static let globalManager = ItemManager()
     
     func createItem(item: Item, completionHandler: (ErrorType?) -> () ) {
-        item.getStringsFromImages(item.photos!)
-        let params = ["name": item.name, "details": item.details, "owner": item.owner, "photoStrings": item.photoStrings] as JSON
 
+        let params = ["name": item.name, "details": item.details, "owner": item.owner] as JSON
+    
         RESTEngine.sharedEngine.addItemToServerWithDetails(params,
             success: { response in
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
                     item.id = id as! String
+                    RESTEngine.sharedEngine.altAddItemImagesById(item.id, images: item.photos!, success: { success in }, failure: { error in })
                 }
                 completionHandler(nil)
             }, failure: { error in
@@ -32,7 +33,6 @@ struct ItemManager {
             success: { response in
                 if let response = response {
                     let item = Item(json: response)
-                    item.getImagesFromStrings(item.photoStrings)
                     completionHandler(item, nil)
                 }
             }, failure: { error in
@@ -49,7 +49,18 @@ struct ItemManager {
                     for data in arr {
                         let data = data as! JSON
                         let item = Item(json: data)
-                        item.getImagesFromStrings(item.photoStrings)
+                        
+                        RESTEngine.sharedEngine.getImageFromServerById(item.id, fileName: "image0",
+                            success: { response in
+                                if let content = response!["content"] as? NSString {
+                                    let fileData = NSData(base64EncodedString: content as String, options: [NSDataBase64DecodingOptions.IgnoreUnknownCharacters])
+                                    let img = UIImage(data: fileData!)
+                                    item.photos?.append(img!)
+                                    print("YYYYYYAARRGHGHHHHHHHH!")
+                                }
+                            }, failure: { error in
+                        })
+                        
                         itemsArray.append(item)
                     }
                     completionHandler(itemsArray, nil)
