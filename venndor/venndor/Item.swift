@@ -32,7 +32,6 @@ class Item: NSObject {
     var details: String
     var id: String!
     var photos: [UIImage]?
-    var photoStrings: [String]!
     var owner: String
     
     //init from the server
@@ -41,16 +40,7 @@ class Item: NSObject {
         details = json["details"] as! String
         id = json["_id"] as! String
         owner = json["owner"] as! String
-        
-        if let stringsArray = json["photoStrings"] as? [String] {
-            photoStrings = stringsArray
-        }
-        else {
-            photoStrings = [String]()
-            for (_, str) in json["photoStrings"] as! NSDictionary {
-                photoStrings.append(str as! String)
-            }
-        }
+        //photos = [UIImage]()
     }
     
     //init from the app
@@ -60,6 +50,8 @@ class Item: NSObject {
         self.owner = owner
         self.photos = photos
     }
+
+    /*
     
     func getImagesFromStrings(imageStrings: [String]) {
         var images = [UIImage]()
@@ -86,4 +78,5 @@ class Item: NSObject {
         }
         self.photoStrings = imageStrings
     }
+    */
 }

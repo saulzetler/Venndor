@@ -72,7 +72,6 @@ final class NIKApiInvoker {
         NSURLConnection.sendAsynchronousRequest(request, queue: queue) {(response, response_data, var response_error) -> Void in
             self.stopLoad()
             if let response_error = response_error {
-                print("\(response_error)")
                 if let response_data = response_data {
                     let results = try? NSJSONSerialization.JSONObjectWithData(response_data, options: [])
                     if let results = results as? [String: AnyObject] {
@@ -160,6 +159,7 @@ final class NIKRequestBuilder {
             }
             else {
                 if body is [String: AnyObject] || body is [AnyObject] {
+                    print("\(body)")
                     data = try? NSJSONSerialization.dataWithJSONObject(body, options: [])
                 } else if let body = body as? NIKFile {
                     data = body.data

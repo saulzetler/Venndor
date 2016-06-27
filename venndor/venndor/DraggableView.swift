@@ -87,6 +87,7 @@ public class DraggableView: UIView, UIScrollViewDelegate {
         
         let scrollViewWidth:CGFloat = self.scrollView.frame.width
         let scrollViewHeight:CGFloat = self.scrollView.frame.height
+        
         for x in 0..<photos.count {
             if let temp = photos[x] as UIImage? {
                 let img = UIImageView(frame: CGRectMake(0, scrollViewHeight*CGFloat(x),scrollViewWidth, scrollViewHeight))
