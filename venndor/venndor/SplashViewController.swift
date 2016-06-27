@@ -26,6 +26,8 @@ class SplashViewController: UIViewController {
             if user != nil {
                 LocalUser.user = user
                 print("\(LocalUser.user.email)")
+                //fix for ui testing
+                self.triggerSegue()
             }
             else {
                 userManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email) { user, error in
@@ -33,7 +35,7 @@ class SplashViewController: UIViewController {
                     self.triggerSegueTutorial()
                 }
             }
-            
+            /*
             itemManager.retrieveMultipleItems(10, filter: nil) { items, error in
                 guard error == nil else {
                     print("Error retrieving items from server: \(error)")
@@ -48,6 +50,7 @@ class SplashViewController: UIViewController {
                     self.triggerSegue()
                 }
             }
+            */
         }
     }
     
