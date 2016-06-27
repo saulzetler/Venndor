@@ -21,7 +21,7 @@ protocol DraggableViewDelegate {
     func cardSwipedRight(card: UIView) -> Void
 }
 
-class DraggableView: UIView, UIScrollViewDelegate {
+public class DraggableView: UIView, UIScrollViewDelegate {
     var delegate: DraggableViewDelegate!
     var panGestureRecognizer: UIPanGestureRecognizer!
     var originPoint: CGPoint!
@@ -37,15 +37,15 @@ class DraggableView: UIView, UIScrollViewDelegate {
     var picNum: Int!
     
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    override init(frame: CGRect) {
+    public init(frame: CGRect, photos: [UIImage]) {
         super.init(frame: frame)
 
         self.setupView()
-        setupScrollView()
+        setupScrollView(photos)
 
         information = UILabel(frame: CGRectMake(0, 50, self.frame.size.width, 100))
         information.text = "no info given"
@@ -67,23 +67,56 @@ class DraggableView: UIView, UIScrollViewDelegate {
         yFromCenter = 0
     
     }
-    
+//    func setUpImagesForScroll(photos: [UIImage]) {
+//        
+//    }
     //scroll view funcs
-    func setupScrollView() {
+    func setupScrollView(photos: [UIImage]) {
         scrollView = UIScrollView()
         let cardWidth = self.frame.width
         let cardHeight = self.frame.height
         scrollView.delegate = self
         scrollView.frame = CGRectMake(0, 0, cardWidth, cardHeight)
-        scrollView.contentSize = CGSizeMake(cardWidth, cardHeight*5)
+        scrollView.contentSize = CGSizeMake(cardWidth, cardHeight*CGFloat(photos.count))
         scrollView.decelerationRate = 0.1
         pageControl.currentPage = 0
-        containerView.frame = CGRectMake(0, 0, cardWidth, cardHeight*5)
+        containerView.frame = CGRectMake(0, 0, cardWidth, cardHeight*CGFloat(photos.count))
         scrollView.decelerationRate = 0.1
         pageControl.currentPage = 0
         picNum = 0
         
+        let scrollViewWidth:CGFloat = self.scrollView.frame.width
+        let scrollViewHeight:CGFloat = self.scrollView.frame.height
+        for x in 0..<photos.count {
+            if let temp = photos[x] as UIImage? {
+                let img = UIImageView(frame: CGRectMake(0, scrollViewHeight*CGFloat(x),scrollViewWidth, scrollViewHeight))
+                img.image = temp
+                containerView.addSubview(img)
+            }
+        }
+//        if let temp = photos[1] as UIImage? {
+//            let imgTwo = UIImageView(frame: CGRectMake(0, scrollViewHeight,scrollViewWidth, scrollViewHeight))
+//            imgTwo.image = temp
+//            containerView.addSubview(imgTwo)
+//        }
+//        if let temp = photos[2] as UIImage? {
+//            let imgThree = UIImageView(frame: CGRectMake(0, scrollViewHeight*2,scrollViewWidth, scrollViewHeight))
+//            imgThree.image = temp
+//            containerView.addSubview(imgThree)
+//        }
+//        if let temp = photos[3] as UIImage? {
+//            let imgFour = UIImageView(frame: CGRectMake(0, scrollViewHeight*3,scrollViewWidth, scrollViewHeight))
+//            imgFour.image = temp
+//            containerView.addSubview(imgFour)
+//        }
+//        if let temp = photos[4] as UIImage? {
+//            let imgFive = UIImageView(frame: CGRectMake(0, scrollViewHeight*4,scrollViewWidth, scrollViewHeight))
+//            imgFive.image = temp
+//            containerView.addSubview(imgFive)
+//        }
+        
         scrollView.addSubview(containerView)
+        
         self.addSubview(scrollView)
     }
     
@@ -94,7 +127,7 @@ class DraggableView: UIView, UIScrollViewDelegate {
     }
     */
     
-    func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
+    public func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         adjustPage()
     }
     

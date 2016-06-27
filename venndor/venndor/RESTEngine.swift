@@ -13,8 +13,8 @@ let kAppVersion = "1.0.1"
 // change kApiKey and kBaseInstanceUrl to match your app and instance
 
 // API key for your app goes here, see apps tab in admin console
-private let kApiKey = "f8af5d8a7de063db867f02839c13bfa791c2e79ac19fb2decec669a835028561"
-private let kBaseInstanceUrl = "http://ec2-54-172-155-11.compute-1.amazonaws.com/api/v2"
+private let kApiKey = "dc01594daf3c6dcb240c628afc10fcbd0198b207fbc6809c4c4dce7136ffa4bf"
+private let kBaseInstanceUrl = "http://ec2-52-87-241-215.compute-1.amazonaws.com/api/v2"
 private let kDbServiceName = "venndor/_table"
 
 typealias JSON = [String: AnyObject]
@@ -197,7 +197,7 @@ final class RESTEngine {
         var queryParameters: [String: AnyObject] = ["limit": "\(count)"]
         
         if let offset = offset {
-            queryParameters["offset"] = offset
+            queryParameters["offset"] = "\(offset)"
         }
         
         if let filter = filter {
