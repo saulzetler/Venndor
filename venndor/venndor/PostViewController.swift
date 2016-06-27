@@ -197,6 +197,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     //button targets
     
     func postItem(sender: UIButton) {
+        print("Post button hit!")
         if let name = itemName.text, details = itemDescription.text {
             var images = [UIImage]()
             for imgView in imageViewArray {
