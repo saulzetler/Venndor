@@ -13,7 +13,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     var scrollView: UIScrollView!
     var containerView = UIView()
-    var pageControl: UIPageControl! = UIPageControl()
+    var pageControl: UIPageControl!
     var pageNum: Int!
     
     let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -36,6 +36,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         sideMenuGestureSetup()
         setupImageViews()
         setupScrollView()
+        setupPageControll()
         setupPostButton()
         addHeader()
     }
@@ -50,10 +51,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let scrollViewHeight: CGFloat = scrollView.frame.height
         scrollView.contentSize = CGSizeMake(scrollViewWidth, scrollViewHeight*3)
         scrollView.decelerationRate = 0.1
-        pageControl.currentPage = 0
         containerView.frame = CGRectMake(0, 0, scrollViewWidth, scrollViewHeight*3)
-        
-
         scrollView.addSubview(containerView)
         view.addSubview(scrollView)
     }
@@ -70,14 +68,13 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setupItemDescription() {
-        itemDescription = UITextView(frame: CGRectMake(10, screenSize.height*2 + 120, self.screenSize.width*0.95, 100))
+        itemDescription = UITextView(frame: CGRectMake(10, screenSize.height + 120, self.screenSize.width*0.95, 100))
         itemDescription.text = "Description"
         itemDescription.delegate = self
         containerView.addSubview(itemDescription)
         createBoarder(itemDescription)
         itemDescription.returnKeyType = .Done
     }
-
     
     func setupImageViews() {
         
@@ -92,12 +89,23 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     }
 
-    
     func setupPostButton() {
         let buttonFrame = CGRectMake(screenSize.width*0.4, screenSize.height*2.7, screenSize.width*0.2, screenSize.height*0.1)
         postButton = makeTextButton("Post!", frame: buttonFrame, target: "postItem:")
         containerView.addSubview(postButton)
     }
+    
+    func setupPageControll() {
+        pageControl = UIPageControl(frame: CGRectMake(screenSize.width*0.005, screenSize.height*0.9, screenSize.width*0.17, screenSize.height*0.03))
+        pageControl.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
+        pageControl.addTarget(self, action: Selector("changePage:"), forControlEvents: UIControlEvents.ValueChanged)
+        pageControl.numberOfPages = Int(scrollView.contentSize.height/screenSize.height)
+        pageControl.currentPage = 0
+        self.pageControl.pageIndicatorTintColor = UIColor.grayColor()
+        self.pageControl.currentPageIndicatorTintColor = UIColorFromHex(0x3498db, alpha: 1)
+        self.view.addSubview(pageControl)
+    }
+    
     
     //delegate functions
     
@@ -187,7 +195,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     
     
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]) {
+    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
         
         currentImgView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
         
@@ -195,6 +203,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
 
     //button targets
+    
+    func changePage(sender: AnyObject) -> () {
+        let y = CGFloat(pageControl.currentPage) * scrollView.frame.size.height
+        scrollView.setContentOffset(CGPointMake(0, y), animated: true)
+    }
     
     func postItem(sender: UIButton) {
         if let name = itemName.text, details = itemDescription.text {
