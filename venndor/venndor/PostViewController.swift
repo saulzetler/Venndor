@@ -9,9 +9,8 @@
 import Foundation
 import UIKit
 
-class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate {
     
-    var numberOfPages: CGFloat = 7
     var scrollView: UIScrollView!
     var containerView = UIView()
     var pageControl: UIPageControl!
@@ -29,15 +28,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var currentImgView: UIImageView!
     var postButton: UIButton!
     
-    let pickerData = ["Furniture", "Kitchen", "Household", "Electronics", "Clothing", "Books", "Other"]
-    var categoryPicker: UIPickerView!
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        setupPickerView()
+    
         setupItemName()
         setupItemDescription()
-        setupLabels()
         sideMenuGestureSetup()
         setupImageViews()
         setupScrollView()
@@ -54,15 +49,15 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         scrollView.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
         let scrollViewWidth: CGFloat = scrollView.frame.width
         let scrollViewHeight: CGFloat = scrollView.frame.height
-        scrollView.contentSize = CGSizeMake(scrollViewWidth, scrollViewHeight * numberOfPages)
+        scrollView.contentSize = CGSizeMake(scrollViewWidth, scrollViewHeight*3)
         scrollView.decelerationRate = 0.1
-        containerView.frame = CGRectMake(0, 0, scrollViewWidth, scrollViewHeight * numberOfPages)
+        containerView.frame = CGRectMake(0, 0, scrollViewWidth, scrollViewHeight*3)
         scrollView.addSubview(containerView)
         view.addSubview(scrollView)
     }
     
     func setupItemName() {
-        itemName = ItemNameTextField(frame: CGRectMake(10, screenSize.height*1.5, screenSize.width*0.95, 30))
+        itemName = ItemNameTextField(frame: CGRectMake(10, screenSize.height + 80, screenSize.width*0.95, 30))
         itemName.text = "Name"
         itemName.delegate = self
         itemName.clearsOnBeginEditing = true
@@ -73,8 +68,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setupItemDescription() {
-        itemDescription = UITextView(frame: CGRectMake(10, screenSize.height*4.5, self.screenSize.width*0.95, 100))
-        itemDescription.text = "Additional Info"
+        itemDescription = UITextView(frame: CGRectMake(10, screenSize.height + 120, self.screenSize.width*0.95, 100))
+        itemDescription.text = "Description"
         itemDescription.delegate = self
         containerView.addSubview(itemDescription)
         createBoarder(itemDescription)
@@ -82,6 +77,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setupImageViews() {
+        
 
         imageView1 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.13, screenSize.width*0.7, screenSize.width*0.7), action: "imageTapped:", superView: containerView)
         imageView2 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
@@ -92,22 +88,15 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         imageViewArray = [imageView1, imageView2, imageView3, imageView4, imageView5]
     
     }
-    
-    func setupPickerView() {
-        categoryPicker = UIPickerView(frame: CGRectMake(10, screenSize.height*2.4, self.screenSize.width*0.95, screenSize.height*0.4))
-        categoryPicker.dataSource = self
-        categoryPicker.delegate = self
-        containerView.addSubview(categoryPicker)
-    }
 
     func setupPostButton() {
-        let buttonFrame = CGRectMake(screenSize.width*0.4, screenSize.height*6.5, screenSize.width*0.2, screenSize.height*0.1)
+        let buttonFrame = CGRectMake(screenSize.width*0.4, screenSize.height*2.7, screenSize.width*0.2, screenSize.height*0.1)
         postButton = makeTextButton("Post!", frame: buttonFrame, target: "postItem:")
         containerView.addSubview(postButton)
     }
     
     func setupPageControll() {
-        pageControl = UIPageControl(frame: CGRectMake(screenSize.width*0.005, screenSize.height*0.87, screenSize.width*0.17, screenSize.height*0.03))
+        pageControl = UIPageControl(frame: CGRectMake(screenSize.width*0.005, screenSize.height*0.9, screenSize.width*0.17, screenSize.height*0.03))
         pageControl.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
         pageControl.addTarget(self, action: Selector("changePage:"), forControlEvents: UIControlEvents.ValueChanged)
         pageControl.numberOfPages = Int(scrollView.contentSize.height/screenSize.height)
@@ -116,17 +105,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.pageControl.currentPageIndicatorTintColor = UIColorFromHex(0x3498db, alpha: 1)
         self.view.addSubview(pageControl)
     }
-    
-    func setupLabels() {
-        let nameLabel = UILabel(frame: CGRectMake(10, screenSize.height*1.2, screenSize.width*0.95, 30))
-        nameLabel.text = "What is the name of your item?"
-        containerView.addSubview(nameLabel)
-        let categoriesLabel = UILabel(frame: CGRectMake(10, screenSize.height*2.2, self.screenSize.width*0.95, 30))
-        categoriesLabel.text = "What category does your item fit into"
-        containerView.addSubview(categoriesLabel)
-    }
-    
-    
     
     
     //delegate functions
@@ -142,7 +120,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func adjustPage() {
         // Test the offset and calculate the current page after scrolling ends
         let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
-        let currentPage:CGFloat = floor((scrollView.contentOffset.y-pageHeight/4)/pageHeight)+1
+        let currentPage:CGFloat = floor((scrollView.contentOffset.y-pageHeight/3)/pageHeight)+1
         // Change the indicator
         pageNum = Int(currentPage)
         self.pageControl.currentPage = pageNum
@@ -251,23 +229,5 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 print("YAAAAA BOYZ")
             }
         }
-    }
-    
-    //MARK: - Delegates and data sources
-    //MARK: Data Sources
-    func numberOfComponentsInPickerView(pickerView: UIPickerView) -> Int {
-        return 1
-    }
-    func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
-    }
-    
-    //MARK: Delegates
-    func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row]
-    }
-    
-    func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-//        myLabel.text = pickerData[row]
     }
 }

@@ -13,7 +13,6 @@
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import "SWRevealViewController.h"
-#import <GoogleMaps/GoogleMaps.h>
 
 #endif /* venndor_Bridging_Header_h */
 
