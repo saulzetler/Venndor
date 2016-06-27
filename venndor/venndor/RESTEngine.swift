@@ -192,9 +192,17 @@ final class RESTEngine {
      Get a whole mess of items
      */
     
-    func getItemsFromServer(count: Int, filter: String?, success: SuccessClosure, failure: ErrorClosure) {
+    func getItemsFromServer(count: Int, offset: Int?, filter: String?, success: SuccessClosure, failure: ErrorClosure) {
         
-        let queryParameters: [String: AnyObject] = ["limit": "\(count)"]
+        var queryParameters: [String: AnyObject] = ["limit": "\(count)"]
+        
+        if let offset = offset {
+            queryParameters["offset"] = offset
+        }
+        
+        if let filter = filter {
+            queryParameters["filter"] = filter
+        }
         callApiWithPath(Routing.Service(tableName: "items").path, method: "GET", queryParams: queryParameters, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
     
@@ -210,6 +218,11 @@ final class RESTEngine {
         callApiWithPath(path, method: "PATCH", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
     }
   
+    
+    
+    
+    
+    
     
     
     //MARK: - Image methods
