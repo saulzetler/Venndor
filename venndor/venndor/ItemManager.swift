@@ -21,7 +21,6 @@ struct ItemManager {
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
                     item.id = id as! String
                 }
-                
                 completionHandler(nil)
             }, failure: { error in
                 completionHandler(error)
@@ -41,8 +40,8 @@ struct ItemManager {
         })
     }
     
-    func retrieveMultipleItems(count: Int, filter: String?, completionHandler: ([Item]?, ErrorType?) -> () ) {
-        RESTEngine.sharedEngine.getItemsFromServer(count, filter: filter,
+    func retrieveMultipleItems(count: Int, offset: Int?, filter: String?, completionHandler: ([Item]?, ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.getItemsFromServer(count, offset: offset, filter: filter,
             success: { response in
                 if let response = response, result = response["resource"] {
                     var itemsArray = [Item]()

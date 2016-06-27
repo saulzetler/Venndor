@@ -12,7 +12,8 @@ struct LocalUser {
     static var user: User!
     static var firstName: String!
     static var lastName: String!
-    static var email: String! 
+    static var email: String!
+    static var seenPosts: [String]! 
 }
 
 class User: NSObject {
