@@ -14,7 +14,7 @@ struct ItemManager {
     
     func createItem(item: Item, completionHandler: (ErrorType?) -> () ) {
 
-        let params = ["name": item.name, "details": item.details, "owner": item.owner] as JSON
+        let params = ["name": item.name, "details": item.details, "owner": item.owner, "photoCount": item.photoCount] as JSON
     
         RESTEngine.sharedEngine.addItemToServerWithDetails(params,
             success: { response in

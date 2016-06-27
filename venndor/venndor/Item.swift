@@ -32,6 +32,7 @@ class Item: NSObject {
     var details: String
     var id: String!
     var photos: [UIImage]?
+    var photoCount: Int!
     var owner: String
     
     //init from the server
@@ -40,6 +41,7 @@ class Item: NSObject {
         details = json["details"] as! String
         id = json["_id"] as! String
         owner = json["owner"] as! String
+        photoCount = json["photoCount"] as! Int
         //photos = [UIImage]()
     }
     
@@ -49,6 +51,7 @@ class Item: NSObject {
         self.details = description
         self.owner = owner
         self.photos = photos
+        self.photoCount = photos?.count
     }
 
     /*
