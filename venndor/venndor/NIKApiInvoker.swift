@@ -87,6 +87,7 @@ final class NIKApiInvoker {
             } else {
                 let statusCode = (response as! NSHTTPURLResponse).statusCode
                 if !NSLocationInRange(statusCode, NSMakeRange(200, 99)) {
+                    print("\(response_data)")
                     response_error = NSError(domain: "swagger", code: statusCode, userInfo: try! NSJSONSerialization.JSONObjectWithData(response_data!, options: []) as? [NSObject: AnyObject])
                     completionBlock(nil, response_error)
                     return

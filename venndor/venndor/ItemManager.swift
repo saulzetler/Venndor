@@ -20,9 +20,6 @@ struct ItemManager {
             success: { response in
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
                     item.id = id as! String
-                    RESTEngine.sharedEngine.altAddItemImagesById(item.id, images: item.photos!,
-                        success: { response in
-                        },failure: { error in })
                 }
                 
                 completionHandler(nil)
@@ -36,6 +33,7 @@ struct ItemManager {
             success: { response in
                 if let response = response {
                     let item = Item(json: response)
+                    item.getImagesFromStrings(item.photoStrings)
                     completionHandler(item, nil)
                 }
             }, failure: { error in
