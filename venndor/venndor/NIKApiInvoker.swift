@@ -71,10 +71,8 @@ final class NIKApiInvoker {
         let date = NSDate()
         NSURLConnection.sendAsynchronousRequest(request, queue: queue) {(response, response_data, var response_error) -> Void in
             self.stopLoad()
-            if let data = response_data {
-                print("\(data)")
-            }
             if let response_error = response_error {
+                print("\(response_error)")
                 if let response_data = response_data {
                     let results = try? NSJSONSerialization.JSONObjectWithData(response_data, options: [])
                     if let results = results as? [String: AnyObject] {
@@ -149,20 +147,57 @@ final class NIKRequestBuilder {
         if let body = body {
             // build the body into JSON
             var data: NSData!
-            if body is [String: AnyObject] || body is [AnyObject] {
-                data = try? NSJSONSerialization.dataWithJSONObject(body, options: [])
-            } else if let body = body as? NIKFile {
-                data = body.data
-            } else {
-                data = body.dataUsingEncoding(NSUTF8StringEncoding)
+            
+            if body is [NIKFile] {
+                let boundary = "Boundary-\(NSUUID().UUIDString)"
+                let body = createMultipartBody(body as! [NIKFile], boundary: boundary)
+                let postLength = "\(body.length)"
+                request.setValue(postLength, forHTTPHeaderField:"Content-Length")
+                request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
+                request.HTTPBody = body
+                
+                
             }
-            let postLength = "\(data.length)"
-            request.setValue(postLength, forHTTPHeaderField: "Content-Length")
-            request.HTTPBody = data
-            request.setValue(contentType, forHTTPHeaderField: "Content-Type")
+            else {
+                if body is [String: AnyObject] || body is [AnyObject] {
+                    data = try? NSJSONSerialization.dataWithJSONObject(body, options: [])
+                } else if let body = body as? NIKFile {
+                    data = body.data
+                } else {
+                    data = body.dataUsingEncoding(NSUTF8StringEncoding)
+                }
+                let postLength = "\(data.length)"
+                request.setValue(postLength, forHTTPHeaderField: "Content-Length")
+                request.HTTPBody = data
+                request.setValue(contentType, forHTTPHeaderField: "Content-Type")
+            }
         }
     
         return request
+    }
+}
+
+func createMultipartBody(files: [NIKFile], boundary: String) -> NSData {
+    let body = NSMutableData()
+    for file in files {
+        let filename = file.name
+        let data = file.data;
+        let mimetype = file.mimeType
+        
+        body.appendString("--\(boundary)\r\n")
+        body.appendString("Content-Disposition: form-data;filename=\"\(filename)\"\r\n")
+        body.appendString("Content-Type: \(mimetype)\r\n\r\n")
+        body.appendData(data)
+        body.appendString("\r\n")
+    }
+    
+    return body
+}
+
+extension NSMutableData {
+    func appendString(string: String) {
+        let data = string.dataUsingEncoding(NSUTF8StringEncoding, allowLossyConversion: true)
+        appendData(data!)
     }
 }
 

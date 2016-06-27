@@ -41,6 +41,9 @@ class SplashViewController: UIViewController {
                 }
                 
                 if items != nil {
+                    for item in items! {
+                        
+                    }
                     GlobalItems.items = items!
                     self.triggerSegue()
                 }

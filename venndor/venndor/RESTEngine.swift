@@ -16,7 +16,6 @@ let kAppVersion = "1.0.1"
 private let kApiKey = "f8af5d8a7de063db867f02839c13bfa791c2e79ac19fb2decec669a835028561"
 private let kBaseInstanceUrl = "http://ec2-54-172-155-11.compute-1.amazonaws.com/api/v2"
 private let kDbServiceName = "venndor/_table"
-private let kContainerName = "item_images"
 
 typealias JSON = [String: AnyObject]
 typealias JSONArray = [JSON]
@@ -55,11 +54,11 @@ enum Routing {
             
             // rest path for request, form is <base instance url>/api/v2/files/container/<folder path>/
         case let .ResourceFolder(folderPath):
-            return "\(kBaseInstanceUrl)/files/\(kContainerName)/\(folderPath)/"
+            return "\(kBaseInstanceUrl)/files/\(folderPath)/"
             
             //rest path for request, form is <base instance url>/api/v2/files/container/<folder path>/filename
         case let .ResourceFile(folderPath, fileName):
-            return "\(kBaseInstanceUrl)/files/\(kContainerName)/\(folderPath)/\(fileName)"
+            return "\(kBaseInstanceUrl)/files/\(folderPath)/\(fileName)"
         }
     }
 }
@@ -215,21 +214,78 @@ final class RESTEngine {
     
     //MARK: - Image methods
     
+    /**
+    Create item image on server
+    */
+    func addItemImageById(id: String, image: UIImage, imageName: String, success: SuccessClosure, failure: ErrorClosure) {
+        
+        // first we need to create folder, then image
+        callApiWithPath(Routing.ResourceFolder(folderPath: "\(id)").path, method: "POST", queryParams: nil, body: nil, headerParams: headerParams, success: { _ in
+            
+            self.putImageToFolderWithPath(id, image: image, fileName: imageName, success: success, failure: failure)
+            }, failure: failure)
+    }
     
-    //so here we would provide the item id, and when we upload the image to our server we would need to set its path to ".../item_id"
-    private func removeImageFolderById(id: String, success: SuccessClosure, failure: ErrorClosure) {
+    /*
+    func addItemImagesById(id: String, images: [UIImage], success: SuccessClosure, failure: ErrorClosure) {
         
-        // delete all files and folders in the target folder
-        let queryParams: [String: AnyObject] = ["force": "1"]
+        //first create the folder
         
-        callApiWithPath(Routing.ResourceFolder(folderPath: "\(id)").path, method: "DELETE", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
+        self.putImagesToFolderWithPath(id, images: images, success: success , failure: failure)
+    }
+    */
+    
+    //alternative, dumb way of doing it. Make a separate API call for every image to upload
+    func altAddItemImagesById(id: String, images: [UIImage], success: SuccessClosure, failure: ErrorClosure) {
+        //first create the folder
+        callApiWithPath(Routing.ResourceFolder(folderPath: "\(id)").path, method: "POST", queryParams: nil, body: nil, headerParams: headerParams, success: { _ in
+            
+            var i = 0
+            for image in images {
+                self.putImageToFolderWithPath("\(id)", image: image, fileName: "image\(i)", success: success, failure: failure)
+                i++
+            }
+            
+            }, failure: failure)
     }
     
     
-    /**
-     Get profile image for user
+    /*
+    
+    //try posting every image at once
+    func putImagesToFolderWithPath(folderPath: String, images: [UIImage], success: SuccessClosure, failure: ErrorClosure) {
+        var i = 0
+        var files = [NIKFile]()
+        for image in images {
+            let imageData = UIImageJPEGRepresentation(image, 0.1)
+            let file = NIKFile(name: "image\(i)", mimeType: "application/octet-stream", data: imageData!)
+            files.append(file)
+            i++
+        }
+        
+        callApiWithPath(Routing.ResourceFolder(folderPath: folderPath).path, method: "POST", queryParams: nil, body: files, headerParams: headerParams, success: { success in }, failure: { error in print("Error posting to folder/files to server: \(error)") })
+    }
     */
-    func getProfileImageFromServerById(id: String, fileName: String, success: SuccessClosure, failure: ErrorClosure) {
+    
+    
+    func putImageToFolderWithPath(folderPath: String, image: UIImage, fileName: String, success: SuccessClosure, failure: ErrorClosure) {
+        
+        let imageData = UIImageJPEGRepresentation(image, 0.1)
+        let file = NIKFile(name: fileName, mimeType: "image/jpeg", data: imageData!)
+        
+        callApiWithPath(Routing.ResourceFile(folderPath: folderPath, fileName: fileName).path, method: "POST", queryParams: nil, body: file, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    func getImageListFromServerById(id: String, success: SuccessClosure, failure: ErrorClosure) {
+        
+        // only want to get files, not any sub folders
+        let queryParams: [String: AnyObject] = ["include_folders": "0",
+            "include_files": "1"]
+        
+        callApiWithPath(Routing.ResourceFolder(folderPath: "\(id)").path, method: "GET", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    func getImageFromServerById(id: String, fileName: String, success: SuccessClosure, failure: ErrorClosure) {
         
         // request a download from the file
         let queryParams: [String: AnyObject] = ["include_properties": "1",
@@ -238,39 +294,12 @@ final class RESTEngine {
         
         callApiWithPath(Routing.ResourceFile(folderPath: "/\(id)", fileName: fileName).path, method: "GET", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
-
     
-    /**
-     Create item image on server
-    */
-    
-    func addItemImageById(itemId: String, image: UIImage, imageName: String, success: SuccessClosure, failure: ErrorClosure) {
+    private func removeImageFolderById(id: String, success: SuccessClosure, failure: ErrorClosure) {
         
-        // first we need to create folder, then image
-        callApiWithPath(Routing.ResourceFolder(folderPath: "\(itemId)").path, method: "POST", queryParams: nil, body: nil, headerParams: headerParams, success: { _ in
-            
-            self.putImageToFolderWithPath("\(itemId)", image: image, fileName: imageName, success: success, failure: failure)
-            }, failure: failure)
-    }
-    
-    //NEEDS REFACTORING- Investigate how to store it
-    func putImageToFolderWithPath(folderPath: String, image: UIImage, fileName: String, success: SuccessClosure, failure: ErrorClosure) {
+        // delete all files and folders in the target folder
+        let queryParams: [String: AnyObject] = ["force": "1"]
         
-        let imageData = UIImageJPEGRepresentation(image, 0.1)
-        let file = NIKFile(name: fileName, mimeType: "application/octet-stream", data: imageData!)
-        
-        callApiWithPath(Routing.ResourceFile(folderPath: folderPath, fileName: fileName).path, method: "POST", queryParams: nil, body: file, headerParams: headerParams, success: success, failure: failure)
-    }
-    
-    /**
-     Fetch images for an item on the server
-    */
-    func getImageListFromServerWithItemId(itemId: String, success: SuccessClosure, failure: ErrorClosure) {
-        
-        // only want to get files, not any sub folders
-        let queryParams: [String: AnyObject] = ["include_folders": "0",
-            "include_files": "1"]
-        
-        callApiWithPath(Routing.ResourceFolder(folderPath: "\(itemId)").path, method: "GET", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
+        callApiWithPath(Routing.ResourceFolder(folderPath: "\(id)").path, method: "DELETE", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
 }

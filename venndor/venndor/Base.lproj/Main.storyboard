@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1713" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9532" systemVersion="14F1808" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9530"/>
@@ -77,7 +77,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RRf-bf-PBa" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-926" y="310"/>
+            <point key="canvasLocation" x="-928" y="273"/>
         </scene>
         <!--Splash View Controller-->
         <scene sceneID="nnJ-hU-Qtr">
@@ -355,6 +355,75 @@
             </objects>
             <point key="canvasLocation" x="2249" y="2202"/>
         </scene>
+        <!--Test Image View Controller-->
+        <scene sceneID="GRS-fU-DLM">
+            <objects>
+                <viewController id="QUj-Ch-mnC" customClass="TestImageViewController" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="TuW-Wt-puU"/>
+                        <viewControllerLayoutGuide type="bottom" id="kUd-Tk-rmt"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="ye4-0N-XY6">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="ctt-We-3rJ">
+                                <rect key="frame" x="53" y="92" width="240" height="128"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="j2V-a3-h9j">
+                                <rect key="frame" x="320" y="92" width="240" height="128"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" fixedFrame="YES" translatesAutoresizingMaskIntoConstraints="NO" id="d3w-gt-w3C">
+                                <rect key="frame" x="180" y="262" width="240" height="128"/>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <outlet property="image1" destination="ctt-We-3rJ" id="8A7-SW-8W6"/>
+                        <outlet property="image2" destination="j2V-a3-h9j" id="yEt-Us-ZzE"/>
+                        <outlet property="image3" destination="d3w-gt-w3C" id="qa0-4z-c84"/>
+                        <segue destination="23J-Ns-Kkh" kind="presentation" identifier="finalTest" id="veq-ey-G8q"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K2u-4e-4n4" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3067" y="2188"/>
+        </scene>
+        <!--Final Test View Controller-->
+        <scene sceneID="hys-Kl-LmV">
+            <objects>
+                <viewController id="23J-Ns-Kkh" customClass="FinalTestViewController" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="9sN-sf-xrn"/>
+                        <viewControllerLayoutGuide type="bottom" id="tzI-dK-0dA"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="Qyw-8Z-8ep">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <subviews>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="zV0-n0-kUY">
+                                <rect key="frame" x="20" y="20" width="240" height="128"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="Lsz-jD-Cd7"/>
+                                    <constraint firstAttribute="height" constant="128" id="ehx-Y6-JS3"/>
+                                </constraints>
+                            </imageView>
+                        </subviews>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                        <constraints>
+                            <constraint firstItem="zV0-n0-kUY" firstAttribute="top" secondItem="9sN-sf-xrn" secondAttribute="bottom" id="5eZ-LJ-qln"/>
+                            <constraint firstItem="zV0-n0-kUY" firstAttribute="leading" secondItem="Qyw-8Z-8ep" secondAttribute="leadingMargin" id="vRr-vV-rFe"/>
+                        </constraints>
+                    </view>
+                    <connections>
+                        <outlet property="imageTest" destination="zV0-n0-kUY" id="HtK-h2-oeH"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="DL0-ul-neZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="3838" y="2188"/>
+        </scene>
         <!--Settings View Controller-->
         <scene sceneID="La8-7z-czq">
             <objects>
@@ -560,7 +629,7 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="NQb-tI-6ve"/>
+        <segue reference="hrt-cp-q1Q"/>
         <segue reference="dlm-GT-Iep"/>
     </inferredMetricsTieBreakers>
 </document>
