@@ -67,9 +67,8 @@ public class DraggableView: UIView, UIScrollViewDelegate {
         yFromCenter = 0
     
     }
-//    func setUpImagesForScroll(photos: [UIImage]) {
-//        
-//    }
+    
+    
     //scroll view funcs
     func setupScrollView(item: Item) {
         scrollView = UIScrollView()
@@ -87,38 +86,23 @@ public class DraggableView: UIView, UIScrollViewDelegate {
         
         let scrollViewWidth:CGFloat = self.scrollView.frame.width
         let scrollViewHeight:CGFloat = self.scrollView.frame.height
-        
+        let temp = ItemManager()
         for x in 0..<item.photoCount {
-            RESTEngine.sharedEngine.getImageFromServerById(item.id, fileName: "\(x)",
-                success: { response in },
-                failure: { error in })
-            if let temp = item.photos![x] as UIImage? {
-                let img = UIImageView(frame: CGRectMake(0, scrollViewHeight*CGFloat(x),scrollViewWidth, scrollViewHeight))
-                img.image = temp
-                containerView.addSubview(img)
+            temp.retrieveItemImageById(item.id, imageIndex: x) { img, error in
+                guard error == nil else {
+                    print("Error getting the image from the server: \(error)")
+                    return
+                }
+                
+                if let phonto = img {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        let temp2 = UIImageView(frame: CGRectMake(0, scrollViewHeight*CGFloat(x),scrollViewWidth, scrollViewHeight))
+                        temp2.image = phonto
+                        self.containerView.addSubview(temp2)
+                    }
+                }
             }
         }
-//        if let temp = photos[1] as UIImage? {
-//            let imgTwo = UIImageView(frame: CGRectMake(0, scrollViewHeight,scrollViewWidth, scrollViewHeight))
-//            imgTwo.image = temp
-//            containerView.addSubview(imgTwo)
-//        }
-//        if let temp = photos[2] as UIImage? {
-//            let imgThree = UIImageView(frame: CGRectMake(0, scrollViewHeight*2,scrollViewWidth, scrollViewHeight))
-//            imgThree.image = temp
-//            containerView.addSubview(imgThree)
-//        }
-//        if let temp = photos[3] as UIImage? {
-//            let imgFour = UIImageView(frame: CGRectMake(0, scrollViewHeight*3,scrollViewWidth, scrollViewHeight))
-//            imgFour.image = temp
-//            containerView.addSubview(imgFour)
-//        }
-//        if let temp = photos[4] as UIImage? {
-//            let imgFive = UIImageView(frame: CGRectMake(0, scrollViewHeight*4,scrollViewWidth, scrollViewHeight))
-//            imgFive.image = temp
-//            containerView.addSubview(imgFive)
-//        }
-        
         scrollView.addSubview(containerView)
         
         self.addSubview(scrollView)
