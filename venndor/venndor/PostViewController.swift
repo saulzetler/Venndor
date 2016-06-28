@@ -29,6 +29,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var currentImgView: UIImageView!
     var postButton: UIButton!
     
+    var condition: Int!
+    
     let pickerData = ["Furniture", "Kitchen", "Household", "Electronics", "Clothing", "Books", "Other"]
     var categoryPicker: UIPickerView!
     
@@ -59,6 +61,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         containerView.frame = CGRectMake(0, 0, scrollViewWidth, scrollViewHeight * numberOfPages)
         scrollView.addSubview(containerView)
         view.addSubview(scrollView)
+    }
+    
+    func setupRating() {
+        
     }
     
     func setupItemName() {
@@ -175,7 +181,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             break
         }
         
-        for y in 0...6 {
+        for y in 0...7 {
             if y == Int(currentPage) {
                 let yOffset = CGPointMake(0, pageHeight*CGFloat(y));
                 self.scrollView.setContentOffset(yOffset, animated: true)
