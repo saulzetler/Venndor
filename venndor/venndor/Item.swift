@@ -34,24 +34,46 @@ class Item: NSObject {
     var photos: [UIImage]?
     var photoCount: Int!
     var owner: String
+    var category: String
+    var condition: Int
+    var locationX: Double
+    var locationY: Double
+    var question1: String
+    var question2: String
+    var minPrice: Double
+    
+    //photos, name/title, category, question1, question2, condition, description, address, minPrice
     
     //init from the server
     init(json: JSON) {
         name = json["name"] as! String
         details = json["details"] as! String
         id = json["_id"] as! String
-        owner = json["owner"] as! String
         photoCount = json["photoCount"] as! Int
-        //photos = [UIImage]()
+        owner = json["owner"] as! String
+        category = json["category"] as! String
+        condition = json["condition"] as! Int
+        locationX = json["locationX"] as! Double
+        locationY = json["locationY"] as! Double
+        question1 = json["question1"] as! String
+        question2 = json["question2"] as! String
+        minPrice = json["minPrice"] as! Double
     }
     
     //init from the app
-    init(name: String, description: String, owner: String, photos: [UIImage]?) {
+    init(name: String, description: String, owner: String, category: String, condition: Int, locationX: Double, locationY: Double, photos: [UIImage], question1: String, question2: String, minPrice: Double) {
         self.name = name
         self.details = description
         self.owner = owner
         self.photos = photos
-        self.photoCount = photos?.count
+        self.photoCount = photos.count
+        self.category = category
+        self.condition = condition
+        self.locationX = locationX
+        self.locationY = locationY
+        self.question1 = question1
+        self.question2 = question2
+        self.minPrice = minPrice
     }
 
     /*
