@@ -41,11 +41,11 @@ public class DraggableView: UIView, UIScrollViewDelegate {
         super.init(coder: aDecoder)
     }
     
-    public init(frame: CGRect, photos: [UIImage]) {
+    init(frame: CGRect, item: Item) {
         super.init(frame: frame)
 
         self.setupView()
-        setupScrollView(photos)
+        setupScrollView(item)
 
         information = UILabel(frame: CGRectMake(0, 50, self.frame.size.width, 100))
         information.text = "no info given"
@@ -67,55 +67,42 @@ public class DraggableView: UIView, UIScrollViewDelegate {
         yFromCenter = 0
     
     }
-//    func setUpImagesForScroll(photos: [UIImage]) {
-//        
-//    }
+    
+    
     //scroll view funcs
-    func setupScrollView(photos: [UIImage]) {
+    func setupScrollView(item: Item) {
         scrollView = UIScrollView()
         let cardWidth = self.frame.width
         let cardHeight = self.frame.height
         scrollView.delegate = self
         scrollView.frame = CGRectMake(0, 0, cardWidth, cardHeight)
-        scrollView.contentSize = CGSizeMake(cardWidth, cardHeight*CGFloat(photos.count))
+        scrollView.contentSize = CGSizeMake(cardWidth, cardHeight*CGFloat(item.photoCount))
         scrollView.decelerationRate = 0.1
         pageControl.currentPage = 0
-        containerView.frame = CGRectMake(0, 0, cardWidth, cardHeight*CGFloat(photos.count))
+        containerView.frame = CGRectMake(0, 0, cardWidth, cardHeight*CGFloat(item.photoCount))
         scrollView.decelerationRate = 0.1
         pageControl.currentPage = 0
         picNum = 0
         
         let scrollViewWidth:CGFloat = self.scrollView.frame.width
         let scrollViewHeight:CGFloat = self.scrollView.frame.height
-        
-        for x in 0..<photos.count {
-            if let temp = photos[x] as UIImage? {
-                let img = UIImageView(frame: CGRectMake(0, scrollViewHeight*CGFloat(x),scrollViewWidth, scrollViewHeight))
-                img.image = temp
-                containerView.addSubview(img)
+        let temp = ItemManager()
+        for x in 0..<item.photoCount {
+            temp.retrieveItemImageById(item.id, imageIndex: x) { img, error in
+                guard error == nil else {
+                    print("Error getting the image from the server: \(error)")
+                    return
+                }
+                
+                if let phonto = img {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        let temp2 = UIImageView(frame: CGRectMake(0, scrollViewHeight*CGFloat(x),scrollViewWidth, scrollViewHeight))
+                        temp2.image = phonto
+                        self.containerView.addSubview(temp2)
+                    }
+                }
             }
         }
-//        if let temp = photos[1] as UIImage? {
-//            let imgTwo = UIImageView(frame: CGRectMake(0, scrollViewHeight,scrollViewWidth, scrollViewHeight))
-//            imgTwo.image = temp
-//            containerView.addSubview(imgTwo)
-//        }
-//        if let temp = photos[2] as UIImage? {
-//            let imgThree = UIImageView(frame: CGRectMake(0, scrollViewHeight*2,scrollViewWidth, scrollViewHeight))
-//            imgThree.image = temp
-//            containerView.addSubview(imgThree)
-//        }
-//        if let temp = photos[3] as UIImage? {
-//            let imgFour = UIImageView(frame: CGRectMake(0, scrollViewHeight*3,scrollViewWidth, scrollViewHeight))
-//            imgFour.image = temp
-//            containerView.addSubview(imgFour)
-//        }
-//        if let temp = photos[4] as UIImage? {
-//            let imgFive = UIImageView(frame: CGRectMake(0, scrollViewHeight*4,scrollViewWidth, scrollViewHeight))
-//            imgFive.image = temp
-//            containerView.addSubview(imgFive)
-//        }
-        
         scrollView.addSubview(containerView)
         
         self.addSubview(scrollView)
