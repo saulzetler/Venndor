@@ -14,7 +14,7 @@ struct ItemManager {
     
     func createItem(item: Item, completionHandler: (ErrorType?) -> () ) {
 
-        let params = ["name": item.name, "details": item.details, "owner": item.owner, "photoCount": item.photoCount] as JSON
+        let params = ["name": item.name, "details": item.details, "photoCount": item.photoCount, "owner": item.owner, "category": item.category,  "condition": item.condition, "locationX": item.locationX, "locationY": item.locationY, "question1": item.question1, "question2": item.question2, "minPrice": item.minPrice] as JSON
     
         RESTEngine.sharedEngine.addItemToServerWithDetails(params,
             success: { response in
@@ -75,12 +75,14 @@ struct ItemManager {
     func retrieveItemImageById(id: String, imageIndex: Int, completionHandler: (UIImage?, ErrorType?) -> () ) {
         RESTEngine.sharedEngine.getImageFromServerById(id, fileName: "image\(imageIndex)",
             success: { response in
+                
                 if let content = response!["content"] as? NSString {
                     let fileData = NSData(base64EncodedString: content as String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
                     if let data = fileData {
                         let img = UIImage(data: data)
                         completionHandler(img, nil)
                     }
+                        
                     else {
                         print("Error parsing server data into image.")
                         completionHandler(nil, nil)
