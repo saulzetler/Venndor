@@ -50,22 +50,42 @@ struct ItemManager {
                         let data = data as! JSON
                         let item = Item(json: data)
                         
-                        RESTEngine.sharedEngine.getImageFromServerById(item.id, fileName: "image0",
-                            success: { response in
-                                if let content = response!["content"] as? NSString {
-                                    let fileData = NSData(base64EncodedString: content as String, options: [NSDataBase64DecodingOptions.IgnoreUnknownCharacters])
-                                    let img = UIImage(data: fileData!)
-                                    item.photos = [img!]
-                                    print("YYYYYYAARRGHGHHHHHHHH!")
-                                }
-                            }, failure: { error in
-                        })
+                        self.retrieveItemImageById(item.id, imageIndex: 0) { img, error in
+                            guard error == nil else {
+                                print("Error getting the image from the server: \(error)")
+                                return
+                            }
+                            
+                            if let img = img {
+                                item.photos = [img]
+                                print("YYYYYYAARRGHGHHHHHHHH!")
+                            }
+                        }
                         
                         itemsArray.append(item)
                     }
                     completionHandler(itemsArray, nil)
                 }
                 
+            }, failure: { error in
+                completionHandler(nil, error)
+        })
+    }
+    
+    func retrieveItemImageById(id: String, imageIndex: Int, completionHandler: (UIImage?, ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.getImageFromServerById(id, fileName: "image\(imageIndex)",
+            success: { response in
+                if let content = response!["content"] as? NSString {
+                    let fileData = NSData(base64EncodedString: content as String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
+                    if let data = fileData {
+                        let img = UIImage(data: data)
+                        completionHandler(img, nil)
+                    }
+                    else {
+                        print("Error parsing server data into image.")
+                        completionHandler(nil, nil)
+                    }
+                }
             }, failure: { error in
                 completionHandler(nil, error)
         })
