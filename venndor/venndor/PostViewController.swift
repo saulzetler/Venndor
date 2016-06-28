@@ -11,7 +11,7 @@ import UIKit
 
 class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
-    var numberOfPages: CGFloat = 7
+    var numberOfPages: CGFloat = 8
     var scrollView: UIScrollView!
     var containerView = UIView()
     var pageControl: UIPageControl!
@@ -28,6 +28,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var imageViewArray: [UIImageView]!
     var currentImgView: UIImageView!
     var postButton: UIButton!
+    
+    var condition: Int!
     
     let pickerData = ["Furniture", "Kitchen", "Household", "Electronics", "Clothing", "Books", "Other"]
     var categoryPicker: UIPickerView!
@@ -61,6 +63,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         view.addSubview(scrollView)
     }
     
+    func setupRating() {
+        
+    }
+    
     func setupItemName() {
         itemName = ItemNameTextField(frame: CGRectMake(10, screenSize.height*1.5, screenSize.width*0.95, 30))
         itemName.text = "Name"
@@ -69,7 +75,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         containerView.addSubview(itemName)
         createBoarder(itemName)
         itemName.returnKeyType = .Done
-        
     }
     
     func setupItemDescription() {
@@ -101,7 +106,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setupPostButton() {
-        let buttonFrame = CGRectMake(screenSize.width*0.4, screenSize.height*6.5, screenSize.width*0.2, screenSize.height*0.1)
+        let buttonFrame = CGRectMake(screenSize.width*0.4, screenSize.height*7.5, screenSize.width*0.2, screenSize.height*0.1)
         postButton = makeTextButton("Post!", frame: buttonFrame, target: "postItem:")
         containerView.addSubview(postButton)
     }
@@ -118,12 +123,30 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setupLabels() {
+        let photosLabel = UILabel(frame: CGRectMake(10, screenSize.height*0.2, self.screenSize.width*0.95, 30))
+        photosLabel.text = "Photos"
+        containerView.addSubview(photosLabel)
         let nameLabel = UILabel(frame: CGRectMake(10, screenSize.height*1.2, screenSize.width*0.95, 30))
         nameLabel.text = "What is the name of your item?"
         containerView.addSubview(nameLabel)
         let categoriesLabel = UILabel(frame: CGRectMake(10, screenSize.height*2.2, self.screenSize.width*0.95, 30))
         categoriesLabel.text = "What category does your item fit into"
         containerView.addSubview(categoriesLabel)
+        let dataLabel = UILabel(frame: CGRectMake(10, screenSize.height*3.2, self.screenSize.width*0.95, 30))
+        dataLabel.text = "Give some info on your item"
+        containerView.addSubview(dataLabel)
+        let descriptionLabel = UILabel(frame: CGRectMake(10, screenSize.height*4.2, self.screenSize.width*0.95, 30))
+        descriptionLabel.text = "Give a description of your item"
+        containerView.addSubview(descriptionLabel)
+        let addressLabel = UILabel(frame: CGRectMake(10, screenSize.height*5.2, self.screenSize.width*0.95, 30))
+        addressLabel.text = "What is the address?"
+        containerView.addSubview(addressLabel)
+        let priceLabel = UILabel(frame: CGRectMake(10, screenSize.height*6.2, self.screenSize.width*0.95, 30))
+        priceLabel.text = "What is the minimum you're willing to pay?"
+        containerView.addSubview(priceLabel)
+        let confirmLabel = UILabel(frame: CGRectMake(10, screenSize.height*7.2, self.screenSize.width*0.95, 30))
+        confirmLabel.text = "Confirm Post"
+        containerView.addSubview(confirmLabel)
     }
     
     
@@ -158,7 +181,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             break
         }
         
-        for y in 0...6 {
+        for y in 0...7 {
             if y == Int(currentPage) {
                 let yOffset = CGPointMake(0, pageHeight*CGFloat(y));
                 self.scrollView.setContentOffset(yOffset, animated: true)

@@ -10,6 +10,7 @@
 		101F43CE1D107A55007E0ADE /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F43CD1D107A55007E0ADE /* HeaderView.swift */; };
 		101F43D01D11A203007E0ADE /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F43CF1D11A203007E0ADE /* TutorialViewController.swift */; };
 		102331941D13267B002C6B3C /* MiniMatchTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */; };
+		102806D71D22F11D0019C7FF /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102806D61D22F11D0019C7FF /* RatingControl.swift */; };
 		105FCB011D08A5C70073E3AE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB001D08A5C70073E3AE /* LoginViewController.swift */; };
 		105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB021D08AB790073E3AE /* TempViewController.swift */; };
 		10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9A71D0749700028A999 /* AppDelegate.swift */; };
@@ -93,6 +94,7 @@
 		101F43CD1D107A55007E0ADE /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		101F43CF1D11A203007E0ADE /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniMatchTransitionManager.swift; sourceTree = "<group>"; };
+		102806D61D22F11D0019C7FF /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		105FCB001D08A5C70073E3AE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		105FCB021D08AB790073E3AE /* TempViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempViewController.swift; sourceTree = "<group>"; };
 		10ADC9A41D0749700028A999 /* venndor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = venndor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -385,6 +387,7 @@
 				E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */,
 				E43070DF1D22F0B70035BCF4 /* View.swift */,
 				E43070E11D22F39D0035BCF4 /* OfferView.swift */,
+				102806D61D22F11D0019C7FF /* RatingControl.swift */,
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -667,6 +670,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				E49051B61D0B245C0045D5C0 /* PostViewController.swift in Sources */,
+				102806D71D22F11D0019C7FF /* RatingControl.swift in Sources */,
 				63088BA81D187CA900F67931 /* ItemManager.swift in Sources */,
 				E49051A61D09AF7B0045D5C0 /* DraggableViewBackground.swift in Sources */,
 				E43070DE1D22EE680035BCF4 /* WheelSlider.swift in Sources */,
