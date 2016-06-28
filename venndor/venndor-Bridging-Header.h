@@ -9,12 +9,17 @@
 #ifndef venndor_Bridging_Header_h
 #define venndor_Bridging_Header_h
 
+#import <GoogleMaps/GoogleMaps.h>
 #import <FBSDKCoreKit/FBSDKCorekit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import "SWRevealViewController.h"
 
-#endif /* venndor_Bridging_Header_h */
+#endif 
+
+
+
+/* venndor_Bridging_Header_h */
 
 /*#import "FBSDKAccessToken.h"
 #import "FBSDKAppEvents.h"
