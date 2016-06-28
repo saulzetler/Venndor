@@ -13,7 +13,7 @@ struct LocalUser {
     static var firstName: String!
     static var lastName: String!
     static var email: String!
-    static var seenPosts: [String:AnyObject]!
+    static var seenPosts = [String:AnyObject]()
 }
 
 class User: NSObject {

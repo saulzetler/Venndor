@@ -94,11 +94,39 @@ final class RESTEngine {
         })
     }
     
+    //MARK: -Seen Posts methods
+    
+    func createSeenPosts(id: String, success: SuccessClosure, failure: ErrorClosure) {
+        let params = ["_id": id]
+        
+        let requestBody: [String: AnyObject] = ["resource": params]
+        callApiWithPath(Routing.Service(tableName:"seenPosts").path, method: "POST", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    func getSeenPostsById(id: String, success: SuccessClosure, failure: ErrorClosure) {
+        let path = "\(Routing.Service(tableName: "seenPosts").path)/\(id)"
+        
+        callApiWithPath(path, method: "GET", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    func updateSeenPostsById(id: String, update: [String:AnyObject], success: SuccessClosure, failure: ErrorClosure) {
+        let params = update
+        let path = "\(Routing.Service(tableName: "seenPosts").path)/\(id)"
+        
+        callApiWithPath(path, method: "PATCH", queryParams: nil, body: params, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    func removeSeenPostsById(id: String, success: SuccessClosure, failure: ErrorClosure) {
+        let path = "\(Routing.Service(tableName: "seenPosts").path)/\(id)"
+        callApiWithPath(path, method: "DELETE", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
+    }
+    
     //MARK: - User methods
     
     func registerUser(email: String, firstName: String, lastName: String, success: SuccessClosure, failure: ErrorClosure) {
         
-        let details: [String: AnyObject] = ["email": email,
+        let params: [String: AnyObject] =
+        ["email": email,
             "first_name": firstName,
             "last_name": lastName,
             "rating": 0.0,
@@ -107,8 +135,9 @@ final class RESTEngine {
             "nuItemsBought": 0,
             "soldItems": [String](),
             "ads": [String](),
-            "matches": [String]()]
-        let requestBody: [String: AnyObject] = ["resource": details]
+            "matches": [String](),
+            "seenPosts": [String: AnyObject]()]
+        let requestBody: [String: AnyObject] = ["resource": params]
         
         callApiWithPath(Routing.Service(tableName: "users").path, method: "POST", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
     }
@@ -124,7 +153,8 @@ final class RESTEngine {
     }
     
     func getUserById(id: String, success: SuccessClosure, failure: ErrorClosure) {
-        callApiWithPath("\(Routing.Service(tableName: "users").path)/\(id)", method: "GET", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
+        let path = "\(Routing.Service(tableName: "users").path)/\(id)"
+        callApiWithPath(path, method: "GET", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
 
     /**
