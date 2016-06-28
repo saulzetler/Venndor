@@ -241,7 +241,18 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 }
             }
             
-            let item = Item(name: name, description: details, owner: LocalUser.user.id, photos: images)
+            let row = categoryPicker.selectedRowInComponent(0)
+            let category = pickerData[row]
+            
+            //NEEDS TO BE SET FROM THE DATA GATHERED BY POSTVIEWCONTROLLER
+            let condition = 0
+            let locationX = 0.0
+            let locationY = 0.0
+            let minPrice = 0.0
+            let question1 = ""
+            let question2 = ""
+            
+            let item = Item(name: name, description: details, owner: LocalUser.user.id, category: category, condition: condition, locationX: locationX, locationY: locationY, photos: images, question1: question1, question2: question2, minPrice: minPrice)
             let manager = ItemManager()
             manager.createItem(item) { error in
                 guard error == nil else {
