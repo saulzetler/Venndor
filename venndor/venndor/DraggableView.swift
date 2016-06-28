@@ -41,11 +41,11 @@ public class DraggableView: UIView, UIScrollViewDelegate {
         super.init(coder: aDecoder)
     }
     
-    public init(frame: CGRect, photos: [UIImage]) {
+    init(frame: CGRect, item: Item) {
         super.init(frame: frame)
 
         self.setupView()
-        setupScrollView(photos)
+        setupScrollView(item)
 
         information = UILabel(frame: CGRectMake(0, 50, self.frame.size.width, 100))
         information.text = "no info given"
@@ -71,16 +71,16 @@ public class DraggableView: UIView, UIScrollViewDelegate {
 //        
 //    }
     //scroll view funcs
-    func setupScrollView(photos: [UIImage]) {
+    func setupScrollView(item: Item) {
         scrollView = UIScrollView()
         let cardWidth = self.frame.width
         let cardHeight = self.frame.height
         scrollView.delegate = self
         scrollView.frame = CGRectMake(0, 0, cardWidth, cardHeight)
-        scrollView.contentSize = CGSizeMake(cardWidth, cardHeight*CGFloat(photos.count))
+        scrollView.contentSize = CGSizeMake(cardWidth, cardHeight*CGFloat(item.photoCount))
         scrollView.decelerationRate = 0.1
         pageControl.currentPage = 0
-        containerView.frame = CGRectMake(0, 0, cardWidth, cardHeight*CGFloat(photos.count))
+        containerView.frame = CGRectMake(0, 0, cardWidth, cardHeight*CGFloat(item.photoCount))
         scrollView.decelerationRate = 0.1
         pageControl.currentPage = 0
         picNum = 0
@@ -88,8 +88,11 @@ public class DraggableView: UIView, UIScrollViewDelegate {
         let scrollViewWidth:CGFloat = self.scrollView.frame.width
         let scrollViewHeight:CGFloat = self.scrollView.frame.height
         
-        for x in 0..<photos.count {
-            if let temp = photos[x] as UIImage? {
+        for x in 0..<item.photoCount {
+            RESTEngine.sharedEngine.getImageFromServerById(item.id, fileName: "\(x)",
+                success: { response in },
+                failure: { error in })
+            if let temp = item.photos![x] as UIImage? {
                 let img = UIImageView(frame: CGRectMake(0, scrollViewHeight*CGFloat(x),scrollViewWidth, scrollViewHeight))
                 img.image = temp
                 containerView.addSubview(img)
