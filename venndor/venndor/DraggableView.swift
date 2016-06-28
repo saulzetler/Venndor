@@ -36,6 +36,7 @@ public class DraggableView: UIView, UIScrollViewDelegate {
     var pageControl: UIPageControl! = UIPageControl()
     var picNum: Int!
     
+    var pause: Bool!
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -241,6 +242,14 @@ public class DraggableView: UIView, UIScrollViewDelegate {
     }
     
     func rightAction() -> Void {
+        pause = true
+        let offerView = OfferView(self.frame = CGRectMake(0, 0, 0, 0))
+        self.parentViewController!.bringUpNewView(offerView)
+        while pause == true {
+            
+        }
+        
+        
         let finishPoint: CGPoint = CGPointMake(500, 2 * CGFloat(yFromCenter) + self.originPoint.y)
         UIView.animateWithDuration(0.3,
             animations: {
@@ -249,6 +258,8 @@ public class DraggableView: UIView, UIScrollViewDelegate {
                 (value: Bool) in
                 self.removeFromSuperview()
         })
+        
+        
         delegate.cardSwipedRight(self)
     }
 

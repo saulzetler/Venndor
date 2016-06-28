@@ -79,6 +79,11 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         // Dispose of any resources that can be recreated.
     }
     
+//    func showOfferView(){
+//        let offerView = OfferView(frame: CGRectMake(0, 0, 0, 0))
+//        bringUpNewView(offerView)
+//    }
+    
     
     func showAlert(sender: UIButton) {
         
