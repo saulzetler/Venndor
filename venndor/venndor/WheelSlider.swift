@@ -30,9 +30,7 @@ public enum WSKnobLineCap{
 
 @IBDesignable
 public class WheelSlider: UIView {
-    
-    
-    
+
     private let wheelView:UIView
     
     private var beforePoint:Double = 0
@@ -90,6 +88,7 @@ public class WheelSlider: UIView {
             valueTextLayer = layer
             self.layer.addSublayer(layer)
         }
+        setupButton()
     }
 
     required public init?(coder aDecoder: NSCoder) {
@@ -103,6 +102,7 @@ public class WheelSlider: UIView {
             valueTextLayer = layer
             self.layer.addSublayer(layer)
         }
+        setupButton()
     }
     
     private func drawValueText()->CATextLayer?{
@@ -118,6 +118,15 @@ public class WheelSlider: UIView {
         textLayer.alignmentMode = kCAAlignmentCenter
         textLayer.contentsScale = UIScreen.mainScreen().scale
         return textLayer
+    }
+    
+    private func setupButton() {
+        let offerButton = makeImageButton("", frame: CGRect(x: self.frame.width*0.1, y: self.frame.height*0.1, width: self.frame.width*0.8, height: self.frame.height*0.8), target: "offer:", tinted: false, circle: true, backgroundColor: 0x2c3e50, backgroundAlpha: 0)
+        self.addSubview(offerButton)
+    }
+    
+    func offer(sender: UIButton) {
+        print("offered")
     }
     
     private func drawBackgroundCicle() -> CAShapeLayer{
@@ -227,11 +236,6 @@ public class WheelSlider: UIView {
             beganTouchPosition = moveTouchPosition
             moveTouchPosition = pos
         }
-    }
-    
-    func hack() -> UIColor {
-        let color = UIColorFromHex(0x1abc9c)
-        return color
     }
     
     /*

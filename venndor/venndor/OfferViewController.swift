@@ -34,19 +34,13 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         self.performSegueWithIdentifier("offerToBrowse", sender: self)
     }
     
-    func offer(sender: UIButton) {
-        print("offered")
-    }
-    
     func setupWheelSlider() {
         let wheelFrame = CGRectMake(screenSize.width*0.2, screenSize.height*0.6, screenSize.width*0.6, screenSize.width*0.6)
         let wheelslider = WheelSlider(frame: wheelFrame)
-        let offerButton = makeImageButton("", frame: wheelFrame, target: "offer:", tinted: false, circle: true, backgroundColor: 0x2c3e50, backgroundAlpha: 0)
         wheelslider.delegate = self
         wheelslider.callback = {(value:Double) in
         }
         self.view.addSubview(wheelslider)
-        self.view.addSubview(offerButton)
     }
     
     func updateSliderValue(value: Double, sender: WheelSlider) {
