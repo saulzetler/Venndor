@@ -11,17 +11,17 @@ import Foundation
 class OfferViewController: UIViewController, WheelSliderDelegate {
  
     let screenSize: CGRect = UIScreen.mainScreen().bounds
-    var backgroundColor: UIColor!
+    var backgroundImage: UIColor!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackButton()
         setupWheelSlider()
-        self.view.backgroundColor = UIColorFromHex(0x3498db, alpha: 0.9)
+        self.view.backgroundColor = backgroundImage
     }
     
     func setupBackground(background: UIImage) {
-        backgroundColor = UIColor(patternImage: background).colorWithAlphaComponent(0.7)
+        backgroundImage = UIColor(patternImage: background).colorWithAlphaComponent(0.7)
     }
     
     func setupBackButton() {
