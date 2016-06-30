@@ -10,6 +10,8 @@ import UIKit
 
 class SplashViewController: UIViewController {
     
+//    var categorySelected: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -35,7 +37,7 @@ class SplashViewController: UIViewController {
                     self.triggerSegueTutorial()
                 }
             }
-            itemManager.retrieveMultipleItems(10, offset: nil, filter: nil) { items, error in
+            itemManager.retrieveMultipleItems(5, offset: nil, filter: GlobalItems.currentCategory) { items, error in
                 guard error == nil else {
                     print("Error retrieving items from server: \(error)")
                     return

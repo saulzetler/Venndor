@@ -9,16 +9,19 @@
 import Foundation
 import UIKit
 
-class DraggableViewBackground: UIView, DraggableViewDelegate {
+public class DraggableViewBackground: UIView, DraggableViewDelegate {
+//    var currentCategory: String?
+    
     var exampleCardLabels: [Item]!
     var allCards: [DraggableView]!
 
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     let bvc = BrowseViewController()
     
-    let MAX_BUFFER_SIZE = 2
+//    let MAX_BUFFER_SIZE = 2
     let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.7
     let CARD_WIDTH: CGFloat = UIScreen.mainScreen().bounds.width*0.9
+    var MAX_BUFFER_SIZE: Int!
 
     var cardsLoadedIndex: Int!
     var loadedCards: [DraggableView]!
@@ -29,18 +32,33 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
     
     var itemName: UILabel!
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         super.layoutSubviews()
         self.setupView()
         exampleCardLabels = GlobalItems.items
+        MAX_BUFFER_SIZE = exampleCardLabels.count
         allCards = []
         loadedCards = []
         cardsLoadedIndex = 0
+        self.loadCards()
+    }
+    
+    init(frame: CGRect, category: String) {
+//        currentCategory = category
+        super.init(frame: frame)
+        super.layoutSubviews()
+        self.setupView()
+        exampleCardLabels = GlobalItems.items
+        MAX_BUFFER_SIZE = exampleCardLabels.count
+        allCards = []
+        loadedCards = []
+        cardsLoadedIndex = 0
+        print(currentCategory)
         self.loadCards()
     }
 
@@ -112,45 +130,45 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
         }
     }
     
-//    func loadAnotherCard() -> Void {
-//        let itemManager = ItemManager()
-//        itemManager.retrieveMultipleItems(1, offset:  filter: nil) { items, error in
-//            guard error == nil else {
-//                print("Error retrieving items from server: \(error)")
-//                return
-//            }
-//            
-//            if items != nil {
-//                let tempItem = items!
-//                self.cardsLoadedIndex = self.cardsLoadedIndex - 1
-//                self.allCards[self.cardsLoadedIndex] = self.createDraggableViewFromItem(tempItem[0])
-//            }
-//        }
-//    }
+    func loadAnotherCard() -> Void {
+        let itemManager = ItemManager()
+        itemManager.retrieveMultipleItems(1, offset: cardsLoadedIndex, filter: GlobalItems.currentCategory) { items, error in
+            guard error == nil else {
+                print("Error retrieving items from server: \(error)")
+                return
+            }
+            
+            if items != nil {
+                let tempItem = items!
+                
+                //check that item is returned before creating slide to avoid null pointer exceptions
+                if tempItem.count > 0 {
+                    print ("\(tempItem[0].id)")
+                    self.allCards[0] = self.createDraggableViewFromItem(tempItem[0])
+                }
+            }
+        }
+    }
 
     func cardSwipedLeft(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
 
-        if cardsLoadedIndex < allCards.count {
-            loadedCards.append(allCards[cardsLoadedIndex])
-            cardsLoadedIndex = cardsLoadedIndex + 1
-            self.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
+        loadedCards.append(allCards[0])
+        cardsLoadedIndex = cardsLoadedIndex + 1
+        self.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
 
-//            loadAnotherCard()
-        }
+        loadAnotherCard()
     }
     
     func cardSwipedRight(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
 //        bvc.showOfferView()
         
-        if cardsLoadedIndex < allCards.count {
-            loadedCards.append(allCards[cardsLoadedIndex])
-            cardsLoadedIndex = cardsLoadedIndex + 1
-            self.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
-            
-//            loadAnotherCard()
-        }
+        loadedCards.append(allCards[0])
+        cardsLoadedIndex = cardsLoadedIndex + 1
+        self.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
+        
+        loadAnotherCard()
     }
 
     func swipeRight() -> Void {

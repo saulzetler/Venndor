@@ -186,6 +186,8 @@ typedef NS_ENUM(NSInteger, SWRevealToggleAnimationType)
 
 /* Basic API */
 
+extern NSString *currentCategory;
+
 // Object instance init and rear view setting
 - (id)initWithRearViewController:(UIViewController *)rearViewController frontViewController:(UIViewController *)frontViewController;
 

@@ -40,6 +40,8 @@ class CategoriesMenuController: UITableViewController {
     var clothingButton: UIButton!
     var otherButton: UIButton!
     
+    var categorySelection: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
@@ -57,6 +59,7 @@ class CategoriesMenuController: UITableViewController {
         booksCell.selectionStyle = UITableViewCellSelectionStyle.None
         clothingCell.selectionStyle = UITableViewCellSelectionStyle.None
         otherCell.selectionStyle = UITableViewCellSelectionStyle.None
+        allCell.selected = true
     }
     
     func setupButtons() {
@@ -97,6 +100,37 @@ class CategoriesMenuController: UITableViewController {
     }
     
     func toggleSelected(sender: UIButton) {
+        
+        switch sender.tag {
+        case 1:
+            GlobalItems.currentCategory = nil
+            break;
+        case 2:
+            GlobalItems.currentCategory = "category=Furniture"
+            break;
+        case 3:
+            GlobalItems.currentCategory = "category=Kitchen"
+            break;
+        case 4:
+            GlobalItems.currentCategory = "category=Household"
+            break;
+        case 5:
+            GlobalItems.currentCategory = "category=Electronics"
+            break;
+        case 6:
+            GlobalItems.currentCategory = "category=Clothing"
+            break;
+        case 7:
+            GlobalItems.currentCategory = "category=Books"
+            break;
+        case 8:
+            GlobalItems.currentCategory = "category=Other"
+            break;
+        default: ()
+            break;
+        }
+        
+        
         allButton.selected = false
         furnitureButton.selected = false
         householdButton.selected = false
@@ -105,9 +139,18 @@ class CategoriesMenuController: UITableViewController {
         booksButton.selected = false
         clothingButton.selected = false
         otherButton.selected = false
+        
         sender.selected = true
         
-        
+        self.performSegueWithIdentifier("newCat", sender: self)
     }
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+//        if (segue.identifier == "newCat") {
+//            let svc = segue.destinationViewController as! SplashViewController;
+//            
+//            svc.categorySelected = self.categorySelection
+//            
+//        }
+//    }
     
 }
