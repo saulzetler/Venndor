@@ -61,6 +61,16 @@ extension UIViewController {
         }
     }
     
+    //animate a new view over top
+    func bringUpNewView(view: UIView) {
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        UIView.animateWithDuration(1.0, delay: 0, options: .TransitionCrossDissolve, animations: {
+            self.view.addSubview(view)
+            self.view.bringSubviewToFront(view)
+            view.frame = CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height)
+            }, completion: nil)
+    }
+    
     //generic scroll view functions
     func createBoarder(view: UIView) {
         let boarderColor : UIColor = UIColor.blackColor()

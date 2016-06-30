@@ -63,27 +63,35 @@ class CategoriesMenuController: UITableViewController {
         let buttonSize = CGRect(x: screenSize.width * 0.25, y: screenSize.height * 0.007, width: screenSize.width * 0.15, height: screenSize.width * 0.15)
         
         allButton = makeImageButton("Home-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        allButton.tag = 1
         allCell.addSubview(allButton)
         
         furnitureButton = makeImageButton("Chair-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        furnitureButton.tag = 2
         furnitureCell.addSubview(furnitureButton)
         
         householdButton = makeImageButton("Lamp-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        householdButton.tag = 3
         householdCell.addSubview(householdButton)
         
         kitchenButton = makeImageButton("Kitchen-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        kitchenButton.tag = 4
         kitchenCell.addSubview(kitchenButton)
         
         electronicsButton = makeImageButton("Multiple Devices-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        electronicsButton.tag = 5
         electronicsCell.addSubview(electronicsButton)
         
         booksButton = makeImageButton("Generic Book File Type-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        booksButton.tag = 6
         booksCell.addSubview(booksButton)
         
         clothingButton = makeImageButton("Clothes-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        clothingButton.tag = 7
         clothingCell.addSubview(clothingButton)
         
         otherButton = makeImageButton("More-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        otherButton.tag = 8
         otherCell.addSubview(otherButton)
         
     }
@@ -97,8 +105,9 @@ class CategoriesMenuController: UITableViewController {
         booksButton.selected = false
         clothingButton.selected = false
         otherButton.selected = false
-        
         sender.selected = true
+        
+        
     }
     
 }

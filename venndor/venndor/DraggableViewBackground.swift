@@ -13,7 +13,8 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
     var exampleCardLabels: [Item]!
     var allCards: [DraggableView]!
 
-//    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    let bvc = BrowseViewController()
     
     let MAX_BUFFER_SIZE = 2
 //    let CARD_HEIGHT: CGFloat = 386
@@ -129,6 +130,7 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
     
     func cardSwipedRight(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
+//        bvc.showOfferView()
         
         if cardsLoadedIndex < allCards.count {
             loadedCards.append(allCards[cardsLoadedIndex])
