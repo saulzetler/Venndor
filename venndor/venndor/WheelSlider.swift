@@ -31,6 +31,8 @@ public enum WSKnobLineCap{
 @IBDesignable
 public class WheelSlider: UIView {
     
+    
+    
     private let wheelView:UIView
     
     private var beforePoint:Double = 0
@@ -38,7 +40,7 @@ public class WheelSlider: UIView {
         didSet{
             wheelView.layer.removeAllAnimations()
             wheelView.layer.addAnimation(nextAnimation(), forKey: "rotateAnimation")
-            valueTextLayer?.string = "\(Int(calcCurrentValue()))"
+            valueTextLayer?.string = "$\(Int(calcCurrentValue()))"
             delegate?.updateSliderValue(calcCurrentValue(),sender: self)
             callback?(calcCurrentValue())
         }
@@ -55,9 +57,10 @@ public class WheelSlider: UIView {
     public var callback : ((Double) -> ())?
     
     //backgroundCircleParameter
-    @IBInspectable public var backStrokeColor : UIColor = UIColor.darkGrayColor()
-    @IBInspectable public var backFillColor : UIColor = UIColor.darkGrayColor()
-    @IBInspectable public var backWidth : CGFloat = 10.0
+    
+    @IBInspectable public var backStrokeColor : UIColor = UIColor(red: 26/255, green: 188/255, blue: 156/255, alpha: 1)
+    @IBInspectable public var backFillColor : UIColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
+    @IBInspectable public var backWidth : CGFloat = 5.0
     
     
     //knobParameter
@@ -68,13 +71,13 @@ public class WheelSlider: UIView {
     
  
     @IBInspectable public var minVal:Int = 0
-    @IBInspectable public var maxVal:Int = 10
-    @IBInspectable public var speed:Int = 40
+    @IBInspectable public var maxVal:Int = 50
+    @IBInspectable public var speed:Int = 100
     @IBInspectable public var isLimited:Bool = false
-    @IBInspectable public var allowNegativeNumber:Bool = true
+    @IBInspectable public var allowNegativeNumber:Bool = false
     @IBInspectable public var isValueText:Bool = true
-    @IBInspectable public var valueTextColor:UIColor = UIColor.whiteColor()
-    @IBInspectable public var valueTextFontSize:CGFloat = 20.0
+    @IBInspectable public var valueTextColor:UIColor = UIColor(red: 26/255, green: 188/255, blue: 156/255, alpha: 1)
+    @IBInspectable public var valueTextFontSize:CGFloat = 70.0
     public lazy var font:UIFont = UIFont.systemFontOfSize(self.valueTextFontSize)
     
     override init(frame: CGRect) {
@@ -107,10 +110,10 @@ public class WheelSlider: UIView {
             return nil
         }
         let textLayer = CATextLayer()
-        textLayer.string = "\(0)"
+        textLayer.string = "$\(0)"
         textLayer.font = font
         textLayer.fontSize = font.pointSize
-        textLayer.frame = CGRectMake(frame.origin.x/2 - bounds.width/2, frame.origin.y/2, bounds.width, bounds.height)
+        textLayer.frame = CGRectMake(0, frame.origin.y/6, bounds.width, bounds.height)
         textLayer.foregroundColor = valueTextColor.CGColor
         textLayer.alignmentMode = kCAAlignmentCenter
         textLayer.contentsScale = UIScreen.mainScreen().scale
@@ -136,8 +139,8 @@ public class WheelSlider: UIView {
         ovalShapeLayer.lineWidth = knobWidth
         ovalShapeLayer.lineCap = knobLineCap.getLineCapValue
         let center = CGPoint(x: bounds.width / 2, y: bounds.height / 2)
-        let start = CGFloat(M_PI * 3.0/2.0)
-        let end = CGFloat(M_PI * 3.0/2.0) + knobLength
+        let start = CGFloat(M_PI)
+        let end = CGFloat(M_PI) + knobLength
 
         ovalShapeLayer.path = UIBezierPath(arcCenter: center, radius: max(bounds.width, bounds.height) / 2, startAngle:start, endAngle: end ,clockwise: true).CGPath
         return ovalShapeLayer
@@ -224,6 +227,11 @@ public class WheelSlider: UIView {
             beganTouchPosition = moveTouchPosition
             moveTouchPosition = pos
         }
+    }
+    
+    func hack() -> UIColor {
+        let color = UIColorFromHex(0x1abc9c)
+        return color
     }
     
     /*

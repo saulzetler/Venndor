@@ -23,19 +23,18 @@ class OfferView: UIView {
     }
     
     func setupViewFrame() {
-        self.frame = CGRectMake(0, screenSize.height, screenSize.width, screenSize.height)
+        self.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
         self.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 0.7)
     }
     
     func setupBackButton() {
-        let buttonSize = CGRect(x: screenSize.width * 0.25, y: screenSize.height * 0.007, width: screenSize.width * 0.1, height: screenSize.width * 0.1)
-        let backButton = makeImageButton("Back_Arrow.png", frame: buttonSize, target: "goBack:", tinted: false, circle: false, backgroundColor: 0x2c3e50, backgroundAlpha: 0.7)
+        let buttonSize = CGRect(x: screenSize.width * 0.1, y: screenSize.height * 0.05, width: screenSize.width * 0.13, height: screenSize.width * 0.13)
+        let backButton = makeImageButton("Back_Arrow.png", frame: buttonSize, target: "goBack:", tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         self.addSubview(backButton)
     }
     
     func goBack(sender: UIButton) {
         self.removeFromSuperview()
-        
     }
     
 }

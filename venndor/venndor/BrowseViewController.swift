@@ -18,11 +18,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //add the header
         headerView = HeaderView(frame: self.view.frame)
 
-        
-        
         let globalItems = GlobalItems()
         
         globalItems.loadNextItem()
@@ -31,7 +30,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 //        let items = GlobalItems.items
         
         self.view.backgroundColor = UIColorFromHex(0xe6f2ff, alpha: 1)
-        
         
         //MiniMyMatches button at bottom of browse.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -44,12 +42,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
         }
         self.view.addSubview(headerView)
-        
-
-
     }
     
     override func viewDidAppear(animated: Bool) {
+        
         let backgroundImage = UIImageView(frame: UIScreen.mainScreen().bounds)
         
         let draggableBackground: DraggableViewBackground = DraggableViewBackground(frame: self.view.frame)
@@ -69,6 +65,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 subView.hidden = false
             }
         }
+        
         headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
         headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
     }
@@ -78,6 +75,12 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if (segue.identifier == "toOfferScreen") {
+//            var ovc = segue.destinationViewController as! OfferViewController
+//        }
+//    }
     
 //    func showOfferView(){
 //        let offerView = OfferView(frame: CGRectMake(0, 0, 0, 0))

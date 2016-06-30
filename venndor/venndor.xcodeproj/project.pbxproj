@@ -37,10 +37,11 @@
 		63C8F7331D189E3D00FFC1E2 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */; };
 		63C8F7351D19C01500FFC1E2 /* hellscreams.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63C8F7341D19C01500FFC1E2 /* hellscreams.jpg */; };
 		A61EB1AABD768E2B14D59749 /* Pods_venndorUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9387DB34016E826A2BBEF5 /* Pods_venndorUITests.framework */; };
-		E43070DE1D22EE680035BCF4 /* WheelSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43070DD1D22EE680035BCF4 /* WheelSlider.swift */; };
+		E42E04C31D2563330043779F /* WheelSlider.swift in Sources */ = {isa = PBXBuildFile; fileRef = E42E04C21D2563330043779F /* WheelSlider.swift */; };
 		E43070E01D22F0B70035BCF4 /* View.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43070DF1D22F0B70035BCF4 /* View.swift */; };
 		E43070E21D22F39D0035BCF4 /* OfferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43070E11D22F39D0035BCF4 /* OfferView.swift */; };
 		E43070E41D22FDC80035BCF4 /* Back_Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E43070E31D22FDC80035BCF4 /* Back_Arrow.png */; };
+		E43070E61D2312B00035BCF4 /* OfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43070E51D2312B00035BCF4 /* OfferViewController.swift */; };
 		E43C92B51D189C67003E9CF5 /* ItemNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */; };
 		E44C15181D11B5D00006EBAD /* Shopping Cart Loaded-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */; };
 		E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15171D11B5D00006EBAD /* Megaphone-50.png */; };
@@ -131,10 +132,11 @@
 		B5E5E666F0892E4D453AB7AB /* Pods-venndorTests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-venndorTests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-venndorTests/Pods-venndorTests.debug.xcconfig"; sourceTree = "<group>"; };
 		CA9387DB34016E826A2BBEF5 /* Pods_venndorUITests.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_venndorUITests.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		D2DEF2969293315772844D7D /* Pods-venndorUITests.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-venndorUITests.debug.xcconfig"; path = "Pods/Target Support Files/Pods-venndorUITests/Pods-venndorUITests.debug.xcconfig"; sourceTree = "<group>"; };
-		E43070DD1D22EE680035BCF4 /* WheelSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WheelSlider.swift; sourceTree = "<group>"; };
+		E42E04C21D2563330043779F /* WheelSlider.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = WheelSlider.swift; sourceTree = "<group>"; };
 		E43070DF1D22F0B70035BCF4 /* View.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = View.swift; sourceTree = "<group>"; };
 		E43070E11D22F39D0035BCF4 /* OfferView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferView.swift; sourceTree = "<group>"; };
 		E43070E31D22FDC80035BCF4 /* Back_Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back_Arrow.png; sourceTree = "<group>"; };
+		E43070E51D2312B00035BCF4 /* OfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferViewController.swift; sourceTree = "<group>"; };
 		E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemNameTextField.swift; sourceTree = "<group>"; };
 		E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shopping Cart Loaded-50.png"; sourceTree = "<group>"; };
 		E44C15171D11B5D00006EBAD /* Megaphone-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Megaphone-50.png"; sourceTree = "<group>"; };
@@ -213,6 +215,7 @@
 				E44C15281D11C8680006EBAD /* MyPostsViewController.swift */,
 				E44C152C1D11CC300006EBAD /* MyMatchesViewController.swift */,
 				E44C152E1D11D7410006EBAD /* CategoriesMenuController.swift */,
+				E43070E51D2312B00035BCF4 /* OfferViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -378,7 +381,7 @@
 		E49051A11D09AF6B0045D5C0 /* Views */ = {
 			isa = PBXGroup;
 			children = (
-				E43070DD1D22EE680035BCF4 /* WheelSlider.swift */,
+				E42E04C21D2563330043779F /* WheelSlider.swift */,
 				E49051A21D09AF7B0045D5C0 /* DraggableView.swift */,
 				E49051A31D09AF7B0045D5C0 /* DraggableViewBackground.swift */,
 				E49051A41D09AF7B0045D5C0 /* OverlayView.swift */,
@@ -669,11 +672,11 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E42E04C31D2563330043779F /* WheelSlider.swift in Sources */,
 				E49051B61D0B245C0045D5C0 /* PostViewController.swift in Sources */,
 				102806D71D22F11D0019C7FF /* RatingControl.swift in Sources */,
 				63088BA81D187CA900F67931 /* ItemManager.swift in Sources */,
 				E49051A61D09AF7B0045D5C0 /* DraggableViewBackground.swift in Sources */,
-				E43070DE1D22EE680035BCF4 /* WheelSlider.swift in Sources */,
 				E43070E01D22F0B70035BCF4 /* View.swift in Sources */,
 				E49051B21D09E5E80045D5C0 /* SideMenuController.swift in Sources */,
 				E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */,
@@ -697,6 +700,7 @@
 				63088BAC1D187CBA00F67931 /* User.swift in Sources */,
 				10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */,
 				E44C152F1D11D7410006EBAD /* CategoriesMenuController.swift in Sources */,
+				E43070E61D2312B00035BCF4 /* OfferViewController.swift in Sources */,
 				63088BAE1D187CBA00F67931 /* Match.swift in Sources */,
 				10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */,
 				E43070E21D22F39D0035BCF4 /* OfferView.swift in Sources */,
