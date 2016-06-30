@@ -10,6 +10,8 @@ import UIKit
 
 class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
+    var currentCategory: String!
+    
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var miniMatches: UIButton!
     var menuTransitionManager = MenuTransitionManager()
@@ -47,10 +49,17 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     override func viewDidAppear(animated: Bool) {
         
         let backgroundImage = UIImageView(frame: UIScreen.mainScreen().bounds)
-        
-        let draggableBackground: DraggableViewBackground = DraggableViewBackground(frame: self.view.frame)
-        self.view.addSubview(draggableBackground)
-        draggableBackground.insertSubview(backgroundImage, atIndex: 0)
+        if currentCategory == nil {
+            let draggableBackground: DraggableViewBackground = DraggableViewBackground(frame: self.view.frame)
+            self.view.addSubview(draggableBackground)
+            draggableBackground.insertSubview(backgroundImage, atIndex: 0)
+        }
+        else {
+            let draggableBackground: DraggableViewBackground = DraggableViewBackground(frame: self.view.frame, category: currentCategory)
+            self.view.addSubview(draggableBackground)
+            draggableBackground.insertSubview(backgroundImage, atIndex: 0)
+        }
+
         
         self.view.bringSubviewToFront(headerView)
         
