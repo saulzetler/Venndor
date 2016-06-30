@@ -23,6 +23,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+        GlobalItems.currentCategory = nil
     }
     
     
@@ -97,12 +98,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         print("logged out")
     }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        if (segue.identifier == "newCat") {
-            let svc = segue.destinationViewController as! SplashViewController;
-            
-            svc.categorySelected = nil
-        }
-    }
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+//        if (segue.identifier == "showSplash") {
+//            let svc = segue.destinationViewController as! SplashViewController;
+//            
+//            svc.categorySelected = nil
+//        }
+//    }
     
 }

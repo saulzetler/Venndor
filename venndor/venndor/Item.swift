@@ -11,6 +11,7 @@ import UIKit
 
 struct GlobalItems {
     static var items = [Item]()
+    static var currentCategory: String?
     
     func loadNextItem() -> Void {
 //        let itemManager = ItemManager()

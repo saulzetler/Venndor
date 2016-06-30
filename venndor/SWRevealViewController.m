@@ -1838,7 +1838,7 @@ const int FrontViewPositionNone = 0xff;
 NSString * const SWSegueRearIdentifier = @"sw_rear";
 NSString * const SWSegueFrontIdentifier = @"sw_front";
 NSString * const SWSegueRightIdentifier = @"sw_right";
-
+NSString *currentCategory = @"temp";
 
 #pragma mark - SWRevealViewControllerSegueSetController class
 

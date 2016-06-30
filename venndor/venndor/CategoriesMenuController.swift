@@ -103,28 +103,28 @@ class CategoriesMenuController: UITableViewController {
         
         switch sender.tag {
         case 1:
-            categorySelection = nil
+            GlobalItems.currentCategory = nil
             break;
         case 2:
-            categorySelection = "category=Furniture"
+            GlobalItems.currentCategory = "category=Furniture"
             break;
         case 3:
-            categorySelection = "category=Kitchen"
+            GlobalItems.currentCategory = "category=Kitchen"
             break;
         case 4:
-            categorySelection = "category=Household"
+            GlobalItems.currentCategory = "category=Household"
             break;
         case 5:
-            categorySelection = "category=Electronics"
+            GlobalItems.currentCategory = "category=Electronics"
             break;
         case 6:
-            categorySelection = "category=Clothing"
+            GlobalItems.currentCategory = "category=Clothing"
             break;
         case 7:
-            categorySelection = "category=Books"
+            GlobalItems.currentCategory = "category=Books"
             break;
         case 8:
-            categorySelection = "category=Other"
+            GlobalItems.currentCategory = "category=Other"
             break;
         default: ()
             break;
@@ -144,13 +144,13 @@ class CategoriesMenuController: UITableViewController {
         
         self.performSegueWithIdentifier("newCat", sender: self)
     }
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-        if (segue.identifier == "newCat") {
-            let svc = segue.destinationViewController as! SplashViewController;
-            
-            svc.categorySelected = self.categorySelection
-            
-        }
-    }
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+//        if (segue.identifier == "newCat") {
+//            let svc = segue.destinationViewController as! SplashViewController;
+//            
+//            svc.categorySelected = self.categorySelection
+//            
+//        }
+//    }
     
 }

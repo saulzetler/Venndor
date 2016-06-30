@@ -9,14 +9,16 @@
 import Foundation
 import UIKit
 
-class DraggableViewBackground: UIView, DraggableViewDelegate {
+public class DraggableViewBackground: UIView, DraggableViewDelegate {
+//    var currentCategory: String?
+    
     var exampleCardLabels: [Item]!
     var allCards: [DraggableView]!
 
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     let bvc = BrowseViewController()
     
-    let MAX_BUFFER_SIZE = 5
+    var MAX_BUFFER_SIZE: Int!
 //    let CARD_HEIGHT: CGFloat = 386
 //    let CARD_WIDTH: CGFloat = 290
 
@@ -27,18 +29,33 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
     var checkButton: UIButton!
     var xButton: UIButton!
 
-    required init?(coder aDecoder: NSCoder) {
+    required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
         super.layoutSubviews()
         self.setupView()
         exampleCardLabels = GlobalItems.items
+        MAX_BUFFER_SIZE = exampleCardLabels.count
         allCards = []
         loadedCards = []
         cardsLoadedIndex = 0
+        self.loadCards()
+    }
+    
+    init(frame: CGRect, category: String) {
+//        currentCategory = category
+        super.init(frame: frame)
+        super.layoutSubviews()
+        self.setupView()
+        exampleCardLabels = GlobalItems.items
+        MAX_BUFFER_SIZE = exampleCardLabels.count
+        allCards = []
+        loadedCards = []
+        cardsLoadedIndex = 0
+        print(currentCategory)
         self.loadCards()
     }
 
@@ -102,7 +119,7 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
     
     func loadAnotherCard() -> Void {
         let itemManager = ItemManager()
-        itemManager.retrieveMultipleItems(1, offset: cardsLoadedIndex, filter: nil) { items, error in
+        itemManager.retrieveMultipleItems(1, offset: cardsLoadedIndex, filter: GlobalItems.currentCategory) { items, error in
             guard error == nil else {
                 print("Error retrieving items from server: \(error)")
                 return
