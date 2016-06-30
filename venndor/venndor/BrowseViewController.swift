@@ -78,7 +78,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
 //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 //        if (segue.identifier == "toOfferScreen") {
-//            var ovc = segue.destinationViewController as! OfferViewController
+//            let ovc = segue.destinationViewController as! OfferViewController
 //        }
 //    }
     

@@ -36,7 +36,7 @@ class HeaderView: UIView, UITextFieldDelegate {
     func setUpViewFrame() -> Void {
         //initial view frame
 
-        self.frame = CGRectMake(0, 0, screenSize.width, 64)
+        self.frame = CGRectMake(0, 0, screenSize.width, screenSize.height*0.1)
         self.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
     }
     

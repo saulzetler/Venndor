@@ -17,8 +17,8 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
     let bvc = BrowseViewController()
     
     let MAX_BUFFER_SIZE = 2
-//    let CARD_HEIGHT: CGFloat = 386
-//    let CARD_WIDTH: CGFloat = 290
+    let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.7
+    let CARD_WIDTH: CGFloat = UIScreen.mainScreen().bounds.width*0.9
 
     var cardsLoadedIndex: Int!
     var loadedCards: [DraggableView]!
@@ -26,6 +26,8 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
     var messageButton: UIButton!
     var checkButton: UIButton!
     var xButton: UIButton!
+    
+    var itemName: UILabel!
 
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -58,24 +60,34 @@ class DraggableViewBackground: UIView, DraggableViewDelegate {
     }
     
     func createDraggableViewFromItem(item: Item) -> DraggableView {
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        let CARD_HEIGHT: CGFloat = screenSize.height*0.8
-        let CARD_WIDTH: CGFloat = screenSize.width*0.9
         let draggableView = DraggableView(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2, (self.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: item)
+        draggableView.layer.cornerRadius = 20
+        draggableView.layer.masksToBounds = true
         draggableView.information.text = item.name
         draggableView.delegate = self
+        setupItemInfo(item)
         return draggableView
 
     }
 
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        let CARD_HEIGHT: CGFloat = screenSize.height*0.8
-        let CARD_WIDTH: CGFloat = screenSize.width*0.9
-        let draggableView = DraggableView(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2, (self.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: exampleCardLabels[index])
+        let draggableView = DraggableView(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2, (self.frame.size.height - CARD_HEIGHT)/2.8, CARD_WIDTH, CARD_HEIGHT), item: exampleCardLabels[index])
+        draggableView.layer.cornerRadius = 20
+        draggableView.layer.masksToBounds = true
         draggableView.information.text = exampleCardLabels[index].name
         draggableView.delegate = self
+        setupItemInfo(exampleCardLabels[index])
         return draggableView
+    }
+    
+    func setupItemInfo(item: Item) {
+        let itemInfo = UIView(frame: CGRect(x: (self.frame.size.width - CARD_WIDTH)/2, y: (self.frame.size.height - CARD_HEIGHT)/2.8 + CARD_HEIGHT, width: CARD_WIDTH, height: self.frame.height*0.1))
+        itemInfo.backgroundColor = UIColor.whiteColor()
+        itemInfo.layer.cornerRadius = 20
+        itemInfo.layer.masksToBounds = true
+        itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.2, width: itemInfo.frame.width, height: itemInfo.frame.height*0.6))
+        itemInfo.addSubview(itemName)
+        self.addSubview(itemInfo)
     }
 
     func loadCards() -> Void {
