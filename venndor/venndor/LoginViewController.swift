@@ -97,6 +97,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         print("logged out")
     }
-    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+        if (segue.identifier == "newCat") {
+            let svc = segue.destinationViewController as! SplashViewController;
+            
+            svc.categorySelected = nil
+        }
+    }
     
 }
