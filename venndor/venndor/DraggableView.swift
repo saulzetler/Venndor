@@ -36,6 +36,9 @@ public class DraggableView: UIView, UIScrollViewDelegate {
     var pageControl: UIPageControl! = UIPageControl()
     var picNum: Int!
     
+    //save current item
+    var currentItem: Item!
+    var firstPhoto: UIImage!
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -45,7 +48,10 @@ public class DraggableView: UIView, UIScrollViewDelegate {
         super.init(frame: frame)
 
         self.setupView()
+        currentItem = item
+        
         setupScrollView(item)
+        
 
         information = UILabel(frame: CGRectMake(0, 50, self.frame.size.width, 100))
         information.text = "no info given"
@@ -71,6 +77,7 @@ public class DraggableView: UIView, UIScrollViewDelegate {
     
     //scroll view funcs
     func setupScrollView(item: Item) {
+        
         scrollView = UIScrollView()
         let cardWidth = self.frame.width
         let cardHeight = self.frame.height
@@ -92,6 +99,9 @@ public class DraggableView: UIView, UIScrollViewDelegate {
                 guard error == nil else {
                     print("Error getting the image from the server: \(error)")
                     return
+                }
+                if x == 0 {
+                    self.firstPhoto = img
                 }
                 
                 if let phonto = img {
@@ -241,6 +251,13 @@ public class DraggableView: UIView, UIScrollViewDelegate {
     }
     
     func rightAction() -> Void {
+//        let offerView = OfferView(self.frame = CGRectMake(0, 0, 0, 0))
+//        self.parentViewController!.bringUpNewView(offerView)
+//        let image: UIImage = currentItem.photos![0]
+//        let offerViewController = OfferViewController()
+//        offerViewController.setupBackground(firstPhoto)
+        self.parentViewController!.performSegueWithIdentifier("toOfferScreen", sender: self.parentViewController!)
+        
         let finishPoint: CGPoint = CGPointMake(500, 2 * CGFloat(yFromCenter) + self.originPoint.y)
         UIView.animateWithDuration(0.3,
             animations: {
@@ -249,6 +266,8 @@ public class DraggableView: UIView, UIScrollViewDelegate {
                 (value: Bool) in
                 self.removeFromSuperview()
         })
+        
+        
         delegate.cardSwipedRight(self)
     }
 

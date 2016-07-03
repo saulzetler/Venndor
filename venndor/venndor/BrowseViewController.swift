@@ -10,6 +10,8 @@ import UIKit
 
 class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate {
     
+    var currentCategory: String!
+    
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var miniMatches: UIButton!
     var menuTransitionManager = MenuTransitionManager()
@@ -18,11 +20,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         //add the header
         headerView = HeaderView(frame: self.view.frame)
 
-        
-        
         let globalItems = GlobalItems()
         
         globalItems.loadNextItem()
@@ -31,7 +32,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 //        let items = GlobalItems.items
         
         self.view.backgroundColor = UIColorFromHex(0xe6f2ff, alpha: 1)
-        
         
         //MiniMyMatches button at bottom of browse.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -44,17 +44,22 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
         }
         self.view.addSubview(headerView)
-        
-
-
     }
     
     override func viewDidAppear(animated: Bool) {
-        let backgroundImage = UIImageView(frame: UIScreen.mainScreen().bounds)
         
-        let draggableBackground: DraggableViewBackground = DraggableViewBackground(frame: self.view.frame)
-        self.view.addSubview(draggableBackground)
-        draggableBackground.insertSubview(backgroundImage, atIndex: 0)
+        let backgroundImage = UIImageView(frame: UIScreen.mainScreen().bounds)
+        if currentCategory == nil {
+            let draggableBackground: DraggableViewBackground = DraggableViewBackground(frame: self.view.frame)
+            self.view.addSubview(draggableBackground)
+            draggableBackground.insertSubview(backgroundImage, atIndex: 0)
+        }
+        else {
+            let draggableBackground: DraggableViewBackground = DraggableViewBackground(frame: self.view.frame, category: currentCategory)
+            self.view.addSubview(draggableBackground)
+            draggableBackground.insertSubview(backgroundImage, atIndex: 0)
+        }
+
         
         self.view.bringSubviewToFront(headerView)
         
@@ -69,6 +74,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 subView.hidden = false
             }
         }
+        
         headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
         headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
     }
@@ -78,6 +84,17 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+//        if (segue.identifier == "toOfferScreen") {
+//            let ovc = segue.destinationViewController as! OfferViewController
+//        }
+//    }
+    
+//    func showOfferView(){
+//        let offerView = OfferView(frame: CGRectMake(0, 0, 0, 0))
+//        bringUpNewView(offerView)
+//    }
     
     
     func showAlert(sender: UIButton) {

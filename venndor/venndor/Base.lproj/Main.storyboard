@@ -113,6 +113,27 @@
             </objects>
             <point key="canvasLocation" x="-119" y="248"/>
         </scene>
+        <!--Offer View Controller-->
+        <scene sceneID="dRK-VA-KIk">
+            <objects>
+                <viewController id="kYg-o8-mtK" customClass="OfferViewController" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Kmu-80-lV9"/>
+                        <viewControllerLayoutGuide type="bottom" id="ZPK-DJ-LCb"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="W4W-Be-7eE">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="5Q4-WU-6Zg" kind="show" identifier="offerToBrowse" id="pMb-c4-TUY"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="don-4y-Icb" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-826" y="1258"/>
+        </scene>
         <!--BrowseViewController-->
         <scene sceneID="MF2-K3-bZl">
             <objects>
@@ -127,10 +148,13 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <navigationItem key="navigationItem" id="pI1-Me-Ycj"/>
+                    <connections>
+                        <segue destination="kYg-o8-mtK" kind="presentation" identifier="toOfferScreen" id="QwB-WW-QHS"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9j-p1-Ii5" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="33" y="1210"/>
+            <point key="canvasLocation" x="-23" y="1210"/>
         </scene>
         <!--Tutorial View Controller-->
         <scene sceneID="83t-Pb-6F1">
@@ -277,6 +301,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="gEg-Gc-bT8" kind="show" identifier="newCat" id="NUc-xW-YrN"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="70" id="5oB-bi-GrF">
                                         <rect key="frame" x="0.0" y="280" width="600" height="70"/>
@@ -560,7 +587,8 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="hrt-cp-q1Q"/>
+        <segue reference="XwR-UP-4A2"/>
+        <segue reference="T4w-aX-c8F"/>
         <segue reference="dlm-GT-Iep"/>
     </inferredMetricsTieBreakers>
 </document>

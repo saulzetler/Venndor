@@ -8,16 +8,7 @@
 
 //import Cocoa
 import UIKit
-extension UIView {
-    
-    func UIColorFromHex(rgbValue:UInt32, alpha:Double=1.0)->UIColor {
-        let red = CGFloat((rgbValue & 0xFF0000) >> 16)/256.0
-        let green = CGFloat((rgbValue & 0xFF00) >> 8)/256.0
-        let blue = CGFloat(rgbValue & 0xFF)/256.0
-        
-        return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
-    }
-}
+
 class HeaderView: UIView, UITextFieldDelegate {
     
     var menuButton: UIButton!
@@ -45,7 +36,7 @@ class HeaderView: UIView, UITextFieldDelegate {
     func setUpViewFrame() -> Void {
         //initial view frame
 
-        self.frame = CGRectMake(0, 0, screenSize.width, 64)
+        self.frame = CGRectMake(0, 0, screenSize.width, screenSize.height*0.1)
         self.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
     }
     

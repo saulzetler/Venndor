@@ -10,6 +10,8 @@ import UIKit
 
 class SplashViewController: UIViewController {
     
+//    var categorySelected: String!
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
