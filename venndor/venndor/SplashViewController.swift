@@ -48,53 +48,79 @@ class SplashViewController: UIViewController {
                     })
                 }
             }
+        }
+        
+        while LocalUser.user == nil {
+            continue
+        }
             
-            while LocalUser.user == nil {
-                continue
+        while seenPostsMade == false {
+            continue
+        }
+            
+        let filterString = constructFilter(LocalUser.seenPosts)
+        print("Filter string: \(filterString)")
+            
+        itemManager.retrieveMultipleItems(5, offset: nil, filter: filterString, fields: nil) { items, error in
+            guard error == nil else {
+                print("Error retrieving items from server: \(error)")
+                return
             }
-            
-            while seenPostsMade == false {
-                continue
-            }
-            
-            seenPostsManager.getSeenPostsById(LocalUser.user.id) { posts, error in
-                guard error == nil else {
-                    print("YOU AINT PULLIN SHIT YOU PUNKASS")
-                    print("\(error)")
-                    return
-                }
                 
-                if let posts = posts {
-                    LocalUser.seenPosts = posts
-                    
-                    itemManager.retrieveMultipleItems(10, offset: nil, filter: nil) { items, error in
-                        guard error == nil else {
-                            print("Error retrieving items from server: \(error)")
-                            return
-                        }
-                        
-                        if items != nil {
-                            GlobalItems.items = items!
-                            for x in 0..<GlobalItems.items.count{
-                                while GlobalItems.items[x].photos == nil {
-                                    continue
-                                }
-                            }
-                            self.triggerSegue()
-                        }
-                    }
-                }
+            if let items = items {
+                GlobalItems.items = items
             }
+        }
             
+        while GlobalItems.items.count == 0 {
+            continue
+        }
+            
+        for x in 0..<GlobalItems.items.count {
+            print("\(GlobalItems.items[x].id)")
+            while GlobalItems.items[x].photos == nil {
+                continue
+            }
+        }
+            
+        print("Ready to segue")
+            
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("showBrowse", sender: self)
         }
     }
     
+    
+    func constructFilter(seenPosts: Dictionary<String, AnyObject>) -> String {
+        var ids: String!
+        var index = 0
+        
+        for (key, _ ) in seenPosts {
+            
+            if key == "_id" {
+                continue
+            }
+            else {
+                ids = index > 0 ? "\(ids) and (_id != \(key))" : "(_id != \(key))"
+            }
+            index++
+        }
+        
+        if GlobalItems.categorySelected != nil {
+            ids = "\(ids) and (\(GlobalItems.categorySelected))"
+        }
+        
+        return ids
+    }
+
+    
     func triggerSegue(){
-        self.performSegueWithIdentifier("showBrowse", sender: self)
+        performSegueWithIdentifier("showBrowse", sender: self)
     }
     func triggerSegueTutorial(){
-        self.performSegueWithIdentifier("goTutorial", sender: self)
+        performSegueWithIdentifier("goTutorial", sender: self)
     }
     
 }
+
 

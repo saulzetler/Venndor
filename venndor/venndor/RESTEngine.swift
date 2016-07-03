@@ -13,8 +13,8 @@ let kAppVersion = "1.0.1"
 // change kApiKey and kBaseInstanceUrl to match your app and instance
 
 // API key for your app goes here, see apps tab in admin console
-private let kApiKey = "dc01594daf3c6dcb240c628afc10fcbd0198b207fbc6809c4c4dce7136ffa4bf"
-private let kBaseInstanceUrl = "http://ec2-52-87-241-215.compute-1.amazonaws.com/api/v2"
+private let kApiKey = "58bbaee4c53d3643eb0c01211ed537b8ba3bae6d9269503ae1c55916e75f47f2"
+private let kBaseInstanceUrl = "http://bitnami-dreamfactory-000b.cloudapp.net/api/v2"
 private let kDbServiceName = "venndor/_table"
 
 typealias JSON = [String: AnyObject]
@@ -222,7 +222,7 @@ final class RESTEngine {
      Get a whole mess of items
      */
     
-    func getItemsFromServer(count: Int, offset: Int?, filter: String?, success: SuccessClosure, failure: ErrorClosure) {
+    func getItemsFromServer(count: Int, offset: Int?, filter: String?, fields:[String]?, success: SuccessClosure, failure: ErrorClosure) {
         
         var queryParameters: [String: AnyObject] = ["limit": "\(count)"]
         
@@ -232,6 +232,10 @@ final class RESTEngine {
         
         if let filter = filter {
             queryParameters["filter"] = filter
+        }
+        
+        if let fields = fields {
+            queryParameters["fields"] = fields
         }
         callApiWithPath(Routing.Service(tableName: "items").path, method: "GET", queryParams: queryParameters, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
