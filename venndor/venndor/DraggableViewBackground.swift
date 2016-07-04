@@ -49,7 +49,6 @@ public class DraggableViewBackground: UIView, DraggableViewDelegate {
     }
     
     init(frame: CGRect, category: String) {
-//        currentCategory = category
         super.init(frame: frame)
         super.layoutSubviews()
         self.setupView()

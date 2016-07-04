@@ -10,9 +10,9 @@ import Foundation
 
 
 class CategoriesMenuController: UITableViewController {
-    
+    //declare screensize for future reference
     let screenSize: CGRect = UIScreen.mainScreen().bounds
-    
+    //link the table and buttons
     @IBOutlet var table: UITableView!
     
     @IBOutlet weak var allCell: UITableViewCell!
@@ -30,7 +30,7 @@ class CategoriesMenuController: UITableViewController {
     @IBOutlet weak var clothingCell: UITableViewCell!
     
     @IBOutlet weak var otherCell: UITableViewCell!
-    
+    //declare the buttons
     var allButton: UIButton!
     var furnitureButton: UIButton!
     var householdButton: UIButton!
@@ -39,7 +39,7 @@ class CategoriesMenuController: UITableViewController {
     var booksButton: UIButton!
     var clothingButton: UIButton!
     var otherButton: UIButton!
-    
+    //declare the category string to pass to other pages as the current category selected
     var categorySelection: String!
     
     override func viewDidLoad() {
@@ -49,7 +49,7 @@ class CategoriesMenuController: UITableViewController {
         setupButtons()
         
     }
-    
+    //setup the cells for the menu
     func setupCells() {
         allCell.selectionStyle = UITableViewCellSelectionStyle.None
         furnitureCell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -62,7 +62,9 @@ class CategoriesMenuController: UITableViewController {
         allCell.selected = true
     }
     
+    //create the buttons for the menu
     func setupButtons() {
+        //declare the button sizes for the refactored methods to create the buttons
         let buttonSize = CGRect(x: screenSize.width * 0.25, y: screenSize.height * 0.007, width: screenSize.width * 0.15, height: screenSize.width * 0.15)
         
         allButton = makeImageButton("Home-50", frame: buttonSize, target: "toggleSelected:", tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
@@ -99,8 +101,13 @@ class CategoriesMenuController: UITableViewController {
         
     }
     
+    
+    /* MAKE THE HIGHLIGHTING OF CATEGORIES PERSISTENT */
+    
+    
+    //function to control the selection of category
     func toggleSelected(sender: UIButton) {
-        
+        //switch case to control which category should be selected
         switch sender.tag {
         case 1:
             GlobalItems.currentCategory = nil
@@ -130,7 +137,7 @@ class CategoriesMenuController: UITableViewController {
             break;
         }
         
-        
+        //change the tint/selection of every button to not higlighted
         allButton.selected = false
         furnitureButton.selected = false
         householdButton.selected = false
@@ -139,18 +146,10 @@ class CategoriesMenuController: UITableViewController {
         booksButton.selected = false
         clothingButton.selected = false
         otherButton.selected = false
-        
+        //make the sender highlighted
         sender.selected = true
         
         self.performSegueWithIdentifier("newCat", sender: self)
     }
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-//        if (segue.identifier == "newCat") {
-//            let svc = segue.destinationViewController as! SplashViewController;
-//            
-//            svc.categorySelected = self.categorySelection
-//            
-//        }
-//    }
     
 }
