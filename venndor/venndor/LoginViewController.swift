@@ -10,19 +10,18 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
+    //declare class as part of fb delegate to allow delegate overwriting
 class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     
     let loginButton : FBSDKLoginButton = FBSDKLoginButton()
-//    @IBOutlet weak var loginButton: FBSDKLoginButton!
     
-    @IBAction func loginButton2(sender: UIButton){
-        loginButton.sendActionsForControlEvents(UIControlEvents.TouchUpInside)
-    }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         self.view.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+        
+        //app loads for the first time reset the category to all
         GlobalItems.currentCategory = nil
     }
     
@@ -30,10 +29,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(animated)
-        // Do any additional setup after loading the view, typically from a nib.
         
+        //check if the user has already logged in through facebook
         if (FBSDKAccessToken.currentAccessToken() != nil)
         {
+            //if they are remove all the junk so it looks nice and get the data from their profile
             let subViews = self.view.subviews
             for subView in subViews {
                 subView.removeFromSuperview()
@@ -42,15 +42,17 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         }
         else
         {
-//            self.view.addSubview(loginButton)
+            //if they arent get them to log in!
             loginButton.readPermissions = ["public_profile", "email"]
             loginButton.delegate = self
         }
         
     }
     
+    //function to pull the user data
     func fetchProfile() {
         
+        //parameters for what data the app should pull
         let parameters = ["fields": "email, first_name, last_name, picture.type(large)"]
         
         FBSDKGraphRequest(graphPath: "me", parameters: parameters).startWithCompletionHandler {(
@@ -60,9 +62,16 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 return
             }
             if let firstName = result["first_name"] as? String, lastName = result["last_name"] as? String, email = result["email"] as? String {
+                //if there is great success store the pulled data
                 LocalUser.firstName = firstName
                 LocalUser.lastName = lastName
                 LocalUser.email = email
+                
+                
+                /* ADD PHOTO HANDLER/STORAGE FOR USER*/
+                
+                
+                //transition when great success
                 self.performSegueWithIdentifier("showSplash", sender: self)
             }
         }
@@ -73,11 +82,15 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         // Dispose of any resources that can be recreated.
     }
     
+    //function to be called when the login button is pressed.
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        //check there is no error first
         if error == nil
         {
+            //then check that the user isn't currently logged in
             if (FBSDKAccessToken.currentAccessToken() != nil)
             {
+                // remove UI so the transition looks nice when segueing
                 let subViews = self.view.subviews
                 for subView in subViews {
                     subView.removeFromSuperview()
@@ -98,12 +111,5 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         print("logged out")
     }
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-//        if (segue.identifier == "showSplash") {
-//            let svc = segue.destinationViewController as! SplashViewController;
-//            
-//            svc.categorySelected = nil
-//        }
-//    }
     
 }

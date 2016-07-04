@@ -11,7 +11,9 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
+    //logout button for when the user wants to log out
     @IBAction func logOut(sender: UIButton) {
+        //logs the user out of facebook along with out app
         let loginManager = FBSDKLoginManager()
         loginManager.logOut()
         self.performSegueWithIdentifier("showLogin", sender: self)
@@ -20,12 +22,14 @@ class SettingsViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //add lable for the title, NEEDS REFACTORING
         let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
         label.center = CGPointMake(160, 284)
         label.textAlignment = NSTextAlignment.Center
         label.text = "Settings"
         self.view.addSubview(label)
-
+        
+        //add the generic views of each page ie. header and side menu
         addHeader()
         sideMenuGestureSetup()
         
