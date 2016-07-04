@@ -10,13 +10,12 @@ import Foundation
 import UIKit
 
 public class DraggableViewBackground: UIView, DraggableViewDelegate {
-//    var currentCategory: String?
+    var currentCategory: String?
     
-    var exampleCardLabels: [Item]!
+//    var exampleCardLabels: [Item]!
     var allCards: [DraggableView]!
-
+    
     let screenSize: CGRect = UIScreen.mainScreen().bounds
-    let bvc = BrowseViewController()
     
 //    let MAX_BUFFER_SIZE = 2
     let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.7
@@ -25,10 +24,6 @@ public class DraggableViewBackground: UIView, DraggableViewDelegate {
 
     var cardsLoadedIndex: Int!
     var loadedCards: [DraggableView]!
-    var menuButton: UIButton!
-    var messageButton: UIButton!
-    var checkButton: UIButton!
-    var xButton: UIButton!
     
     var itemName: UILabel!
 
@@ -36,30 +31,28 @@ public class DraggableViewBackground: UIView, DraggableViewDelegate {
         super.init(coder: aDecoder)
     }
     
-    override init(frame: CGRect) {
+    init(frame: CGRect, items: [Item]) {
         super.init(frame: frame)
         super.layoutSubviews()
         self.setupView()
-        exampleCardLabels = GlobalItems.items
-        MAX_BUFFER_SIZE = exampleCardLabels.count
+        MAX_BUFFER_SIZE = items.count
         allCards = []
         loadedCards = []
         cardsLoadedIndex = 0
-        self.loadCards()
+        self.loadCards(items)
     }
     
-    init(frame: CGRect, category: String) {
-//        currentCategory = category
+    init(frame: CGRect, category: String, items: [Item]) {
+        currentCategory = category
         super.init(frame: frame)
         super.layoutSubviews()
         self.setupView()
-        exampleCardLabels = GlobalItems.items
-        MAX_BUFFER_SIZE = exampleCardLabels.count
+        MAX_BUFFER_SIZE = items.count
         allCards = []
         loadedCards = []
         cardsLoadedIndex = 0
         print(currentCategory)
-        self.loadCards()
+        self.loadCards(items)
     }
 
     func setupView() -> Void {
@@ -85,16 +78,15 @@ public class DraggableViewBackground: UIView, DraggableViewDelegate {
         draggableView.delegate = self
         setupItemInfo(item)
         return draggableView
-
     }
 
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
-        let draggableView = DraggableView(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2, (self.frame.size.height - CARD_HEIGHT)/2.8, CARD_WIDTH, CARD_HEIGHT), item: exampleCardLabels[index])
+        let draggableView = DraggableView(frame: CGRectMake((self.frame.size.width - CARD_WIDTH)/2, (self.frame.size.height - CARD_HEIGHT)/2.8, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index])
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
-        draggableView.information.text = exampleCardLabels[index].name
+        draggableView.information.text = GlobalItems.items[index].name
         draggableView.delegate = self
-        setupItemInfo(exampleCardLabels[index])
+        setupItemInfo(GlobalItems.items[index])
         return draggableView
     }
     
@@ -108,10 +100,10 @@ public class DraggableViewBackground: UIView, DraggableViewDelegate {
         self.addSubview(itemInfo)
     }
 
-    func loadCards() -> Void {
-        if exampleCardLabels.count > 0 {
-            let numLoadedCardsCap = exampleCardLabels.count > MAX_BUFFER_SIZE ? MAX_BUFFER_SIZE : exampleCardLabels.count
-            for var i = 0; i < exampleCardLabels.count; i++ {
+    func loadCards(items: [Item]) -> Void {
+        if items.count > 0 {
+            let numLoadedCardsCap = items.count > MAX_BUFFER_SIZE ? MAX_BUFFER_SIZE : items.count
+            for var i = 0; i < items.count; i++ {
                 let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(i)
                 allCards.append(newCard)
                 if i < numLoadedCardsCap {
@@ -129,6 +121,8 @@ public class DraggableViewBackground: UIView, DraggableViewDelegate {
             }
         }
     }
+    
+    //gonna move this to view controller
     
     func loadAnotherCard() -> Void {
         let itemManager = ItemManager()
@@ -150,26 +144,24 @@ public class DraggableViewBackground: UIView, DraggableViewDelegate {
         }
     }
 
+    
     func cardSwipedLeft(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
-
         loadedCards.append(allCards[0])
         cardsLoadedIndex = cardsLoadedIndex + 1
         self.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
-
         loadAnotherCard()
     }
     
     func cardSwipedRight(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
-//        bvc.showOfferView()
-        
         loadedCards.append(allCards[0])
         cardsLoadedIndex = cardsLoadedIndex + 1
         self.insertSubview(loadedCards[MAX_BUFFER_SIZE - 1], belowSubview: loadedCards[MAX_BUFFER_SIZE - 2])
-        
         loadAnotherCard()
     }
+    
+    //until here will be removed
 
     func swipeRight() -> Void {
         if loadedCards.count <= 0 {
