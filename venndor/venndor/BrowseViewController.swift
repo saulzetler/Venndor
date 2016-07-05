@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate {
+class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate, UIGestureRecognizerDelegate {
     
     var allCards: [DraggableView]!
     var itemList: [Item]!
@@ -33,6 +33,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var menuTransitionManager = MenuTransitionManager()
     let fadeOut = UIView()
     var headerView: HeaderView!
+    
+    var infoOpen: Bool!
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -114,10 +116,35 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         itemInfo.backgroundColor = UIColor.whiteColor()
         itemInfo.layer.cornerRadius = 20
         itemInfo.layer.masksToBounds = true
+        let tap = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+        tap.delegate = self
+        itemInfo.addGestureRecognizer(tap)
         itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.2, width: itemInfo.frame.width, height: itemInfo.frame.height*0.6))
         itemInfo.addSubview(itemName)
         updateItemInfo()
+        infoOpen = false
         self.view.addSubview(itemInfo)
+    }
+    
+    func handleTap(sender: AnyObject?) {
+        if infoOpen == false { //open info
+            UIView.animateWithDuration(1, animations: { () -> Void in
+                self.itemInfo.frame = CGRect(x: (self.view.frame.size.width - self.CARD_WIDTH)/2, y: (self.view.frame.size.height - self.CARD_HEIGHT)/2.8, width: self.CARD_WIDTH, height: self.view.frame.height*0.1 + self.CARD_HEIGHT)
+                self.itemInfo.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.95)
+                }) { (finished: Bool) -> Void in
+            }
+            infoOpen = true
+        }
+        else { //close info
+            UIView.animateWithDuration(1, animations: { () -> Void in
+                self.itemInfo.frame = CGRect(x: (self.view.frame.size.width - self.CARD_WIDTH)/2, y: (self.view.frame.size.height - self.CARD_HEIGHT)/2.8 + self.CARD_HEIGHT, width: self.CARD_WIDTH, height: self.view.frame.height*0.1)
+                self.itemInfo.backgroundColor = UIColor.whiteColor()
+                }) { (finished: Bool) -> Void in
+            }
+            infoOpen = false
+        }
+        
+        
     }
     
     //function to bring up mini matches bottom menu
