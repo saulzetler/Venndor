@@ -136,7 +136,8 @@ final class RESTEngine {
             "soldItems": [String](),
             "ads": [String](),
             "matches": [String](),
-            "seenPosts": [String: AnyObject]()]
+            "boughtItems": [String](),
+            "moneySaved": 0]
         let requestBody: [String: AnyObject] = ["resource": params]
         
         callApiWithPath(Routing.Service(tableName: "users").path, method: "POST", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)

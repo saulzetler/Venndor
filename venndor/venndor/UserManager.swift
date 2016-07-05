@@ -32,7 +32,9 @@ struct UserManager {
                         "nuItemsBought": 0,
                         "ads": [String](),
                         "soldItems": [String](),
-                        "matches": [String]() ]
+                        "matches": [String](),
+                        "boughtItems": [String](),
+                        "moneySaved": 0]
                     let user = User(json: params)
                     completionHandler(user, nil)
                 }
@@ -80,6 +82,15 @@ struct UserManager {
            
             }, failure: { error in
                 completionHandler(nil, error)
+        })
+    }
+    
+    func deleteUserById(id: String, completionHandler: (ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.removeUserById(id,
+            success: { response in
+                completionHandler(nil)
+            }, failure: {error in
+                completionHandler(error)
         })
     }
 }

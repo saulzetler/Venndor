@@ -33,6 +33,8 @@
 		6319462A1D22F19800715643 /* SeenPostsManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631946291D22F19800715643 /* SeenPostsManager.swift */; };
 		631F4F531D2829EB005EEFE2 /* RESTEngine.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631F4F521D2829EB005EEFE2 /* RESTEngine.swift */; };
 		631F4F551D2829FC005EEFE2 /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631F4F541D2829FC005EEFE2 /* ItemManager.swift */; };
+		631F4F571D2AB5F4005EEFE2 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631F4F561D2AB5F4005EEFE2 /* ProfilePageViewController.swift */; };
+		631F4F591D2AEFCD005EEFE2 /* DeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631F4F581D2AEFCD005EEFE2 /* DeleteViewController.swift */; };
 		63859A131D13347C004F4968 /* NIKApiInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A101D13347C004F4968 /* NIKApiInvoker.swift */; };
 		63859A141D13347C004F4968 /* NIKFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A111D13347C004F4968 /* NIKFile.swift */; };
 		63C8F7331D189E3D00FFC1E2 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */; };
@@ -124,6 +126,8 @@
 		631946291D22F19800715643 /* SeenPostsManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SeenPostsManager.swift; sourceTree = "<group>"; };
 		631F4F521D2829EB005EEFE2 /* RESTEngine.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RESTEngine.swift; sourceTree = "<group>"; };
 		631F4F541D2829FC005EEFE2 /* ItemManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemManager.swift; sourceTree = "<group>"; };
+		631F4F561D2AB5F4005EEFE2 /* ProfilePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
+		631F4F581D2AEFCD005EEFE2 /* DeleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteViewController.swift; sourceTree = "<group>"; };
 		63859A101D13347C004F4968 /* NIKApiInvoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKApiInvoker.swift; sourceTree = "<group>"; };
 		63859A111D13347C004F4968 /* NIKFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKFile.swift; sourceTree = "<group>"; };
 		63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
@@ -218,6 +222,8 @@
 				E44C152C1D11CC300006EBAD /* MyMatchesViewController.swift */,
 				E44C152E1D11D7410006EBAD /* CategoriesMenuController.swift */,
 				E43070E51D2312B00035BCF4 /* OfferViewController.swift */,
+				631F4F561D2AB5F4005EEFE2 /* ProfilePageViewController.swift */,
+				631F4F581D2AEFCD005EEFE2 /* DeleteViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -678,7 +684,6 @@
 				E42E04C31D2563330043779F /* WheelSlider.swift in Sources */,
 				E49051B61D0B245C0045D5C0 /* PostViewController.swift in Sources */,
 				102806D71D22F11D0019C7FF /* RatingControl.swift in Sources */,
-				63088BA81D187CA900F67931 /* ItemManager.swift in Sources */,
 				E49051A61D09AF7B0045D5C0 /* DraggableViewBackground.swift in Sources */,
 				E43070E01D22F0B70035BCF4 /* View.swift in Sources */,
 				E49051B21D09E5E80045D5C0 /* SideMenuController.swift in Sources */,
@@ -698,6 +703,7 @@
 				63088BA71D187CA900F67931 /* UserManager.swift in Sources */,
 				E49051A91D09B0250045D5C0 /* BrowseViewController.swift in Sources */,
 				631069271D1B27B8004A3ADD /* ParserManager.swift in Sources */,
+				631F4F571D2AB5F4005EEFE2 /* ProfilePageViewController.swift in Sources */,
 				E49051B01D09C0C90045D5C0 /* SWRevealViewController.m in Sources */,
 				63088BAC1D187CBA00F67931 /* User.swift in Sources */,
 				10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */,
@@ -714,6 +720,7 @@
 				E44C15271D11C7150006EBAD /* NotificationsViewController.swift in Sources */,
 				631F4F551D2829FC005EEFE2 /* ItemManager.swift in Sources */,
 				63088BAD1D187CBA00F67931 /* Item.swift in Sources */,
+				631F4F591D2AEFCD005EEFE2 /* DeleteViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

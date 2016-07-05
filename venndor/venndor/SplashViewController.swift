@@ -36,6 +36,7 @@ class SplashViewController: UIViewController {
                 //create the user on the server
                 userManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email) { user, error in
                     LocalUser.user = user
+                    LocalUser.seenPosts = [String:AnyObject]()
                     LocalUser.seenPosts["_id"] = LocalUser.user.id
                     
                     //create the seenPosts object on the server
@@ -59,7 +60,26 @@ class SplashViewController: UIViewController {
         while seenPostsMade == false {
             continue
         }
+        
+        //get all the posts the user has seen
+        seenPostsManager.getSeenPostsById(LocalUser.user.id) { seenPosts, error in
             
+            guard error == nil else {
+                print("YOU AINT PULLIN SHIT YOU PUNKASS")
+                print("\(error)")
+                return
+            }
+            
+            if let posts = seenPosts {
+                LocalUser.seenPosts = posts
+                print("Dictionary loaded")
+            }
+        }
+        
+        while LocalUser.seenPosts == nil {
+            continue
+        }
+
         let filterString = constructFilter(LocalUser.seenPosts)
         print("Filter string: \(filterString)")
             
@@ -93,7 +113,7 @@ class SplashViewController: UIViewController {
     }
     
     
-    func constructFilter(seenPosts: Dictionary<String, AnyObject>) -> String {
+    func constructFilter(seenPosts: Dictionary<String, AnyObject>) -> String? {
         var ids: String!
         var index = 0
         
@@ -108,8 +128,8 @@ class SplashViewController: UIViewController {
             index++
         }
         
-        if GlobalItems.categorySelected != nil {
-            ids = "\(ids) and (\(GlobalItems.categorySelected))"
+        if GlobalItems.currentCategory != nil {
+            ids = "\(ids) and (\(GlobalItems.currentCategory))"
         }
         
         return ids
@@ -117,10 +137,13 @@ class SplashViewController: UIViewController {
 
     
     func triggerSegue(){
+        
         performSegueWithIdentifier("showBrowse", sender: self)
     }
     func triggerSegueTutorial(){
-        performSegueWithIdentifier("goTutorial", sender: self)
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("goTutorial", sender: self)        }
+        
     }
     
 }

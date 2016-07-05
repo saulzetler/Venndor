@@ -13,7 +13,7 @@ struct LocalUser {
     static var firstName: String!
     static var lastName: String!
     static var email: String!
-    static var seenPosts = [String:AnyObject]()
+    static var seenPosts: [String:AnyObject]!
 }
 
 class User: NSObject {
@@ -26,8 +26,11 @@ class User: NSObject {
     var nuItemsSold: Int!
     var nuItemsBought: Int!
     var soldItems : [String]!
+    var boughtItems: [String]!
     var ads: [String]!
     var matches: [String]!
+    var moneySaved: Double!
+    let parseManager = ParserManager()
     
     init(json:JSON) {
         firstName = json["first_name"] as! String
@@ -38,9 +41,11 @@ class User: NSObject {
         nuMatches = json["nuMatches"] as! Int
         nuItemsBought = json["nuItemsBought"] as! Int
         nuItemsSold = json["nuItemsSold"] as! Int
-        soldItems = json["soldItems"] as! [String]
-        ads = json["ads"] as! [String]
-        matches = json["matches"] as! [String]
+        soldItems = parseManager.getArray(json["soldItems"]!)
+        ads = parseManager.getArray(json["ads"]!)
+        matches = parseManager.getArray(json["matches"]!)
+        boughtItems = parseManager.getArray(json["boughtItems"]!)
+        moneySaved = Double(json["moneySaved"] as! Int)
     }
     
 }
