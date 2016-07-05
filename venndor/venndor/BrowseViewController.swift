@@ -21,6 +21,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var currentCardIndex: Int!
     var loadedCards: [DraggableView]!
     var currentCategory: String!
+    var itemInfo: UIView!
     var itemName: UILabel!
     
     let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -114,10 +115,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //functions to create dragable views
     
     func createDraggableViewFromItem(item: Item) -> DraggableView {
-        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: item)
+        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2.8, CARD_WIDTH, CARD_HEIGHT), item: item)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
-        draggableView.information.text = item.name
+        draggableView.information.text = ""
         draggableView.delegate = self
         return draggableView
     }
@@ -126,7 +127,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2.8, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index])
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
-        draggableView.information.text = GlobalItems.items[index].name
+        draggableView.information.text = ""
         draggableView.delegate = self
         return draggableView
     }
@@ -134,14 +135,12 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //functions to create item information
     
     func updateItemInfo() {
-        if currentCardIndex < itemList.count {
-            itemName.text = itemList[currentCardIndex].name
-        }
-        
+        itemName.text = itemList[currentCardIndex].name
+        print(itemList[currentCardIndex].name)
     }
     
     func setupItemInfo() {
-        let itemInfo = UIView(frame: CGRect(x: (self.view.frame.size.width - CARD_WIDTH)/2, y: (self.view.frame.size.height - CARD_HEIGHT)/2.8 + CARD_HEIGHT, width: CARD_WIDTH, height: self.view.frame.height*0.1))
+        itemInfo = UIView(frame: CGRect(x: (self.view.frame.size.width - CARD_WIDTH)/2, y: (self.view.frame.size.height - CARD_HEIGHT)/2.8 + CARD_HEIGHT, width: CARD_WIDTH, height: self.view.frame.height*0.1))
         itemInfo.backgroundColor = UIColor.whiteColor()
         itemInfo.layer.cornerRadius = 20
         itemInfo.layer.masksToBounds = true
@@ -155,30 +154,41 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     func cardSwipedLeft(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
-//        loadedCards.append(allCards[0])
-        nextCard()
-        updateItemInfo()
         loadAnotherCard()
+        nextCard()
+        
     }
     
     func cardSwipedRight(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
-//        loadedCards.append(allCards[0])
-        nextCard()
-        updateItemInfo()
         loadAnotherCard()
+        nextCard()
+        
     }
     
+    //inserts a new card to the back of the view
     func nextCard() {
-        if loadedCards.count > 1 {
-            currentCardIndex = currentCardIndex + 1
-            self.view.insertSubview(loadedCards[cardsLoadedIndex - currentCardIndex - 1], belowSubview: loadedCards[cardsLoadedIndex - currentCardIndex - 2])
+        currentCardIndex = currentCardIndex + 1
+        //to avoid that backgroung thread autolayout error
+        dispatch_async(dispatch_get_main_queue(), {
+            self.insertNewCard()
+        })
+    }
+    func insertNewCard() {
+        if cardsLoadedIndex - currentCardIndex > 0 {
+            let newCard = loadedCards[cardsLoadedIndex - currentCardIndex - 1]
+                self.view.addSubview(newCard)
+                self.view.sendSubviewToBack(newCard)
+                updateItemInfo()
         }
-        
+        else {
+            itemInfo.removeFromSuperview()
+        }
     }
     
     //loading cards
     
+    //loads one new card
     func loadAnotherCard() -> Void {
         let itemManager = ItemManager()
         itemManager.retrieveMultipleItems(1, offset: cardsLoadedIndex, filter: GlobalItems.currentCategory) { items, error in
@@ -192,25 +202,22 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 
                 //check that item is returned before creating slide to avoid null pointer exceptions
                 if tempItem.count > 0 {
-//                    print ("\(tempItem[0].id)")
                     self.itemList.append(tempItem[0])
                     let newCard: DraggableView = self.createDraggableViewFromItem(tempItem[0])
-                    self.allCards.append(newCard)
                     self.loadedCards.append(newCard)
                     self.cardsLoadedIndex = self.cardsLoadedIndex + 1
                 }
             }
         }
-        print("load another")
     }
-    
+
+    //loads the intial 5 cards
     func loadCards(items: [Item]) -> Void {
         if items.count > 0 {
             let numLoadedCardsCap = items.count > MAX_BUFFER_SIZE ? MAX_BUFFER_SIZE : items.count
             for var i = 0; i < items.count; i++ {
                 itemList.append(items[i])
                 let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(i)
-                allCards.append(newCard)
                 if i < numLoadedCardsCap {
                     loadedCards.append(newCard)
                 }
@@ -226,16 +233,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 cardsLoadedIndex = cardsLoadedIndex + 1
             }
             
-//            for var i = 0; i < loadedCards.count; i++ {
-//                if i > 0 {
-//                    self.view.insertSubview(loadedCards[i], belowSubview: loadedCards[i - 1])
-//                } else {
-//                    self.view.addSubview(loadedCards[i])
-//                }
-//                cardsLoadedIndex = cardsLoadedIndex + 1
-//            }
         }
-        print("load cards")
     }
 
 }
