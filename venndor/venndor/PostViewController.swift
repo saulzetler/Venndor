@@ -9,14 +9,19 @@
 import Foundation
 import UIKit
 
+//class to control the post/sell page in the application requires many delegates
 class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
     
+    //declare the needed variables for the page to work.
+    
+    //all the scrollview variables required
     var numberOfPages: CGFloat = 8
     var scrollView: UIScrollView!
     var containerView = UIView()
     var pageControl: UIPageControl!
     var pageNum: Int!
     
+    //all the various post view requirement variables
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var itemDescription: UITextView!
     var itemName: UITextField!
@@ -28,9 +33,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var imageViewArray: [UIImageView]!
     var currentImgView: UIImageView!
     var postButton: UIButton!
-    
     var condition: Int!
-    
     let pickerData = ["Furniture", "Kitchen", "Household", "Electronics", "Clothing", "Books", "Other"]
     var categoryPicker: UIPickerView!
     
@@ -50,23 +53,30 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //setup functions
     
+    //first function to setup the scroll view for the page.
     func setupScrollView() {
         scrollView = UIScrollView()
         scrollView.delegate = self
         scrollView.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
         let scrollViewWidth: CGFloat = scrollView.frame.width
         let scrollViewHeight: CGFloat = scrollView.frame.height
+        
+        //create the scroll view to have enough space to hold all needed content in this case 8 pages
         scrollView.contentSize = CGSizeMake(scrollViewWidth, scrollViewHeight * numberOfPages)
         scrollView.decelerationRate = 0.1
+        
+        //adjust the frame appropriately too
         containerView.frame = CGRectMake(0, 0, scrollViewWidth, scrollViewHeight * numberOfPages)
         scrollView.addSubview(containerView)
         view.addSubview(scrollView)
     }
     
-    func setupRating() {
-        
+    //function to set up the rating/condition of the item
+    func setupCondition() {
+        //the function will set the condition int variable on a scale of 1 to 5
     }
     
+    //create the text field required for the user to input the name of the item.
     func setupItemName() {
         itemName = ItemNameTextField(frame: CGRectMake(10, screenSize.height*1.5, screenSize.width*0.95, 30))
         itemName.text = "Name"
@@ -77,6 +87,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemName.returnKeyType = .Done
     }
     
+    //create the text field required for the user to input a basic description of the item
     func setupItemDescription() {
         itemDescription = UITextView(frame: CGRectMake(10, screenSize.height*4.5, self.screenSize.width*0.95, 100))
         itemDescription.text = "Additional Info"
@@ -86,7 +97,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemDescription.returnKeyType = .Done
     }
     
+    //create the input for the user to access their camera roll to upload a maximum of 5 photos
     func setupImageViews() {
+        
+        //each view performs the same action/function in allowing a user to upload an image, thus it is refactored to allow for neater code
         
         imageView1 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.13, screenSize.width*0.7, screenSize.width*0.7), action: "imageTapped:", superView: containerView)
         imageView2 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
@@ -94,25 +108,32 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         imageView4 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
         imageView5 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
         
+        //store the image views in an array for easier future use
         imageViewArray = [imageView1, imageView2, imageView3, imageView4, imageView5]
         
     }
     
+    //function to allow the user to pick from a certain list of categories to assign the item.
     func setupPickerView() {
         categoryPicker = UIPickerView(frame: CGRectMake(10, screenSize.height*2.4, self.screenSize.width*0.95, screenSize.height*0.4))
+        
+        //asign the needed points to allow the pickerview to function as intended
         categoryPicker.dataSource = self
         categoryPicker.delegate = self
         containerView.addSubview(categoryPicker)
     }
-    
+
+    //function to create the final post button which is called when the user completes the process.
     func setupPostButton() {
         let buttonFrame = CGRectMake(screenSize.width*0.4, screenSize.height*7.5, screenSize.width*0.2, screenSize.height*0.1)
         postButton = makeTextButton("Post!", frame: buttonFrame, target: "postItem:")
         containerView.addSubview(postButton)
     }
     
+    //this function is created to setup the page control image in the bottom left hand corner.
     func setupPageControll() {
         pageControl = UIPageControl(frame: CGRectMake(screenSize.width*0.005, screenSize.height*0.87, screenSize.width*0.17, screenSize.height*0.03))
+        //rotate the page control image to allow for a more intuitive visual
         pageControl.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
         pageControl.addTarget(self, action: Selector("changePage:"), forControlEvents: UIControlEvents.ValueChanged)
         pageControl.numberOfPages = Int(scrollView.contentSize.height/screenSize.height)
@@ -122,6 +143,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.view.addSubview(pageControl)
     }
     
+    //function to setup the various labels/titles needed for each page to help direct the user.
     func setupLabels() {
         let photosLabel = UILabel(frame: CGRectMake(10, screenSize.height*0.2, self.screenSize.width*0.95, 30))
         photosLabel.text = "Photos"
@@ -149,11 +171,9 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         containerView.addSubview(confirmLabel)
     }
     
+    //delegate functions that control parts of the view controller
     
-    
-    
-    //delegate functions
-    
+    //2 funcitons are called when a user scrolls through a scroll view, either drag or accelerate as such both must be overwritten to auto adjust the page to the correct one when either is called
     func scrollViewDidEndDecelerating(scrollView: UIScrollView){
         adjustPage()
     }
@@ -162,26 +182,19 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         adjustPage()
     }
     
+    //this is the function used to automatically adjust the page to the correct one when the user scrolls through the view
     func adjustPage() {
         // Test the offset and calculate the current page after scrolling ends
         let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
         let currentPage:CGFloat = floor((scrollView.contentOffset.y-pageHeight/4)/pageHeight)+1
+        
         // Change the indicator
         pageNum = Int(currentPage)
         self.pageControl.currentPage = pageNum
         
-        switch pageNum {
-        case 0:
-            print("page 0")
-        case 1:
-            print("page 1")
-        case 2:
-            print("page 2")
-        default:
-            break
-        }
-        
+        //go through the possibilties of what the current page could be
         for y in 0...7 {
+            //at the correct current page correctly offset the view to fit the correct frame
             if y == Int(currentPage) {
                 let yOffset = CGPointMake(0, pageHeight*CGFloat(y));
                 self.scrollView.setContentOffset(yOffset, animated: true)
@@ -189,6 +202,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         }
     }
     
+    //text field editing delegates
     func textFieldShouldClear(textField: UITextField) -> Bool {
         if textField.text == "Name" {
             return true
@@ -229,17 +243,22 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.view.endEditing(true)
         return true
     }
+    //end of text field delegates
     
+    //function to control when an image view is tapped and access the camera roll
     func imageTapped(sender: AnyObject) {
         currentImgView = sender.view as! UIImageView
+        
+        //declare the needed controller to access photos
         let myPickerController = UIImagePickerController()
         myPickerController.delegate = self;
+        
+        //accessing the camera roll
         myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
         self.presentViewController(myPickerController, animated: true, completion: nil)
     }
     
-    
-    
+    //controller to control the correct image for the correct image view
     func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
         
         currentImgView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
@@ -247,15 +266,19 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
-    //button targets
+    //controller to change the current page shown on the view controller when button pressed
+    
+    /* TO BE FIXED */
     
     func changePage(sender: AnyObject) -> () {
         let y = CGFloat(pageControl.currentPage) * scrollView.frame.size.height
         scrollView.setContentOffset(CGPointMake(0, y), animated: true)
     }
     
+    //function to controll when the user is finished and decides to post
     func postItem(sender: UIButton) {
-        print("Post button hit!")
+        
+        //add the iamges from the image view to an array to be passed to the backend function to post an item to server
         if let name = itemName.text, details = itemDescription.text {
             var images = [UIImage]()
             for imgView in imageViewArray {
@@ -264,18 +287,23 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 }
             }
             
+            //get the category of the item from the picker controller
             let row = categoryPicker.selectedRowInComponent(0)
             let category = pickerData[row]
             
-            //NEEDS TO BE SET FROM THE DATA GATHERED BY POSTVIEWCONTROLLER
+            /*NEEDS TO BE SET FROM THE DATA GATHERED BY POSTVIEWCONTROLLER*/
             let condition = 0
             let locationX = 0.0
             let locationY = 0.0
             let minPrice = 0.0
             let question1 = ""
             let question2 = ""
+            /******************************************************************/
             
+            //create an item object to past to the manager to create the item
             let item = Item(name: name, description: details, owner: LocalUser.user.id, category: category, condition: condition, locationX: locationX, locationY: locationY, photos: images, question1: question1, question2: question2, minPrice: minPrice)
+            
+            //decalre the item manager and then call the appropriate function to create an item
             let manager = ItemManager()
             manager.createItem(item) { error in
                 guard error == nil else {

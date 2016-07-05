@@ -8,18 +8,23 @@
 
 import UIKit
 
+//splash view controller to allow for data to be loaded before displaying browse
 class SplashViewController: UIViewController {
     
-//    var categorySelected: String!
-    
+    //perform during load to allow for a shorter splash screen/early call.
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //declare managers to pull data of each object
         let userManager = UserManager()
         let itemManager = ItemManager()
+
         let seenPostsManager = SeenPostsManager()
         var seenPostsMade = false
         
+
+        
+        //first pull the user/check he/she exist
         userManager.retrieveUserByEmail(LocalUser.email) { user, error in
             guard error == nil else {
                 print("Error retrieving user from database: \(error)")
@@ -27,6 +32,8 @@ class SplashViewController: UIViewController {
                 }
             
             if user != nil {
+                
+                //if they do set the data!
                 LocalUser.user = user
                 print("\(LocalUser.user.email)")
                 seenPostsMade = true
@@ -93,11 +100,13 @@ class SplashViewController: UIViewController {
                 GlobalItems.items = items
             }
         }
+
             
         while GlobalItems.items.count == 0 {
             continue
         }
-            
+        
+        //while loop to ensure each item is loaded before transitioning to give the user a seemless experience
         for x in 0..<GlobalItems.items.count {
             print("\(GlobalItems.items[x].id)")
             while GlobalItems.items[x].photos == nil {
@@ -136,14 +145,10 @@ class SplashViewController: UIViewController {
     }
 
     
-    func triggerSegue(){
-        
-        performSegueWithIdentifier("showBrowse", sender: self)
-    }
     func triggerSegueTutorial(){
         dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("goTutorial", sender: self)        }
-        
+            self.performSegueWithIdentifier("goTutorial", sender: self)
+        }
     }
     
 }

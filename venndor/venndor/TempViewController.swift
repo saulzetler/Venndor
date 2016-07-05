@@ -10,6 +10,13 @@ import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
 
+/********************************************
+
+USELESS CLASS CREATED TO TEST SIMPLE FUNCTIONS
+PLEASE IGNORE
+
+*********************************************/
+
 class TempViewController: UIViewController, FBSDKLoginButtonDelegate {
     let loginButton2 : FBSDKLoginButton = FBSDKLoginButton()
     

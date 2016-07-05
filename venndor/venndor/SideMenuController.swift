@@ -9,10 +9,13 @@
 import Foundation
 import FBSDKLoginKit
 
+
+//class to control the side menu which should be available in most pages.
 class SideMenuController: UITableViewController {
     
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     
+    //declare all the outlets or the buttons
     @IBOutlet weak var profileCell: UITableViewCell!
     
     @IBOutlet weak var browseCell: UITableViewCell!
@@ -27,14 +30,14 @@ class SideMenuController: UITableViewController {
     
     @IBOutlet weak var sellCell: UITableViewCell!
     
+    //declare the various buttons
     var postButton: UIButton!
-    
     var browseButton: UIButton!
     var myMatchesButton: UIButton!
     var myPostsButton: UIButton!
     var notificationsButton: UIButton!
     var settingsButton: UIButton!
-    
+    //and their icons
     var browseIconButton: UIButton!
     var myMatchesIconButton: UIButton!
     var myPostsIconButton: UIButton!
@@ -45,7 +48,10 @@ class SideMenuController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        //create and load the users profile picture
         let profilePic: UIImageView! = UIImageView(frame: CGRectMake(screenSize.width*0.05, screenSize.height*0.02, screenSize.width*0.4, screenSize.width*0.4))
+        
+        /*NEEDS REFACTORING*/
         
         profilePic.layer.borderWidth = 2.0
         profilePic.layer.masksToBounds = false
@@ -60,7 +66,8 @@ class SideMenuController: UITableViewController {
         profilePic.userInteractionEnabled = true
         profilePic.addGestureRecognizer(tapGestureRecognizer)
         
-        setupCells()
+        //setupCells()
+        //setup calls for the page
         setupButtons()
     
     }
@@ -72,11 +79,13 @@ class SideMenuController: UITableViewController {
     
     
     func setupButtons() {
+        
+        //declare various size variables for the buttons to reference allowing for cleaner code.
         let imageButtonSize = CGRect(x: screenSize.width*0.04, y: screenSize.height*0.01, width: screenSize.width*0.1, height: screenSize.width*0.1)
         let textButtonSize = CGRect(x: screenSize.width*0.2, y: screenSize.height*0.01, width: screenSize.width*0.4, height: screenSize.width*0.1)
         let postButtonSize = CGRect(x: 0, y: 0, width: screenSize.width*0.6, height: screenSize.width*0.3)
         
-        // text buttons
+        // create all the buttons themselves
         
         browseButton = makeTextButton("Browse", frame: textButtonSize, target: "browsePage:")
         browseCell.addSubview(browseButton)
@@ -100,7 +109,7 @@ class SideMenuController: UITableViewController {
         
         
         
-        // image buttons
+        // create all the button icons/images
         
         browseIconButton = makeImageButton("Home-50", frame: imageButtonSize, target: "browsePage:", tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         browseCell.addSubview(browseIconButton)
@@ -117,15 +126,11 @@ class SideMenuController: UITableViewController {
         settingsIconButton = makeImageButton("Settings-50", frame: imageButtonSize, target: "settingsPage:", tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         settingsCell.addSubview(settingsIconButton)
         
-        
-        
     }
     
-    
-    func setupCells() {
-        
-    }
-    
+
+    //various functions to perform the buttons segues
+
     func sellPage(sender: UIButton) {
         self.performSegueWithIdentifier("toSellPage", sender: self)
     }
