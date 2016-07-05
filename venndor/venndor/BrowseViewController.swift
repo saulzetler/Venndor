@@ -51,8 +51,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 //        let user = LocalUser.user
 //        let items = GlobalItems.items
         
+        
         setupView()
         setupItemInfo()
+        
         
         //MiniMyMatches button at bottom of browse.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -82,13 +84,12 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     
     //code to for when the user swipes right to make an offer
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if (segue.identifier == "toOfferScreen") {
-//            let ovc = segue.destinationViewController as! OfferViewController
-////            ovc.backgroundImage: UIColor = 
-//            
-//        }
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "toOfferScreen") {
+            let ovc = segue.destinationViewController as! OfferViewController
+            ovc.backgroundImage = itemList[currentCardIndex].photos![0]
+        }
+    }
     
     func setupView() {
         self.view.backgroundColor = UIColorFromHex(0xe6f2ff, alpha: 1)
@@ -99,6 +100,24 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         currentCardIndex = 0
         cardsLoadedIndex = 0
         loadCards(GlobalItems.items)
+    }
+    
+    //functions to create item information
+    
+    func updateItemInfo() {
+        itemName.text = itemList[currentCardIndex].name
+        print(itemList[currentCardIndex].name)
+    }
+    
+    func setupItemInfo() {
+        itemInfo = UIView(frame: CGRect(x: (self.view.frame.size.width - CARD_WIDTH)/2, y: (self.view.frame.size.height - CARD_HEIGHT)/2.8 + CARD_HEIGHT, width: CARD_WIDTH, height: self.view.frame.height*0.1))
+        itemInfo.backgroundColor = UIColor.whiteColor()
+        itemInfo.layer.cornerRadius = 20
+        itemInfo.layer.masksToBounds = true
+        itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.2, width: itemInfo.frame.width, height: itemInfo.frame.height*0.6))
+        itemInfo.addSubview(itemName)
+        updateItemInfo()
+        self.view.addSubview(itemInfo)
     }
     
     //function to bring up mini matches bottom menu
@@ -152,24 +171,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         draggableView.information.text = ""
         draggableView.delegate = self
         return draggableView
-    }
-    
-    //functions to create item information
-    
-    func updateItemInfo() {
-        itemName.text = itemList[currentCardIndex].name
-        print(itemList[currentCardIndex].name)
-    }
-    
-    func setupItemInfo() {
-        itemInfo = UIView(frame: CGRect(x: (self.view.frame.size.width - CARD_WIDTH)/2, y: (self.view.frame.size.height - CARD_HEIGHT)/2.8 + CARD_HEIGHT, width: CARD_WIDTH, height: self.view.frame.height*0.1))
-        itemInfo.backgroundColor = UIColor.whiteColor()
-        itemInfo.layer.cornerRadius = 20
-        itemInfo.layer.masksToBounds = true
-        itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.2, width: itemInfo.frame.width, height: itemInfo.frame.height*0.6))
-        itemInfo.addSubview(itemName)
-        updateItemInfo()
-        self.view.addSubview(itemInfo)
     }
     
     //Dragable view delegate functions
