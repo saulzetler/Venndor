@@ -131,7 +131,7 @@ public class DraggableViewBackground: UIView, DraggableViewDelegate {
     
     func loadAnotherCard() -> Void {
         let itemManager = ItemManager()
-        itemManager.retrieveMultipleItems(1, offset: cardsLoadedIndex, filter: GlobalItems.currentCategory) { items, error in
+        itemManager.retrieveMultipleItems(1, offset: cardsLoadedIndex, filter: GlobalItems.currentCategory, fields: nil) { items, error in
             guard error == nil else {
                 print("Error retrieving items from server: \(error)")
                 return
