@@ -72,6 +72,7 @@
 		E49051B41D0A006B0045D5C0 /* app landing page background.png in Resources */ = {isa = PBXBuildFile; fileRef = E49051B31D0A006B0045D5C0 /* app landing page background.png */; };
 		E49051B61D0B245C0045D5C0 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051B51D0B245C0045D5C0 /* PostViewController.swift */; };
 		E49051B81D0B29F20045D5C0 /* ItemDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051B71D0B29F20045D5C0 /* ItemDescriptionView.swift */; };
+		E4992DFF1D2C38D200032221 /* go.png in Resources */ = {isa = PBXBuildFile; fileRef = E4992DFE1D2C38D200032221 /* go.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -170,6 +171,7 @@
 		E49051B31D0A006B0045D5C0 /* app landing page background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app landing page background.png"; sourceTree = "<group>"; };
 		E49051B51D0B245C0045D5C0 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		E49051B71D0B29F20045D5C0 /* ItemDescriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDescriptionView.swift; sourceTree = "<group>"; };
+		E4992DFE1D2C38D200032221 /* go.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = go.png; sourceTree = "<group>"; };
 		FFD7DAC17D30907788729F4A /* Pods-venndorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-venndorTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-venndorTests/Pods-venndorTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -367,6 +369,7 @@
 		E44C153E1D11E04F0006EBAD /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				E4992DFE1D2C38D200032221 /* go.png */,
 				E43070E31D22FDC80035BCF4 /* Back_Arrow.png */,
 				E44C15301D11E0430006EBAD /* More-50.png */,
 				E44C15311D11E0430006EBAD /* Chair-50.png */,
@@ -518,6 +521,7 @@
 				E44C151C1D11B9650006EBAD /* Settings-50.png in Resources */,
 				E49051AD1D09B6690045D5C0 /* Images.xcassets in Resources */,
 				E43070E41D22FDC80035BCF4 /* Back_Arrow.png in Resources */,
+				E4992DFF1D2C38D200032221 /* go.png in Resources */,
 				E44C153C1D11E0430006EBAD /* Kitchen-50.png in Resources */,
 				E44C151F1D11B9B90006EBAD /* New Product-50.png in Resources */,
 				E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */,
