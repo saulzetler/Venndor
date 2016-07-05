@@ -20,10 +20,14 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var cardsLoadedIndex: Int!
     var currentCardIndex: Int!
     var loadedCards: [DraggableView]!
+
+    //declare the current category so we know what cards we need to filter
+
     var currentCategory: String!
     var itemInfo: UIView!
     var itemName: UILabel!
     
+    //variabls to help declare and set things
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var miniMatches: UIButton!
     var menuTransitionManager = MenuTransitionManager()
@@ -33,12 +37,16 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
         self.view.backgroundColor = UIColor(red: 0.92, green: 0.93, blue: 0.95, alpha: 1)
         
-        let globalItems = GlobalItems()
+//        let globalItems = GlobalItems()
+
         
-        globalItems.loadNextItem()
+        //intialize the global items in this controller
+//        let globalItems = GlobalItems()
+        
+        /* ADD FUNCTION ON WHEN SWIPPING TO ROTATE THE GLOBAL ITEM */
+        
         // Do any additional setup after loading the view, typically from a nib.	
 //        let user = LocalUser.user
 //        let items = GlobalItems.items
@@ -50,14 +58,20 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
         miniMatches = makeImageButton("ic_menu_white.png", frame: buttonSize, target: "showAlert:", tinted: false, circle: true, backgroundColor: 0x3498db, backgroundAlpha: 1)
+
         self.view.addSubview(miniMatches)
+
+        //end minimatches decleration, could use refactoring instead of ugly code
         
+        
+        //prepare the reveal view controller to allow swipping and side menus.
         if revealViewController() != nil {
             revealViewController().rightViewRevealWidth = screenSize.width*0.3
             revealViewController().rearViewRevealWidth = screenSize.width*0.6
             self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
         }
         
+        //add the headerview
         addHeader()
     }
     
@@ -66,6 +80,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         // Dispose of any resources that can be recreated.
     }
     
+    
+    //code to for when the user swipes right to make an offer
 //    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
 //        if (segue.identifier == "toOfferScreen") {
 //            let ovc = segue.destinationViewController as! OfferViewController
@@ -85,26 +101,32 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         loadCards(GlobalItems.items)
     }
     
+    //function to bring up mini matches bottom menu
     func showAlert(sender: UIButton) {
         
+        //create the controller for the bottom menu
         let alertController = UIAlertController(title: "\n\n\n\n", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
+        // create the custom view for the bottom menu
         let rect = CGRectMake(-10, 0, alertController.view.bounds.size.width, 165.0)
         let customView = UIView(frame: rect)
         let customViewTwo = UIView(frame: CGRect(x: -10, y: 125, width: alertController.view.bounds.size.width+10, height: 75))
         customViewTwo.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
 
+        //create the custom cancel view for the user to quit the menu
+        //note this function also cancels when a user presses outside the frame
         let arrowView = UIView(frame: CGRect(x: (alertController.view.bounds.size.width)/2-23, y: 145, width: 30, height: 30))
         arrowView.backgroundColor = UIColor(patternImage: UIImage(named: "ic_keyboard_arrow_down_white.png")!)
 
         customView.backgroundColor = UIColorFromHex(0xe6e6e6)
-        
+        //round the corners to look more appealing
         customView.layer.cornerRadius = 15
 
         alertController.view.addSubview(customView)
         alertController.view.addSubview(customViewTwo)
         alertController.view.addSubview(arrowView)
         
+        //declare the type of alert controller
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(alert: UIAlertAction!) in print("cancel")})
         alertController.addAction(cancelAction)
         
@@ -191,7 +213,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //loads one new card
     func loadAnotherCard() -> Void {
         let itemManager = ItemManager()
-        itemManager.retrieveMultipleItems(1, offset: cardsLoadedIndex, filter: GlobalItems.currentCategory) { items, error in
+        itemManager.retrieveMultipleItems(1, offset: cardsLoadedIndex, filter: GlobalItems.currentCategory, fields: nil) { items, error in
             guard error == nil else {
                 print("Error retrieving items from server: \(error)")
                 return

@@ -19,6 +19,7 @@ struct UserManager {
     func createUser(first: String, last: String, email: String, completionHandler: (User?, ErrorType?) -> ()) {
         RESTEngine.sharedEngine.registerUser(email, firstName: first, lastName: last,
             success: { response in
+                
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
                     let params: JSON =
                     ["first_name": "\(first)",
@@ -31,8 +32,9 @@ struct UserManager {
                         "nuItemsBought": 0,
                         "ads": [String](),
                         "soldItems": [String](),
-                        "matches": [String]()]
-                    
+                        "matches": [String](),
+                        "boughtItems": [String](),
+                        "moneySaved": 0]
                     let user = User(json: params)
                     completionHandler(user, nil)
                 }
@@ -48,6 +50,7 @@ struct UserManager {
                 
                 //deconstruct the response into a "results" array
                 if let response = response, result = response["resource"] {
+                    
                     //if the array is empty, then the user does not exist in the database. Return nil
                     if (result.count>0) {
                         let user = User(json: response)
@@ -66,6 +69,7 @@ struct UserManager {
     func retrieveUserByEmail(email: String, completionHandler: (User?, ErrorType?) ->() ) {
         RESTEngine.sharedEngine.getUserByEmail(email,
             success: { response in
+               
                 if let response = response, result = response["resource"] {
                     if (result.count>0) {
                         let userData = result[0]
@@ -73,12 +77,20 @@ struct UserManager {
                         completionHandler(user, nil)
                     } else {
                         completionHandler(nil, nil)
-                        
-
                     }
                 }
+           
             }, failure: { error in
                 completionHandler(nil, error)
+        })
+    }
+    
+    func deleteUserById(id: String, completionHandler: (ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.removeUserById(id,
+            success: { response in
+                completionHandler(nil)
+            }, failure: {error in
+                completionHandler(error)
         })
     }
 }

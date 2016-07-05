@@ -28,7 +28,7 @@ struct ItemManager {
         })
     }
     
-    func retrieveItem(id: String, completionHandler: (Item?, ErrorType?) -> () ) {
+    func retrieveItemById(id: String, completionHandler: (Item?, ErrorType?) -> () ) {
         RESTEngine.sharedEngine.getItemById(id,
             success: { response in
                 if let response = response {
@@ -40,9 +40,30 @@ struct ItemManager {
         })
     }
     
-    func retrieveMultipleItems(count: Int, offset: Int?, filter: String?, completionHandler: ([Item]?, ErrorType?) -> () ) {
-        RESTEngine.sharedEngine.getItemsFromServer(count, offset: offset, filter: filter,
+    func retrieveItem(offset: Int?, filter: String?, fields: [String]?, completionHandler: (Item?, ErrorType?) -> () ) {
+        retrieveMultipleItems(1, offset: offset, filter: filter, fields: fields) { items, error in
+            guard error == nil else {
+                completionHandler(nil, error)
+                return
+            }
+            
+            if let items = items {
+                
+                //check if theres an item for us to return 
+                if items.count == 0 {
+                    completionHandler(nil, nil)
+                }
+                else {
+                    completionHandler(items[0], nil)
+                }
+            }
+        }
+    }
+    
+    func retrieveMultipleItems(count: Int, offset: Int?, filter: String?, fields: [String]?, completionHandler: ([Item]?, ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.getItemsFromServer(count, offset: offset, filter: filter, fields: fields,
             success: { response in
+                
                 if let response = response, result = response["resource"] {
                     var itemsArray = [Item]()
                     let arr = result as! NSArray
@@ -52,13 +73,12 @@ struct ItemManager {
                         
                         self.retrieveItemImageById(item.id, imageIndex: 0) { img, error in
                             guard error == nil else {
-                                print("Error getting the image from the server: \(error)")
+                                print("Error pulling item image: \(error)")
                                 return
                             }
                             
                             if let img = img {
                                 item.photos = [img]
-                                print("YYYYYYAARRGHGHHHHHHHH!")
                             }
                         }
                         
@@ -72,6 +92,22 @@ struct ItemManager {
         })
     }
     
+    func retrieveItemIds(count: Int, offset: Int, filter: String?, completionHandler: ([String]?, ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.getItemsFromServer(count, offset: offset, filter: filter, fields: ["_id"],
+            success: { response in
+                if let ids = response!["resource"] as? Array<Dictionary<String, String>> {
+                    var arr = [String]()
+                    for data in ids {
+                        arr.append(data["_id"]!)
+                    }
+                    
+                    completionHandler(arr, nil)
+                }
+            }, failure: { error in
+                    completionHandler(nil, error)
+        })
+    }
+    
     func retrieveItemImageById(id: String, imageIndex: Int, completionHandler: (UIImage?, ErrorType?) -> () ) {
         RESTEngine.sharedEngine.getImageFromServerById(id, fileName: "image\(imageIndex)",
             success: { response in
@@ -80,6 +116,7 @@ struct ItemManager {
                     let fileData = NSData(base64EncodedString: content as String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
                     if let data = fileData {
                         let img = UIImage(data: data)
+                        print("YYYYAARRGGGGHHHH!!!!")
                         completionHandler(img, nil)
                     }
                         
