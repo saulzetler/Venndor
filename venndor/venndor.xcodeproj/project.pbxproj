@@ -64,7 +64,6 @@
 		E44C153C1D11E0430006EBAD /* Kitchen-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15351D11E0430006EBAD /* Kitchen-50.png */; };
 		E44C153D1D11E0430006EBAD /* Lamp-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15361D11E0430006EBAD /* Lamp-50.png */; };
 		E49051A51D09AF7B0045D5C0 /* DraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A21D09AF7B0045D5C0 /* DraggableView.swift */; };
-		E49051A61D09AF7B0045D5C0 /* DraggableViewBackground.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A31D09AF7B0045D5C0 /* DraggableViewBackground.swift */; };
 		E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A41D09AF7B0045D5C0 /* OverlayView.swift */; };
 		E49051A91D09B0250045D5C0 /* BrowseViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051A81D09B0250045D5C0 /* BrowseViewController.swift */; };
 		E49051AD1D09B6690045D5C0 /* Images.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = E49051AC1D09B6690045D5C0 /* Images.xcassets */; };
@@ -162,7 +161,6 @@
 		E44C15351D11E0430006EBAD /* Kitchen-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Kitchen-50.png"; sourceTree = "<group>"; };
 		E44C15361D11E0430006EBAD /* Lamp-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lamp-50.png"; sourceTree = "<group>"; };
 		E49051A21D09AF7B0045D5C0 /* DraggableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableView.swift; sourceTree = "<group>"; };
-		E49051A31D09AF7B0045D5C0 /* DraggableViewBackground.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DraggableViewBackground.swift; sourceTree = "<group>"; };
 		E49051A41D09AF7B0045D5C0 /* OverlayView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OverlayView.swift; sourceTree = "<group>"; };
 		E49051A81D09B0250045D5C0 /* BrowseViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BrowseViewController.swift; sourceTree = "<group>"; };
 		E49051AC1D09B6690045D5C0 /* Images.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Images.xcassets; sourceTree = "<group>"; };
@@ -392,7 +390,6 @@
 			children = (
 				E42E04C21D2563330043779F /* WheelSlider.swift */,
 				E49051A21D09AF7B0045D5C0 /* DraggableView.swift */,
-				E49051A31D09AF7B0045D5C0 /* DraggableViewBackground.swift */,
 				E49051A41D09AF7B0045D5C0 /* OverlayView.swift */,
 				E49051B71D0B29F20045D5C0 /* ItemDescriptionView.swift */,
 				101F43CD1D107A55007E0ADE /* HeaderView.swift */,
@@ -684,7 +681,6 @@
 				E42E04C31D2563330043779F /* WheelSlider.swift in Sources */,
 				E49051B61D0B245C0045D5C0 /* PostViewController.swift in Sources */,
 				102806D71D22F11D0019C7FF /* RatingControl.swift in Sources */,
-				E49051A61D09AF7B0045D5C0 /* DraggableViewBackground.swift in Sources */,
 				E43070E01D22F0B70035BCF4 /* View.swift in Sources */,
 				E49051B21D09E5E80045D5C0 /* SideMenuController.swift in Sources */,
 				E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */,
