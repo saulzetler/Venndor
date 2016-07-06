@@ -22,7 +22,9 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         setupBackButton()
         setupWheelSlider()
         setupBackground()
-        setupPrompt()
+        let promptFrame = CGRect(x: 0, y: screenSize.height*0.2, width: screenSize.width, height: screenSize.height*0.2)
+        setupPrompt("How much would you pay?", item: offeredItem, screenSize: screenSize, frame: promptFrame)
+//        setupPrompt()
     }
     //to setup the page background to be the items image TO BE DONE
     func setupBackground() {
@@ -70,7 +72,8 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         let temp = matchController.calculateMatchedPrice(offered, posted: posted, item: offeredItem)
         print("\(temp)")
         print("offered")
-        
+        let matchControllerView = PopUpViewControllerSwift()
+        matchControllerView.showInView(self.view, price: 35.22, item: offeredItem)
     }
     
     //segue to return to browsing
@@ -87,14 +90,13 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         }
         let offerButton = makeImageButton("", frame: CGRect(x: wheelslider.frame.width*0.1, y: wheelslider.frame.height*0.1, width: wheelslider.frame.width*0.73, height: wheelslider.frame.height*0.73), target: "offer:", tinted: false, circle: true, backgroundColor: 0x1abc9c, backgroundAlpha: 0)
         wheelslider.addSubview(offerButton)
-        let goImageView = UIImageView(frame: CGRect(x: wheelslider.frame.width*0.35, y: wheelslider.frame.height*0.5, width: wheelslider.frame.width*0.3, height: wheelslider.frame.height*0.3))
+        let goImageView = UIImageView(frame: CGRect(x: wheelslider.frame.width*0.35, y: wheelslider.frame.height*0.55, width: wheelslider.frame.width*0.3, height: wheelslider.frame.height*0.3))
         goImageView.image = UIImage(named: "go.png")
         wheelslider.addSubview(goImageView)
         self.view.addSubview(wheelslider)
     }
     
-    
-    //function to update hte midle number shown in the wheel TO BE DONE
+    //function to update the midle number shown in the wheel TO BE DONE
     func updateSliderValue(value: Double, sender: WheelSlider) {
         self.offer = value
     }
