@@ -81,6 +81,24 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         self.performSegueWithIdentifier("offerToBrowse", sender: self)
     }
     
+//    func browseAfterMatch() {
+//        self.performSegueWithIdentifier("offerToBrowse", sender: self)
+//    }
+//    
+//    func viewMatchesAfterMatch() {
+//        self.performSegueWithIdentifier("offerToMatches", sender: self)
+//    }
+    
+    func goBackToBrowse(sender: UIButton) {
+        print("toBrowse")
+        self.performSegueWithIdentifier("offerToBrowse", sender: self)
+    }
+    
+    func toMatches(sender: UIButton) {
+        print("toMatches")
+        self.performSegueWithIdentifier("offerToMatches", sender: self)
+    }
+    
     //function to set up the wheel slider and control.
     func setupWheelSlider() {
         let wheelFrame = CGRectMake(screenSize.width*0.2, screenSize.height*0.6, screenSize.width*0.6, screenSize.width*0.6)
