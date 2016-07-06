@@ -8,10 +8,24 @@
 
 import UIKit
 
-class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate {
+class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate {
     
+    var allCards: [DraggableView]!
+    var itemList: [Item]!
+    
+    let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.7
+    let CARD_WIDTH: CGFloat = UIScreen.mainScreen().bounds.width*0.9
+    var MAX_BUFFER_SIZE: Int!
+    
+    var cardsLoadedIndex: Int!
+    var currentCardIndex: Int!
+    var loadedCards: [DraggableView]!
+
     //declare the current category so we know what cards we need to filter
+
     var currentCategory: String!
+    var itemInfo: UIView!
+    var itemName: UILabel!
     
     //variabls to help declare and set things
     let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -23,8 +37,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        //add the header
-        headerView = HeaderView(frame: self.view.frame)
+        self.view.backgroundColor = UIColor(red: 0.92, green: 0.93, blue: 0.95, alpha: 1)
+        
+//        let globalItems = GlobalItems()
+
         
         //intialize the global items in this controller
 //        let globalItems = GlobalItems()
@@ -35,14 +51,19 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 //        let user = LocalUser.user
 //        let items = GlobalItems.items
         
-        self.view.backgroundColor = UIColorFromHex(0xe6f2ff, alpha: 1)
+        
+        setupView()
+        setupItemInfo()
+        
         
         //MiniMyMatches button at bottom of browse.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
         miniMatches = makeImageButton("ic_menu_white.png", frame: buttonSize, target: "showAlert:", tinted: false, circle: true, backgroundColor: 0x3498db, backgroundAlpha: 1)
+
+        self.view.addSubview(miniMatches)
+
         //end minimatches decleration, could use refactoring instead of ugly code
-        
         
         
         //prepare the reveal view controller to allow swipping and side menus.
@@ -53,40 +74,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         }
         
         //add the headerview
-        self.view.addSubview(headerView)
+        addHeader()
     }
     
-    override func viewDidAppear(animated: Bool) {
-        
-        //create the item slides using draggableviewbackground
-        
-        /* THIS CODE NEEDS REFACTORING, WE NEED TO CREATE AND ALTER THE CARDS IN BROWSE VIEW CONTROLLER NOT THE VIEW*/
-        
-        let backgroundImage = UIImageView(frame: UIScreen.mainScreen().bounds)
-        if currentCategory == nil {
-            let draggableBackground: DraggableViewBackground = DraggableViewBackground(frame: self.view.frame)
-            self.view.addSubview(draggableBackground)
-            draggableBackground.insertSubview(backgroundImage, atIndex: 0)
-        }
-        else {
-            let draggableBackground: DraggableViewBackground = DraggableViewBackground(frame: self.view.frame, category: currentCategory)
-            self.view.addSubview(draggableBackground)
-            draggableBackground.insertSubview(backgroundImage, atIndex: 0)
-        }
-        
-        /* THIS CODE NEEDS REFACTORING, WE NEED TO CREATE AND ALTER THE CARDS IN BROWSE VIEW CONTROLLER NOT THE VIEW*/
-
-        //add mini matches to view after background to stop covering it
-        self.view.addSubview(miniMatches)
-        
-        //brings the header view to front as the draggable background covers it
-        self.view.bringSubviewToFront(headerView)
-        
-        headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
-        headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
-    }
-
-
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
@@ -94,17 +84,41 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     
     //code to for when the user swipes right to make an offer
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-//        if (segue.identifier == "toOfferScreen") {
-//            let ovc = segue.destinationViewController as! OfferViewController
-//        }
-//    }
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if (segue.identifier == "toOfferScreen") {
+            let ovc = segue.destinationViewController as! OfferViewController
+            ovc.backgroundImage = itemList[currentCardIndex].photos![0]
+        }
+    }
     
-//    func showOfferView(){
-//        let offerView = OfferView(frame: CGRectMake(0, 0, 0, 0))
-//        bringUpNewView(offerView)
-//    }
+    func setupView() {
+        self.view.backgroundColor = UIColorFromHex(0xe6f2ff, alpha: 1)
+        MAX_BUFFER_SIZE = GlobalItems.items.count
+        itemList = []
+        allCards = []
+        loadedCards = []
+        currentCardIndex = 0
+        cardsLoadedIndex = 0
+        loadCards(GlobalItems.items)
+    }
     
+    //functions to create item information
+    
+    func updateItemInfo() {
+        itemName.text = itemList[currentCardIndex].name
+        print(itemList[currentCardIndex].name)
+    }
+    
+    func setupItemInfo() {
+        itemInfo = UIView(frame: CGRect(x: (self.view.frame.size.width - CARD_WIDTH)/2, y: (self.view.frame.size.height - CARD_HEIGHT)/2.8 + CARD_HEIGHT, width: CARD_WIDTH, height: self.view.frame.height*0.1))
+        itemInfo.backgroundColor = UIColor.whiteColor()
+        itemInfo.layer.cornerRadius = 20
+        itemInfo.layer.masksToBounds = true
+        itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.2, width: itemInfo.frame.width, height: itemInfo.frame.height*0.6))
+        itemInfo.addSubview(itemName)
+        updateItemInfo()
+        self.view.addSubview(itemInfo)
+    }
     
     //function to bring up mini matches bottom menu
     func showAlert(sender: UIButton) {
@@ -138,5 +152,112 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         self.presentViewController(alertController, animated: true, completion:{})
         
     }
+    
+    //functions to create dragable views
+    
+    func createDraggableViewFromItem(item: Item) -> DraggableView {
+        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2.8, CARD_WIDTH, CARD_HEIGHT), item: item)
+        draggableView.layer.cornerRadius = 20
+        draggableView.layer.masksToBounds = true
+        draggableView.information.text = ""
+        draggableView.delegate = self
+        return draggableView
+    }
+    
+    func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
+        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2.8, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index])
+        draggableView.layer.cornerRadius = 20
+        draggableView.layer.masksToBounds = true
+        draggableView.information.text = ""
+        draggableView.delegate = self
+        return draggableView
+    }
+    
+    //Dragable view delegate functions
+    
+    func cardSwipedLeft(card: UIView) -> Void {
+        loadedCards.removeAtIndex(0)
+        loadAnotherCard()
+        nextCard()
+        
+    }
+    
+    func cardSwipedRight(card: UIView) -> Void {
+        loadedCards.removeAtIndex(0)
+        loadAnotherCard()
+        nextCard()
+        
+    }
+    
+    //inserts a new card to the back of the view
+    func nextCard() {
+        currentCardIndex = currentCardIndex + 1
+        //to avoid that backgroung thread autolayout error
+        dispatch_async(dispatch_get_main_queue(), {
+            self.insertNewCard()
+        })
+    }
+    func insertNewCard() {
+        if cardsLoadedIndex - currentCardIndex > 0 {
+            let newCard = loadedCards[cardsLoadedIndex - currentCardIndex - 1]
+                self.view.addSubview(newCard)
+                self.view.sendSubviewToBack(newCard)
+                updateItemInfo()
+        }
+        else {
+            itemInfo.removeFromSuperview()
+        }
+    }
+    
+    //loading cards
+    
+    //loads one new card
+    func loadAnotherCard() -> Void {
+        let itemManager = ItemManager()
+        itemManager.retrieveMultipleItems(1, offset: cardsLoadedIndex, filter: GlobalItems.currentCategory, fields: nil) { items, error in
+            guard error == nil else {
+                print("Error retrieving items from server: \(error)")
+                return
+            }
+            
+            if items != nil {
+                let tempItem = items!
+                
+                //check that item is returned before creating slide to avoid null pointer exceptions
+                if tempItem.count > 0 {
+                    self.itemList.append(tempItem[0])
+                    let newCard: DraggableView = self.createDraggableViewFromItem(tempItem[0])
+                    self.loadedCards.append(newCard)
+                    self.cardsLoadedIndex = self.cardsLoadedIndex + 1
+                }
+            }
+        }
+    }
+
+    //loads the intial 5 cards
+    func loadCards(items: [Item]) -> Void {
+        if items.count > 0 {
+            let numLoadedCardsCap = items.count > MAX_BUFFER_SIZE ? MAX_BUFFER_SIZE : items.count
+            for var i = 0; i < items.count; i++ {
+                itemList.append(items[i])
+                let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(i)
+                if i < numLoadedCardsCap {
+                    loadedCards.append(newCard)
+                }
+            }
+            
+            while cardsLoadedIndex < loadedCards.count {
+                if cardsLoadedIndex == 0 {
+                    self.view.addSubview(loadedCards[cardsLoadedIndex])
+                }
+                else {
+                    self.view.insertSubview(loadedCards[cardsLoadedIndex], belowSubview: loadedCards[cardsLoadedIndex - 1])
+                }
+                cardsLoadedIndex = cardsLoadedIndex + 1
+            }
+            
+        }
+    }
+
 }
 

@@ -61,10 +61,22 @@ class SideMenuController: UITableViewController {
         profileCell.selectionStyle = .None
         profileCell.addSubview(profilePic)
         
+        //create a tap gesture recognizer and assign it to the profile picture view
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "profilePictureTapped")
+        profilePic.userInteractionEnabled = true
+        profilePic.addGestureRecognizer(tapGestureRecognizer)
+        
+        //setupCells()
         //setup calls for the page
         setupButtons()
     
     }
+    
+    func profilePictureTapped() {
+        self.performSegueWithIdentifier("showProfile", sender: self)
+    }
+    
+    
     
     func setupButtons() {
         
@@ -116,7 +128,9 @@ class SideMenuController: UITableViewController {
         
     }
     
+
     //various functions to perform the buttons segues
+
     func sellPage(sender: UIButton) {
         self.performSegueWithIdentifier("toSellPage", sender: self)
     }
@@ -140,9 +154,5 @@ class SideMenuController: UITableViewController {
     func browsePage(sender: UIButton) {
         self.performSegueWithIdentifier("toBrowse", sender: self)
     }
-    
-    
-    
-    
     
 }
