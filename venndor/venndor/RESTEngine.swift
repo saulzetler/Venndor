@@ -93,8 +93,51 @@ final class RESTEngine {
             }
         })
     }
+    //MARK: - Matches Methods
     
-    //MARK: -Seen Posts methods
+    func createMatchOnServer(match: Match, success: SuccessClosure, failure: ErrorClosure) {
+        let params = ["itemID": match.itemID, "buyerID": match.buyerID, "sellerID": match.sellerID, "offeredPrice":match.offeredPrice]
+        
+        let requestBody: [String:AnyObject] = ["resource": params]
+        
+        callApiWithPath(Routing.Service(tableName: "matches").path, method: "POST", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    func getMatchById(id: String, success: SuccessClosure, failure: ErrorClosure) {
+        let path = "\(Routing.Service(tableName: "matches").path)/\(id)"
+        
+        callApiWithPath(path, method: "GET", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    func getMatchesFromServer(count: Int?, filter: String?, offset: Int?, fields: [String]?, success: SuccessClosure, failure: ErrorClosure) {
+        var queryParams = [String:AnyObject]()
+        
+        if let count = count {
+            queryParams["count"] = count
+        }
+        
+        if let filter = filter {
+            queryParams["filter"] = filter
+        }
+        
+        if let offset = offset {
+            queryParams["offset"] = offset
+        }
+        
+        if let fields = fields {
+            queryParams["fields"] = fields
+        }
+        
+        callApiWithPath(Routing.Service(tableName: "matches").path, method: "GET", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    func deleteMatchFromServerById(id: String, success: SuccessClosure, failure: ErrorClosure) {
+        let path = "\(Routing.Service(tableName: "matches").path)/\(id)"
+        
+        callApiWithPath(path, method: "DELETE", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    //MARK: - Seen Posts methods
     
     func createSeenPosts(id: String, success: SuccessClosure, failure: ErrorClosure) {
         let params = ["_id": id]
@@ -114,6 +157,12 @@ final class RESTEngine {
         let path = "\(Routing.Service(tableName: "seenPosts").path)/\(id)"
         
         callApiWithPath(path, method: "PATCH", queryParams: nil, body: params, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    func patchSeenPostsById(id: String, patch: [String:AnyObject], success: SuccessClosure, failure: ErrorClosure) {
+        let requestBody = ["resource": patch]
+        
+        callApiWithPath(Routing.Service(tableName: "seenPosts").path, method: "PUT", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
     }
     
     func removeSeenPostsById(id: String, success: SuccessClosure, failure: ErrorClosure) {
@@ -171,9 +220,8 @@ final class RESTEngine {
             }, failure: failure)
     }
     
-    
     /**
-     Update an existing contact info with the server
+     Update an existing user with the server
      */
     func updateUserById(id: String, info: JSON, success: SuccessClosure, failure: ErrorClosure) {
         

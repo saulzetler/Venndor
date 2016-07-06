@@ -14,7 +14,9 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var offeredItem: Item!
     var backgroundImage: UIImage!
+
     var offer: Double!
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
