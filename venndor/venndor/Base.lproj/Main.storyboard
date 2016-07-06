@@ -149,6 +149,7 @@
                     </view>
                     <connections>
                         <segue destination="5Q4-WU-6Zg" kind="show" identifier="offerToBrowse" id="pMb-c4-TUY"/>
+                        <segue destination="q8m-ke-uIK" kind="show" identifier="offerToMatches" id="Rrk-Pj-e4w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="don-4y-Icb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -768,9 +769,10 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="pMb-c4-TUY"/>
         <segue reference="fH8-HC-wrA"/>
-        <segue reference="XwR-UP-4A2"/>
-        <segue reference="T4w-aX-c8F"/>
+        <segue reference="Rrk-Pj-e4w"/>
         <segue reference="8vX-4e-WnC"/>
+        <segue reference="T4w-aX-c8F"/>
     </inferredMetricsTieBreakers>
 </document>
