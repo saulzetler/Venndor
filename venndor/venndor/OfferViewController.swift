@@ -12,16 +12,18 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
 
     //screen size for future reference
     let screenSize: CGRect = UIScreen.mainScreen().bounds
+    var offeredItem: Item!
     var backgroundImage: UIImage!
-    var item: Item!
+    var offer: Double!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backgroundImage = offeredItem.photos![0]
         setupBackButton()
         setupWheelSlider()
         setupBackground()
         let promptFrame = CGRect(x: 0, y: screenSize.height*0.2, width: screenSize.width, height: screenSize.height*0.2)
-        setupPrompt("How much would you pay?", item: item, screenSize: screenSize, frame: promptFrame)
+        setupPrompt("How much would you pay?", item: offeredItem, screenSize: screenSize, frame: promptFrame)
 //        setupPrompt()
     }
     //to setup the page background to be the items image TO BE DONE
@@ -61,9 +63,17 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     }
     
     func offer(sender: UIButton) {
+//        let tempOffer = Int(offer)
+//        let offered = Double(tempOffer)
+//        let posted = offeredItem.minPrice
+        let offered = 12.00
+        let posted = 10.00
+        let matchController = MatchController()
+        let temp = matchController.calculateMatchedPrice(offered, posted: posted, item: offeredItem)
+        print("\(temp)")
         print("offered")
         let matchControllerView = PopUpViewControllerSwift()
-        matchControllerView.showInView(self.view, price: 35.22, item: item)
+        matchControllerView.showInView(self.view, price: 35.22, item: offeredItem)
     }
     
     //segue to return to browsing
@@ -88,6 +98,6 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     
     //function to update the midle number shown in the wheel TO BE DONE
     func updateSliderValue(value: Double, sender: WheelSlider) {
-        
+        self.offer = value
     }
 }
