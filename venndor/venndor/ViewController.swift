@@ -90,6 +90,22 @@ extension UIViewController {
         return imgView
     }
     
+    //function to set up text and image
+    func setupPrompt(text: String, item: Item, screenSize: CGRect, frame: CGRect) {
+        let promptView = UIView(frame: frame)
+        promptView.backgroundColor = UIColor.whiteColor()
+        let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.height, height: frame.height))
+        imageView.image = item.photos![0]
+        let promptText = UILabel(frame: CGRect(x: frame.width*0.47, y: frame.height*0.3, width: frame.width*0.4, height: frame.height*0.4))
+        promptText.textAlignment = .Center
+        promptText.text = text
+        promptText.numberOfLines = 2
+        promptView.addSubview(promptText)
+        promptView.addSubview(imageView)
+        self.view.addSubview(promptView)
+    }
+    
+    
     //my match/post functions
     
     

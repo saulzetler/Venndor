@@ -42,6 +42,7 @@ class Item: NSObject {
     var question1: String
     var question2: String
     var minPrice: Double
+//    var previousOffers: [Double]
     
     //photos, name/title, category, question1, question2, condition, description, address, minPrice
     
@@ -59,6 +60,7 @@ class Item: NSObject {
         question1 = json["question1"] as! String
         question2 = json["question2"] as! String
         minPrice = json["minPrice"] as! Double
+//        previousOffers = json["previousOffers"] as! [Double]
     }
     
     //init from the app
@@ -75,6 +77,7 @@ class Item: NSObject {
         self.question1 = question1
         self.question2 = question2
         self.minPrice = minPrice
+//        self.previousOffers = [Double]()
     }
 
     /*
