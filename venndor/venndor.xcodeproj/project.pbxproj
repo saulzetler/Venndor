@@ -37,6 +37,7 @@
 		631F4F591D2AEFCD005EEFE2 /* DeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631F4F581D2AEFCD005EEFE2 /* DeleteViewController.swift */; };
 		63859A131D13347C004F4968 /* NIKApiInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A101D13347C004F4968 /* NIKApiInvoker.swift */; };
 		63859A141D13347C004F4968 /* NIKFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A111D13347C004F4968 /* NIKFile.swift */; };
+		638DF3E81D2C3C7C00319FD8 /* MatchesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638DF3E71D2C3C7C00319FD8 /* MatchesManager.swift */; };
 		63C8F7331D189E3D00FFC1E2 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */; };
 		63C8F7351D19C01500FFC1E2 /* hellscreams.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 63C8F7341D19C01500FFC1E2 /* hellscreams.jpg */; };
 		A61EB1AABD768E2B14D59749 /* Pods_venndorUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9387DB34016E826A2BBEF5 /* Pods_venndorUITests.framework */; };
@@ -130,6 +131,7 @@
 		631F4F581D2AEFCD005EEFE2 /* DeleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteViewController.swift; sourceTree = "<group>"; };
 		63859A101D13347C004F4968 /* NIKApiInvoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKApiInvoker.swift; sourceTree = "<group>"; };
 		63859A111D13347C004F4968 /* NIKFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKFile.swift; sourceTree = "<group>"; };
+		638DF3E71D2C3C7C00319FD8 /* MatchesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesManager.swift; sourceTree = "<group>"; };
 		63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		63C8F7341D19C01500FFC1E2 /* hellscreams.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = hellscreams.jpg; sourceTree = "<group>"; };
 		7C9AD43D3AAC3204D361DD5E /* Pods-venndorUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-venndorUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-venndorUITests/Pods-venndorUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -255,8 +257,8 @@
 		10ADC9A61D0749700028A999 /* venndor */ = {
 			isa = PBXGroup;
 			children = (
-				10ADC9E71D088EB70028A999 /* Controllers */,
 				63859A171D13353F004F4968 /* Model */,
+				10ADC9E71D088EB70028A999 /* Controllers */,
 				63859A161D13348C004F4968 /* Backend */,
 				E49051A11D09AF6B0045D5C0 /* Views */,
 				105FCAFF1D08A5490073E3AE /* ViewControllers */,
@@ -317,6 +319,7 @@
 				63088BA51D187CA900F67931 /* UserManager.swift */,
 				631F4F541D2829FC005EEFE2 /* ItemManager.swift */,
 				631946291D22F19800715643 /* SeenPostsManager.swift */,
+				638DF3E71D2C3C7C00319FD8 /* MatchesManager.swift */,
 				631069261D1B27B8004A3ADD /* ParserManager.swift */,
 				102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */,
 			);
@@ -705,6 +708,7 @@
 				631069271D1B27B8004A3ADD /* ParserManager.swift in Sources */,
 				631F4F571D2AB5F4005EEFE2 /* ProfilePageViewController.swift in Sources */,
 				E49051B01D09C0C90045D5C0 /* SWRevealViewController.m in Sources */,
+				638DF3E81D2C3C7C00319FD8 /* MatchesManager.swift in Sources */,
 				63088BAC1D187CBA00F67931 /* User.swift in Sources */,
 				10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */,
 				631F4F531D2829EB005EEFE2 /* RESTEngine.swift in Sources */,

@@ -88,6 +88,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         if (segue.identifier == "toOfferScreen") {
             let ovc = segue.destinationViewController as! OfferViewController
             ovc.backgroundImage = itemList[currentCardIndex].photos![0]
+            ovc.item = itemList[currentCardIndex]
         }
     }
     
@@ -177,6 +178,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     func cardSwipedLeft(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
+        LocalUser.seenPosts[itemList[currentCardIndex].id] = NSDate()
         loadAnotherCard()
         nextCard()
         

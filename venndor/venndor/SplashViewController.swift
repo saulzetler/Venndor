@@ -86,7 +86,9 @@ class SplashViewController: UIViewController {
         while LocalUser.seenPosts == nil {
             continue
         }
-
+        
+        
+        updateSeenPosts()
         let filterString = constructFilter(LocalUser.seenPosts)
         print("Filter string: \(filterString)")
             
@@ -113,7 +115,7 @@ class SplashViewController: UIViewController {
                 continue
             }
         }
-            
+        
         print("Ready to segue")
             
         dispatch_async(dispatch_get_main_queue()) {
@@ -137,6 +139,10 @@ class SplashViewController: UIViewController {
             index++
         }
         
+        for match in LocalUser.user.matches {
+            ids = "\(ids) and (_id != \(match)"
+        }
+        
         if GlobalItems.currentCategory != nil {
             ids = "\(ids) and (\(GlobalItems.currentCategory))"
         }
@@ -144,6 +150,19 @@ class SplashViewController: UIViewController {
         return ids
     }
 
+    func updateSeenPosts() {
+        for (key, value) in LocalUser.seenPosts {
+            if key == "_id" {
+                continue
+            }
+            let postDate = value as! NSDate
+            let timeInterval = ( (postDate.timeIntervalSinceNow) / 60 * -1)
+            
+            if timeInterval >= 5 {
+               LocalUser.seenPosts.removeValueForKey(key)
+            }
+        }
+    }
     
     func triggerSegueTutorial(){
         dispatch_async(dispatch_get_main_queue()) {
