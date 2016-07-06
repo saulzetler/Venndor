@@ -12,10 +12,13 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
 
     //screen size for future reference
     let screenSize: CGRect = UIScreen.mainScreen().bounds
+    var offeredItem: Item!
     var backgroundImage: UIImage!
+    var offer: Double!
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        backgroundImage = offeredItem.photos![0]
         setupBackButton()
         setupWheelSlider()
         setupBackground()
@@ -58,7 +61,16 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     }
     
     func offer(sender: UIButton) {
+//        let tempOffer = Int(offer)
+//        let offered = Double(tempOffer)
+//        let posted = offeredItem.minPrice
+        let offered = 12.00
+        let posted = 10.00
+        let matchController = MatchController()
+        let temp = matchController.calculateMatchedPrice(offered, posted: posted, item: offeredItem)
+        print("\(temp)")
         print("offered")
+        
     }
     
     //segue to return to browsing
@@ -84,5 +96,6 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     
     //function to update hte midle number shown in the wheel TO BE DONE
     func updateSliderValue(value: Double, sender: WheelSlider) {
+        self.offer = value
     }
 }
