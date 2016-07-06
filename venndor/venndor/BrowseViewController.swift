@@ -87,7 +87,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if (segue.identifier == "toOfferScreen") {
             let ovc = segue.destinationViewController as! OfferViewController
-            ovc.backgroundImage = itemList[currentCardIndex].photos![0]
+            ovc.offeredItem = itemList[currentCardIndex]
         }
     }
     
