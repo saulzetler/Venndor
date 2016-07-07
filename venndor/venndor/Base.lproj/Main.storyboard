@@ -18,7 +18,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AqT-ZL-8E1">
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AqT-ZL-8E1" customClass="FBSDKLoginButton">
                                 <rect key="frame" x="154" y="424" width="292" height="36"/>
                                 <accessibility key="accessibilityConfiguration" identifier="fbButton"/>
                                 <constraints>
@@ -28,9 +28,6 @@
                                 <state key="normal" title="Log In Through Facebook Now!">
                                     <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
-                                <connections>
-                                    <action selector="loginButton2:" destination="dSk-Eg-Ksm" eventType="touchUpInside" id="MiA-Gd-ciw"/>
-                                </connections>
                             </button>
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app landing page background.png" translatesAutoresizingMaskIntoConstraints="NO" id="owN-2m-UxM">
                                 <rect key="frame" x="200" y="123" width="200" height="200"/>
