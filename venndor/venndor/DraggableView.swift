@@ -87,8 +87,6 @@ public class DraggableView: UIView, UIScrollViewDelegate {
         scrollView.decelerationRate = 0.1
         pageControl.currentPage = 0
         containerView.frame = CGRectMake(0, 0, cardWidth, cardHeight*CGFloat(item.photoCount))
-        scrollView.decelerationRate = 0.1
-        pageControl.currentPage = 0
         picNum = 0
         
         let scrollViewWidth:CGFloat = self.scrollView.frame.width

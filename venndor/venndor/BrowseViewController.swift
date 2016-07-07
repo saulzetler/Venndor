@@ -25,6 +25,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 
     var currentCategory: String!
     var itemInfo: UIView!
+    var draggableInfo: DraggableView!
     var itemName: UILabel!
     
     //variabls to help declare and set things
@@ -198,6 +199,25 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         draggableView.information.text = ""
         draggableView.delegate = self
         return draggableView
+    }
+    
+    
+    //trying to implement dragging the info aswell but not gonna happen rn
+    func createDragableInfoView(item: Item) {
+        let infoFrame = CGRect(x: (self.view.frame.size.width - CARD_WIDTH)/2, y: (self.view.frame.size.height - CARD_HEIGHT)/2.8 + CARD_HEIGHT, width: CARD_WIDTH, height: self.view.frame.height*0.1)
+        draggableInfo = DraggableView(frame: infoFrame, item: item)
+        draggableInfo.layer.cornerRadius = 20
+        draggableInfo.layer.masksToBounds = true
+        draggableInfo.information.text = ""
+        draggableInfo.delegate = self
+        let tap = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+        tap.delegate = self
+        draggableInfo.addGestureRecognizer(tap)
+        itemName = UILabel(frame: CGRect(x: draggableInfo.frame.width*0.05, y: draggableInfo.frame.height*0.2, width: draggableInfo.frame.width, height: draggableInfo.frame.height*0.6))
+        draggableInfo.addSubview(itemName)
+        updateItemInfo()
+        infoOpen = false
+        self.view.addSubview(itemInfo)
     }
     
     //Dragable view delegate functions
