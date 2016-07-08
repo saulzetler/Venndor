@@ -85,7 +85,7 @@ class ProfilePageViewController: UIViewController {
     }
     
     func toggleContent(sender: UITapGestureRecognizer) {
-        var content: [AnyObject]!
+        var content: [String:AnyObject]!
         
         let user = LocalUser.user
         switch sender.view! {
@@ -109,7 +109,7 @@ class ProfilePageViewController: UIViewController {
         
     }
 
-    func updateScrollview(content: [AnyObject]) {
+    func updateScrollview(content: [String:AnyObject]) {
         self.contentScroll.subviews.forEach({ $0.removeFromSuperview() })
         let scalar:Double = 8/19
         let contentViewDimension = self.contentScroll.frame.width * CGFloat(scalar)
@@ -129,5 +129,8 @@ class ProfilePageViewController: UIViewController {
         
         contentScroll.contentSize = CGSizeMake(contentScrollWidth, contentScroll.frame.height)
     }
+    
+    
 
 }
+

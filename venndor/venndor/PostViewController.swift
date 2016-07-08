@@ -305,12 +305,24 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             
             //decalre the item manager and then call the appropriate function to create an item
             let manager = ItemManager()
+            let uManager = UserManager()
             manager.createItem(item) { error in
                 guard error == nil else {
                     print("GOOD FUCKING JOB BUDDY YOU BROKE EVERYTHING i fucking hate u")
                     return
                 }
                 print("YAAAAA BOYZ")
+                LocalUser.user.ads[item.id!] = "Posted"
+                let update = ["ads": LocalUser.user.ads]
+                uManager.updateUserById(LocalUser.user.id, update: update) { error in
+                    guard error == nil else {
+                        print("Error updating the LocalUser's ads from post screen: \(error)")
+                        return
+                    }
+                    
+                    print("Succesfully updated LocalUser's ads from post screen.")
+                }
+                
             }
         }
     }

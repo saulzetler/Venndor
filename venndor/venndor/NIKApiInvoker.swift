@@ -52,24 +52,17 @@ final class NIKApiInvoker {
      - Parameter completionBlock: block to be executed once call is done
     */
     func restPath(path: String, method: String, queryParams: [String: AnyObject]?, body: AnyObject?, headerParams: [String: String]?, contentType: String?, completionBlock: ([String: AnyObject]?, NSError?) -> Void) {
-        let request = NIKRequestBuilder.restPath(path, method: method, queryParams: queryParams, body: body, headerParams: headerParams, contentType: contentType)
         
-        /*******************************************************************
-        *
-        *  NOTE: apple added App Transport Security in iOS 9.0+ to improve
-        *          security. As of this writing (7/15) all plain text http
-        *          connections fail by default. For more info about App
-        *          Transport Security and how to handle this issue here:
-        *          https://developer.apple.com/library/prerelease/ios/technotes/App-Transport-Security-Technote/index.html
-        *
-        *******************************************************************/
+        //build the request
+        let request = NIKRequestBuilder.restPath(path, method: method, queryParams: queryParams, body: body, headerParams: headerParams, contentType: contentType)
         
         // Handle caching on GET requests
 
         startLoad() // for network activity indicator
         
         let date = NSDate()
-        NSURLConnection.sendAsynchronousRequest(request, queue: queue) {(response, response_data, var response_error) -> Void in
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) {(response_data, response, var response_error) -> Void in
             self.stopLoad()
             if let response_error = response_error {
                 if let response_data = response_data {
@@ -98,6 +91,37 @@ final class NIKApiInvoker {
                 }
             }
         }
+        task.resume()
+        
+//        NSURLConnection.sendAsynchronousRequest(request, queue: queue) {(response, response_data, var response_error) -> Void in
+//            self.stopLoad()
+//            if let response_error = response_error {
+//                if let response_data = response_data {
+//                    let results = try? NSJSONSerialization.JSONObjectWithData(response_data, options: [])
+//                    if let results = results as? [String: AnyObject] {
+//                        completionBlock(nil, NSError(domain: response_error.domain, code: response_error.code, userInfo: results))
+//                    } else {
+//                        completionBlock(nil, response_error)
+//                    }
+//                } else {
+//                    completionBlock(nil, response_error)
+//                }
+//                return
+//            } else {
+//                let statusCode = (response as! NSHTTPURLResponse).statusCode
+//                if !NSLocationInRange(statusCode, NSMakeRange(200, 99)) {
+//                    response_error = NSError(domain: "swagger", code: statusCode, userInfo: try! NSJSONSerialization.JSONObjectWithData(response_data!, options: []) as? [NSObject: AnyObject])
+//                    completionBlock(nil, response_error)
+//                    return
+//                } else {
+//                    let results = try! NSJSONSerialization.JSONObjectWithData(response_data!, options: []) as! [String: AnyObject]
+//                    if NSUserDefaults.standardUserDefaults().boolForKey("RVBLogging") {
+//                        NSLog("fetched results (\(NSDate().timeIntervalSinceDate(date)) seconds): \(results)")
+//                    }
+//                    completionBlock(results, nil)
+//                }
+//            }
+//        }
     }
 }
 
@@ -147,34 +171,26 @@ final class NIKRequestBuilder {
             // build the body into JSON
             var data: NSData!
             
-            if body is [NIKFile] {
-                let boundary = "Boundary-\(NSUUID().UUIDString)"
-                let body = createMultipartBody(body as! [NIKFile], boundary: boundary)
-                let postLength = "\(body.length)"
-                request.setValue(postLength, forHTTPHeaderField:"Content-Length")
-                request.setValue("multipart/form-data; boundary=\(boundary)", forHTTPHeaderField: "Content-Type")
-                request.HTTPBody = body
-                
-                
+            if body is [String: AnyObject] || body is [AnyObject] {
+                print("\(body)")
+                data = try? NSJSONSerialization.dataWithJSONObject(body, options: [])
+                let body2 = try? NSJSONSerialization.JSONObjectWithData(data, options: [])
+                print("\(body2)")
+            } else if let body = body as? NIKFile {
+                data = body.data
+            } else {
+                data = body.dataUsingEncoding(NSUTF8StringEncoding)
             }
-            else {
-                if body is [String: AnyObject] || body is [AnyObject] {
-                    print("\(body)")
-                    data = try? NSJSONSerialization.dataWithJSONObject(body, options: [])
-                } else if let body = body as? NIKFile {
-                    data = body.data
-                } else {
-                    data = body.dataUsingEncoding(NSUTF8StringEncoding)
-                }
-                let postLength = "\(data.length)"
-                request.setValue(postLength, forHTTPHeaderField: "Content-Length")
-                request.HTTPBody = data
-                request.setValue(contentType, forHTTPHeaderField: "Content-Type")
-            }
+            let postLength = "\(data.length)"
+            request.setValue(postLength, forHTTPHeaderField: "Content-Length")
+            request.HTTPBody = data
+            request.setValue(contentType, forHTTPHeaderField: "Content-Type")
         }
     
         return request
+    
     }
+    
 }
 
 func createMultipartBody(files: [NIKFile], boundary: String) -> NSData {

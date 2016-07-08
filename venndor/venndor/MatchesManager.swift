@@ -82,11 +82,11 @@ class MatchesManager: NSObject {
             failure: { error in completionHandler(error)})
     }
     
-    func createFilterString(matches: [String]) -> String {
+    func createFilterString(matches: [String:AnyObject]) -> String {
         var filterString = ""
         var index = 0
-        for matchID in matches {
-            filterString = index == 0 ? "(_id = \(matchID))" : "\(filterString) or (_id = \(matchID))"
+        for (key, _) in matches {
+            filterString = index == 0 ? "(_id = \(key))" : "\(filterString) or (_id = \(key))"
             index++
         }
         

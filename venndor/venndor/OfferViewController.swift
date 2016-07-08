@@ -75,6 +75,8 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         print("\(temp)")
         print("offered")
         let matchControllerView = PopUpViewControllerSwift()
+        matchControllerView.matchedItem = offeredItem
+        matchControllerView.matchedPrice = 35.22
         matchControllerView.showInView(self.view, price: 35.22, item: offeredItem)
     }
     

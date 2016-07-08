@@ -93,7 +93,6 @@ class SplashViewController: UIViewController {
             continue
         }
         
-        
         updateSeenPosts()
         let filterString = constructFilter(LocalUser.seenPosts)
         print("Filter string: \(filterString)")
@@ -134,6 +133,7 @@ class SplashViewController: UIViewController {
         var ids: String!
         var index = 0
         
+        //filter out seenPosts
         for (key, _ ) in seenPosts {
             
             if key == "_id" {
@@ -145,12 +145,21 @@ class SplashViewController: UIViewController {
             index++
         }
         
-        for match in LocalUser.user.matches {
-            ids = "\(ids) and (_id != \(match)"
+        //filter out user matches
+        for (_, value) in LocalUser.user.matches {
+
+            ids = ids == nil ? "(_id != \(value))" : "\(ids) and (_id != \(value)"
+            
         }
         
+        //filter out user's ads
+        for (key, _) in LocalUser.user.ads {
+            ids = ids == nil ? "(_id != \(key))" : "\(ids) and (_id != \(key))"
+        }
+        
+        //filter by category
         if GlobalItems.currentCategory != nil {
-            ids = "\(ids) and (\(GlobalItems.currentCategory))"
+            ids = ids == nil ? GlobalItems.currentCategory : "\(ids) and (\(GlobalItems.currentCategory))"
         }
         
         return ids
@@ -168,6 +177,17 @@ class SplashViewController: UIViewController {
                LocalUser.seenPosts.removeValueForKey(key)
             }
         }
+        
+        let manager = SeenPostsManager()
+        manager.patchSeenPostsById(LocalUser.user.id) { error in
+            guard error == nil else {
+                print("Error patching LocalUser's seen posts: \(error)")
+                return
+            }
+            
+            print("Succesfully patched LocalUser's seen posts")
+        }
+        
     }
     
     func triggerSegueTutorial(){
