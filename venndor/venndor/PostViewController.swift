@@ -311,6 +311,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     return
                 }
                 print("YAAAAA BOYZ")
+                LocalUser.user.ads[item.id!] = "Posted"
             }
         }
     }

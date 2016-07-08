@@ -288,6 +288,19 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             
         }
     }
+    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        let manager = SeenPostsManager()
+        manager.updateSeenPostsById(LocalUser.user.id) { error in
+            guard error == nil else {
+                print("Error updating LocalUser's seen posts: \(error)")
+                return
+            }
+            
+            print("Succesfully updated the LocalUser's seen posts.")
+        }
+    }
 
 }
 

@@ -14,13 +14,13 @@ class Match: NSObject {
     var itemID: String!
     var buyerID: String!
     var sellerID: String!
-    var offeredPrice: Double!
+    var matchedPrice: Double!
     
-    init(itemID: String, buyerID: String, sellerID: String, offeredPrice: Double) {
+    init(itemID: String, buyerID: String, sellerID: String, matchedPrice: Double) {
         self.itemID = itemID
         self.buyerID = buyerID
         self.sellerID = sellerID
-        self.offeredPrice = offeredPrice
+        self.matchedPrice = matchedPrice
     }
     
     init(json: JSON) {
@@ -28,7 +28,7 @@ class Match: NSObject {
         self.itemID = json["itemID"] as! String
         self.buyerID = json["buyerID"] as! String
         self.sellerID = json["sellerID"] as! String
-        self.offeredPrice = json["offeredPrice"] as! Double
+        self.matchedPrice = json["matchedPrice"] as! Double
     }
     
 }

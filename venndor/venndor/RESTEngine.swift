@@ -96,7 +96,7 @@ final class RESTEngine {
     //MARK: - Matches Methods
     
     func createMatchOnServer(match: Match, success: SuccessClosure, failure: ErrorClosure) {
-        let params = ["itemID": match.itemID, "buyerID": match.buyerID, "sellerID": match.sellerID, "offeredPrice":match.offeredPrice]
+        let params = ["itemID": match.itemID, "buyerID": match.buyerID, "sellerID": match.sellerID, "offeredPrice":match.matchedPrice]
         
         let requestBody: [String:AnyObject] = ["resource": params]
         
@@ -137,6 +137,9 @@ final class RESTEngine {
         callApiWithPath(path, method: "DELETE", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
     
+    
+    
+    
     //MARK: - Seen Posts methods
     
     func createSeenPosts(id: String, success: SuccessClosure, failure: ErrorClosure) {
@@ -170,6 +173,9 @@ final class RESTEngine {
         callApiWithPath(path, method: "DELETE", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
     
+    
+    
+    
     //MARK: - User methods
     
     func registerUser(email: String, firstName: String, lastName: String, success: SuccessClosure, failure: ErrorClosure) {
@@ -182,10 +188,10 @@ final class RESTEngine {
             "nuMatches": 0,
             "nuItemsSold": 0,
             "nuItemsBought": 0,
-            "soldItems": [String](),
-            "ads": [String](),
-            "matches": [String](),
-            "boughtItems": [String](),
+            "soldItems": [String:AnyObject](),
+            "ads": [String:AnyObject](),
+            "matches": [String:AnyObject](),
+            "boughtItems": [String:AnyObject](),
             "moneySaved": 0]
         let requestBody: [String: AnyObject] = ["resource": params]
         
