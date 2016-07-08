@@ -14,6 +14,7 @@ struct LocalUser {
     static var lastName: String!
     static var email: String!
     static var seenPosts: [String:AnyObject]!
+    static var matches: [Match]!
 }
 
 class User: NSObject {
