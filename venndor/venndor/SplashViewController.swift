@@ -93,7 +93,6 @@ class SplashViewController: UIViewController {
             continue
         }
         
-        
         updateSeenPosts()
         let filterString = constructFilter(LocalUser.seenPosts)
         print("Filter string: \(filterString)")
