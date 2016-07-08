@@ -12,11 +12,78 @@ import QuartzCore
 class PopUpViewControllerSwift : UIViewController {
     
     var screenSize = UIScreen.mainScreen().bounds
+
+    var matchedItem: Item!
+    var matchedPrice: Double!
+
     let ovc = OfferViewController()
+
     
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackground()
+        
+        let userManager = UserManager()
+        let matchManager = MatchesManager()
+        
+        let item = matchedItem
+
+    
+        
+        //create the match on the server
+        let newMatch = Match(itemID: matchedItem.id, buyerID: LocalUser.user.id, sellerID: matchedItem.owner, matchedPrice: matchedPrice)
+        matchManager.createMatch(newMatch) { match, error in
+            guard error == nil else {
+                print("Error creating match on server: \(error)")
+                return
+            }
+            
+            if let match = match {
+                
+                //update the LocalUser's matches info
+                LocalUser.user.matches[match.id!] = item.id
+                LocalUser.user.nuMatches = LocalUser.user.nuMatches + 1
+                let update = ["matches": LocalUser.user.matches, "nuMatches": LocalUser.user.nuMatches]
+
+                
+                //update the LocalUser on the server
+                userManager.updateUserById(LocalUser.user.id, update: update as! [String : AnyObject]) { error in
+                    guard error == nil else {
+                        print("Error updating the local user's matches: \(error)")
+                        return
+                    }
+                    
+                    print("LocalUser matches succesfully updated.")
+                }
+                
+                //retrieve the item's owner from the server and update their info as well
+                userManager.retrieveUserById(self.matchedItem.owner) { user, error in
+                    guard error == nil else {
+                        print("Error retrieving user for match update: \(error)")
+                        return
+                    }
+                    
+                    if let user = user {
+                        //update item owner's match info
+                        user.matches[match.id!] = item.id
+                        user.nuMatches = user.nuMatches + 1
+                        user.ads[item.id!] = "Matched"
+                        
+                        //post the update to the server
+                        let update = ["matches": user.matches, "nuMatches": user.nuMatches, "ads": user.ads]
+                        userManager.updateUserById(user.id, update: update as! [String:AnyObject]) { error in
+                            guard error == nil else {
+                                print("Error updating item owner's matches: \(error)")
+                                return
+                            }
+                            
+                            print("Item owner's matches updated.")
+                        }
+                    }
+                }
+
+            }
+        }
     }
     
     func setupBackground() {

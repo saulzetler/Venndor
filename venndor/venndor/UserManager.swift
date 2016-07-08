@@ -31,9 +31,9 @@ struct UserManager {
                         "nuItemsSold": 0,
                         "nuItemsBought": 0,
                         "ads": [String](),
-                        "soldItems": [String](),
-                        "matches": [String](),
-                        "boughtItems": [String](),
+                        "soldItems": [String:AnyObject](),
+                        "matches": [String:AnyObject](),
+                        "boughtItems": [String:AnyObject](),
                         "moneySaved": 0]
                     let user = User(json: params)
                     completionHandler(user, nil)
@@ -49,16 +49,12 @@ struct UserManager {
             success: { response in
                 
                 //deconstruct the response into a "results" array
-                if let response = response, result = response["resource"] {
-                    
+                if let response = response {
+                    let data = response as JSON
                     //if the array is empty, then the user does not exist in the database. Return nil
-                    if (result.count>0) {
-                        let user = User(json: response)
-                        completionHandler(user, nil)
-                    }
-                    else {
-                        completionHandler(nil, nil)
-                    }
+                    let  user = User(json: data)
+                    completionHandler(user, nil)
+                    
                 }
             }, failure: { error in
                 completionHandler(nil, error)
@@ -91,6 +87,16 @@ struct UserManager {
             success: { response in
                 completionHandler(nil)
             }, failure: {error in
+                completionHandler(error)
+        })
+    }
+    
+    func updateUserById(id: String, update: [String:AnyObject], completionHandler: (ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.updateUserById(id, info: update,
+            success: { response in
+                print("Succesfully updated the user.")
+                completionHandler(nil)
+            } , failure: { error in
                 completionHandler(error)
         })
     }

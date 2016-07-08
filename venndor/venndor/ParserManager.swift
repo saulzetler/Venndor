@@ -23,4 +23,13 @@ struct ParserManager {
             return stringArray
         }
     }
+    
+    func getDict(response: AnyObject) -> [String:AnyObject] {
+        if let _ = response as? NSArray {
+            return [String:AnyObject]()
+        }
+        else {
+            return response as! [String:AnyObject]
+        }
+    }
 }

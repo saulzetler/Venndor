@@ -14,6 +14,7 @@ struct LocalUser {
     static var lastName: String!
     static var email: String!
     static var seenPosts: [String:AnyObject]!
+    static var matches: [Match]!
 }
 
 class User: NSObject {
@@ -25,10 +26,11 @@ class User: NSObject {
     var nuMatches: Int!
     var nuItemsSold: Int!
     var nuItemsBought: Int!
-    var soldItems : [String]!
-    var boughtItems: [String]!
-    var ads: [String]!
-    var matches: [String]!
+    var soldItems : [String:AnyObject]!
+    var boughtItems: [String:AnyObject]!
+    var ads: [String:AnyObject]!
+    //key: matchID, value: item in the match
+    var matches: [String:AnyObject]!
     var moneySaved: Double!
     let parseManager = ParserManager()
     
@@ -41,10 +43,10 @@ class User: NSObject {
         nuMatches = json["nuMatches"] as! Int
         nuItemsBought = json["nuItemsBought"] as! Int
         nuItemsSold = json["nuItemsSold"] as! Int
-        soldItems = parseManager.getArray(json["soldItems"]!)
-        ads = parseManager.getArray(json["ads"]!)
-        matches = parseManager.getArray(json["matches"]!)
-        boughtItems = parseManager.getArray(json["boughtItems"]!)
+        soldItems = parseManager.getDict(json["soldItems"]!)
+        ads = parseManager.getDict(json["ads"]!)
+        matches = parseManager.getDict(json["matches"]!) 
+        boughtItems = parseManager.getDict(json["boughtItems"]!)
         moneySaved = Double(json["moneySaved"] as! Int)
     }
     
