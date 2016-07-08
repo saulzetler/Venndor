@@ -89,7 +89,7 @@ class HeaderView: UIView, UITextFieldDelegate {
     func setUpViewCancel() -> Void {
         cancelButton.frame = CGRectMake(screenSize.width*0.8, 24, screenSize.width*0.2, 30)
         cancelButton.setImage(cancelImage, forState: .Normal)
-        cancelButton.addTarget(self, action: "buttonPress:", forControlEvents: .TouchUpInside)
+        cancelButton.addTarget(self, action: #selector(HeaderView.buttonPress(_:)), forControlEvents: .TouchUpInside)
         cancelButton.hidden = true
         self.addSubview(cancelButton)
     }

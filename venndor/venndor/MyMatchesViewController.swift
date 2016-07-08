@@ -74,8 +74,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         let matchesButtonFrame = CGRectMake(0, 0, screenSize.width/2, 32)
         let boughtButtonFrame = CGRectMake(screenSize.width/2, 0, screenSize.width/2, 32)
         buttonBar.backgroundColor = UIColor.whiteColor()
-        matchesButton = makeTextButton("Matches", frame: matchesButtonFrame, target: "matchesPressed:")
-        boughtButton = makeTextButton("Bought", frame: boughtButtonFrame, target: "boughtPressed:")
+        matchesButton = makeTextButton("Matches", frame: matchesButtonFrame, target: #selector(MyMatchesViewController.matchesPressed(_:)))
+        boughtButton = makeTextButton("Bought", frame: boughtButtonFrame, target: #selector(MyMatchesViewController.boughtPressed(_:)))
         matchesButton.selected = true
         matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
         buttonBar.addSubview(matchesBar)
@@ -85,6 +85,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         self.view.addSubview(buttonBar)
     }
     
+
     func addContainerContent(matchContainer: UIView, img: UIImage, match: Match) {
         
         //create the match photo
@@ -146,11 +147,11 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     
     //gesture recognizer function to allow functionality of swipping left or right to control which menu to look at
     func addGestureRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(MyMatchesViewController.respondToSwipeGesture(_:)))
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
         self.view.addGestureRecognizer(swipeRight)
         
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(MyMatchesViewController.respondToSwipeGesture(_:)))
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(swipeLeft)
     }

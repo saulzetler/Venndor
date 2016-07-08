@@ -44,8 +44,8 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         let postsButtonFrame = CGRectMake(0, 0, screenSize.width/2, 32)
         let soldButtonFrame = CGRectMake(screenSize.width/2, 0, screenSize.width/2, 32)
         buttonBar.backgroundColor = UIColor.whiteColor()
-        postsButton = makeTextButton("Posts", frame: postsButtonFrame, target: "matchesPressed:")
-        soldButton = makeTextButton("Sold", frame: soldButtonFrame, target: "boughtPressed:")
+        postsButton = makeTextButton("Posts", frame: postsButtonFrame, target: #selector(MyPostsViewController.matchesPressed(_:)))
+        soldButton = makeTextButton("Sold", frame: soldButtonFrame, target: #selector(MyPostsViewController.boughtPressed(_:)))
         postsButton.selected = true
         postsBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
         buttonBar.addSubview(postsBar)
@@ -59,7 +59,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         //temporary function that is to be later changed
         //function used to add the item images to the price container.
         let matchContainer = UIView(frame: CGRect(x: 0, y: screenSize.height*0.17, width: screenSize.width, height: screenSize.height*0.4))
-        createImgView(CGRect(x: screenSize.width*0.05, y: 5, width: screenSize.width*0.3, height: screenSize.width*0.3), action: "none:", superView: matchContainer)
+        createImgView(CGRect(x: screenSize.width*0.05, y: 5, width: screenSize.width*0.3, height: screenSize.width*0.3), action: #selector(MyPostsViewController.none(_:)), superView: matchContainer)
         let priceContainer = UIView(frame: CGRect(x: screenSize.width*0.27, y: -8, width: screenSize.width*0.12, height: screenSize.width*0.08))
         priceContainer.backgroundColor = UIColorFromHex(0x2ecc71)
         createBoarder(priceContainer)
@@ -82,11 +82,11 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     
     //gesture recognizer function to allow functionality of swipping left or right to control which menu to look at
     func addGestureRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(MyPostsViewController.respondToSwipeGesture(_:)))
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
         self.view.addGestureRecognizer(swipeRight)
         
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(MyPostsViewController.respondToSwipeGesture(_:)))
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(swipeLeft)
     }

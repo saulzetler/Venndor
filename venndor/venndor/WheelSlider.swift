@@ -181,7 +181,7 @@ public class WheelSlider: UIView {
             return
         }
         guard(allowNegativeNumber || calcCurrentValue() > 0)else{
-            currentPoint++
+            currentPoint += 1
             return
         }
         
@@ -191,29 +191,29 @@ public class WheelSlider: UIView {
         if(displacementX > displacementY){
             if(centerY > beganTouchPosition.y){
                 if(moveTouchPosition.x >= beganTouchPosition.x){
-                    currentPoint++
+                    currentPoint += 1
                 }else{
-                    currentPoint--
+                    currentPoint -= 1
                 }
             }else{
                 if(moveTouchPosition.x > beganTouchPosition.x){
-                    currentPoint--
+                    currentPoint -= 1
                 }else{
-                    currentPoint++
+                    currentPoint += 1
                 }
             }
         }else{
             if(centerX <= beganTouchPosition.x){
                 if(moveTouchPosition.y >= beganTouchPosition.y){
-                    currentPoint++
+                    currentPoint += 1
                 }else{
-                    currentPoint--
+                    currentPoint -= 1
                 }
             }else{
                 if(moveTouchPosition.y > beganTouchPosition.y){
-                    currentPoint--
+                    currentPoint -= 1
                 }else{
-                    currentPoint++
+                    currentPoint += 1
                 }
             }
         }
