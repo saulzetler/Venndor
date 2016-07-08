@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 //class to control the post/sell page in the application requires many delegates
-class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate {
+class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, STRatingControlDelegate, ImagePickerDelegate {
     
     //declare the needed variables for the page to work.
     
@@ -36,6 +36,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var condition: Int!
     let pickerData = ["Furniture", "Kitchen", "Household", "Electronics", "Clothing", "Books", "Other"]
     var categoryPicker: UIPickerView!
+    var ratingControl: STRatingControl!
+    var imagePickerController: ImagePickerController!
+    
+    var photoChoiceDisplayed = false
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -48,10 +52,19 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setupScrollView()
         setupPageControll()
         setupPostButton()
+        setupRatingControl()
         addHeader()
+        setupDownArrow()
     }
     
     //setup functions
+    
+    func setupDownArrow() {
+        let downArrowFrame = CGRect(x: screenSize.width*0.45, y: screenSize.height*0.95, width: screenSize.width*0.1, height: screenSize.height*0.05)
+        let downArrow = makeImageButton("Expand Arrow.png", frame: downArrowFrame, target: #selector(PostViewController.nextPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        self.view.addSubview(downArrow)
+        self.view.bringSubviewToFront(downArrow)
+    }
     
     //first function to setup the scroll view for the page.
     func setupScrollView() {
@@ -102,11 +115,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
         //each view performs the same action/function in allowing a user to upload an image, thus it is refactored to allow for neater code
         
-        imageView1 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.13, screenSize.width*0.7, screenSize.width*0.7), action: "imageTapped:", superView: containerView)
-        imageView2 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
-        imageView3 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
-        imageView4 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
-        imageView5 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: "imageTapped:", superView: containerView)
+        imageView1 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.13, screenSize.width*0.7, screenSize.width*0.7), action: #selector(PostViewController.imageTapped(_:)), superView: containerView)
+        imageView2 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView)
+        imageView3 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView)
+        imageView4 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView)
+        imageView5 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView)
         
         //store the image views in an array for easier future use
         imageViewArray = [imageView1, imageView2, imageView3, imageView4, imageView5]
@@ -122,11 +135,19 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         categoryPicker.delegate = self
         containerView.addSubview(categoryPicker)
     }
-
+    
+    //setup rating control
+    func setupRatingControl() {
+        ratingControl = STRatingControl(frame: CGRectMake(screenSize.width*0.25, screenSize.height*3.5, self.screenSize.width*0.5, 30))
+        ratingControl.delegate = self
+        ratingControl.layoutSubviews()
+        containerView.addSubview(ratingControl)
+    }
+    
     //function to create the final post button which is called when the user completes the process.
     func setupPostButton() {
         let buttonFrame = CGRectMake(screenSize.width*0.4, screenSize.height*7.5, screenSize.width*0.2, screenSize.height*0.1)
-        postButton = makeTextButton("Post!", frame: buttonFrame, target: "postItem:")
+        postButton = makeTextButton("Post!", frame: buttonFrame, target: #selector(PostViewController.postItem(_:)))
         containerView.addSubview(postButton)
     }
     
@@ -135,7 +156,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         pageControl = UIPageControl(frame: CGRectMake(screenSize.width*0.005, screenSize.height*0.87, screenSize.width*0.17, screenSize.height*0.03))
         //rotate the page control image to allow for a more intuitive visual
         pageControl.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-        pageControl.addTarget(self, action: Selector("changePage:"), forControlEvents: UIControlEvents.ValueChanged)
+        pageControl.addTarget(self, action: #selector(PostViewController.changePage(_:)), forControlEvents: UIControlEvents.ValueChanged)
         pageControl.numberOfPages = Int(scrollView.contentSize.height/screenSize.height)
         pageControl.currentPage = 0
         self.pageControl.pageIndicatorTintColor = UIColor.grayColor()
@@ -172,6 +193,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     //delegate functions that control parts of the view controller
+    
+    func didSelectRating(control: STRatingControl, rating: Int) {
+        print(rating)
+    }
     
     //2 funcitons are called when a user scrolls through a scroll view, either drag or accelerate as such both must be overwritten to auto adjust the page to the correct one when either is called
     func scrollViewDidEndDecelerating(scrollView: UIScrollView){
@@ -226,7 +251,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
-        if textView.text == "Description" {
+        if textView.text == "Additional Info" {
             textView.text = ""
         }
     }
@@ -234,7 +259,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func textViewDidEndEditing(textView: UITextView) {
         textView.resignFirstResponder()
         if textView.text == "" {
-            textView.text = "Description"
+            textView.text = "Additional Info"
         }
     }
     
@@ -245,32 +270,56 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     //end of text field delegates
     
-    //function to control when an image view is tapped and access the camera roll
-    func imageTapped(sender: AnyObject) {
-        currentImgView = sender.view as! UIImageView
+    //IMAGE SELECTION METHODS
+    
+    //delegate image picker functions
+    
+    func wrapperDidPress(images: [UIImage]){
+        print("cool")
+    }
+    func doneButtonDidPress(images: [UIImage]){
+        imagePickerController.dismissViewControllerAnimated(true, completion: nil)
+        var i = 0
+        let images = imageAssets
+        for imageView in imageViewArray {
+            if i < images.count {
+                imageView.image = images[i]
+                i += 1
+            }
+        }
         
-        //declare the needed controller to access photos
-        let myPickerController = UIImagePickerController()
-        myPickerController.delegate = self;
+    }
+    func cancelButtonDidPress(){
         
-        //accessing the camera roll
-        myPickerController.sourceType = UIImagePickerControllerSourceType.PhotoLibrary
-        self.presentViewController(myPickerController, animated: true, completion: nil)
     }
     
-    //controller to control the correct image for the correct image view
-    func imagePickerController(picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : AnyObject]){
-        
-        currentImgView.image = info[UIImagePickerControllerOriginalImage] as? UIImage
-        
-        self.dismissViewControllerAnimated(true, completion: nil)
+    var imageAssets: [UIImage] {
+        return ImagePicker.resolveAssets(imagePickerController.stack.assets)
     }
+    
+    //function to control when an image view is tapped and access the camera roll
+    func imageTapped(sender: UIGestureRecognizer) {
+        imagePickerController = ImagePickerController()
+        imagePickerController.delegate = self
+        imagePickerController.imageLimit = 5
+        presentViewController(imagePickerController, animated: true, completion: nil)
+
+    }
+    
+    
+    //END OF IMAGE SELECTION METHODS
     
     //controller to change the current page shown on the view controller when button pressed
     
     /* TO BE FIXED */
     
     func changePage(sender: AnyObject) -> () {
+        let y = CGFloat(pageControl.currentPage) * scrollView.frame.size.height
+        scrollView.setContentOffset(CGPointMake(0, y), animated: true)
+    }
+    
+    func nextPage(sender: UIButton) {
+        pageControl.currentPage += 1
         let y = CGFloat(pageControl.currentPage) * scrollView.frame.size.height
         scrollView.setContentOffset(CGPointMake(0, y), animated: true)
     }

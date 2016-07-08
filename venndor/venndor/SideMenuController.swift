@@ -1,3 +1,4 @@
+
 //
 //  SideMenuController.swift
 //  venndor
@@ -62,7 +63,7 @@ class SideMenuController: UITableViewController {
         profileCell.addSubview(profilePic)
         
         //create a tap gesture recognizer and assign it to the profile picture view
-        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "profilePictureTapped")
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SideMenuController.profilePictureTapped))
         profilePic.userInteractionEnabled = true
         profilePic.addGestureRecognizer(tapGestureRecognizer)
         
@@ -87,22 +88,22 @@ class SideMenuController: UITableViewController {
         
         // create all the buttons themselves
         
-        browseButton = makeTextButton("Browse", frame: textButtonSize, target: "browsePage:")
+        browseButton = makeTextButton("Browse", frame: textButtonSize, target: #selector(SideMenuController.browsePage(_:)))
         browseCell.addSubview(browseButton)
         
-        myMatchesButton = makeTextButton("My Matches", frame: textButtonSize, target: "myMatchesPage:")
+        myMatchesButton = makeTextButton("My Matches", frame: textButtonSize, target: #selector(SideMenuController.myMatchesPage(_:)))
         myMatchesCell.addSubview(myMatchesButton)
         
-        myPostsButton = makeTextButton("My Posts", frame: textButtonSize, target: "myPostsPage:")
+        myPostsButton = makeTextButton("My Posts", frame: textButtonSize, target: #selector(SideMenuController.myPostsPage(_:)))
         myPostsCell.addSubview(myPostsButton)
         
-        notificationsButton = makeTextButton("Notifications", frame: textButtonSize, target: "notificationsPage:")
+        notificationsButton = makeTextButton("Notifications", frame: textButtonSize, target: #selector(SideMenuController.notificationsPage(_:)))
         notificationsCell.addSubview(notificationsButton)
         
-        settingsButton = makeTextButton("Settings", frame: textButtonSize, target: "settingsPage:")
+        settingsButton = makeTextButton("Settings", frame: textButtonSize, target: #selector(SideMenuController.settingsPage(_:)))
         settingsCell.addSubview(settingsButton)
         
-        postButton = makeTextButton("Sell", frame: postButtonSize, target: "sellPage:")
+        postButton = makeTextButton("Sell", frame: postButtonSize, target: #selector(SideMenuController.sellPage(_:)))
         postButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         postButton.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
         sellCell.addSubview(postButton)
@@ -111,19 +112,19 @@ class SideMenuController: UITableViewController {
         
         // create all the button icons/images
         
-        browseIconButton = makeImageButton("Home-50", frame: imageButtonSize, target: "browsePage:", tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        browseIconButton = makeImageButton("Home-50", frame: imageButtonSize, target: #selector(SideMenuController.browsePage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         browseCell.addSubview(browseIconButton)
         
-        myMatchesIconButton = makeImageButton("Shopping Cart Loaded-50", frame: imageButtonSize, target: "myMatchesPage:", tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        myMatchesIconButton = makeImageButton("Shopping Cart Loaded-50", frame: imageButtonSize, target: #selector(SideMenuController.myMatchesPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         myMatchesCell.addSubview(myMatchesIconButton)
         
-        myPostsIconButton = makeImageButton("New Product-50", frame: imageButtonSize, target: "myPostsPage:", tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        myPostsIconButton = makeImageButton("New Product-50", frame: imageButtonSize, target: #selector(SideMenuController.myPostsPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         myPostsCell.addSubview(myPostsIconButton)
         
-        notificationsIconButton = makeImageButton("Megaphone-50", frame: imageButtonSize, target: "notificationsPage:", tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        notificationsIconButton = makeImageButton("Megaphone-50", frame: imageButtonSize, target: #selector(SideMenuController.notificationsPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         notificationsCell.addSubview(notificationsIconButton)
         
-        settingsIconButton = makeImageButton("Settings-50", frame: imageButtonSize, target: "settingsPage:", tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        settingsIconButton = makeImageButton("Settings-50", frame: imageButtonSize, target: #selector(SideMenuController.settingsPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         settingsCell.addSubview(settingsIconButton)
         
     }

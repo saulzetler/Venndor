@@ -62,7 +62,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         //MiniMyMatches button at bottom of browse.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
-        miniMatches = makeImageButton("ic_menu_white.png", frame: buttonSize, target: "showAlert:", tinted: false, circle: true, backgroundColor: 0x3498db, backgroundAlpha: 1)
+        miniMatches = makeImageButton("ic_menu_white.png", frame: buttonSize, target: #selector(BrowseViewController.showAlert(_:)), tinted: false, circle: true, backgroundColor: 0x3498db, backgroundAlpha: 1)
 
         self.view.addSubview(miniMatches)
 
@@ -212,7 +212,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         draggableInfo.layer.masksToBounds = true
         draggableInfo.information.text = ""
         draggableInfo.delegate = self
-        let tap = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(BrowseViewController.handleTap(_:)))
         tap.delegate = self
         draggableInfo.addGestureRecognizer(tap)
         itemName = UILabel(frame: CGRect(x: draggableInfo.frame.width*0.05, y: draggableInfo.frame.height*0.2, width: draggableInfo.frame.width, height: draggableInfo.frame.height*0.6))
@@ -288,7 +288,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     func loadCards(items: [Item]) -> Void {
         if items.count > 0 {
             let numLoadedCardsCap = items.count > MAX_BUFFER_SIZE ? MAX_BUFFER_SIZE : items.count
-            for var i = 0; i < items.count; i++ {
+            for i in 0 ..< items.count {
                 itemList.append(items[i])
                 let newCard: DraggableView = self.createDraggableViewWithDataAtIndex(i)
                 if i < numLoadedCardsCap {

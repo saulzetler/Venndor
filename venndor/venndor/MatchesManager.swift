@@ -87,7 +87,7 @@ class MatchesManager: NSObject {
         var index = 0
         for matchID in matches {
             filterString = index == 0 ? "(_id = \(matchID))" : "\(filterString) or (_id = \(matchID))"
-            index++
+            index += 1
         }
         
         return filterString

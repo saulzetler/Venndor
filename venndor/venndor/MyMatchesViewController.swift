@@ -40,8 +40,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         let matchesButtonFrame = CGRectMake(0, 0, screenSize.width/2, 32)
         let boughtButtonFrame = CGRectMake(screenSize.width/2, 0, screenSize.width/2, 32)
         buttonBar.backgroundColor = UIColor.whiteColor()
-        matchesButton = makeTextButton("Matches", frame: matchesButtonFrame, target: "matchesPressed:")
-        boughtButton = makeTextButton("Bought", frame: boughtButtonFrame, target: "boughtPressed:")
+        matchesButton = makeTextButton("Matches", frame: matchesButtonFrame, target: #selector(MyMatchesViewController.matchesPressed(_:)))
+        boughtButton = makeTextButton("Bought", frame: boughtButtonFrame, target: #selector(MyMatchesViewController.boughtPressed(_:)))
         matchesButton.selected = true
         matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
         buttonBar.addSubview(matchesBar)
@@ -55,7 +55,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         //temporary function that is to be later changed
         //function used to add the item images to the price container.
         let matchContainer = UIView(frame: CGRect(x: 0, y: screenSize.height*0.17, width: screenSize.width, height: screenSize.height*0.4))
-        createImgView(CGRect(x: screenSize.width*0.05, y: 5, width: screenSize.width*0.3, height: screenSize.width*0.3), action: "none:", superView: matchContainer)
+        createImgView(CGRect(x: screenSize.width*0.05, y: 5, width: screenSize.width*0.3, height: screenSize.width*0.3), action: #selector(MyMatchesViewController.none(_:)), superView: matchContainer)
         let priceContainer = UIView(frame: CGRect(x: screenSize.width*0.27, y: -8, width: screenSize.width*0.12, height: screenSize.width*0.08))
         priceContainer.backgroundColor = UIColorFromHex(0x2ecc71)
         createBoarder(priceContainer)
@@ -79,11 +79,11 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     
     //gesture recognizer function to allow functionality of swipping left or right to control which menu to look at
     func addGestureRecognizer() {
-        let swipeRight = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(MyMatchesViewController.respondToSwipeGesture(_:)))
         swipeRight.direction = UISwipeGestureRecognizerDirection.Right
         self.view.addGestureRecognizer(swipeRight)
         
-        let swipeLeft = UISwipeGestureRecognizer(target: self, action: "respondToSwipeGesture:")
+        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(MyMatchesViewController.respondToSwipeGesture(_:)))
         swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
         self.view.addGestureRecognizer(swipeLeft)
     }

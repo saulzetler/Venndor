@@ -60,7 +60,7 @@ public class DraggableView: UIView, UIScrollViewDelegate {
 
         self.backgroundColor = UIColor.whiteColor()
 
-        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: "beingDragged:")
+        panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(DraggableView.beingDragged(_:)))
 
         self.addGestureRecognizer(panGestureRecognizer)
         self.addSubview(information)

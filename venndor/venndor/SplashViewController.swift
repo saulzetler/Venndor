@@ -142,7 +142,7 @@ class SplashViewController: UIViewController {
             else {
                 ids = index > 0 ? "\(ids) and (_id != \(key))" : "(_id != \(key))"
             }
-            index++
+            index += 1
         }
         
         for match in LocalUser.user.matches {

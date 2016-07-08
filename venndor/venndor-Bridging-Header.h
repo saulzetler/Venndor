@@ -10,6 +10,7 @@
 #define venndor_Bridging_Header_h
 
 #import <GoogleMaps/GoogleMaps.h>
+#import <ImagePicker/ImagePicker-Swift.h>
 #import <FBSDKCoreKit/FBSDKCorekit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
