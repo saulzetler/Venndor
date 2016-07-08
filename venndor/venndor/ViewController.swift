@@ -28,12 +28,18 @@ extension UIViewController {
         return button
     }
     
-    func makeTextButton(text: String, frame: CGRect, target: Selector) -> UIButton {
+    func makeTextButton(text: String, frame: CGRect, target: Selector, circle: Bool = false, textColor: UIColor = UIColor.blackColor(), tinted: Bool = true, backgroundColor: UIColor = UIColor.clearColor()) -> UIButton {
         let button = UIButton(frame: frame)
         button.addTarget(self, action: target, forControlEvents: .TouchUpInside)
         button.setTitle(text, forState: .Normal)
-        button.setTitleColor(UIColor.blackColor(), forState: UIControlState.Normal)
-        button.setTitleColor(UIColorFromHex(0x3498db, alpha: 1), forState: UIControlState.Selected)
+        button.setTitleColor(textColor, forState: UIControlState.Normal)
+        if tinted == true {
+            button.setTitleColor(UIColorFromHex(0x3498db, alpha: 1), forState: UIControlState.Selected)
+        }
+        if circle == true {
+            button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        }
+        button.backgroundColor = backgroundColor
         return button
     }
     
@@ -72,11 +78,13 @@ extension UIViewController {
     }
     
     //generic scroll view functions
-    func createBoarder(view: UIView) {
-        let boarderColor : UIColor = UIColor.blackColor()
+    func createBoarder(view: UIView, color: UIColor = UIColor.blackColor(), circle: Bool = false) {
+        let boarderColor : UIColor = color
         view.layer.borderColor = boarderColor.CGColor
         view.layer.borderWidth = 2.0
-        view.layer.cornerRadius = 8.0
+        if circle == false {
+          view.layer.cornerRadius = 8.0
+        }
         view.layer.masksToBounds = true
     }
     
