@@ -25,12 +25,46 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        let manager = MatchesManager()
+        
+        //set up prelimenary variables to make for-loop more readable
+        var index:CGFloat = 0.0
+        let yOrigin = screenSize.height * 0.17
+        let containerHeight = screenSize.height * 0.2
+        
+        
+        //populate the matchContainerView
+        for match in LocalUser.matches {
+            
+            //create the match container view
+            let matchContainer = UIView(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight), width: screenSize.width, height: containerHeight))
+            
+            //retrieve the match thumbnail
+            manager.retrieveMatchThumbnail(match) { img, error in
+                guard error == nil else {
+                    print("Error retrieving match images: \(error)")
+                    return
+                }
+                if let img = img {
+                    //self.addContainerContent(matchContainer, img: img, match: match)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.addContainerContent(matchContainer, img: img, match: match)
+                    }
+                    
+                }
+            }
+            
+            matchContainerView.addSubview(matchContainer)
+            index += 1
+        }
+        
         setupScrollView()
-        addImages()
         addHeader()
         addGestureRecognizer()
         setupButtons()
-    } 
+        
+    }
     
     func setupButtons() {
         //setting up the buttons needed to control the 2 pages within the controller, NEEDS REFACTORING WITH POST
@@ -51,16 +85,49 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         self.view.addSubview(buttonBar)
     }
     
-    func addImages() {
-        //temporary function that is to be later changed
-        //function used to add the item images to the price container.
-        let matchContainer = UIView(frame: CGRect(x: 0, y: screenSize.height*0.17, width: screenSize.width, height: screenSize.height*0.4))
-        createImgView(CGRect(x: screenSize.width*0.05, y: 5, width: screenSize.width*0.3, height: screenSize.width*0.3), action: "none:", superView: matchContainer)
+    func addContainerContent(matchContainer: UIView, img: UIImage, match: Match) {
+        
+        //create the match photo
+        let imgView = createImgView(CGRect(x: screenSize.width*0.05, y: 5, width: screenSize.width*0.3, height: screenSize.width*0.3), action: "none:", superView: matchContainer)
+        imgView.image = img
+        
+        let imgHeight = imgView.frame.height
+        let imgWidth = imgView.frame.width
+        
+        
+        let labelX = imgWidth + imgView.frame.origin.x + 20
+        
+        //create the match info labels
+        let nameLabel = UILabel(frame: CGRect(x: labelX, y: 5, width: matchContainer.frame.width - imgWidth, height: imgHeight * 0.15))
+        nameLabel.text = match.itemID
+        nameLabel.textAlignment = .Center
+        matchContainer.addSubview(nameLabel)
+        
+        let distanceLabel = UILabel(frame: CGRect(x: labelX, y: matchContainer.frame.height * 0.35, width: matchContainer.frame.width - imgWidth, height: imgHeight * 0.15))
+        distanceLabel.text = "495 Hilldale Road"
+        distanceLabel.textAlignment = .Center
+        matchContainer.addSubview(distanceLabel)
+        
+        let sellerLabel = UILabel(frame: CGRect(x: labelX, y: matchContainer.frame.height * 0.7, width: matchContainer.frame.width - imgWidth, height: imgHeight * 0.15))
+        sellerLabel.text = "\(match.sellerID)"
+        sellerLabel.textAlignment = .Center
+        matchContainer.addSubview(sellerLabel)
+        
+        
+        
+        //create the price container + label
         let priceContainer = UIView(frame: CGRect(x: screenSize.width*0.27, y: -8, width: screenSize.width*0.12, height: screenSize.width*0.08))
         priceContainer.backgroundColor = UIColorFromHex(0x2ecc71)
+       
+        let priceLabel = UILabel(frame: CGRect(x: 2, y: 2, width: priceContainer.frame.width - 5, height: priceContainer.frame.height))
+        priceLabel.text = "$\(match.matchedPrice)"
+        priceLabel.numberOfLines = 1
+        priceLabel.adjustsFontSizeToFitWidth = true
+        priceContainer.addSubview(priceLabel)
+        
         createBoarder(priceContainer)
         matchContainer.addSubview(priceContainer)
-        matchContainerView.addSubview(matchContainer)
+        
     }
     
     //function to control when the bought category is pressed

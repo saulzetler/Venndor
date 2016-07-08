@@ -121,6 +121,19 @@ class SplashViewController: UIViewController {
             }
         }
         
+        let matchManager = MatchesManager()
+        matchManager.retrieveUserMatches(LocalUser.user) { matches, error in
+            guard error == nil else {
+                print("Error retrieving user matches from server: \(error)")
+                return
+            }
+            
+            if let matches = matches {
+                LocalUser.matches = matches
+                print("Succesfully set the LocalUser's matches")
+            }
+        }
+        
         print("Ready to segue")
             
         dispatch_async(dispatch_get_main_queue()) {

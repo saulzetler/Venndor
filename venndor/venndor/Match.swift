@@ -11,12 +11,14 @@ import Foundation
 class Match: NSObject {
     
     var id: String?
+    //var itemName: String!
     var itemID: String!
     var buyerID: String!
     var sellerID: String!
     var matchedPrice: Double!
     
     init(itemID: String, buyerID: String, sellerID: String, matchedPrice: Double) {
+        //self.itemName = itemName
         self.itemID = itemID
         self.buyerID = buyerID
         self.sellerID = sellerID

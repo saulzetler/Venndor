@@ -96,7 +96,7 @@ final class RESTEngine {
     //MARK: - Matches Methods
     
     func createMatchOnServer(match: Match, success: SuccessClosure, failure: ErrorClosure) {
-        let params = ["itemID": match.itemID, "buyerID": match.buyerID, "sellerID": match.sellerID, "offeredPrice":match.matchedPrice]
+        let params = ["itemID": match.itemID, "buyerID": match.buyerID, "sellerID": match.sellerID, "matchedPrice":match.matchedPrice]
         
         let requestBody: [String:AnyObject] = ["resource": params]
         
