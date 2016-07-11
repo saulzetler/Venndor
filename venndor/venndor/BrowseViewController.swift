@@ -27,6 +27,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var itemInfo: UIView!
     var draggableInfo: DraggableView!
     var itemName: UILabel!
+    var itemDescription: UILabel!
+    var itemCondtion: UIView!
     
     //variabls to help declare and set things
     let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -110,8 +112,11 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //functions to create item information
     
     func updateItemInfo() {
+        if itemList.count == 0 {
+            return
+        }
         itemName.text = itemList[currentCardIndex].name
-        print(itemList[currentCardIndex].name)
+        itemDescription.text = itemList[currentCardIndex].details
     }
     
     func setupItemInfo() {
@@ -119,11 +124,16 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         itemInfo.backgroundColor = UIColor.whiteColor()
         itemInfo.layer.cornerRadius = 20
         itemInfo.layer.masksToBounds = true
-        let tap = UITapGestureRecognizer(target: self, action: Selector("handleTap:"))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(BrowseViewController.handleTap(_:)))
         tap.delegate = self
         itemInfo.addGestureRecognizer(tap)
-        itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.2, width: itemInfo.frame.width, height: itemInfo.frame.height*0.6))
+        itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.2, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*0.6))
         itemInfo.addSubview(itemName)
+        itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*1.2, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
+        itemInfo.addSubview(itemDescription)
+        itemCondtion = UIView(frame: CGRectMake(screenSize.width*0.25, screenSize.height*0.4, screenSize.width*0.5, 30))
+//        let filledStarImage = UIImage(named: "Star Filled.png")
+//        let emptyStarImage = UIImage(named: "Star Empty.png")
         updateItemInfo()
         infoOpen = false
         self.view.addSubview(itemInfo)

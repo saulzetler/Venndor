@@ -94,6 +94,7 @@ extension UIViewController {
         imgView.userInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
         createBoarder(imgView)
+        imgView.contentMode = .ScaleAspectFill
         superView.addSubview(imgView)
         return imgView
     }

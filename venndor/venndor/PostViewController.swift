@@ -102,7 +102,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //create the text field required for the user to input a basic description of the item
     func setupItemDescription() {
-        itemDescription = UITextView(frame: CGRectMake(10, screenSize.height*4.5, self.screenSize.width*0.95, 100))
+        itemDescription = UITextView(frame: CGRectMake(10, screenSize.height*4.3, self.screenSize.width*0.95, 100))
         itemDescription.text = "Additional Info"
         itemDescription.delegate = self
         containerView.addSubview(itemDescription)
@@ -341,7 +341,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let category = pickerData[row]
             
             /*NEEDS TO BE SET FROM THE DATA GATHERED BY POSTVIEWCONTROLLER*/
-            let condition = 0
+            let condition = ratingControl.rating
             let locationX = 0.0
             let locationY = 0.0
             let minPrice = 0.0
