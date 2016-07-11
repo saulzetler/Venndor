@@ -55,8 +55,8 @@ class ProfilePageViewController: UIViewController {
         
         //present the header view and add the sidemenu toggles to it
         self.view.bringSubviewToFront(headerView)
-        headerView.menuButton.addTarget(self.revealViewController(), action: "revealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
-        headerView.categoryButton.addTarget(self.revealViewController(), action: "rightRevealToggle:", forControlEvents: UIControlEvents.TouchUpInside)
+        headerView.menuButton.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        headerView.categoryButton.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.rightRevealToggle(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
 
     }
@@ -64,7 +64,7 @@ class ProfilePageViewController: UIViewController {
     func setTapsForStackViews() {
         let stackViews = [matchesStack, boughtStack, soldStack]
         for stack in stackViews {
-            let tap = UITapGestureRecognizer(target: self, action: "toggleContent:")
+            let tap = UITapGestureRecognizer(target: self, action: #selector(ProfilePageViewController.toggleContent(_:)))
             stack.addGestureRecognizer(tap)
         }
     }
@@ -87,7 +87,7 @@ class ProfilePageViewController: UIViewController {
     func toggleContent(sender: UITapGestureRecognizer) {
         var content: [String:AnyObject]!
         
-        let user = LocalUser.user
+        _ = LocalUser.user
         switch sender.view! {
         case matchesStack:
             print("Matches tapped!")

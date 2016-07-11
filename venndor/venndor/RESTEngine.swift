@@ -345,7 +345,7 @@ final class RESTEngine {
             var i = 0
             for image in images {
                 self.putImageToFolderWithPath("\(id)", image: image, fileName: "image\(i)", success: success, failure: failure)
-                i++
+                i += 1
             }
             
             }, failure: failure)

@@ -45,7 +45,7 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     //to create the back button
     func setupBackButton() {
         let buttonSize = CGRect(x: screenSize.width * 0.1, y: screenSize.height * 0.05, width: screenSize.width * 0.13, height: screenSize.width * 0.13)
-        let backButton = makeImageButton("Back_Arrow.png", frame: buttonSize, target: "goBack:", tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.3)
+        let backButton = makeImageButton("Back_Arrow.png", frame: buttonSize, target: #selector(OfferViewController.goBack(_:)), tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.3)
         self.view.addSubview(backButton)
     }
     
@@ -110,7 +110,7 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         wheelslider.delegate = self
         wheelslider.callback = {(value:Double) in
         }
-        let offerButton = makeImageButton("", frame: CGRect(x: wheelslider.frame.width*0.1, y: wheelslider.frame.height*0.1, width: wheelslider.frame.width*0.73, height: wheelslider.frame.height*0.73), target: "offer:", tinted: false, circle: true, backgroundColor: 0x1abc9c, backgroundAlpha: 0)
+        let offerButton = makeImageButton("", frame: CGRect(x: wheelslider.frame.width*0.1, y: wheelslider.frame.height*0.1, width: wheelslider.frame.width*0.73, height: wheelslider.frame.height*0.73), target: #selector(OfferViewController.offer(_:)), tinted: false, circle: true, backgroundColor: 0x1abc9c, backgroundAlpha: 0)
         wheelslider.addSubview(offerButton)
         let goImageView = UIImageView(frame: CGRect(x: wheelslider.frame.width*0.35, y: wheelslider.frame.height*0.55, width: wheelslider.frame.width*0.3, height: wheelslider.frame.height*0.3))
         goImageView.image = UIImage(named: "go.png")
