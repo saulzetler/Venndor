@@ -161,7 +161,7 @@ class SplashViewController: UIViewController {
         //filter out user matches
         for (_, value) in LocalUser.user.matches {
 
-            ids = ids == nil ? "(_id != \(value))" : "\(ids) and (_id != \(value)"
+            ids = ids == nil ? "(_id != \(value))" : "\(ids) and (_id != \(value))"
             
         }
         
