@@ -89,7 +89,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     func addContainerContent(matchContainer: UIView, img: UIImage, match: Match) {
         
         //create the match photo
-        let imgView = createImgView(CGRect(x: screenSize.width*0.05, y: 5, width: screenSize.width*0.3, height: screenSize.width*0.3), action: "none:", superView: matchContainer)
+        let imgView = createImgView(CGRect(x: screenSize.width*0.05, y: 5, width: screenSize.width*0.3, height: screenSize.width*0.3), action: #selector(MyMatchesViewController.none(_:)), superView: matchContainer)
         imgView.image = img
         
         let imgHeight = imgView.frame.height
