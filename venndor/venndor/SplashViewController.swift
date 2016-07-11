@@ -109,9 +109,9 @@ class SplashViewController: UIViewController {
         }
 
             
-        while GlobalItems.items.count == 0 {
-            continue
-        }
+//        while GlobalItems.items.count == 0 {
+//            continue
+//        }
         
         //while loop to ensure each item is loaded before transitioning to give the user a seemless experience
         for x in 0..<GlobalItems.items.count {
@@ -121,13 +121,14 @@ class SplashViewController: UIViewController {
             }
         }
         
+        print("1")
         let matchManager = MatchesManager()
         matchManager.retrieveUserMatches(LocalUser.user) { matches, error in
             guard error == nil else {
                 print("Error retrieving user matches from server: \(error)")
                 return
             }
-            
+            print("2")
             if let matches = matches {
                 LocalUser.matches = matches
                 print("Succesfully set the LocalUser's matches")
