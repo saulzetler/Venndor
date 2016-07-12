@@ -78,7 +78,7 @@ extension UIViewController {
     }
     
     //generic scroll view functions
-    func createBoarder(view: UIView, color: UIColor = UIColor.blackColor(), circle: Bool = false) {
+    func createBorder(view: UIView, color: UIColor = UIColor.blackColor(), circle: Bool = false) {
         let boarderColor : UIColor = color
         view.layer.borderColor = boarderColor.CGColor
         view.layer.borderWidth = 2.0
@@ -93,7 +93,7 @@ extension UIViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: action)
         imgView.userInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
-        createBoarder(imgView)
+        createBorder(imgView)
         imgView.contentMode = .ScaleAspectFill
         superView.addSubview(imgView)
         return imgView

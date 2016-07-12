@@ -765,9 +765,9 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="pMb-c4-TUY"/>
-        <segue reference="dlm-GT-Iep"/>
-        <segue reference="8vX-4e-WnC"/>
+        <segue reference="XwR-UP-4A2"/>
         <segue reference="T4w-aX-c8F"/>
+        <segue reference="8vX-4e-WnC"/>
+        <segue reference="dlm-GT-Iep"/>
     </inferredMetricsTieBreakers>
 </document>

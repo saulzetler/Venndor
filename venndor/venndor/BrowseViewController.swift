@@ -185,6 +185,12 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         // create the custom view for the bottom menu
         let rect = CGRectMake(-10, 0, alertController.view.bounds.size.width, 165.0)
         let customView = UIView(frame: rect)
+        let contentScroll = UIScrollView(frame: CGRect(x: 0, y: 0, width: customView.frame.width, height: customView.frame.height))
+        setupMiniContentScroll(contentScroll)
+        
+        customView.addSubview(contentScroll)
+        
+        
         let customViewTwo = UIView(frame: CGRect(x: -10, y: 125, width: alertController.view.bounds.size.width+10, height: 75))
         customViewTwo.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
 
@@ -207,6 +213,85 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         self.presentViewController(alertController, animated: true, completion:{})
         
+    }
+    
+    //function to create contentScrollView for MiniMyatches
+    func setupMiniContentScroll(contentScroll: UIScrollView) {
+        let scalar:Double = 4/19
+        let contentViewDimension = contentScroll.frame.width * CGFloat(scalar)
+        let contentScrollWidth = CGFloat(LocalUser.matches.count) * (contentViewDimension + CGFloat(12)) - CGFloat(12)
+        let matchManager = MatchesManager()
+        
+        for index in 0..<LocalUser.matches.count {
+            let match = LocalUser.matches[index]
+            matchManager.retrieveMatchThumbnail(match) { img, error in
+                
+                
+                if let img = img {
+                    //create the mini matches views
+                    let xOrigin = index == 0 ? 12 : CGFloat(index) * contentViewDimension + (CGFloat(12) * CGFloat(index) + CGFloat(12))
+                    let contentFrame = CGRectMake(xOrigin, 10, contentViewDimension, contentViewDimension)
+                    let contentView = self.makeMiniContentView(contentFrame, image: img, matchedPrice: match.matchedPrice)
+                    
+                    
+                    //update the contentScrollView
+                    dispatch_async(dispatch_get_main_queue()) {
+                        contentScroll.addSubview(contentView)
+                        let contentLabelFrame = CGRect(x: xOrigin, y: contentFrame.height + 15, width: contentFrame.width, height: 20)
+                        let contentLabel = self.makeMiniContentLabel(contentLabelFrame, itemName: match.itemName)
+                        let priceLabel = self.makeMiniPriceLabel(contentFrame, matchedPrice: match.matchedPrice)
+
+                        contentScroll.addSubview(contentLabel)
+                        contentScroll.addSubview(priceLabel)
+                        contentScroll.contentSize = CGSizeMake(contentScrollWidth + CGFloat(16), contentScroll.frame.height)
+                    }
+                }
+               
+            }
+        }
+        
+    }
+    
+    func makeMiniPriceLabel(contentLabelFrame: CGRect, matchedPrice: Double) -> UIView {
+        let priceLabelHeight = contentLabelFrame.height * 0.25
+        let priceLabelWidth = contentLabelFrame.width * 0.55
+        let priceLabelFrame = CGRect(x: contentLabelFrame.origin.x + contentLabelFrame.width - CGFloat(30), y: contentLabelFrame.origin.y - 7, width: priceLabelWidth, height: priceLabelHeight)
+        
+        //create the price container + label
+        //let screenSize = frame
+        let priceContainer = UIView(frame: priceLabelFrame)
+        priceContainer.backgroundColor = UIColorFromHex(0x2ecc71)
+        
+        let priceLabel = UILabel(frame: CGRect(x: 3, y:0, width: priceContainer.frame.width, height: priceContainer.frame.height))
+        priceLabel.text = "$\(matchedPrice)"
+        priceLabel.numberOfLines = 1
+        //priceLabel.adjustsFontSizeToFitWidth = true
+        priceLabel.font = priceLabel.font.fontWithSize(8)
+        priceContainer.addSubview(priceLabel)
+        createBorder(priceContainer)
+        return priceContainer
+
+    }
+    
+    //functions to create labels and imgViews for MiniMyMatches
+    
+    func makeMiniContentView(frame: CGRect, image: UIImage, matchedPrice: Double) -> UIImageView {
+        
+        let imgView = UIImageView(frame: frame)
+        imgView.image = image
+        createBorder(imgView)
+        return imgView
+    }
+    
+    func makeMiniContentLabel(frame: CGRect, itemName: String) -> UILabel {
+        let contentLabel = UILabel(frame: frame)
+        contentLabel.text = itemName
+        contentLabel.numberOfLines = 2
+        contentLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 16.0)
+        contentLabel.adjustsFontSizeToFitWidth = true
+        contentLabel.textAlignment = .Center
+        return contentLabel
+
     }
     
     //functions to create dragable views

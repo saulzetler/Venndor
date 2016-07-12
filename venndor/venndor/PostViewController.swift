@@ -96,7 +96,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemName.delegate = self
         itemName.clearsOnBeginEditing = true
         containerView.addSubview(itemName)
-        createBoarder(itemName)
+        createBorder(itemName)
         itemName.returnKeyType = .Done
     }
     
@@ -106,7 +106,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemDescription.text = "Additional Info"
         itemDescription.delegate = self
         containerView.addSubview(itemDescription)
-        createBoarder(itemDescription)
+        createBorder(itemDescription)
         itemDescription.returnKeyType = .Done
     }
     

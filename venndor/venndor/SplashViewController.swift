@@ -121,14 +121,12 @@ class SplashViewController: UIViewController {
 //            }
 //        }
         
-        print("1")
         let matchManager = MatchesManager()
         matchManager.retrieveUserMatches(LocalUser.user) { matches, error in
             guard error == nil else {
                 print("Error retrieving user matches from server: \(error)")
                 return
             }
-            print("2")
             if let matches = matches {
                 LocalUser.matches = matches
                 print("Succesfully set the LocalUser's matches")
