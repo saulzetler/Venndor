@@ -41,6 +41,7 @@ class PopUpViewControllerSwift : UIViewController {
             if let match = match {
                 
                 //update the LocalUser's matches info
+                LocalUser.matches.append(match)
                 LocalUser.user.matches[match.id!] = item.id
                 LocalUser.user.nuMatches = LocalUser.user.nuMatches + 1
                 let update = ["matches": LocalUser.user.matches, "nuMatches": LocalUser.user.nuMatches]
