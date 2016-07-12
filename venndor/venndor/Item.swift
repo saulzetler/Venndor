@@ -35,6 +35,7 @@ class Item: NSObject {
     var photos: [UIImage]?
     var photoCount: Int!
     var owner: String
+    var ownerName: String
     var category: String
     var condition: Int
     var locationX: Double
@@ -53,6 +54,7 @@ class Item: NSObject {
         id = json["_id"] as! String
         photoCount = json["photoCount"] as! Int
         owner = json["owner"] as! String
+        ownerName =  json["ownerName"] as! String
         category = json["category"] as! String
         condition = json["condition"] as! Int
         locationX = json["locationX"] as! Double
@@ -64,10 +66,11 @@ class Item: NSObject {
     }
     
     //init from the app
-    init(name: String, description: String, owner: String, category: String, condition: Int, locationX: Double, locationY: Double, photos: [UIImage], question1: String, question2: String, minPrice: Double) {
+    init(name: String, description: String, owner: String, ownerName: String, category: String, condition: Int, locationX: Double, locationY: Double, photos: [UIImage], question1: String, question2: String, minPrice: Double) {
         self.name = name
         self.details = description
         self.owner = owner
+        self.ownerName = ownerName
         self.photos = photos
         self.photoCount = photos.count
         self.category = category

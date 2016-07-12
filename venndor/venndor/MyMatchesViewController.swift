@@ -50,6 +50,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     //self.addContainerContent(matchContainer, img: img, match: match)
                     dispatch_async(dispatch_get_main_queue()) {
                         self.addContainerContent(matchContainer, img: img, match: match)
+                        
                     }
                     
                 }
@@ -59,7 +60,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             index += 1
         }
         
-        setupScrollView()
+        
+        setupScrollView(containerHeight + 10)
         addHeader()
         addGestureRecognizer()
         setupButtons()
@@ -68,21 +70,30 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     
     func setupButtons() {
         //setting up the buttons needed to control the 2 pages within the controller, NEEDS REFACTORING WITH POST
-        let buttonBar = UIView(frame: CGRect(x: 0, y: 64, width: screenSize.width, height: 35))
+        let buttonBar = UIView(frame: CGRect(x: 0, y: 50, width: screenSize.width, height: 35))
+        buttonBar.backgroundColor = UIColor.whiteColor()
+        
         matchesBar = UIView(frame: CGRect(x: 0, y: 32, width: screenSize.width/2, height: 3))
         boughtBar = UIView(frame: CGRect(x: screenSize.width/2, y: 32, width: screenSize.width/2, height: 3))
-        let matchesButtonFrame = CGRectMake(0, 0, screenSize.width/2, 32)
+        
+        
+        //setup the buttons on the button bar
         let boughtButtonFrame = CGRectMake(screenSize.width/2, 0, screenSize.width/2, 32)
-        buttonBar.backgroundColor = UIColor.whiteColor()
-        matchesButton = makeTextButton("Matches", frame: matchesButtonFrame, target: #selector(MyMatchesViewController.matchesPressed(_:)))
         boughtButton = makeTextButton("Bought", frame: boughtButtonFrame, target: #selector(MyMatchesViewController.boughtPressed(_:)))
+        
+        let matchesButtonFrame = CGRectMake(0, 0, screenSize.width/2, 32)
+        matchesButton = makeTextButton("Matches", frame: matchesButtonFrame, target: #selector(MyMatchesViewController.matchesPressed(_:)))
         matchesButton.selected = true
         matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+        
+        //set up the subviews for the bar and add it to the master view hierarchy
         buttonBar.addSubview(matchesBar)
         buttonBar.addSubview(boughtBar)
         buttonBar.addSubview(matchesButton)
         buttonBar.addSubview(boughtButton)
+        
         self.view.addSubview(buttonBar)
+        self.view.bringSubviewToFront(buttonBar)
     }
     
 
@@ -100,7 +111,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         //create the match info labels
         let nameLabel = UILabel(frame: CGRect(x: labelX, y: 5, width: matchContainer.frame.width - imgWidth, height: imgHeight * 0.15))
-        nameLabel.text = match.itemID
+        nameLabel.text = match.itemName
         nameLabel.textAlignment = .Center
         matchContainer.addSubview(nameLabel)
         
@@ -110,7 +121,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         matchContainer.addSubview(distanceLabel)
         
         let sellerLabel = UILabel(frame: CGRect(x: labelX, y: matchContainer.frame.height * 0.7, width: matchContainer.frame.width - imgWidth, height: imgHeight * 0.15))
-        sellerLabel.text = "\(match.sellerID)"
+        sellerLabel.text = "\(match.sellerName)"
         sellerLabel.textAlignment = .Center
         matchContainer.addSubview(sellerLabel)
         
@@ -157,18 +168,31 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     }
     
     //hard coded for now but we can change to size scroll view based on number of matches
-    func setupScrollView() {
+    func setupScrollView(containerHeight: CGFloat) {
         scrollView = UIScrollView()
         scrollView.delegate = self
-        scrollView.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
-        let scrollViewWidth: CGFloat = scrollView.frame.width
-        let scrollViewHeight: CGFloat = scrollView.frame.height
-        scrollView.contentSize = CGSizeMake(scrollViewWidth, scrollViewHeight*3)
+        
+        let headerViewHeight = screenSize.height*0.1
+        let buttonBarHeight:CGFloat = 34
+        
+        let scrollY = buttonBarHeight
+        
+        //set up scroll view frame and create variables for the contentView frame
+        scrollView.frame = CGRectMake(0, scrollY, screenSize.width, screenSize.height)
+        let contentWidth: CGFloat = scrollView.frame.width
+        let contentHeight = CGFloat(LocalUser.user.matches.count) * containerHeight * CGFloat(1.2)
+        
+        
+        scrollView.contentSize = CGSizeMake(contentWidth, contentHeight)
         scrollView.decelerationRate = 0.1
-        matchContainerView.frame = CGRectMake(0, 0, scrollViewWidth, scrollViewHeight*3)
+        matchContainerView.frame = CGRectMake(0, scrollY, contentWidth, contentHeight)
         onMatches = true
+        
+        //add subviews accordingly
         scrollView.addSubview(matchContainerView)
         view.addSubview(scrollView)
+//        view.sendSubviewToBack(scrollView)
+//        view.sendSubviewToBack(matchContainerView)
     }
     
     //function to control the switching between the 2 possible views given a passed boolean.

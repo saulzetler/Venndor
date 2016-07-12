@@ -31,7 +31,7 @@ class PopUpViewControllerSwift : UIViewController {
     
         
         //create the match on the server
-        let newMatch = Match(itemID: matchedItem.id, buyerID: LocalUser.user.id, sellerID: matchedItem.owner, matchedPrice: matchedPrice)
+        let newMatch = Match(itemID: matchedItem.id, itemName: matchedItem.name, buyerID: LocalUser.user.id, sellerID: matchedItem.owner, sellerName: matchedItem.ownerName, matchedPrice: matchedPrice)
         matchManager.createMatch(newMatch) { match, error in
             guard error == nil else {
                 print("Error creating match on server: \(error)")
@@ -64,9 +64,7 @@ class PopUpViewControllerSwift : UIViewController {
                     }
                     
                     if let user = user {
-                        //update item owner's match info
-                        user.matches[match.id!] = item.id
-                        user.nuMatches = user.nuMatches + 1
+                        //update item owner's info
                         user.ads[item.id!] = "Matched"
                         
                         //post the update to the server
@@ -77,7 +75,7 @@ class PopUpViewControllerSwift : UIViewController {
                                 return
                             }
                             
-                            print("Item owner's matches updated.")
+                            print("Item's owner updated.")
                         }
                     }
                 }
