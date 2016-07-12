@@ -28,7 +28,7 @@ class SplashViewController: UIViewController {
         let seenPostsManager = SeenPostsManager()
         var seenPostsMade = false
         
-
+        /////////////////////////////////////// IF NOT GUEST //////////////////////////////////////
         
         //first pull the user/check he/she exist
         userManager.retrieveUserByEmail(LocalUser.email) { user, error in
@@ -94,9 +94,13 @@ class SplashViewController: UIViewController {
         }
         
         updateSeenPosts()
+        
         let filterString = constructFilter(LocalUser.seenPosts)
         print("Filter string: \(filterString)")
-            
+        
+        ///////////////////////////////////////////// ELSE   ////////////////////////////////////////
+        
+        //what happened to category filtering
         itemManager.retrieveMultipleItems(5, offset: nil, filter: filterString, fields: nil) { items, error in
             guard error == nil else {
                 print("Error retrieving items from server: \(error)")

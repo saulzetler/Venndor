@@ -65,19 +65,33 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     }
     
     func offer(sender: UIButton) {
-//        let tempOffer = Int(offer)
-//        let offered = Double(tempOffer)
+        var tempOffer = 0
+        if offer != nil {
+            tempOffer = Int(offer)
+        }
+        let offered = Double(tempOffer)
 //        let posted = offeredItem.minPrice
-        let offered = 12.00
+//        let offered = 12.00
         let posted = 10.00
-        let matchController = MatchController()
+        let matchController = jonasBoettcherController()
         let temp = matchController.calculateMatchedPrice(offered, posted: posted, item: offeredItem)
+        
+        //temp for initial release matching controller
+        
+        
         print("\(temp)")
         print("offered")
-        let matchControllerView = PopUpViewControllerSwift()
-        matchControllerView.matchedItem = offeredItem
-        matchControllerView.matchedPrice = 35.22
-        matchControllerView.showInView(self.view, price: 35.22, item: offeredItem)
+        
+        if temp[0] != 0.00 {
+            let matchControllerView = PopUpViewControllerSwift()
+            matchControllerView.matchedItem = offeredItem
+            matchControllerView.matchedPrice = temp[0] + temp[1]
+            matchControllerView.showInView(self.view, price: temp[0] + temp[1], item: offeredItem)
+        }
+        else {
+            LocalUser.seenPosts[offeredItem.id] = NSDate()
+            self.performSegueWithIdentifier("offerToBrowse", sender: self)
+        }
     }
     
     //segue to return to browsing
@@ -95,6 +109,7 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     
     func goBackToBrowse(sender: UIButton) {
         print("toBrowse")
+        LocalUser.seenPosts[offeredItem.id] = NSDate()
         self.performSegueWithIdentifier("offerToBrowse", sender: self)
     }
     
