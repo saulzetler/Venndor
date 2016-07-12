@@ -103,7 +103,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemName.delegate = self
         itemName.clearsOnBeginEditing = true
         containerView.addSubview(itemName)
-        createBoarder(itemName)
+        createBorder(itemName)
         itemName.returnKeyType = .Done
     }
     
@@ -113,7 +113,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemDescription.text = "Additional Info"
         itemDescription.delegate = self
         containerView.addSubview(itemDescription)
-        createBoarder(itemDescription)
+        createBorder(itemDescription)
         itemDescription.returnKeyType = .Done
     }
     
@@ -456,6 +456,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             //get the category of the item from the picker controller
             let row = categoryPicker.selectedRowInComponent(0)
             let category = pickerData[row]
+            let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
             
             /*NEEDS TO BE SET FROM THE DATA GATHERED BY POSTVIEWCONTROLLER*/
             let condition = ratingControl.rating
@@ -470,10 +471,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let minPrice = 0.0
             let question1 = ""
             let question2 = ""
+            
             /******************************************************************/
             
             //create an item object to past to the manager to create the item
-            let item = Item(name: name, description: details, owner: LocalUser.user.id, category: category, condition: condition, locationX: locationX, locationY: locationY, photos: images, question1: question1, question2: question2, minPrice: minPrice)
+            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, locationX: locationX, locationY: locationY, photos: images, question1: question1, question2: question2, minPrice: minPrice)
             
             //decalre the item manager and then call the appropriate function to create an item
             let manager = ItemManager()

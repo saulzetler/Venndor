@@ -28,7 +28,7 @@ class SplashViewController: UIViewController {
         let seenPostsManager = SeenPostsManager()
         var seenPostsMade = false
         
-
+        /////////////////////////////////////// IF NOT GUEST //////////////////////////////////////
         
         //first pull the user/check he/she exist
         userManager.retrieveUserByEmail(LocalUser.email) { user, error in
@@ -92,43 +92,14 @@ class SplashViewController: UIViewController {
         while LocalUser.seenPosts == nil {
             continue
         }
-        
         updateSeenPosts()
-        let filterString = constructFilter(LocalUser.seenPosts)
-        print("Filter string: \(filterString)")
-            
-        itemManager.retrieveMultipleItems(5, offset: nil, filter: filterString, fields: nil) { items, error in
-            guard error == nil else {
-                print("Error retrieving items from server: \(error)")
-                return
-            }
-                
-            if let items = items {
-                GlobalItems.items = items
-            }
-        }
-
-            
-//        while GlobalItems.items.count == 0 {
-//            continue
-//        }
         
-        //while loop to ensure each item is loaded before transitioning to give the user a seemless experience
-        for x in 0..<GlobalItems.items.count {
-            print("\(GlobalItems.items[x].id)")
-            while GlobalItems.items[x].photos == nil {
-                continue
-            }
-        }
-        
-        print("1")
         let matchManager = MatchesManager()
         matchManager.retrieveUserMatches(LocalUser.user) { matches, error in
             guard error == nil else {
                 print("Error retrieving user matches from server: \(error)")
                 return
             }
-            print("2")
             if let matches = matches {
                 LocalUser.matches = matches
                 print("Succesfully set the LocalUser's matches")
@@ -142,43 +113,6 @@ class SplashViewController: UIViewController {
         }
     }
     
-    
-    func constructFilter(seenPosts: Dictionary<String, AnyObject>) -> String? {
-        var ids: String!
-        var index = 0
-        
-        //filter out seenPosts
-        for (key, _ ) in seenPosts {
-            
-            if key == "_id" {
-                continue
-            }
-            else {
-                ids = index > 0 ? "\(ids) and (_id != \(key))" : "(_id != \(key))"
-            }
-            index += 1
-        }
-        
-        //filter out user matches
-        for (_, value) in LocalUser.user.matches {
-
-            ids = ids == nil ? "(_id != \(value))" : "\(ids) and (_id != \(value))"
-            
-        }
-        
-        //filter out user's ads
-        for (key, _) in LocalUser.user.ads {
-            ids = ids == nil ? "(_id != \(key))" : "\(ids) and (_id != \(key))"
-        }
-        
-        //filter by category
-        if GlobalItems.currentCategory != nil {
-            ids = ids == nil ? GlobalItems.currentCategory : "\(ids) and (\(GlobalItems.currentCategory))"
-        }
-        
-        return ids
-    }
-
     func updateSeenPosts() {
         for (key, value) in LocalUser.seenPosts {
             if key == "_id" {
