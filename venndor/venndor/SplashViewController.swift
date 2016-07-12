@@ -28,7 +28,7 @@ class SplashViewController: UIViewController {
         let seenPostsManager = SeenPostsManager()
         var seenPostsMade = false
         
-
+        /////////////////////////////////////// IF NOT GUEST //////////////////////////////////////
         
         //first pull the user/check he/she exist
         userManager.retrieveUserByEmail(LocalUser.email) { user, error in
@@ -93,33 +93,6 @@ class SplashViewController: UIViewController {
             continue
         }
         updateSeenPosts()
-        
-//        let filterString = itemManager.constructFeedFilter()
-//        print("Filter string: \(filterString)")
-//            
-//        itemManager.retrieveMultipleItems(5, offset: nil, filter: filterString, fields: nil) { items, error in
-//            guard error == nil else {
-//                print("Error retrieving items from server: \(error)")
-//                return
-//            }
-//                
-//            if let items = items {
-//                GlobalItems.items = items
-//            }
-//        }
-//
-//            
-//        while GlobalItems.items.count == 0 {
-//           continue
-//        }
-//        
-//        //while loop to ensure each item is loaded before transitioning to give the user a seemless experience
-//        for x in 0..<GlobalItems.items.count {
-//            print("\(GlobalItems.items[x].id)")
-//            while GlobalItems.items[x].photos == nil {
-//                continue
-//            }
-//        }
         
         let matchManager = MatchesManager()
         matchManager.retrieveUserMatches(LocalUser.user) { matches, error in

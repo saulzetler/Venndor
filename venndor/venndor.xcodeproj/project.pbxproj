@@ -11,6 +11,7 @@
 		101F43D01D11A203007E0ADE /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F43CF1D11A203007E0ADE /* TutorialViewController.swift */; };
 		102331941D13267B002C6B3C /* MiniMatchTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */; };
 		102806D71D22F11D0019C7FF /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102806D61D22F11D0019C7FF /* RatingControl.swift */; };
+		103B17081D35686C005AEFDD /* jonasBoettcherController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103B17071D35686C005AEFDD /* jonasBoettcherController.swift */; };
 		105FCB011D08A5C70073E3AE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB001D08A5C70073E3AE /* LoginViewController.swift */; };
 		105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB021D08AB790073E3AE /* TempViewController.swift */; };
 		10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9A71D0749700028A999 /* AppDelegate.swift */; };
@@ -109,6 +110,7 @@
 		101F43CF1D11A203007E0ADE /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniMatchTransitionManager.swift; sourceTree = "<group>"; };
 		102806D61D22F11D0019C7FF /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
+		103B17071D35686C005AEFDD /* jonasBoettcherController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = jonasBoettcherController.swift; sourceTree = "<group>"; };
 		105FCB001D08A5C70073E3AE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		105FCB021D08AB790073E3AE /* TempViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempViewController.swift; sourceTree = "<group>"; };
 		10ADC9A41D0749700028A999 /* venndor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = venndor.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -345,6 +347,7 @@
 				638DF3E71D2C3C7C00319FD8 /* MatchesManager.swift */,
 				631069261D1B27B8004A3ADD /* ParserManager.swift */,
 				102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */,
+				103B17071D35686C005AEFDD /* jonasBoettcherController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -742,6 +745,7 @@
 				105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */,
 				63859A141D13347C004F4968 /* NIKFile.swift in Sources */,
 				E453F0A91D2EC991002637AB /* STRatingControl.swift in Sources */,
+				103B17081D35686C005AEFDD /* jonasBoettcherController.swift in Sources */,
 				101F43D01D11A203007E0ADE /* TutorialViewController.swift in Sources */,
 				10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */,
 				E478AB141D2D5DDB00F00D60 /* PopUpViewControllerSwift.swift in Sources */,

@@ -131,6 +131,8 @@ class SideMenuController: UITableViewController {
     
 
     //various functions to perform the buttons segues
+    
+    //add check facebook login token anf if none log them in.
 
     func sellPage(sender: UIButton) {
         self.performSegueWithIdentifier("toSellPage", sender: self)

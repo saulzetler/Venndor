@@ -146,6 +146,7 @@
                     </view>
                     <connections>
                         <segue destination="5Q4-WU-6Zg" kind="show" identifier="offerToBrowse" id="pMb-c4-TUY"/>
+                        <segue destination="4v2-09-dkh" kind="show" identifier="offerToMatches" id="vAq-9L-0oi"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="don-4y-Icb" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -595,6 +596,28 @@
             </objects>
             <point key="canvasLocation" x="-2662" y="2233"/>
         </scene>
+        <!--Reveal View Controller-->
+        <scene sceneID="MUf-Ly-qQ4">
+            <objects>
+                <viewController id="4v2-09-dkh" customClass="SWRevealViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="r3W-XX-BgG"/>
+                        <viewControllerLayoutGuide type="bottom" id="iFS-xf-FVQ"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="xNa-7m-6Vd">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="q8m-ke-uIK" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="YQC-W7-xKJ"/>
+                        <segue destination="iSZ-II-anh" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="iP8-l6-ghd"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="zHM-z2-aiM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-700" y="2248"/>
+        </scene>
         <!--Notifications View Controller-->
         <scene sceneID="87C-xJ-6jb">
             <objects>
@@ -766,8 +789,10 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="XwR-UP-4A2"/>
-        <segue reference="T4w-aX-c8F"/>
-        <segue reference="8vX-4e-WnC"/>
+        <segue reference="YQC-W7-xKJ"/>
         <segue reference="dlm-GT-Iep"/>
+        <segue reference="iP8-l6-ghd"/>
+        <segue reference="8vX-4e-WnC"/>
+        <segue reference="T4w-aX-c8F"/>
     </inferredMetricsTieBreakers>
 </document>
