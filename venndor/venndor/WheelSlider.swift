@@ -70,7 +70,7 @@ public class WheelSlider: UIView {
  
     @IBInspectable public var minVal:Int = 0
     @IBInspectable public var maxVal:Int = 50
-    @IBInspectable public var speed:Int = 70
+    @IBInspectable public var speed:Int = 90
     @IBInspectable public var isLimited:Bool = false
     @IBInspectable public var allowNegativeNumber:Bool = false
     @IBInspectable public var isValueText:Bool = true
