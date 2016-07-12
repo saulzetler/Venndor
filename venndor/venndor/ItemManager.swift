@@ -14,7 +14,7 @@ struct ItemManager {
     
     func createItem(item: Item, completionHandler: (ErrorType?) -> () ) {
 
-        let params = ["name": item.name, "details": item.details, "photoCount": item.photoCount, "owner": item.owner, "category": item.category,  "condition": item.condition, "locationX": item.locationX, "locationY": item.locationY, "question1": item.question1, "question2": item.question2, "minPrice": item.minPrice] as JSON
+        let params = ["name": item.name, "details": item.details, "photoCount": item.photoCount, "owner": item.owner, "ownerName": item.ownerName, "category": item.category,  "condition": item.condition, "locationX": item.locationX, "locationY": item.locationY, "question1": item.question1, "question2": item.question2, "minPrice": item.minPrice] as JSON
     
         RESTEngine.sharedEngine.addItemToServerWithDetails(params,
             success: { response in
@@ -128,6 +128,42 @@ struct ItemManager {
             }, failure: { error in
                 completionHandler(nil, error)
         })
+    }
+    
+    func constructFeedFilter() -> String? {
+        var ids: String!
+        var index = 0
+        let seenPosts = LocalUser.seenPosts
+        //filter out seenPosts
+        for (key, _ ) in seenPosts {
+            
+            if key == "_id" {
+                continue
+            }
+            else {
+                ids = index > 0 ? "\(ids) and (_id != \(key))" : "(_id != \(key))"
+            }
+            index += 1
+        }
+        
+        //filter out user matches
+        for (_, value) in LocalUser.user.matches {
+            
+            ids = ids == nil ? "(_id != \(value))" : "\(ids) and (_id != \(value))"
+            
+        }
+        
+        //filter out user's ads
+        for (key, _) in LocalUser.user.ads {
+            ids = ids == nil ? "(_id != \(key))" : "\(ids) and (_id != \(key))"
+        }
+        
+        //filter by category
+        if GlobalItems.currentCategory != nil {
+            ids = ids == nil ? GlobalItems.currentCategory : "\(ids) and (\(GlobalItems.currentCategory))"
+        }
+        
+        return ids
     }
     
 }
