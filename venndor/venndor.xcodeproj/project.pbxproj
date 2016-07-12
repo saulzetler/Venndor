@@ -519,7 +519,7 @@
 				TargetAttributes = {
 					10ADC9A31D0749700028A999 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 59THX85PFH;
+						DevelopmentTeam = QA24C9EBQB;
 					};
 					10ADC9BA1D0749700028A999 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -841,6 +841,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = dwarf;
@@ -887,6 +888,7 @@
 				CLANG_WARN_OBJC_ROOT_CLASS = YES_ERROR;
 				CLANG_WARN_UNREACHABLE_CODE = YES;
 				CLANG_WARN__DUPLICATE_METHOD_MATCH = YES;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=iphoneos*]" = "iPhone Developer";
 				COPY_PHASE_STRIP = NO;
 				DEBUG_INFORMATION_FORMAT = "dwarf-with-dsym";
@@ -928,7 +930,7 @@
 				);
 				INFOPLIST_FILE = venndor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";
@@ -954,7 +956,7 @@
 				);
 				INFOPLIST_FILE = venndor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venn;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";

@@ -57,8 +57,24 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 //        let items = GlobalItems.items
         
         
-        setupView()
-        setupItemInfo()
+        let manager = ItemManager()
+        let filter = manager.constructFeedFilter()
+        manager.retrieveMultipleItems(5, offset: nil, filter: filter, fields: nil) { items, error in
+            guard error == nil else {
+                print("Error retrieving items for browse feed: \(error)")
+                return
+            }
+            
+            if let items = items {
+                GlobalItems.items = items
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.setupView()
+                    self.setupItemInfo()
+                }
+            }
+        }
+//        setupView()
+//        setupItemInfo()
         
         
         //MiniMyMatches button at bottom of browse.
