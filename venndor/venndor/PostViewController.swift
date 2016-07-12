@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 //class to control the post/sell page in the application requires many delegates
-class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, STRatingControlDelegate, ImagePickerDelegate {
+class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, STRatingControlDelegate, ImagePickerDelegate, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
     
     //declare the needed variables for the page to work.
     
@@ -38,7 +38,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var categoryPicker: UIPickerView!
     var ratingControl: STRatingControl!
     var imagePickerController: ImagePickerController!
-    
+    var mapView: GMSMapView!
+    var currentPlace: GMSPlace!
+    var myLocation: CLLocation!
+    var useLocation: Bool!
+    let locationManager = CLLocationManager()
+    var coordinate: CLLocationCoordinate2D!
     var photoChoiceDisplayed = false
     
     override func viewDidLoad() {
@@ -55,6 +60,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setupRatingControl()
         addHeader()
         setupDownArrow()
+        setupMap()
     }
     
     //setup functions
@@ -71,6 +77,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         scrollView = UIScrollView()
         scrollView.delegate = self
         scrollView.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
+        scrollView.backgroundColor = UIColorFromHex(0x1abc9c)
         let scrollViewWidth: CGFloat = scrollView.frame.width
         let scrollViewHeight: CGFloat = scrollView.frame.height
         
@@ -144,6 +151,114 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         containerView.addSubview(ratingControl)
     }
     
+    /***********************************************************
+    ALL GOOGLE MAPS IMPLEMENTATION IS HERE
+    ***********************************************************/
+    
+    func setupMap() {
+        mapView = GMSMapView(frame: CGRectMake(0, screenSize.height*5.2, screenSize.width, screenSize.height*0.5))
+        mapView.backgroundColor = UIColorFromHex(0xecf0f1)
+        containerView.addSubview(mapView)
+        
+        let currentLocationButton = makeImageButton("use_current_location.png", frame: CGRectMake(screenSize.width*0.15, screenSize.height*5.75, self.screenSize.width*0.7, self.screenSize.height*0.1), target: #selector(PostViewController.curLocationClicked(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0.0)
+        
+        containerView.addSubview(currentLocationButton)
+        
+        let searchImageButton = makeImageButton("Search Filled-100.png", frame: CGRectMake(screenSize.width*0.85, screenSize.height*5.12, self.screenSize.width*0.1, self.screenSize.width*0.1), target: #selector(PostViewController.searchClicked(_:)), tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.0)
+        
+        containerView.addSubview(searchImageButton)
+        
+        //to get the users location
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+        useLocation = true
+    }
+    
+    func curLocationClicked(sender: UIButton) {
+        print("curLoc")
+        mapView.clear()
+        mapView.camera = GMSCameraPosition(target: myLocation.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+        let pin = GMSMarker(position: myLocation.coordinate)
+        pin.map = mapView
+        useLocation = true
+        
+    }
+    
+    func searchClicked(sender: UIButton) {
+        print("seach clicked")
+        let acController = GMSAutocompleteViewController()
+        acController.delegate = self
+        self.presentViewController(acController, animated: true, completion: nil)
+    }
+    
+    //delegate functions
+    
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            
+            myLocation = location
+            useLocation = false
+            
+            // 7
+            mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+            
+            mapView.myLocationEnabled = true
+            mapView.settings.myLocationButton = true
+            
+            // 8
+            locationManager.stopUpdatingLocation()
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        // 3
+        if status == .AuthorizedWhenInUse {
+            
+            // 4
+            locationManager.startUpdatingLocation()
+            
+            //5
+            mapView.myLocationEnabled = true
+            mapView.settings.myLocationButton = true
+        }
+    }
+    
+    // Handle the user's selection.
+    func viewController(viewController: GMSAutocompleteViewController, didAutocompleteWithPlace place: GMSPlace) {
+        currentPlace = place
+        mapView.clear()
+        print("Place name: ", place.name)
+        print("Place address: ", place.formattedAddress)
+        print("Place attributions: ", place.attributions)
+        self.dismissViewControllerAnimated(true, completion: nil)
+        mapView.camera = GMSCameraPosition(target: place.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+        let pin = GMSMarker(position: place.coordinate)
+        pin.map = mapView
+    }
+    
+    func viewController(viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: NSError) {
+        // TODO: handle the error.
+        print("Error: ", error.description)
+    }
+    
+    // User canceled the operation.
+    func wasCancelled(viewController: GMSAutocompleteViewController) {
+        self.dismissViewControllerAnimated(true, completion: nil)
+    }
+    
+    // Turn the network activity indicator on and off again.
+    func didRequestAutocompletePredictions(viewController: GMSAutocompleteViewController) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+    }
+    
+    func didUpdateAutocompletePredictions(viewController: GMSAutocompleteViewController) {
+        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+    }
+    
+    //END OF GOOGLE MAPS IMPLEMENTATION
+    
     //function to create the final post button which is called when the user completes the process.
     func setupPostButton() {
         let buttonFrame = CGRectMake(screenSize.width*0.4, screenSize.height*7.5, screenSize.width*0.2, screenSize.height*0.1)
@@ -181,8 +296,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let descriptionLabel = UILabel(frame: CGRectMake(10, screenSize.height*4.2, self.screenSize.width*0.95, 30))
         descriptionLabel.text = "Give a description of your item"
         containerView.addSubview(descriptionLabel)
-        let addressLabel = UILabel(frame: CGRectMake(10, screenSize.height*5.2, self.screenSize.width*0.95, 30))
-        addressLabel.text = "What is the address?"
+        let addressLabel = UILabel(frame: CGRectMake(10, screenSize.height*5.1, self.screenSize.width*0.95, screenSize.height*0.1))
+        addressLabel.textColor = UIColor.whiteColor()
+        addressLabel.font = addressLabel.font.fontWithSize(20)
+        addressLabel.text = "Where are you located?"
         containerView.addSubview(addressLabel)
         let priceLabel = UILabel(frame: CGRectMake(10, screenSize.height*6.2, self.screenSize.width*0.95, 30))
         priceLabel.text = "What is the minimum you're willing to pay?"
@@ -342,6 +459,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             
             /*NEEDS TO BE SET FROM THE DATA GATHERED BY POSTVIEWCONTROLLER*/
             let condition = ratingControl.rating
+            if useLocation == true {
+                coordinate = myLocation.coordinate
+            }
+            else {
+                coordinate = currentPlace.coordinate
+            }
             let locationX = 0.0
             let locationY = 0.0
             let minPrice = 0.0
@@ -393,4 +516,5 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //        myLabel.text = pickerData[row]
     }
+    
 }
