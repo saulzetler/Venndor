@@ -100,7 +100,6 @@ class SplashViewController: UIViewController {
                 print("Error retrieving user matches from server: \(error)")
                 return
             }
-            print("2")
             if let matches = matches {
                 LocalUser.matches = matches
                 print("Succesfully set the LocalUser's matches")
