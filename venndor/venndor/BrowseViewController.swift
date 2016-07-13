@@ -84,6 +84,12 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         miniMatches.layer.cornerRadius = 0.5 * miniMatches.bounds.size.width
         miniMatches.layer.masksToBounds = true
+        
+        let bottomBar = CGRect(x: 0, y: screenSize.height*0.93, width: screenSize.width, height: screenSize.height*0.07)
+        let bottomBarButton = UIButton(frame: bottomBar)
+        bottomBarButton.backgroundColor = UIColorFromHex(0x1abc9c)
+        
+        self.view.addSubview(bottomBarButton)
 
         self.view.addSubview(miniMatches)
 
@@ -149,6 +155,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.2, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*0.6))
         itemInfo.addSubview(itemName)
         itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*1.2, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
+        itemDescription.numberOfLines = 0
         itemInfo.addSubview(itemDescription)
         itemCondtion = UIView(frame: CGRectMake(screenSize.width*0.25, screenSize.height*0.4, screenSize.width*0.5, 30))
 //        let filledStarImage = UIImage(named: "Star Filled.png")
@@ -195,7 +202,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         
         let customViewTwo = UIView(frame: CGRect(x: -10, y: 125, width: alertController.view.bounds.size.width+10, height: 75))
-        customViewTwo.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+        customViewTwo.backgroundColor = UIColorFromHex(0x1abc9c, alpha: 1)
 
         //create the custom cancel view for the user to quit the menu
         //note this function also cancels when a user presses outside the frame
