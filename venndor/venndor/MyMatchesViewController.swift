@@ -137,7 +137,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         priceLabel.adjustsFontSizeToFitWidth = true
         priceContainer.addSubview(priceLabel)
         
-        createBoarder(priceContainer)
+        createBorder(priceContainer)
         matchContainer.addSubview(priceContainer)
         
     }

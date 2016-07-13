@@ -787,9 +787,9 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="XwR-UP-4A2"/>
         <segue reference="YQC-W7-xKJ"/>
         <segue reference="dlm-GT-Iep"/>
-        <segue reference="XwR-UP-4A2"/>
         <segue reference="T4w-aX-c8F"/>
         <segue reference="8vX-4e-WnC"/>
         <segue reference="iP8-l6-ghd"/>
