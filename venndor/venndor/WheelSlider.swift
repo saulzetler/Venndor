@@ -229,19 +229,20 @@ public class WheelSlider: UIView {
     
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
-    override public func drawRect(rect: CGRect) {
-        let h = rect.height
-        let w = rect.width
-        self.backgroundColor = UIColor.clearColor()
-        
-        let color:UIColor = UIColor.clearColor()
-        color.setFill()
-        
-        
-        let drect = CGRect(x: (w * 0.25),y: (h * 0.25),width: (w * 0.5),height: (h * 0.5))
-        let bpath:UIBezierPath = UIBezierPath(rect: drect)
-        
-        bpath.stroke()
-
-    }
+//    override public func drawRect(rect: CGRect) {
+//        let h = rect.height
+//        let w = rect.width
+//        self.backgroundColor = UIColor.clearColor()
+//        
+//        let color:UIColor = UIColor.clearColor()
+//        color.setFill()
+//        color.setStroke()
+//        color.set()
+//        
+//        let drect = CGRect(x: (w * 0.25),y: (h * 0.25),width: (w * 0.5),height: (h * 0.5))
+//        let bpath:UIBezierPath = UIBezierPath(rect: drect)
+//        
+//        bpath.stroke()
+//
+//    }
 }

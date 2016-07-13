@@ -52,6 +52,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setupItemName()
         setupItemDescription()
         setupLabels()
+        setupPriceInput()
         sideMenuGestureSetup()
         setupImageViews()
         setupScrollView()
@@ -61,6 +62,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         addHeader()
         setupDownArrow()
         setupMap()
+        hideKeyboardWhenTappedAround()
     }
     
     //setup functions
@@ -283,6 +285,34 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.view.addSubview(pageControl)
     }
     
+    func setupPriceInput() {
+        let priceField = UITextField(frame: CGRectMake(self.screenSize.width*0.2, self.screenSize.height*6.3, self.screenSize.width*0.6, screenSize.height*0.1))
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColor.darkGrayColor().CGColor
+        border.frame = CGRect(x: 0, y: priceField.frame.size.height - width, width:  priceField.frame.size.width, height: priceField.frame.size.height)
+        
+        border.borderWidth = width
+        border.borderColor = UIColor.whiteColor().CGColor
+        priceField.layer.addSublayer(border)
+        priceField.layer.masksToBounds = true
+        
+        priceField.textColor = UIColor.whiteColor()
+        priceField.textAlignment = .Center
+        priceField.clearsOnBeginEditing = true
+        priceField.font = priceField.font?.fontWithSize(50)
+        priceField.returnKeyType = .Done
+        priceField.keyboardType = .NumberPad
+        
+        let dollarSign = UILabel(frame: CGRectMake(0, 0, priceField.frame.width*0.2, priceField.frame.height))
+        dollarSign.text = "$"
+        dollarSign.textColor = UIColor.whiteColor()
+        dollarSign.font = dollarSign.font.fontWithSize(50)
+        priceField.addSubview(dollarSign)
+        
+        containerView.addSubview(priceField)
+    }
+    
     //function to setup the various labels/titles needed for each page to help direct the user.
     func setupLabels() {
         let photosLabel = UILabel(frame: CGRectMake(10, screenSize.height*0.2, self.screenSize.width*0.95, 30))
@@ -305,8 +335,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         addressLabel.font = addressLabel.font.fontWithSize(20)
         addressLabel.text = "Where are you located?"
         containerView.addSubview(addressLabel)
-        let priceLabel = UILabel(frame: CGRectMake(10, screenSize.height*6.2, self.screenSize.width*0.95, 30))
-        priceLabel.text = "What is the minimum you're willing to pay?"
+        let priceLabel = UILabel(frame: CGRectMake(10, screenSize.height*6.08, self.screenSize.width*0.95, screenSize.height*0.3))
+        priceLabel.text = "What is the minimum you're willing to accept?"
+        priceLabel.font = priceLabel.font.fontWithSize(20)
+        priceLabel.textColor = UIColor.whiteColor()
+        priceLabel.textAlignment = .Center
         priceLabel.numberOfLines = 0
         containerView.addSubview(priceLabel)
         let confirmLabel = UILabel(frame: CGRectMake(10, screenSize.height*7.2, self.screenSize.width*0.95, 30))
@@ -390,6 +423,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         self.view.endEditing(true)
         return true
     }
+    
     //end of text field delegates
     
     //IMAGE SELECTION METHODS
