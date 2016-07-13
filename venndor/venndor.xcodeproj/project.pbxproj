@@ -534,7 +534,7 @@
 				TargetAttributes = {
 					10ADC9A31D0749700028A999 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = QA24C9EBQB;
+						DevelopmentTeam = 59THX85PFH;
 					};
 					10ADC9BA1D0749700028A999 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -950,7 +950,7 @@
 				);
 				INFOPLIST_FILE = venndor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";
@@ -976,7 +976,7 @@
 				);
 				INFOPLIST_FILE = venndor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venn;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";

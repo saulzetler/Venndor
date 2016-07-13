@@ -179,8 +179,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func curLocationClicked(sender: UIButton) {
         print("curLoc")
         mapView.clear()
-        mapView.camera = GMSCameraPosition(target: myLocation.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+        mapView.animateToLocation(myLocation.coordinate)
+//        mapView.camera = GMSCameraPosition(target: myLocation.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
         let pin = GMSMarker(position: myLocation.coordinate)
+        pin.appearAnimation = kGMSMarkerAnimationPop
         pin.map = mapView
         useLocation = true
         
@@ -233,8 +235,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         print("Place address: ", place.formattedAddress)
         print("Place attributions: ", place.attributions)
         self.dismissViewControllerAnimated(true, completion: nil)
-        mapView.camera = GMSCameraPosition(target: place.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+        mapView.animateToLocation(place.coordinate)
+//        mapView.camera = GMSCameraPosition(target: place.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
         let pin = GMSMarker(position: place.coordinate)
+        pin.appearAnimation = kGMSMarkerAnimationPop
         pin.map = mapView
     }
     
@@ -283,7 +287,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func setupLabels() {
         let photosLabel = UILabel(frame: CGRectMake(10, screenSize.height*0.2, self.screenSize.width*0.95, 30))
         photosLabel.text = "Photos"
-        containerView.addSubview(photosLabel)
+//        containerView.addSubview(photosLabel)
         let nameLabel = UILabel(frame: CGRectMake(10, screenSize.height*1.2, screenSize.width*0.95, 30))
         nameLabel.text = "What is the name of your item?"
         containerView.addSubview(nameLabel)
@@ -303,6 +307,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         containerView.addSubview(addressLabel)
         let priceLabel = UILabel(frame: CGRectMake(10, screenSize.height*6.2, self.screenSize.width*0.95, 30))
         priceLabel.text = "What is the minimum you're willing to pay?"
+        priceLabel.numberOfLines = 0
         containerView.addSubview(priceLabel)
         let confirmLabel = UILabel(frame: CGRectMake(10, screenSize.height*7.2, self.screenSize.width*0.95, 30))
         confirmLabel.text = "Confirm Post"
