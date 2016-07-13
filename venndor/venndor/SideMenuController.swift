@@ -105,7 +105,7 @@ class SideMenuController: UITableViewController {
         
         postButton = makeTextButton("Sell", frame: postButtonSize, target: #selector(SideMenuController.sellPage(_:)))
         postButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        postButton.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+        postButton.backgroundColor = UIColorFromHex(0x1abc9c, alpha: 1)
         sellCell.addSubview(postButton)
         
         
