@@ -14,16 +14,17 @@ class SplashViewController: UIViewController {
     //perform during load to allow for a shorter splash screen/early call.
     override func viewDidLoad() {
         super.viewDidLoad()
-        let filePath = NSBundle.mainBundle().pathForResource("splashGif", ofType: "gif")
-        let gif = NSData(contentsOfFile: filePath!)
-        let webViewBG = UIWebView(frame: self.view.frame)
-        webViewBG.loadData(gif!, MIMEType: "image/gif", textEncodingName: String(), baseURL: NSURL())
-        webViewBG.userInteractionEnabled = false;
-        self.view.addSubview(webViewBG)
+        let screenSize: CGRect = UIScreen.mainScreen().bounds
+        let background = UIImage(named: "background.jpg")
+        let backgroundView = UIImageView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
+        backgroundView.image = background
+        
+        self.view.addSubview(backgroundView)
+        self.view.sendSubviewToBack(backgroundView)
+        
         
         //declare managers to pull data of each object
         let userManager = UserManager()
-        let itemManager = ItemManager()
 
         let seenPostsManager = SeenPostsManager()
         var seenPostsMade = false

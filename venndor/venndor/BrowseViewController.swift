@@ -42,7 +42,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        self.view.backgroundColor = UIColor(red: 0.92, green: 0.93, blue: 0.95, alpha: 1)
+//        self.view.backgroundColor = UIColor(red: 0.92, green: 0.95, blue: 0.93, alpha: 1)
         
 //        let globalItems = GlobalItems()
 
@@ -80,7 +80,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         //MiniMyMatches button at bottom of browse.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
-        miniMatches = makeImageButton("ic_menu_white.png", frame: buttonSize, target: #selector(BrowseViewController.showAlert(_:)), tinted: false, circle: true, backgroundColor: 0x3498db, backgroundAlpha: 1)
+        miniMatches = makeImageButton("iphone-icon.png", frame: buttonSize, target: #selector(BrowseViewController.showAlert(_:)), tinted: false, circle: true, backgroundColor: 0x1abc9c, backgroundAlpha: 1)
+        
+        miniMatches.layer.cornerRadius = 0.5 * miniMatches.bounds.size.width
+        miniMatches.layer.masksToBounds = true
 
         self.view.addSubview(miniMatches)
 
@@ -115,7 +118,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func setupView() {
-        self.view.backgroundColor = UIColorFromHex(0xe6f2ff, alpha: 1)
+        self.view.backgroundColor = UIColorFromHex(0xecf0f1, alpha: 1)
         MAX_BUFFER_SIZE = GlobalItems.items.count
         itemList = []
         allCards = []
