@@ -19,7 +19,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        self.view.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+        self.view.backgroundColor = UIColorFromHex(0x1abc9c, alpha: 1)
         
         //app loads for the first time reset the category to all
         GlobalItems.currentCategory = nil

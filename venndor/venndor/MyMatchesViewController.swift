@@ -70,7 +70,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     
     func setupButtons() {
         //setting up the buttons needed to control the 2 pages within the controller, NEEDS REFACTORING WITH POST
-        let buttonBar = UIView(frame: CGRect(x: 0, y: 50, width: screenSize.width, height: 35))
+        let buttonBar = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: 35))
         buttonBar.backgroundColor = UIColor.whiteColor()
         
         matchesBar = UIView(frame: CGRect(x: 0, y: 32, width: screenSize.width/2, height: 3))
@@ -172,20 +172,15 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         scrollView = UIScrollView()
         scrollView.delegate = self
         
-        let headerViewHeight = screenSize.height*0.1
-        let buttonBarHeight:CGFloat = 34
-        
-        let scrollY = buttonBarHeight
-        
         //set up scroll view frame and create variables for the contentView frame
-        scrollView.frame = CGRectMake(0, scrollY, screenSize.width, screenSize.height)
+        scrollView.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
         let contentWidth: CGFloat = scrollView.frame.width
         let contentHeight = CGFloat(LocalUser.user.matches.count) * containerHeight * CGFloat(1.2)
         
         
         scrollView.contentSize = CGSizeMake(contentWidth, contentHeight)
         scrollView.decelerationRate = 0.1
-        matchContainerView.frame = CGRectMake(0, scrollY, contentWidth, contentHeight)
+        matchContainerView.frame = CGRectMake(0, 10, contentWidth, contentHeight)
         onMatches = true
         
         //add subviews accordingly

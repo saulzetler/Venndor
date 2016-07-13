@@ -89,16 +89,15 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZj-Qb-7hl">
-                                <rect key="frame" x="233.5" y="279" width="134.5" height="41"/>
+                                <rect key="frame" x="233.5" y="409" width="134.5" height="41"/>
                                 <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="34"/>
                                 <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                         </subviews>
-                        <color key="backgroundColor" red="0.96862751250000001" green="0.69411766529999996" blue="0.17254902420000001" alpha="1" colorSpace="deviceRGB"/>
                         <constraints>
+                            <constraint firstItem="CZz-kX-AU8" firstAttribute="top" secondItem="SZj-Qb-7hl" secondAttribute="bottom" constant="150" id="DY6-dZ-tkJ"/>
                             <constraint firstItem="SZj-Qb-7hl" firstAttribute="centerX" secondItem="Ibf-aM-pjS" secondAttribute="centerX" id="hdI-oJ-Qhx"/>
-                            <constraint firstItem="SZj-Qb-7hl" firstAttribute="centerY" secondItem="Ibf-aM-pjS" secondAttribute="centerY" id="yat-P8-tWa"/>
                         </constraints>
                     </view>
                     <connections>
@@ -791,8 +790,8 @@
         <segue reference="XwR-UP-4A2"/>
         <segue reference="YQC-W7-xKJ"/>
         <segue reference="dlm-GT-Iep"/>
-        <segue reference="iP8-l6-ghd"/>
-        <segue reference="8vX-4e-WnC"/>
         <segue reference="T4w-aX-c8F"/>
+        <segue reference="8vX-4e-WnC"/>
+        <segue reference="iP8-l6-ghd"/>
     </inferredMetricsTieBreakers>
 </document>
