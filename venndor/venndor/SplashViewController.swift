@@ -43,6 +43,10 @@ class SplashViewController: UIViewController {
                 //if they do set the data!
                 LocalUser.user = user
                 print("\(LocalUser.user.email)")
+                /**************************************************************************/
+                //to be taken out later when the users profile picture is addded to database.
+                LocalUser.user.profilePicture = LocalUser.profilePicture
+                /**************************************************************************/
                 seenPostsMade = true
             }
             else {
@@ -52,6 +56,11 @@ class SplashViewController: UIViewController {
                     LocalUser.user = user
                     LocalUser.seenPosts = [String:AnyObject]()
                     LocalUser.seenPosts["_id"] = LocalUser.user.id
+                    
+                    /**************************************************************************/
+                    //to be taken out later when the users profile picture is addded to database.
+                    LocalUser.user.profilePicture = LocalUser.profilePicture
+                    /**************************************************************************/
                     
                     //create the seenPosts object on the server
                     seenPostsManager.createSeenPostsById(LocalUser.user.id, completionHandler: { error in

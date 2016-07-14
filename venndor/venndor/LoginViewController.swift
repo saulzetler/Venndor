@@ -53,7 +53,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func fetchProfile() {
         
         //parameters for what data the app should pull
-        let parameters = ["fields": "email, first_name, last_name, picture.type(large)"]
+        let parameters = ["fields": "email, first_name, last_name, picture.type(large), id"]
         
         FBSDKGraphRequest(graphPath: "me", parameters: parameters).startWithCompletionHandler {(
             connection, result, error) -> Void in
@@ -61,7 +61,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 print(error)
                 return
             }
-            if let firstName = result["first_name"] as? String, lastName = result["last_name"] as? String, email = result["email"] as? String {
+            if let firstName = result["first_name"] as? String, lastName = result["last_name"] as? String, email = result["email"] as? String, userID = result["id"] as? NSString {
                 //if there is great success store the pulled data
                 LocalUser.firstName = firstName
                 LocalUser.lastName = lastName
@@ -69,6 +69,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 
                 
                 /* ADD PHOTO HANDLER/STORAGE FOR USER*/
+//                let link = NSURL(string: "https://graph.facebook.com/\(userID)/picture?type=large")
+//                let pictureData = NSData(contentsOfURL: link!)
+//                LocalUser.profilePicture = UIImage(data: pictureData!)
+                print (userID)
+                LocalUser.profilePicture = "https://graph.facebook.com/\(userID)/picture?type=large"
                 
                 
                 //transition when great success
@@ -111,5 +116,4 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
         print("logged out")
     }
-    
 }

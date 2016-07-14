@@ -10,9 +10,11 @@ import UIKit
 
 class ProfilePageViewController: UIViewController {
     
-    let user = LocalUser.user
+    var user: User!
+    
+//    let user = LocalUser.user
 
-    @IBOutlet weak var profilePicView: UIView!
+    @IBOutlet weak var profilePicView: UIImageView!
     @IBOutlet weak var nameLabel: UILabel!
     @IBOutlet weak var rating: UILabel!
     @IBOutlet weak var numMatches: UILabel!
@@ -30,7 +32,10 @@ class ProfilePageViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        //add profile picture
+        let link = NSURL(string: user.profilePicture)
+        let pictureData = NSData(contentsOfURL: link!)
+        profilePicView.image = UIImage(data: pictureData!)
         //set up the side menu
         setSideMenu()
         
@@ -43,7 +48,7 @@ class ProfilePageViewController: UIViewController {
         
         //default content scroll
         dispatch_async(dispatch_get_main_queue(), {
-            self.updateScrollview(LocalUser.user.matches)
+            self.updateScrollview(self.user.matches)
         })
     }
     
@@ -78,29 +83,29 @@ class ProfilePageViewController: UIViewController {
         }
     }
     func setLabels() {
-        nameLabel.text = "\(LocalUser.firstName) \(LocalUser.lastName)"
-        numMatches.text = "\(LocalUser.user.matches.count)"
-        numBought.text = "\(LocalUser.user.boughtItems.count)"
-        numSold.text = "\(LocalUser.user.soldItems.count)"
+        nameLabel.text = "\(user.firstName) \(user.lastName)"
+        numMatches.text = "\(user.matches.count)"
+        numBought.text = "\(user.boughtItems.count)"
+        numSold.text = "\(user.soldItems.count)"
     }
     
     func toggleContent(sender: UITapGestureRecognizer) {
         var content: [String:AnyObject]!
         
-        _ = LocalUser.user
+        _ = user
         switch sender.view! {
         case matchesStack:
             print("Matches tapped!")
-            content = LocalUser.user.matches
+            content = user.matches
         case boughtStack:
             print("Bought tapped!")
-            content = LocalUser.user.boughtItems
+            content = user.boughtItems
         case soldStack:
             print("Sold tapped!")
-            content = LocalUser.user.soldItems
+            content = user.soldItems
         default:
             print("Idk why the fuck you're getting this here error, bruh, but lets set a default...")
-            content = LocalUser.user.matches
+            content = user.matches
         }
         
         dispatch_async(dispatch_get_main_queue(), {

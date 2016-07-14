@@ -25,8 +25,6 @@ class SideMenuController: UITableViewController {
     
     @IBOutlet weak var myPostsCell: UITableViewCell!
     
-    @IBOutlet weak var notificationsCell: UITableViewCell!
-    
     @IBOutlet weak var settingsCell: UITableViewCell!
     
     @IBOutlet weak var sellCell: UITableViewCell!
@@ -36,13 +34,12 @@ class SideMenuController: UITableViewController {
     var browseButton: UIButton!
     var myMatchesButton: UIButton!
     var myPostsButton: UIButton!
-    var notificationsButton: UIButton!
     var settingsButton: UIButton!
+    
     //and their icons
     var browseIconButton: UIButton!
     var myMatchesIconButton: UIButton!
     var myPostsIconButton: UIButton!
-    var notificationsIconButton: UIButton!
     var settingsIconButton: UIButton!
     
     
@@ -50,9 +47,12 @@ class SideMenuController: UITableViewController {
         super.viewDidLoad()
         
         //create and load the users profile picture
-        let profilePic: UIImageView! = UIImageView(frame: CGRectMake(screenSize.width*0.05, screenSize.height*0.02, screenSize.width*0.4, screenSize.width*0.4))
+        let profilePic: UIImageView! = UIImageView(frame: CGRectMake(screenSize.width*0.08, screenSize.height*0.02, screenSize.width*0.4, screenSize.width*0.425))
         
         /*NEEDS REFACTORING*/
+        let link = NSURL(string: LocalUser.profilePicture)
+        let pictureData = NSData(contentsOfURL: link!)
+        profilePic.image = UIImage(data: pictureData!)
         
         profilePic.layer.borderWidth = 2.0
         profilePic.layer.masksToBounds = false
@@ -73,11 +73,6 @@ class SideMenuController: UITableViewController {
     
     }
     
-    func profilePictureTapped() {
-        self.performSegueWithIdentifier("showProfile", sender: self)
-    }
-    
-    
     
     func setupButtons() {
         
@@ -96,9 +91,6 @@ class SideMenuController: UITableViewController {
         
         myPostsButton = makeTextButton("My Posts", frame: textButtonSize, target: #selector(SideMenuController.myPostsPage(_:)))
         myPostsCell.addSubview(myPostsButton)
-        
-        notificationsButton = makeTextButton("Notifications", frame: textButtonSize, target: #selector(SideMenuController.notificationsPage(_:)))
-        notificationsCell.addSubview(notificationsButton)
         
         settingsButton = makeTextButton("Settings", frame: textButtonSize, target: #selector(SideMenuController.settingsPage(_:)))
         settingsCell.addSubview(settingsButton)
@@ -121,8 +113,6 @@ class SideMenuController: UITableViewController {
         myPostsIconButton = makeImageButton("New Product-50", frame: imageButtonSize, target: #selector(SideMenuController.myPostsPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         myPostsCell.addSubview(myPostsIconButton)
         
-        notificationsIconButton = makeImageButton("Megaphone-50", frame: imageButtonSize, target: #selector(SideMenuController.notificationsPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
-        notificationsCell.addSubview(notificationsIconButton)
         
         settingsIconButton = makeImageButton("Settings-50", frame: imageButtonSize, target: #selector(SideMenuController.settingsPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         settingsCell.addSubview(settingsIconButton)
@@ -142,10 +132,6 @@ class SideMenuController: UITableViewController {
         self.performSegueWithIdentifier("toSettings", sender: self)
     }
     
-    func notificationsPage(sender: UIButton) {
-        self.performSegueWithIdentifier("toNotifications", sender: self)
-    }
-    
     func myPostsPage(sender: UIButton) {
         self.performSegueWithIdentifier("toMyPosts", sender: self)
     }
@@ -156,6 +142,17 @@ class SideMenuController: UITableViewController {
     
     func browsePage(sender: UIButton) {
         self.performSegueWithIdentifier("toBrowse", sender: self)
+    }
+    
+    func profilePictureTapped() {
+        self.performSegueWithIdentifier("showProfile", sender: self)
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showProfile" {
+            let ovc = segue.destinationViewController as! ProfilePageViewController
+            ovc.user = LocalUser.user
+        }
     }
     
 }
