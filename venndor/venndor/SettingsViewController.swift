@@ -30,7 +30,7 @@ class SettingsViewController: UIViewController {
         self.view.addSubview(label)
         
         //add the generic views of each page ie. header and side menu
-        addHeader()
+        addHeaderOther()
         sideMenuGestureSetup()
         
     }
