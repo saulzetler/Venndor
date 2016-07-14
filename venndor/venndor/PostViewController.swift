@@ -58,7 +58,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setupPageControll()
         setupPostButton()
         setupRatingControl()
-        addHeader()
+        addHeaderOther()
         setupDownArrow()
         setupMap()
     }

@@ -62,6 +62,13 @@ class SideMenuController: UITableViewController {
         profileCell.selectionStyle = .None
         profileCell.addSubview(profilePic)
         
+//        profileCell.frame = CGRectMake(0, 0, screenSize.width, screenSize.height*0.4)
+//        browseCell.frame = CGRectMake(0, screenSize.height*0.4, screenSize.width, screenSize.height*0.35/4)
+//        myMatchesCell.frame = CGRectMake(0, screenSize.height*0.4+screenSize.height*0.35/4, screenSize.width, screenSize.height*0.35/4)
+//        myPostsCell.frame = CGRectMake(0, screenSize.height*0.4+screenSize.height*0.35/2, screenSize.width, screenSize.height*0.35/4)
+//        settingsCell.frame = CGRectMake(0, screenSize.height*0.4+screenSize.height*3*0.35/4, screenSize.width, screenSize.height*0.35/4)
+//        sellCell.frame = CGRectMake(0, screenSize.height*0.75, screenSize.width, screenSize.height*0.25)
+        
         //create a tap gesture recognizer and assign it to the profile picture view
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SideMenuController.profilePictureTapped))
         profilePic.userInteractionEnabled = true
