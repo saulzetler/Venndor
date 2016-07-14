@@ -43,8 +43,7 @@ class ProfilePageViewController: UIViewController {
         setLabels()
         
         //add the header
-        headerView = HeaderView(frame: self.view.frame)
-        self.view.addSubview(headerView)
+        addHeaderOther()
         
         //default content scroll
         dispatch_async(dispatch_get_main_queue(), {
@@ -57,11 +56,6 @@ class ProfilePageViewController: UIViewController {
         
         //assign a tap gesture recognizer to each stackview
         setTapsForStackViews()
-        
-        //present the header view and add the sidemenu toggles to it
-        self.view.bringSubviewToFront(headerView)
-        headerView.menuButton.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        headerView.categoryButton.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.rightRevealToggle(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
 
     }
