@@ -80,14 +80,15 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         //MiniMyMatches button at bottom of browse.
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
-        miniMatches = makeImageButton("iphone-icon.png", frame: buttonSize, target: #selector(BrowseViewController.showAlert(_:)), tinted: false, circle: true, backgroundColor: 0x1abc9c, backgroundAlpha: 1)
+        miniMatches = makeImageButton("ic_keyboard_arrow_up_white.png", frame: buttonSize, target: #selector(BrowseViewController.showAlert(_:)), tinted: false, circle: true, backgroundColor: 0x006666, backgroundAlpha: 1)
         
         miniMatches.layer.cornerRadius = 0.5 * miniMatches.bounds.size.width
         miniMatches.layer.masksToBounds = true
         
         let bottomBar = CGRect(x: 0, y: screenSize.height*0.93, width: screenSize.width, height: screenSize.height*0.07)
         let bottomBarButton = UIButton(frame: bottomBar)
-        bottomBarButton.backgroundColor = UIColorFromHex(0x1abc9c)
+        bottomBarButton.backgroundColor = UIColorFromHex(0x006666)
+        bottomBarButton.addTarget(self, action: #selector(BrowseViewController.showAlert(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         self.view.addSubview(bottomBarButton)
 

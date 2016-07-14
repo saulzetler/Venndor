@@ -15,6 +15,7 @@ struct LocalUser {
     static var email: String!
     static var seenPosts: [String:AnyObject]!
     static var matches: [Match]!
+    static var profilePicture: String!
 }
 
 class User: NSObject {
@@ -29,6 +30,7 @@ class User: NSObject {
     var soldItems : [String:AnyObject]!
     var boughtItems: [String:AnyObject]!
     var ads: [String:AnyObject]!
+    var profilePicture: String!
     //key: matchID, value: item in the match
     var matches: [String:AnyObject]!
     var moneySaved: Double!
