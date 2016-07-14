@@ -41,7 +41,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var mapView: GMSMapView!
     var currentPlace: GMSPlace!
     var myLocation: CLLocation!
-    var useLocation: Bool!
+    var useMyLocation: Bool!
     let locationManager = CLLocationManager()
     var coordinate: CLLocationCoordinate2D!
     var photoChoiceDisplayed = false
@@ -69,7 +69,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func setupDownArrow() {
         let downArrowFrame = CGRect(x: screenSize.width*0.45, y: screenSize.height*0.95, width: screenSize.width*0.1, height: screenSize.height*0.05)
-        let downArrow = makeImageButton("Expand Arrow.png", frame: downArrowFrame, target: #selector(PostViewController.nextPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        let downArrow = makeImageButton("Expand Arrow-100.png", frame: downArrowFrame, target: #selector(PostViewController.nextPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         self.view.addSubview(downArrow)
         self.view.bringSubviewToFront(downArrow)
     }
@@ -100,19 +100,22 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //create the text field required for the user to input the name of the item.
     func setupItemName() {
-        itemName = ItemNameTextField(frame: CGRectMake(10, screenSize.height*1.5, screenSize.width*0.95, 30))
+        itemName = ItemNameTextField(frame: CGRectMake(10, screenSize.height*1.35, screenSize.width*0.95, screenSize.height*0.1))
         itemName.text = "Name"
+        itemName.textColor = UIColor.whiteColor()
+        itemName.font = itemName.font?.fontWithSize(30)
         itemName.delegate = self
         itemName.clearsOnBeginEditing = true
         containerView.addSubview(itemName)
-        createBorder(itemName)
+        createBorder(itemName, color: UIColor.whiteColor())
         itemName.returnKeyType = .Done
     }
     
     //create the text field required for the user to input a basic description of the item
     func setupItemDescription() {
-        itemDescription = UITextView(frame: CGRectMake(10, screenSize.height*4.3, self.screenSize.width*0.95, 100))
+        itemDescription = UITextView(frame: CGRectMake(10, screenSize.height*4.18, self.screenSize.width*0.95, screenSize.height*0.3))
         itemDescription.text = "Additional Info"
+        itemDescription.font = itemDescription.font?.fontWithSize(15)
         itemDescription.delegate = self
         containerView.addSubview(itemDescription)
         createBorder(itemDescription)
@@ -124,11 +127,16 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
         //each view performs the same action/function in allowing a user to upload an image, thus it is refactored to allow for neater code
         
-        imageView1 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.13, screenSize.width*0.7, screenSize.width*0.7), action: #selector(PostViewController.imageTapped(_:)), superView: containerView)
-        imageView2 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView)
-        imageView3 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView)
-        imageView4 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView)
-        imageView5 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView)
+        imageView1 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.13, screenSize.width*0.7, screenSize.width*0.7), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor())
+        imageView1.tag = 0
+        imageView2 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor())
+        imageView2.tag = 1
+        imageView3 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor())
+        imageView3.tag = 2
+        imageView4 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor())
+        imageView4.tag = 3
+        imageView5 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor())
+        imageView5.tag = 4
         
         //store the image views in an array for easier future use
         imageViewArray = [imageView1, imageView2, imageView3, imageView4, imageView5]
@@ -137,7 +145,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //function to allow the user to pick from a certain list of categories to assign the item.
     func setupPickerView() {
-        categoryPicker = UIPickerView(frame: CGRectMake(10, screenSize.height*2.4, self.screenSize.width*0.95, screenSize.height*0.4))
+        categoryPicker = UIPickerView(frame: CGRectMake(10, screenSize.height*2.2, self.screenSize.width*0.95, screenSize.height*0.4))
         
         //asign the needed points to allow the pickerview to function as intended
         categoryPicker.dataSource = self
@@ -145,9 +153,15 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         containerView.addSubview(categoryPicker)
     }
     
+    func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
+        let titleData = pickerData[row]
+        let myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 15.0)!,NSForegroundColorAttributeName:UIColor.whiteColor()])
+        return myTitle
+    }
+    
     //setup rating control
     func setupRatingControl() {
-        ratingControl = STRatingControl(frame: CGRectMake(screenSize.width*0.25, screenSize.height*3.5, self.screenSize.width*0.5, 30))
+        ratingControl = STRatingControl(frame: CGRectMake(screenSize.width*0.11, screenSize.height*3.2, screenSize.width, screenSize.height*0.08))
         ratingControl.delegate = self
         ratingControl.layoutSubviews()
         containerView.addSubview(ratingControl)
@@ -175,7 +189,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
         
-        useLocation = true
+        useMyLocation = true
     }
     
     func curLocationClicked(sender: UIButton) {
@@ -186,7 +200,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let pin = GMSMarker(position: myLocation.coordinate)
         pin.appearAnimation = kGMSMarkerAnimationPop
         pin.map = mapView
-        useLocation = true
+        useMyLocation = true
         
     }
     
@@ -203,7 +217,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         if let location = locations.first {
             
             myLocation = location
-            useLocation = false
             
             // 7
             mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
@@ -232,6 +245,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     // Handle the user's selection.
     func viewController(viewController: GMSAutocompleteViewController, didAutocompleteWithPlace place: GMSPlace) {
         currentPlace = place
+        useMyLocation = false
         mapView.clear()
         print("Place name: ", place.name)
         print("Place address: ", place.formattedAddress)
@@ -267,8 +281,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //function to create the final post button which is called when the user completes the process.
     func setupPostButton() {
-        let buttonFrame = CGRectMake(screenSize.width*0.4, screenSize.height*7.5, screenSize.width*0.2, screenSize.height*0.1)
+        let buttonFrame = CGRectMake(screenSize.width*0.3, screenSize.height*7.3, screenSize.width*0.4, screenSize.height*0.4)
         postButton = makeTextButton("Post!", frame: buttonFrame, target: #selector(PostViewController.postItem(_:)))
+        postButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        postButton.titleLabel!.font = postButton.titleLabel!.font.fontWithSize(40)
         containerView.addSubview(postButton)
     }
     
@@ -318,17 +334,29 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let photosLabel = UILabel(frame: CGRectMake(10, screenSize.height*0.2, self.screenSize.width*0.95, 30))
         photosLabel.text = "Photos"
 //        containerView.addSubview(photosLabel)
-        let nameLabel = UILabel(frame: CGRectMake(10, screenSize.height*1.2, screenSize.width*0.95, 30))
+        let nameLabel = UILabel(frame: CGRectMake(10, screenSize.height*1.1, screenSize.width*0.95, screenSize.height*0.2))
         nameLabel.text = "What is the name of your item?"
+        nameLabel.numberOfLines = 0
+        nameLabel.textColor = UIColor.whiteColor()
+        nameLabel.textAlignment = .Center
+        nameLabel.font = nameLabel.font.fontWithSize(30)
         containerView.addSubview(nameLabel)
         let categoriesLabel = UILabel(frame: CGRectMake(10, screenSize.height*2.2, self.screenSize.width*0.95, 30))
         categoriesLabel.text = "What category does your item fit into"
+        categoriesLabel.textColor = UIColor.whiteColor()
+        categoriesLabel.textAlignment = .Center
         containerView.addSubview(categoriesLabel)
-        let dataLabel = UILabel(frame: CGRectMake(10, screenSize.height*3.2, self.screenSize.width*0.95, 30))
+        let dataLabel = UILabel(frame: CGRectMake(10, screenSize.height*3.12, self.screenSize.width*0.95, 30))
         dataLabel.text = "Give some info on your item"
+        dataLabel.textColor = UIColor.whiteColor()
+        dataLabel.textAlignment = .Center
+        dataLabel.font = dataLabel.font.fontWithSize(20)
         containerView.addSubview(dataLabel)
-        let descriptionLabel = UILabel(frame: CGRectMake(10, screenSize.height*4.2, self.screenSize.width*0.95, 30))
+        let descriptionLabel = UILabel(frame: CGRectMake(10, screenSize.height*4.12, self.screenSize.width*0.95, 30))
         descriptionLabel.text = "Give a description of your item"
+        descriptionLabel.textColor = UIColor.whiteColor()
+        descriptionLabel.textAlignment = .Center
+        descriptionLabel.font = descriptionLabel.font.fontWithSize(20)
         containerView.addSubview(descriptionLabel)
         let addressLabel = UILabel(frame: CGRectMake(10, screenSize.height*5.1, self.screenSize.width*0.95, screenSize.height*0.1))
         addressLabel.textColor = UIColor.whiteColor()
@@ -336,15 +364,21 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         addressLabel.text = "Where are you located?"
         containerView.addSubview(addressLabel)
         let priceLabel = UILabel(frame: CGRectMake(10, screenSize.height*6.08, self.screenSize.width*0.95, screenSize.height*0.3))
-        priceLabel.text = "What is the minimum you're willing to accept?"
-        priceLabel.font = priceLabel.font.fontWithSize(20)
+        priceLabel.text = "I want to sell this for"
+        priceLabel.font = priceLabel.font.fontWithSize(30)
         priceLabel.textColor = UIColor.whiteColor()
         priceLabel.textAlignment = .Center
         priceLabel.numberOfLines = 0
         containerView.addSubview(priceLabel)
+        let orMore = UILabel(frame: CGRectMake(10, screenSize.height*6.33, self.screenSize.width*0.95, screenSize.height*0.3))
+        orMore.font = orMore.font.fontWithSize(30)
+        orMore.textColor = UIColor.whiteColor()
+        orMore.textAlignment = .Center
+        orMore.text = "or more!"
+        containerView.addSubview(orMore)
         let confirmLabel = UILabel(frame: CGRectMake(10, screenSize.height*7.2, self.screenSize.width*0.95, 30))
         confirmLabel.text = "Confirm Post"
-        containerView.addSubview(confirmLabel)
+//        containerView.addSubview(confirmLabel)
     }
     
     //delegate functions that control parts of the view controller
@@ -364,6 +398,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //this is the function used to automatically adjust the page to the correct one when the user scrolls through the view
     func adjustPage() {
+        
+        view.endEditing(true)
         // Test the offset and calculate the current page after scrolling ends
         let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
         let currentPage:CGFloat = floor((scrollView.contentOffset.y-pageHeight/4)/pageHeight)+1
@@ -436,14 +472,18 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func doneButtonDidPress(images: [UIImage]){
         imagePickerController.dismissViewControllerAnimated(true, completion: nil)
         var i = 0
+        var startIndex = currentImgView.tag
         let images = imageAssets
         for imageView in imageViewArray {
-            if i < images.count {
-                imageView.image = images[i]
-                i += 1
+//            print("image tag: \(imageView.tag) Start Index: \(startIndex) i: \(i)")
+            if imageView.tag == startIndex {
+                if i < images.count {
+                    imageView.image = images[i]
+                    i += 1
+                    startIndex += 1
+                }
             }
         }
-        
     }
     func cancelButtonDidPress(){
         
@@ -455,9 +495,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //function to control when an image view is tapped and access the camera roll
     func imageTapped(sender: UIGestureRecognizer) {
+        currentImgView = sender.view as! UIImageView
         imagePickerController = ImagePickerController()
         imagePickerController.delegate = self
-        imagePickerController.imageLimit = 5
+        imagePickerController.imageLimit = 5 - currentImgView.tag
         presentViewController(imagePickerController, animated: true, completion: nil)
 
     }
@@ -499,7 +540,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             
             /*NEEDS TO BE SET FROM THE DATA GATHERED BY POSTVIEWCONTROLLER*/
             let condition = ratingControl.rating
-            if useLocation == true {
+            if useMyLocation == true {
                 coordinate = myLocation.coordinate
             }
             else {
@@ -534,6 +575,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     }
                     
                     print("Succesfully updated LocalUser's ads from post screen.")
+                    self.performSegueWithIdentifier("backToBrowse", sender: self)
                 }
                 
             }

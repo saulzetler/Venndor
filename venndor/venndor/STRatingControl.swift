@@ -34,8 +34,8 @@ public class STRatingControl: UIView {
       setNeedsLayout()
     }
   }
-  var filledStarImage = UIImage(named: "Star Filled.png")
-  var emptyStarImage = UIImage(named: "Star Empty.png")
+  var filledStarImage = UIImage(named: "Star Filled White.png")
+  var emptyStarImage = UIImage(named: "Star White.png")
   var spacing : Int = 5
   
   var delegate : STRatingControlDelegate?

@@ -104,12 +104,12 @@ extension UIViewController {
         view.layer.masksToBounds = true
     }
     
-    func createImgView(frame: CGRect, action: Selector, superView: UIView) -> UIImageView {
+    func createImgView(frame: CGRect, action: Selector, superView: UIView, boarderColor: UIColor = UIColor.blackColor()) -> UIImageView {
         let imgView = UIImageView(frame: frame)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: action)
         imgView.userInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
-        createBorder(imgView)
+        createBorder(imgView, color: boarderColor)
         imgView.contentMode = .ScaleAspectFill
         superView.addSubview(imgView)
         return imgView
