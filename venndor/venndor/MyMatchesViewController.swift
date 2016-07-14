@@ -12,15 +12,19 @@ import UIKit
 class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     //declaring screen size for future reference
     let screenSize: CGRect = UIScreen.mainScreen().bounds
+    var tappedItem: Item!
+    
     //declaring the buttons needed for the 2 views
     var matchesButton: UIButton!
     var boughtButton: UIButton!
     var matchesBar: UIView!
     var boughtBar: UIView!
+    
     //variables needed for the scroll view
     var scrollView: UIScrollView!
     var matchContainerView = UIView()
     var boughtContainerView = UIView()
+    var matchObjects = [Match]()
     var onMatches: Bool!
     
     override func viewDidLoad() {
@@ -38,7 +42,10 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         for match in LocalUser.matches {
             
             //create the match container view
-            let matchContainer = UIView(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight), width: screenSize.width, height: containerHeight))
+            let matchContainer = ItemContainer(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight), width: screenSize.width, height: containerHeight))
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
+            matchContainer.addGestureRecognizer(tap)
             
             //retrieve the match thumbnail
             manager.retrieveMatchThumbnail(match) { img, error in
@@ -47,12 +54,13 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     return
                 }
                 if let img = img {
+                    match.thumbnail = img
+                    matchContainer.match = match
                     //self.addContainerContent(matchContainer, img: img, match: match)
                     dispatch_async(dispatch_get_main_queue()) {
                         self.addContainerContent(matchContainer, img: img, match: match)
                         
                     }
-                    
                 }
             }
             
@@ -66,6 +74,31 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         addGestureRecognizer()
         setupButtons()
         
+    }
+    
+    func toggleItemInfo(sender: UITapGestureRecognizer) {
+        print("Match tapped!")
+        let containerView = sender.view as! ItemContainer
+        let manager = ItemManager()
+        manager.retrieveItemById(containerView.match.itemID) { item, error in
+            guard error == nil else {
+                print("error pulling item data from tapped match: \(error)")
+                return
+            }
+            if let item = item {
+                self.tappedItem = item
+                dispatch_async(dispatch_get_main_queue()) {
+                   self.performSegueWithIdentifier("showItemInfo", sender: self)
+                }
+            }
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showItemInfo" {
+            let ivc = segue.destinationViewController as! ItemInfoViewController
+            ivc.item = tappedItem
+        }
     }
     
     func setupButtons() {

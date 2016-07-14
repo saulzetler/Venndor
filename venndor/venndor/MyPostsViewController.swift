@@ -114,17 +114,19 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         imgView.image = item.photos![0]
         let imgHeight = imgView.frame.height
         let imgWidth = imgView.frame.width
-        let labelX = imgWidth + imgView.frame.origin.x + 20
+       
+        let labelX = imgWidth + imgView.frame.origin.x + 10
+        let labelWidth = postContainer.frame.width - imgWidth - 25
         
         //create the match info labels
-        let nameLabel = UILabel(frame: CGRect(x: labelX, y: 5, width: postContainer.frame.width - imgWidth, height: imgHeight * 0.15))
+        let nameLabel = UILabel(frame: CGRect(x: labelX, y: 5, width: labelWidth, height: imgHeight * 0.15))
         nameLabel.text = item.name
         nameLabel.textAlignment = .Center
-        nameLabel.numberOfLines = 1
+        nameLabel.numberOfLines = 2
         nameLabel.adjustsFontSizeToFitWidth = true
         postContainer.addSubview(nameLabel)
         
-        let distanceLabel = UILabel(frame: CGRect(x: labelX, y: postContainer.frame.height * 0.35, width: postContainer.frame.width - imgWidth, height: imgHeight * 0.15))
+        let distanceLabel = UILabel(frame: CGRect(x: labelX, y: postContainer.frame.height * 0.35, width: labelWidth, height: imgHeight * 0.15))
         distanceLabel.text = "495 Hilldale Road"
         distanceLabel.textAlignment = .Center
         distanceLabel.numberOfLines = 1
@@ -148,6 +150,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         priceLabel.adjustsFontSizeToFitWidth = true
         priceContainer.addSubview(priceLabel)
         
+        createBorder(priceContainer)
         postContainer.addSubview(priceContainer)
         postsContainerView.addSubview(postContainer)
     }
