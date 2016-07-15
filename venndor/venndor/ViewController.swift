@@ -60,18 +60,16 @@ extension UIViewController {
         self.view.addSubview(headerView)
         self.view.bringSubviewToFront(headerView)
     }
-    func addHeaderOther() {
-        let headerView: OtherHeaderView = OtherHeaderView(frame: self.view.frame)
+    func addHeaderOther(page: String) {
+        let headerView: OtherHeaderView = OtherHeaderView(frame: self.view.frame, page: page)
         headerView.menuButton.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         self.view.addSubview(headerView)
         self.view.bringSubviewToFront(headerView)
     }
-    func addHeaderItems() {
-        let headerView: MyItemHeaderView = MyItemHeaderView(frame: self.view.frame)
+    func addHeaderItems(page: String) {
+        let headerView: MyItemHeaderView = MyItemHeaderView(frame: self.view.frame, page: page)
         headerView.menuButton.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), forControlEvents: UIControlEvents.TouchUpInside)
-        
-        headerView.categoryButton.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.rightRevealToggle(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         self.view.addSubview(headerView)
         self.view.bringSubviewToFront(headerView)

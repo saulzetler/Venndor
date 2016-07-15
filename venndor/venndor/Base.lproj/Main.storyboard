@@ -615,7 +615,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="zHM-z2-aiM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-700" y="2248"/>
+            <point key="canvasLocation" x="-360" y="2256"/>
         </scene>
         <!--My Posts View Controller-->
         <scene sceneID="0Cd-uI-jZ5">
@@ -758,11 +758,11 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="T4w-aX-c8F"/>
+        <segue reference="8vX-4e-WnC"/>
         <segue reference="iP8-l6-ghd"/>
         <segue reference="fH8-HC-wrA"/>
-        <segue reference="Al0-8C-Npd"/>
-        <segue reference="8vX-4e-WnC"/>
-        <segue reference="T4w-aX-c8F"/>
+        <segue reference="YQC-W7-xKJ"/>
         <segue reference="hrt-cp-q1Q"/>
     </inferredMetricsTieBreakers>
 </document>
