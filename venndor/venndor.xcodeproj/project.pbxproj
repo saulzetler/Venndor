@@ -590,10 +590,7 @@
 			files = (
 				E44C15391D11E0430006EBAD /* Generic Book File Type-50.png in Resources */,
 				E44C15211D11B9F90006EBAD /* Home-50.png in Resources */,
-<<<<<<< HEAD
 				E4845EE71D37E7F000F4A5B2 /* Star Filled White.png in Resources */,
-=======
->>>>>>> 02a0df17232e3debf94a2cc329d61b691c9edea0
 				E44C151C1D11B9650006EBAD /* Settings-50.png in Resources */,
 				E49051AD1D09B6690045D5C0 /* Images.xcassets in Resources */,
 				E43070E41D22FDC80035BCF4 /* Back_Arrow.png in Resources */,
