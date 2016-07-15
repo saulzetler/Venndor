@@ -50,9 +50,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     //self.addContainerContent(matchContainer, img: img, match: match)
                     dispatch_async(dispatch_get_main_queue()) {
                         self.addContainerContent(matchContainer, img: img, match: match)
-                        
                     }
-                    
                 }
             }
             
