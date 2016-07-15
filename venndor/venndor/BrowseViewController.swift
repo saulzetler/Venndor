@@ -438,8 +438,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //loads one new card
     func loadAnotherCard() -> Void {
         let itemManager = ItemManager()
-        let filterString = itemManager.constructFeedFilter()
-        itemManager.retrieveMultipleItems(1, offset: cardsLoadedIndex, filter: filterString, fields: nil) { items, error in
+
+        let feedFilter = itemManager.constructFeedFilter()
+        itemManager.retrieveMultipleItems(1, offset: cardsLoadedIndex, filter: feedFilter, fields: nil) { items, error in
+
             guard error == nil else {
                 print("Error retrieving items from server: \(error)")
                 return
