@@ -51,9 +51,10 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
     
     //function to pull the user data
     func fetchProfile() {
-        
+        //, user_location
+        //, location = result["user_location"] as? String
         //parameters for what data the app should pull
-        let parameters = ["fields": "email, first_name, last_name, picture.type(large), id"]
+        let parameters = ["fields": "email, first_name, last_name, picture.type(large), id, gender"]
         
         FBSDKGraphRequest(graphPath: "me", parameters: parameters).startWithCompletionHandler {(
             connection, result, error) -> Void in
@@ -61,11 +62,12 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 print(error)
                 return
             }
-            if let firstName = result["first_name"] as? String, lastName = result["last_name"] as? String, email = result["email"] as? String, userID = result["id"] as? NSString {
+            if let firstName = result["first_name"] as? String, lastName = result["last_name"] as? String, email = result["email"] as? String, userID = result["id"] as? NSString, gender = result["gender"] as? String {
                 //if there is great success store the pulled data
                 LocalUser.firstName = firstName
                 LocalUser.lastName = lastName
                 LocalUser.email = email
+                print (gender)
                 
                 
                 /* ADD PHOTO HANDLER/STORAGE FOR USER*/

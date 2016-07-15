@@ -60,9 +60,12 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         
         setupScrollView(containerHeight + 10)
-        addHeaderItems()
+        addHeaderItems("Your Matches")
         addGestureRecognizer()
         setupButtons()
+        
+    }
+    func DropdownAction() {
         
     }
     
