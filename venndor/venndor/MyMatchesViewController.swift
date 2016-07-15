@@ -70,7 +70,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         
         setupScrollView(containerHeight + 10)
-        addHeader()
+        addHeaderItems()
         addGestureRecognizer()
         setupButtons()
         

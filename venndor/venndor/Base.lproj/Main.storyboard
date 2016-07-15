@@ -392,14 +392,6 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6XW-mr-Kxf">
-                                <rect key="frame" x="239" y="105" width="122" height="122"/>
-                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="122" id="ami-mL-4sv"/>
-                                    <constraint firstAttribute="height" constant="122" id="n7g-mg-sDx"/>
-                                </constraints>
-                            </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Rating" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="bzn-uS-fZm">
                                 <rect key="frame" x="275" y="264" width="49" height="20.5"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
@@ -488,6 +480,14 @@
                                 <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
+                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="6XW-mr-Kxf" customClass="UIImageView">
+                                <rect key="frame" x="239" y="105" width="122" height="122"/>
+                                <color key="backgroundColor" white="0.66666666666666663" alpha="1" colorSpace="calibratedWhite"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="122" id="ami-mL-4sv"/>
+                                    <constraint firstAttribute="height" constant="122" id="n7g-mg-sDx"/>
+                                </constraints>
+                            </view>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -618,24 +618,6 @@
             </objects>
             <point key="canvasLocation" x="-700" y="2248"/>
         </scene>
-        <!--Notifications View Controller-->
-        <scene sceneID="87C-xJ-6jb">
-            <objects>
-                <viewController id="Hti-UJ-K0L" customClass="NotificationsViewController" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="6YE-RB-s04"/>
-                        <viewControllerLayoutGuide type="bottom" id="VkJ-nE-JXT"/>
-                    </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="XyP-k2-1Er">
-                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
-                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                    </view>
-                </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="b5c-cU-ZSv" userLabel="First Responder" sceneMemberID="firstResponder"/>
-            </objects>
-            <point key="canvasLocation" x="171" y="2202"/>
-        </scene>
         <!--My Posts View Controller-->
         <scene sceneID="0Cd-uI-jZ5">
             <objects>
@@ -751,19 +733,8 @@
                                             <segue destination="UaQ-m2-eNN" kind="custom" identifier="toMyPosts" customClass="SWRevealViewControllerSeguePushController" id="MCb-AK-BNF"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="Vjk-h9-A2d">
-                                        <rect key="frame" x="0.0" y="357" width="600" height="50"/>
-                                        <autoresizingMask key="autoresizingMask"/>
-                                        <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="Vjk-h9-A2d" id="2tB-Y3-ihp">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
-                                            <autoresizingMask key="autoresizingMask"/>
-                                        </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="Hti-UJ-K0L" kind="custom" identifier="toNotifications" customClass="SWRevealViewControllerSeguePushController" id="JNf-ts-iwV"/>
-                                        </connections>
-                                    </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="50" id="ctk-YQ-JFI">
-                                        <rect key="frame" x="0.0" y="407" width="600" height="50"/>
+                                        <rect key="frame" x="0.0" y="357" width="600" height="50"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="ctk-YQ-JFI" id="T0r-qO-afe">
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="49.5"/>
@@ -773,12 +744,13 @@
                                             <segue destination="xZd-1d-xuv" kind="custom" identifier="toSettings" customClass="SWRevealViewControllerSeguePushController" id="Fiw-wm-Civ"/>
                                         </connections>
                                     </tableViewCell>
-                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="100" id="17O-B4-1Yi">
-                                        <rect key="frame" x="0.0" y="457" width="600" height="100"/>
+                                    <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="206" id="17O-B4-1Yi">
+                                        <rect key="frame" x="0.0" y="407" width="600" height="206"/>
                                         <autoresizingMask key="autoresizingMask"/>
                                         <tableViewCellContentView key="contentView" opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="center" tableViewCell="17O-B4-1Yi" id="wre-TV-gca">
-                                            <rect key="frame" x="0.0" y="0.0" width="600" height="99.5"/>
+                                            <rect key="frame" x="0.0" y="0.0" width="600" height="205.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
+                                            <color key="backgroundColor" red="0.10196078431372549" green="0.73725490196078436" blue="0.61176470588235299" alpha="1" colorSpace="calibratedRGB"/>
                                         </tableViewCellContentView>
                                         <connections>
                                             <segue destination="RnH-ph-BVQ" kind="custom" identifier="toSellPage" customClass="SWRevealViewControllerSeguePushController" id="Ms6-Cq-UGc"/>
@@ -796,7 +768,6 @@
                         <outlet property="browseCell" destination="ejt-ts-N7L" id="a2Q-cV-enF"/>
                         <outlet property="myMatchesCell" destination="uOA-Gq-RVK" id="eyJ-fR-krJ"/>
                         <outlet property="myPostsCell" destination="jSE-w3-eGF" id="rfX-Zp-Zeu"/>
-                        <outlet property="notificationsCell" destination="Vjk-h9-A2d" id="VfS-vY-NFj"/>
                         <outlet property="profileCell" destination="bRs-Vj-jyd" id="ySU-ve-mPC"/>
                         <outlet property="sellCell" destination="17O-B4-1Yi" id="yox-l6-aFZ"/>
                         <outlet property="settingsCell" destination="ctk-YQ-JFI" id="mmx-bt-a3B"/>
@@ -819,5 +790,7 @@
         <segue reference="8vX-4e-WnC"/>
         <segue reference="mUc-z2-b8r"/>
         <segue reference="YQC-W7-xKJ"/>
+        <segue reference="fH8-HC-wrA"/>
+        <segue reference="Al0-8C-Npd"/>
     </inferredMetricsTieBreakers>
 </document>

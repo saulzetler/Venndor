@@ -45,6 +45,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        
+        
+        
 //        self.view.backgroundColor = UIColor(red: 0.92, green: 0.95, blue: 0.93, alpha: 1)
         
 //        let globalItems = GlobalItems()
@@ -80,18 +83,30 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 //        setupItemInfo()
         
         
-        //MiniMyMatches button at bottom of browse.
+        
         let screenSize: CGRect = UIScreen.mainScreen().bounds
+        
+        //cover view
+//        let cover = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height*0.9))
+//        cover.backgroundColor = UIColorFromHex(0xffffff, alpha: 0.6)
+//        cover.hidden = false
+//        self.view.addSubview(cover)
+        
+        //MiniMyMatches button at bottom of browse.
         let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
-        miniMatches = makeImageButton("iphone-icon.png", frame: buttonSize, target: #selector(BrowseViewController.showAlert(_:)), tinted: false, circle: true, backgroundColor: 0x1abc9c, backgroundAlpha: 1)
+        miniMatches = makeImageButton("ic_keyboard_arrow_up_white.png", frame: buttonSize, target: #selector(BrowseViewController.showAlert(_:)), tinted: false, circle: true, backgroundColor: 0x006666, backgroundAlpha: 1)
         
         miniMatches.layer.cornerRadius = 0.5 * miniMatches.bounds.size.width
         miniMatches.layer.masksToBounds = true
+        
+        let bottomBar = CGRect(x: 0, y: screenSize.height*0.93, width: screenSize.width, height: screenSize.height*0.07)
+        let bottomBarButton = UIButton(frame: bottomBar)
+        bottomBarButton.backgroundColor = UIColorFromHex(0x006666)
+        bottomBarButton.addTarget(self, action: #selector(BrowseViewController.showAlert(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        
+        self.view.addSubview(bottomBarButton)
 
         self.view.addSubview(miniMatches)
-
-        //end minimatches decleration, could use refactoring instead of ugly code
-        
         
         //prepare the reveal view controller to allow swipping and side menus.
         if revealViewController() != nil {
@@ -102,6 +117,11 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         //add the headerview
         addHeader()
+//        self.view.bringSubviewToFront(cover)
+    }
+    
+    override func didMoveToParentViewController(parent: UIViewController?) {
+        
     }
     
     override func didReceiveMemoryWarning() {
@@ -158,6 +178,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.2, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*0.6))
         itemInfo.addSubview(itemName)
         itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*1.2, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
+        itemDescription.numberOfLines = 0
         itemInfo.addSubview(itemDescription)
         itemCondtion = UIView(frame: CGRectMake(screenSize.width*0.25, screenSize.height*0.4, screenSize.width*0.5, 30))
 //        let filledStarImage = UIImage(named: "Star Filled.png")
@@ -204,7 +225,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         
         let customViewTwo = UIView(frame: CGRect(x: -10, y: 125, width: alertController.view.bounds.size.width+10, height: 75))
-        customViewTwo.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+        customViewTwo.backgroundColor = UIColorFromHex(0x1abc9c, alpha: 1)
 
         //create the custom cancel view for the user to quit the menu
         //note this function also cancels when a user presses outside the frame

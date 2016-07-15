@@ -80,7 +80,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         }
         
         setupScrollView()
-        addHeader()
+        addHeaderItems()
         addGestureRecognizer()
         setupButtons()
     }
