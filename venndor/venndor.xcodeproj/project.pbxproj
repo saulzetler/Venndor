@@ -54,6 +54,9 @@
 		E43070E41D22FDC80035BCF4 /* Back_Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E43070E31D22FDC80035BCF4 /* Back_Arrow.png */; };
 		E43070E61D2312B00035BCF4 /* OfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43070E51D2312B00035BCF4 /* OfferViewController.swift */; };
 		E43C92B51D189C67003E9CF5 /* ItemNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */; };
+		E44B388C1D39441100733D96 /* use_current_location.png in Resources */ = {isa = PBXBuildFile; fileRef = E44B388B1D39441100733D96 /* use_current_location.png */; };
+		E44B38911D396B9C00733D96 /* Checked-100.png in Resources */ = {isa = PBXBuildFile; fileRef = E44B388F1D396B9C00733D96 /* Checked-100.png */; };
+		E44B38921D396B9C00733D96 /* Xbox X-100.png in Resources */ = {isa = PBXBuildFile; fileRef = E44B38901D396B9C00733D96 /* Xbox X-100.png */; };
 		E44C15181D11B5D00006EBAD /* Shopping Cart Loaded-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */; };
 		E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15171D11B5D00006EBAD /* Megaphone-50.png */; };
 		E44C151C1D11B9650006EBAD /* Settings-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C151A1D11B9650006EBAD /* Settings-50.png */; };
@@ -171,6 +174,9 @@
 		E43070E31D22FDC80035BCF4 /* Back_Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back_Arrow.png; sourceTree = "<group>"; };
 		E43070E51D2312B00035BCF4 /* OfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferViewController.swift; sourceTree = "<group>"; };
 		E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemNameTextField.swift; sourceTree = "<group>"; };
+		E44B388B1D39441100733D96 /* use_current_location.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = use_current_location.png; sourceTree = "<group>"; };
+		E44B388F1D396B9C00733D96 /* Checked-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Checked-100.png"; sourceTree = "<group>"; };
+		E44B38901D396B9C00733D96 /* Xbox X-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Xbox X-100.png"; sourceTree = "<group>"; };
 		E44C15161D11B5D00006EBAD /* Shopping Cart Loaded-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Shopping Cart Loaded-50.png"; sourceTree = "<group>"; };
 		E44C15171D11B5D00006EBAD /* Megaphone-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Megaphone-50.png"; sourceTree = "<group>"; };
 		E44C151A1D11B9650006EBAD /* Settings-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Settings-50.png"; sourceTree = "<group>"; };
@@ -414,6 +420,9 @@
 		E44C153E1D11E04F0006EBAD /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				E44B388F1D396B9C00733D96 /* Checked-100.png */,
+				E44B38901D396B9C00733D96 /* Xbox X-100.png */,
+				E44B388B1D39441100733D96 /* use_current_location.png */,
 				E4845EE91D3832A500F4A5B2 /* Expand Arrow-100.png */,
 				E4845EE51D37E7F000F4A5B2 /* Star Filled White.png */,
 				E4845EE61D37E7F000F4A5B2 /* Star White.png */,
@@ -591,6 +600,7 @@
 				E43070E41D22FDC80035BCF4 /* Back_Arrow.png in Resources */,
 				E4992DFF1D2C38D200032221 /* go.png in Resources */,
 				E44C153C1D11E0430006EBAD /* Kitchen-50.png in Resources */,
+				E44B388C1D39441100733D96 /* use_current_location.png in Resources */,
 				E4C0594C1D358E7A00AE51A3 /* Search Filled-100.png in Resources */,
 				E44C151F1D11B9B90006EBAD /* New Product-50.png in Resources */,
 				106E96251D35896700DBBED0 /* iphone-icon.png in Resources */,
@@ -604,8 +614,10 @@
 				E4845EEA1D3832A500F4A5B2 /* Expand Arrow-100.png in Resources */,
 				10F6B3371D2D5ED8008B83A8 /* splashGif.gif in Resources */,
 				E49051B41D0A006B0045D5C0 /* app landing page background.png in Resources */,
+				E44B38911D396B9C00733D96 /* Checked-100.png in Resources */,
 				10ADC9B51D0749700028A999 /* LaunchScreen.storyboard in Resources */,
 				E44C153D1D11E0430006EBAD /* Lamp-50.png in Resources */,
+				E44B38921D396B9C00733D96 /* Xbox X-100.png in Resources */,
 				E44C153B1D11E0430006EBAD /* Multiple Devices-50.png in Resources */,
 				E4D4C9DF1D2EDC0200EF0455 /* Star Filled.png in Resources */,
 				E44C15371D11E0430006EBAD /* More-50.png in Resources */,
