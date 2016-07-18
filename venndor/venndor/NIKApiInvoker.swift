@@ -62,7 +62,7 @@ final class NIKApiInvoker {
         
         let date = NSDate()
         let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) {(response_data, response, var response_error) -> Void in
+        let task = session.dataTaskWithRequest(request) {(response_data, response, response_error) -> Void in
             self.stopLoad()
             if let response_error = response_error {
                 if let response_data = response_data {
@@ -79,7 +79,7 @@ final class NIKApiInvoker {
             } else {
                 let statusCode = (response as! NSHTTPURLResponse).statusCode
                 if !NSLocationInRange(statusCode, NSMakeRange(200, 99)) {
-                    response_error = NSError(domain: "swagger", code: statusCode, userInfo: try! NSJSONSerialization.JSONObjectWithData(response_data!, options: []) as? [NSObject: AnyObject])
+                    //response_error = NSError(domain: "swagger", code: statusCode, userInfo: try! NSJSONSerialization.JSONObjectWithData(response_data!, options: []) as? [NSObject: AnyObject])
                     completionBlock(nil, response_error)
                     return
                 } else {

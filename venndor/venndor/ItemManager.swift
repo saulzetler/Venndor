@@ -111,8 +111,8 @@ struct ItemManager {
     func retrieveItemImageById(id: String, imageIndex: Int, completionHandler: (UIImage?, ErrorType?) -> () ) {
         RESTEngine.sharedEngine.getImageFromServerById(id, fileName: "image\(imageIndex)",
             success: { response in
-                
-                if let content = response!["content"] as? NSString {
+               
+                if let response = response, content = response["content"] as? NSString {
                     let fileData = NSData(base64EncodedString: content as String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
                     if let data = fileData {
                         let img = UIImage(data: data)
@@ -160,9 +160,10 @@ struct ItemManager {
         
         //filter by category
         if GlobalItems.currentCategory != nil {
-            ids = ids == nil ? GlobalItems.currentCategory : "\(ids) and (\(GlobalItems.currentCategory))"
+            ids = ids == nil ? GlobalItems.currentCategory : "\(ids) and (category = \(GlobalItems.currentCategory!))"
         }
         
+        print("\(ids)")
         return ids
     }
     
