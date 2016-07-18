@@ -139,6 +139,26 @@ extension UIViewController {
         view.endEditing(true)
     }
     
+    func deactivateWhenSideMenuIsOpen() {
+        let deactivateView = UIView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.height*0.1, 0, UIScreen.mainScreen().bounds.height*0.9))
+        deactivateView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.7)
+        deactivateView.tag = 100
+        let tap = UITapGestureRecognizer(target: deactivateView, action: #selector(UIViewController.reactivate))
+        deactivateView.addGestureRecognizer(tap)
+        
+    }
+    
+    func reactivate() {
+        for view in self.view.subviews {
+            if (view.tag == 100) {
+                view.removeFromSuperview()
+            }
+        }
+        if revealViewController() != nil {
+            revealViewController().revealToggle(self)
+        }
+    }
+    
     
     //my match/post functions
     
@@ -146,8 +166,6 @@ extension UIViewController {
 }
 
 class ViewController: UIViewController {
-
-    
     
 }
 
