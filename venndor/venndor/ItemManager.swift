@@ -163,7 +163,6 @@ struct ItemManager {
             ids = ids == nil ? GlobalItems.currentCategory : "\(ids) and (category = \(GlobalItems.currentCategory!))"
         }
         
-        print("\(ids)")
         return ids
     }
     
