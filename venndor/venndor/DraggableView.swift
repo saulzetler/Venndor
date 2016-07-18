@@ -21,7 +21,7 @@ protocol DraggableViewDelegate {
     func cardSwipedRight(card: UIView) -> Void
 }
 
-public class DraggableView: UIView, UIScrollViewDelegate {
+public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     var delegate: DraggableViewDelegate!
     var panGestureRecognizer: UIPanGestureRecognizer!
     var originPoint: CGPoint!
@@ -39,7 +39,12 @@ public class DraggableView: UIView, UIScrollViewDelegate {
     //save current item
     var currentItem: Item!
     var firstPhoto: UIImage!
-
+    
+    var itemInfo: UIView!
+    var itemName: UILabel!
+    var itemDescription: UILabel!
+    var infoOpen: Bool!
+    
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -51,27 +56,42 @@ public class DraggableView: UIView, UIScrollViewDelegate {
         currentItem = item
         
         setupScrollView(item)
-        
-
-        information = UILabel(frame: CGRectMake(0, 50, self.frame.size.width, 100))
-        information.text = "no info given"
-        information.textAlignment = NSTextAlignment.Center
-        information.textColor = UIColor.blackColor()
+        setupItemInfo(item)
 
         self.backgroundColor = UIColor.whiteColor()
 
         panGestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(DraggableView.beingDragged(_:)))
 
         self.addGestureRecognizer(panGestureRecognizer)
-        self.addSubview(information)
-
+            
         overlayView = OverlayView(frame: CGRectMake(self.frame.size.width/2-100, 0, 100, 100))
         overlayView.alpha = 0
         self.addSubview(overlayView)
-
+        
         xFromCenter = 0
         yFromCenter = 0
     
+    }
+    
+    func setupItemInfo(item: Item) {
+//        itemInfo = UIView(frame: CGRect(x: (self.view.frame.size.width - CARD_WIDTH)/2, y: (self.view.frame.size.height - CARD_HEIGHT)/2.8 + CARD_HEIGHT, width: CARD_WIDTH, height: self.view.frame.height*0.1))
+        itemInfo = UIView(frame: CGRect(x: 0, y: self.frame.height*0.9, width: self.frame.width, height: self.frame.height*0.1))
+        itemInfo.backgroundColor = UIColor.whiteColor()
+        itemInfo.layer.cornerRadius = 20
+        itemInfo.layer.masksToBounds = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(DraggableView.handleTap(_:)))
+        tap.delegate = self
+        itemInfo.addGestureRecognizer(tap)
+        itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*0.6))
+        itemName.text = item.name
+        itemInfo.addSubview(itemName)
+        itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*1.2, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
+        itemDescription.text = item.details
+        itemDescription.numberOfLines = 0
+        itemInfo.addSubview(itemDescription)
+        infoOpen = false
+        self.addSubview(itemInfo)
+        self.bringSubviewToFront(itemInfo)
     }
     
     
@@ -82,11 +102,11 @@ public class DraggableView: UIView, UIScrollViewDelegate {
         let cardWidth = self.frame.width
         let cardHeight = self.frame.height
         scrollView.delegate = self
-        scrollView.frame = CGRectMake(0, 0, cardWidth, cardHeight)
-        scrollView.contentSize = CGSizeMake(cardWidth, cardHeight*CGFloat(item.photoCount))
+        scrollView.frame = CGRectMake(0, 0, cardWidth, cardHeight*0.9)
+        scrollView.contentSize = CGSizeMake(cardWidth, cardHeight*0.9*CGFloat(item.photoCount))
         scrollView.decelerationRate = 0.1
         pageControl.currentPage = 0
-        containerView.frame = CGRectMake(0, 0, cardWidth, cardHeight*CGFloat(item.photoCount))
+        containerView.frame = CGRectMake(0, 0, cardWidth, cardHeight*0.9*CGFloat(item.photoCount))
         picNum = 0
         
         let scrollViewWidth:CGFloat = self.scrollView.frame.width
@@ -164,6 +184,28 @@ public class DraggableView: UIView, UIScrollViewDelegate {
         self.layer.shadowOpacity = 0.2;
         self.layer.shadowOffset = CGSizeMake(1, 1);
     }
+    
+    
+    func handleTap(sender: AnyObject?) {
+        if infoOpen == false { //open info
+            UIView.animateWithDuration(1, animations: { () -> Void in
+                self.itemInfo.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+                self.itemInfo.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.95)
+            }) { (finished: Bool) -> Void in
+            }
+            infoOpen = true
+        }
+        else { //close info
+            UIView.animateWithDuration(1, animations: { () -> Void in
+                self.itemInfo.frame = CGRect(x: 0, y: self.frame.height*0.9, width: self.frame.width, height: self.frame.height*0.1)
+                self.itemInfo.backgroundColor = UIColor.whiteColor()
+            }) { (finished: Bool) -> Void in
+            }
+            infoOpen = false
+        }
+        
+        
+    }
 
     func beingDragged(gestureRecognizer: UIPanGestureRecognizer) -> Void {
         xFromCenter = Float(gestureRecognizer.translationInView(self).x)
@@ -204,7 +246,7 @@ public class DraggableView: UIView, UIScrollViewDelegate {
         } else {
             overlayView.setMode(GGOverlayViewMode.GGOverlayViewModeLeft)
         }
-        overlayView.alpha = CGFloat(min(fabsf(Float(distance))/100, 0.4))
+        overlayView.alpha = CGFloat(min(fabsf(Float(distance))/100, 0.7))
     }
 
     func afterSwipeAction() -> Void {

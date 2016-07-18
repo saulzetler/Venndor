@@ -43,7 +43,7 @@ class ProfilePageViewController: UIViewController {
         setLabels()
         
         //add the header
-        addHeaderOther()
+        addHeaderOther("Your Profile")
         
         //default content scroll
         dispatch_async(dispatch_get_main_queue(), {

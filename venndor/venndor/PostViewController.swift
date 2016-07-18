@@ -59,7 +59,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setupPageControll()
         setupPostButton()
         setupRatingControl()
-        addHeaderOther()
+        addHeaderOther("Sell an Item")
         setupDownArrow()
         setupMap()
         hideKeyboardWhenTappedAround()

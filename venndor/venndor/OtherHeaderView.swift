@@ -24,10 +24,11 @@ class OtherHeaderView: UIView, UITextFieldDelegate {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    override init(frame: CGRect) {
+    init(frame: CGRect, page: String) {
         super.init(frame: frame)
         setUpViewFrame()
         setUpViewMenu()
+        setUpName(page)
     }
     
     func setUpViewFrame() -> Void {
@@ -35,6 +36,13 @@ class OtherHeaderView: UIView, UITextFieldDelegate {
         
         self.frame = CGRectMake(0, 0, screenSize.width, screenSize.height*0.1)
         self.backgroundColor = UIColorFromHex(0x1abc9c, alpha: 1)
+    }
+    func setUpName(page: String) -> Void {
+        let title = UILabel(frame: CGRectMake(screenSize.width*0.36, 26, screenSize.width*0.6, 30))
+        title.text = page
+        title.textColor = UIColor.whiteColor()
+        title.font = UIFont(name: title.font.fontName, size: 20)
+        self.addSubview(title)
     }
     
     func setUpViewMenu() -> Void {

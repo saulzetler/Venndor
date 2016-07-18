@@ -13,7 +13,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var allCards: [DraggableView]!
     var itemList: [Item]!
     
-    let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.7
+    let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.77
     let CARD_WIDTH: CGFloat = UIScreen.mainScreen().bounds.width*0.9
     var MAX_BUFFER_SIZE: Int!
     
@@ -29,7 +29,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //declare the current category so we know what cards we need to filter
     var currentCategory: String!
     var itemInfo: UIView!
-    var currentDraggableInfo: DraggableView!
+    var draggableInfo: DraggableView!
     var itemName: UILabel!
     var itemDescription: UILabel!
     var itemCondtion: UIView!
@@ -37,7 +37,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //variables to help declare and set things
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var miniMatches: UIButton!
-    var menuTransitionManager = MenuTransitionManager()
     let fadeOut = UIView()
     var headerView: HeaderView!
     
@@ -76,7 +75,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 GlobalItems.items = items
                 dispatch_async(dispatch_get_main_queue()) {
                     self.setupView()
-                    self.setupItemInfo()
+//                    self.setupItemInfo()
                 }
             }
         }
@@ -153,11 +152,13 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         itemList = []
         allCards = []
         loadedCards = []
+//        loadedInfos = []
         currentCardIndex = 0
         cardsLoadedIndex = 0
         loadCards(GlobalItems.items)
     }
     
+    /*
     //functions to create item information
     
     func updateItemInfo() {
@@ -167,6 +168,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         itemName.text = itemList[currentCardIndex].name
         itemDescription.text = itemList[currentCardIndex].details
     }
+    
     
     func setupItemInfo() {
         itemInfo = UIView(frame: CGRect(x: (self.view.frame.size.width - CARD_WIDTH)/2, y: (self.view.frame.size.height - CARD_HEIGHT)/2.8 + CARD_HEIGHT, width: CARD_WIDTH, height: self.view.frame.height*0.1))
@@ -189,11 +191,13 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         self.view.addSubview(itemInfo)
     }
     
+    
+    
     func handleTap(sender: AnyObject?) {
         if infoOpen == false { //open info
             UIView.animateWithDuration(1, animations: { () -> Void in
-                self.itemInfo.frame = CGRect(x: (self.view.frame.size.width - self.CARD_WIDTH)/2, y: (self.view.frame.size.height - self.CARD_HEIGHT)/2.8, width: self.CARD_WIDTH, height: self.view.frame.height*0.1 + self.CARD_HEIGHT)
-                self.itemInfo.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.95)
+                self.draggableInfo.frame = CGRect(x: (self.view.frame.size.width - self.CARD_WIDTH)/2, y: (self.view.frame.size.height - self.CARD_HEIGHT)/2.8, width: self.CARD_WIDTH, height: self.view.frame.height*0.1 + self.CARD_HEIGHT)
+                self.draggableInfo.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.95)
                 }) { (finished: Bool) -> Void in
             }
             infoOpen = true
@@ -207,8 +211,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             infoOpen = false
         }
         
-        
     }
+    
+    */
     
     //function to bring up mini matches bottom menu
     func showAlert(sender: UIButton) {
@@ -361,25 +366,22 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //functions to create dragable views
     
     func createDraggableViewFromItem(item: Item) -> DraggableView {
-        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2.8, CARD_WIDTH, CARD_HEIGHT), item: item)
+        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: item)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
-        draggableView.information.text = ""
         draggableView.delegate = self
         return draggableView
     }
     
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
-        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2.8, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index])
+        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index])
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
-        draggableView.information.text = ""
         draggableView.delegate = self
         return draggableView
     }
     
-    
-    //trying to implement dragging the info aswell but not gonna happen rn
+    /*
     func createDragableInfoView(item: Item) -> DraggableView {
         let infoFrame = CGRect(x: (self.view.frame.size.width - CARD_WIDTH)/2, y: (self.view.frame.size.height - CARD_HEIGHT)/2.8 + CARD_HEIGHT, width: CARD_WIDTH, height: self.view.frame.height*0.1)
         let draggableInfo = DraggableView(frame: infoFrame, item: item)
@@ -392,14 +394,16 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         draggableInfo.addGestureRecognizer(tap)
         itemName = UILabel(frame: CGRect(x: draggableInfo.frame.width*0.05, y: draggableInfo.frame.height*0.2, width: draggableInfo.frame.width, height: draggableInfo.frame.height*0.6))
         draggableInfo.addSubview(itemName)
-        itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*1.2, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
+        itemDescription = UILabel(frame: CGRect(x: draggableInfo.frame.width*0.05, y: draggableInfo.frame.height*1.2, width: draggableInfo.frame.width*0.95, height: draggableInfo.frame.height*1.6))
         itemDescription.numberOfLines = 0
         draggableInfo.addSubview(itemDescription)
         updateItemInfo()
         infoOpen = false
-        self.view.addSubview(itemInfo)
+        self.view.addSubview(draggableInfo)
         return draggableInfo
     }
+    
+    */
     
     //Dragable view delegate functions
     
@@ -435,10 +439,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             self.view.sendSubviewToBack(newCard)
 //            self.view.addSubview(newInfo)
 //            self.view.sendSubviewToBack(newInfo)
-            updateItemInfo()
+//            updateItemInfo()
         }
         else {
-            itemInfo.removeFromSuperview()
+//            itemInfo.removeFromSuperview()
         }
     }
     
