@@ -20,7 +20,6 @@ class HeaderView: UIView, UITextFieldDelegate {
     let cancelButton = UIButton(type: UIButtonType.Custom) as UIButton
     var sampleTextField: UITextField!
     
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }

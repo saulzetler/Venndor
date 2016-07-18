@@ -116,19 +116,19 @@ class CategoriesMenuController: UITableViewController {
             GlobalItems.currentCategory = "category=Furniture"
             break;
         case 3:
-            GlobalItems.currentCategory = "category=Kitchen"
+            GlobalItems.currentCategory = "category=Household"
             break;
         case 4:
-            GlobalItems.currentCategory = "category=Household"
+            GlobalItems.currentCategory = "category=Kitchen"
             break;
         case 5:
             GlobalItems.currentCategory = "category=Electronics"
             break;
         case 6:
-            GlobalItems.currentCategory = "category=Clothing"
+            GlobalItems.currentCategory = "category=Books"
             break;
         case 7:
-            GlobalItems.currentCategory = "category=Books"
+            GlobalItems.currentCategory = "category=Clothing"
             break;
         case 8:
             GlobalItems.currentCategory = "category=Other"

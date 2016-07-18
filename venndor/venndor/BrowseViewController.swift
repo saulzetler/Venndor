@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate, UIGestureRecognizerDelegate {
+class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate {
     
     var allCards: [DraggableView]!
     var itemList: [Item]!
@@ -43,7 +43,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         super.viewDidLoad()
         
         
-        
+        print(GlobalItems.currentCategory)
         
 //        self.view.backgroundColor = UIColor(red: 0.92, green: 0.95, blue: 0.93, alpha: 1)
         
@@ -115,10 +115,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         //add the headerview
         addHeader()
 //        self.view.bringSubviewToFront(cover)
-    }
-    
-    override func didMoveToParentViewController(parent: UIViewController?) {
-        
     }
     
     override func didReceiveMemoryWarning() {
