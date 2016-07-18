@@ -12,7 +12,7 @@ import UIKit
 struct GlobalItems {
     static var items = [Item]()
     static var currentCategory: String?
-//    static var currentSearch: [String]
+    static var currentSearch = [String]()
 }
 
 class Item: NSObject {

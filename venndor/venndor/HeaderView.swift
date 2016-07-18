@@ -140,6 +140,8 @@ class HeaderView: UIView, UITextFieldDelegate {
         if self.sampleTextField.text != "" {
             let temp = SearchControl()
             temp.SearchFor(self.sampleTextField.text!)
+            let temp2 = parentViewController as! BrowseViewController
+            temp2.backToSplash()
         }
     }
     
