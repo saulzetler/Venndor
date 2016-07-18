@@ -13,7 +13,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var allCards: [DraggableView]!
     var itemList: [Item]!
     
-    let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.7
+    let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.77
     let CARD_WIDTH: CGFloat = UIScreen.mainScreen().bounds.width*0.9
     var MAX_BUFFER_SIZE: Int!
     
@@ -22,16 +22,19 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var loadedCards: [DraggableView]!
     var loadedInfos: [DraggableView]!
 
+    //variables for miniMatches
+    var miniMatchContainer = [UIImageView]()
+    var tappedItem: Item!
+    
     //declare the current category so we know what cards we need to filter
-
     var currentCategory: String!
     var itemInfo: UIView!
-    var currentDraggableInfo: DraggableView!
+    var draggableInfo: DraggableView!
     var itemName: UILabel!
     var itemDescription: UILabel!
     var itemCondtion: UIView!
     
-    //variabls to help declare and set things
+    //variables to help declare and set things
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var miniMatches: UIButton!
     let fadeOut = UIView()
@@ -72,7 +75,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 GlobalItems.items = items
                 dispatch_async(dispatch_get_main_queue()) {
                     self.setupView()
-                    self.setupItemInfo()
+//                    self.setupItemInfo()
                 }
             }
         }
@@ -125,11 +128,17 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     //code to for when the user swipes right to make an offer
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "toOfferScreen") {
+        switch segue.identifier! {
+        case "toOfferScreen":
             let ovc = segue.destinationViewController as! OfferViewController
-
             ovc.offeredItem = itemList[currentCardIndex]
-
+            
+        case "showItemInfo":
+            let ivc = segue.destinationViewController as! ItemInfoViewController
+            ivc.item = self.tappedItem
+        default:
+            print("The fuck kind of segue are you trying to do?!?!")
+            return
         }
     }
     
@@ -139,11 +148,13 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         itemList = []
         allCards = []
         loadedCards = []
+//        loadedInfos = []
         currentCardIndex = 0
         cardsLoadedIndex = 0
         loadCards(GlobalItems.items)
     }
     
+    /*
     //functions to create item information
     
     func updateItemInfo() {
@@ -153,6 +164,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         itemName.text = itemList[currentCardIndex].name
         itemDescription.text = itemList[currentCardIndex].details
     }
+    
     
     func setupItemInfo() {
         itemInfo = UIView(frame: CGRect(x: (self.view.frame.size.width - CARD_WIDTH)/2, y: (self.view.frame.size.height - CARD_HEIGHT)/2.8 + CARD_HEIGHT, width: CARD_WIDTH, height: self.view.frame.height*0.1))
@@ -175,11 +187,13 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         self.view.addSubview(itemInfo)
     }
     
+    
+    
     func handleTap(sender: AnyObject?) {
         if infoOpen == false { //open info
             UIView.animateWithDuration(1, animations: { () -> Void in
-                self.itemInfo.frame = CGRect(x: (self.view.frame.size.width - self.CARD_WIDTH)/2, y: (self.view.frame.size.height - self.CARD_HEIGHT)/2.8, width: self.CARD_WIDTH, height: self.view.frame.height*0.1 + self.CARD_HEIGHT)
-                self.itemInfo.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.95)
+                self.draggableInfo.frame = CGRect(x: (self.view.frame.size.width - self.CARD_WIDTH)/2, y: (self.view.frame.size.height - self.CARD_HEIGHT)/2.8, width: self.CARD_WIDTH, height: self.view.frame.height*0.1 + self.CARD_HEIGHT)
+                self.draggableInfo.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.95)
                 }) { (finished: Bool) -> Void in
             }
             infoOpen = true
@@ -193,8 +207,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             infoOpen = false
         }
         
-        
     }
+    
+    */
     
     //function to bring up mini matches bottom menu
     func showAlert(sender: UIButton) {
@@ -244,23 +259,30 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         for index in 0..<LocalUser.matches.count {
             let match = LocalUser.matches[index]
+            print("Match index: \(index), Match at Index: \(match.itemName)")
             matchManager.retrieveMatchThumbnail(match) { img, error in
                 
-                
                 if let img = img {
+                    
                     //create the mini matches views
                     let xOrigin = index == 0 ? 12 : CGFloat(index) * contentViewDimension + (CGFloat(12) * CGFloat(index) + CGFloat(12))
                     let contentFrame = CGRectMake(xOrigin, 10, contentViewDimension, contentViewDimension)
                     let contentView = self.makeMiniContentView(contentFrame, image: img, matchedPrice: match.matchedPrice)
+                    contentView.match = match
                     
-                    
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(BrowseViewController.toggleItemInfo(_:)))
+                    contentView.addGestureRecognizer(tap)
+                    //self.miniMatchContainer.append(contentView)
+                    //print("MiniMatchContainer Index: \(self.miniMatchContainer.indexOf(contentView)), Match at Index: \(match.itemName)")
+                                        
                     //update the contentScrollView
                     dispatch_async(dispatch_get_main_queue()) {
-                        contentScroll.addSubview(contentView)
+                        
                         let contentLabelFrame = CGRect(x: xOrigin, y: contentFrame.height + 15, width: contentFrame.width, height: 20)
                         let contentLabel = self.makeMiniContentLabel(contentLabelFrame, itemName: match.itemName)
                         let priceLabel = self.makeMiniPriceLabel(contentFrame, matchedPrice: match.matchedPrice)
 
+                        contentScroll.addSubview(contentView)
                         contentScroll.addSubview(contentLabel)
                         contentScroll.addSubview(priceLabel)
                         contentScroll.contentSize = CGSizeMake(contentScrollWidth + CGFloat(16), contentScroll.frame.height)
@@ -269,7 +291,25 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                
             }
         }
+    }
+    
+    func toggleItemInfo(sender: UITapGestureRecognizer) {
+        let container = sender.view  as! ItemContainer
+        let manager = ItemManager()
+        print("MiniMatch Tapped!")
         
+        let match = container.match
+        manager.retrieveItemById(match.itemID) { item, error in
+            guard error == nil else {
+                print("Error pulling item from server in miniMatches: \(error)")
+                return
+            }
+                
+            if let item = item {
+                self.tappedItem = item
+                self.performSegueWithIdentifier("showItemInfo", sender: self)
+            }
+        }
     }
     
     func makeMiniPriceLabel(contentLabelFrame: CGRect, matchedPrice: Double) -> UIView {
@@ -277,16 +317,17 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         let priceLabelWidth = contentLabelFrame.width * 0.55
         let priceLabelFrame = CGRect(x: contentLabelFrame.origin.x + contentLabelFrame.width - CGFloat(30), y: contentLabelFrame.origin.y - 7, width: priceLabelWidth, height: priceLabelHeight)
         
-        //create the price container + label
-        //let screenSize = frame
+        //create the price container
         let priceContainer = UIView(frame: priceLabelFrame)
         priceContainer.backgroundColor = UIColorFromHex(0x2ecc71)
         
+        //create the price label
         let priceLabel = UILabel(frame: CGRect(x: 3, y:0, width: priceContainer.frame.width, height: priceContainer.frame.height))
         priceLabel.text = "$\(matchedPrice)"
         priceLabel.numberOfLines = 1
         //priceLabel.adjustsFontSizeToFitWidth = true
         priceLabel.font = priceLabel.font.fontWithSize(8)
+        
         priceContainer.addSubview(priceLabel)
         createBorder(priceContainer)
         return priceContainer
@@ -295,12 +336,16 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     //functions to create labels and imgViews for MiniMyMatches
     
-    func makeMiniContentView(frame: CGRect, image: UIImage, matchedPrice: Double) -> UIImageView {
+    func makeMiniContentView(frame: CGRect, image: UIImage, matchedPrice: Double) -> ItemContainer {
         
-        let imgView = UIImageView(frame: frame)
+        let containerView = ItemContainer(frame: frame)
+        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: containerView.frame.width, height: containerView.frame.height))
         imgView.image = image
+        imgView.userInteractionEnabled = true
+        
         createBorder(imgView)
-        return imgView
+        containerView.addSubview(imgView)
+        return containerView
     }
     
     func makeMiniContentLabel(frame: CGRect, itemName: String) -> UILabel {
@@ -317,25 +362,22 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //functions to create dragable views
     
     func createDraggableViewFromItem(item: Item) -> DraggableView {
-        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2.8, CARD_WIDTH, CARD_HEIGHT), item: item)
+        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: item)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
-        draggableView.information.text = ""
         draggableView.delegate = self
         return draggableView
     }
     
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
-        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2.8, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index])
+        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index])
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
-        draggableView.information.text = ""
         draggableView.delegate = self
         return draggableView
     }
     
-    
-    //trying to implement dragging the info aswell but not gonna happen rn
+    /*
     func createDragableInfoView(item: Item) -> DraggableView {
         let infoFrame = CGRect(x: (self.view.frame.size.width - CARD_WIDTH)/2, y: (self.view.frame.size.height - CARD_HEIGHT)/2.8 + CARD_HEIGHT, width: CARD_WIDTH, height: self.view.frame.height*0.1)
         let draggableInfo = DraggableView(frame: infoFrame, item: item)
@@ -348,14 +390,16 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         draggableInfo.addGestureRecognizer(tap)
         itemName = UILabel(frame: CGRect(x: draggableInfo.frame.width*0.05, y: draggableInfo.frame.height*0.2, width: draggableInfo.frame.width, height: draggableInfo.frame.height*0.6))
         draggableInfo.addSubview(itemName)
-        itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*1.2, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
+        itemDescription = UILabel(frame: CGRect(x: draggableInfo.frame.width*0.05, y: draggableInfo.frame.height*1.2, width: draggableInfo.frame.width*0.95, height: draggableInfo.frame.height*1.6))
         itemDescription.numberOfLines = 0
         draggableInfo.addSubview(itemDescription)
         updateItemInfo()
         infoOpen = false
-        self.view.addSubview(itemInfo)
+        self.view.addSubview(draggableInfo)
         return draggableInfo
     }
+    
+    */
     
     //Dragable view delegate functions
     
@@ -391,10 +435,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             self.view.sendSubviewToBack(newCard)
 //            self.view.addSubview(newInfo)
 //            self.view.sendSubviewToBack(newInfo)
-            updateItemInfo()
+//            updateItemInfo()
         }
         else {
-            itemInfo.removeFromSuperview()
+//            itemInfo.removeFromSuperview()
         }
     }
     
@@ -403,8 +447,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //loads one new card
     func loadAnotherCard() -> Void {
         let itemManager = ItemManager()
+
         let feedFilter = itemManager.constructFeedFilter()
         itemManager.retrieveMultipleItems(1, offset: cardsLoadedIndex, filter: feedFilter, fields: nil) { items, error in
+
             guard error == nil else {
                 print("Error retrieving items from server: \(error)")
                 return

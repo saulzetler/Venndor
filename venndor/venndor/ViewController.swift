@@ -9,6 +9,7 @@
 extension UIViewController {
     
     func makeImageButton(imageName: String, frame: CGRect, target: Selector, tinted: Bool, circle: Bool, backgroundColor: UInt32, backgroundAlpha: Double) -> UIButton {
+        
         let button = UIButton(frame: frame)
         button.addTarget(self, action: target, forControlEvents: UIControlEvents.TouchUpInside)
         if imageName != "" {

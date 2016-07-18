@@ -87,7 +87,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     
     func setupButtons() {
         //setting up the buttons needed to control the 2 pages within the controller, NEEDS REFACTORING WITH MATCHES
-        let buttonBar = UIView(frame: CGRect(x: 0, y: 64, width: screenSize.width, height: 35))
+        let buttonBar = UIView(frame: CGRect(x: 0, y: screenSize.height * 0.1, width: screenSize.width, height: 35))
         postsBar = UIView(frame: CGRect(x: 0, y: 32, width: screenSize.width/2, height: 3))
         soldBar = UIView(frame: CGRect(x: screenSize.width/2, y: 32, width: screenSize.width/2, height: 3))
         let postsButtonFrame = CGRectMake(0, 0, screenSize.width/2, 32)
@@ -114,17 +114,19 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         imgView.image = item.photos![0]
         let imgHeight = imgView.frame.height
         let imgWidth = imgView.frame.width
-        let labelX = imgWidth + imgView.frame.origin.x + 20
+       
+        let labelX = imgWidth + imgView.frame.origin.x + 10
+        let labelWidth = postContainer.frame.width - imgWidth - 25
         
         //create the match info labels
-        let nameLabel = UILabel(frame: CGRect(x: labelX, y: 5, width: postContainer.frame.width - imgWidth, height: imgHeight * 0.15))
+        let nameLabel = UILabel(frame: CGRect(x: labelX, y: 5, width: labelWidth, height: imgHeight * 0.15))
         nameLabel.text = item.name
         nameLabel.textAlignment = .Center
-        nameLabel.numberOfLines = 1
+        nameLabel.numberOfLines = 2
         nameLabel.adjustsFontSizeToFitWidth = true
         postContainer.addSubview(nameLabel)
         
-        let distanceLabel = UILabel(frame: CGRect(x: labelX, y: postContainer.frame.height * 0.35, width: postContainer.frame.width - imgWidth, height: imgHeight * 0.15))
+        let distanceLabel = UILabel(frame: CGRect(x: labelX, y: postContainer.frame.height * 0.35, width: labelWidth, height: imgHeight * 0.15))
         distanceLabel.text = "495 Hilldale Road"
         distanceLabel.textAlignment = .Center
         distanceLabel.numberOfLines = 1
@@ -148,6 +150,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         priceLabel.adjustsFontSizeToFitWidth = true
         priceContainer.addSubview(priceLabel)
         
+        createBorder(priceContainer)
         postContainer.addSubview(priceContainer)
         postsContainerView.addSubview(postContainer)
     }
@@ -223,7 +226,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    func none(sender: UIButton) {
+    func none(sender: AnyObject) {
         
     }
     
