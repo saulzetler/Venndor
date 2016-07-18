@@ -12,20 +12,7 @@ import UIKit
 struct GlobalItems {
     static var items = [Item]()
     static var currentCategory: String?
-    
-    func loadNextItem() -> Void {
-//        let itemManager = ItemManager()
-        /*
-        for x in 0...9 {
-            if x < 9 {
-                GlobalItems.items[x] = GlobalItems.items[x+1]
-            }
-            else {
-                
-            }
-        }
-        */
-    }
+//    static var currentSearch: [String]
 }
 
 class Item: NSObject {

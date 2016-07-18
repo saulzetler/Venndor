@@ -116,7 +116,7 @@ struct ItemManager {
                     let fileData = NSData(base64EncodedString: content as String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
                     if let data = fileData {
                         let img = UIImage(data: data)
-                        print("YYYYAARRGGGGHHHH!!!!")
+//                        print("YYYYAARRGGGGHHHH!!!!")
                         completionHandler(img, nil)
                     }
                         
@@ -163,7 +163,7 @@ struct ItemManager {
             ids = ids == nil ? GlobalItems.currentCategory : "\(ids) and (category = \(GlobalItems.currentCategory!))"
         }
         
-        print("\(ids)")
+        //print("\(ids)")
         return ids
     }
     
