@@ -88,7 +88,6 @@
 		E49051B21D09E5E80045D5C0 /* SideMenuController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051B11D09E5E80045D5C0 /* SideMenuController.swift */; };
 		E49051B41D0A006B0045D5C0 /* app landing page background.png in Resources */ = {isa = PBXBuildFile; fileRef = E49051B31D0A006B0045D5C0 /* app landing page background.png */; };
 		E49051B61D0B245C0045D5C0 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051B51D0B245C0045D5C0 /* PostViewController.swift */; };
-		E49051B81D0B29F20045D5C0 /* ItemDescriptionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051B71D0B29F20045D5C0 /* ItemDescriptionView.swift */; };
 		E4992DFF1D2C38D200032221 /* go.png in Resources */ = {isa = PBXBuildFile; fileRef = E4992DFE1D2C38D200032221 /* go.png */; };
 		E4992E041D2C4DB300032221 /* match background.png in Resources */ = {isa = PBXBuildFile; fileRef = E4992E031D2C4DB300032221 /* match background.png */; };
 		E4AB1FF21D30437F00CC7400 /* ImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4AB1FF11D30437F00CC7400 /* ImagePicker.framework */; };
@@ -209,7 +208,6 @@
 		E49051B11D09E5E80045D5C0 /* SideMenuController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SideMenuController.swift; sourceTree = "<group>"; };
 		E49051B31D0A006B0045D5C0 /* app landing page background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "app landing page background.png"; sourceTree = "<group>"; };
 		E49051B51D0B245C0045D5C0 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
-		E49051B71D0B29F20045D5C0 /* ItemDescriptionView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemDescriptionView.swift; sourceTree = "<group>"; };
 		E4992DFE1D2C38D200032221 /* go.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = go.png; sourceTree = "<group>"; };
 		E4992E031D2C4DB300032221 /* match background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "match background.png"; sourceTree = "<group>"; };
 		E4AB1FF11D30437F00CC7400 /* ImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImagePicker.framework; path = "../../../Library/Developer/Xcode/DerivedData/venndor-cjexyuheznflryetuxeryodhnzpo/Build/Products/Debug-iphonesimulator/ImagePicker/ImagePicker.framework"; sourceTree = "<group>"; };
@@ -458,7 +456,6 @@
 				E42E04C21D2563330043779F /* WheelSlider.swift */,
 				E49051A21D09AF7B0045D5C0 /* DraggableView.swift */,
 				E49051A41D09AF7B0045D5C0 /* OverlayView.swift */,
-				E49051B71D0B29F20045D5C0 /* ItemDescriptionView.swift */,
 				101F43CD1D107A55007E0ADE /* HeaderView.swift */,
 				E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */,
 				E43070DF1D22F0B70035BCF4 /* View.swift */,
@@ -810,7 +807,6 @@
 				6319462A1D22F19800715643 /* SeenPostsManager.swift in Sources */,
 				10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */,
 				E43070E21D22F39D0035BCF4 /* OfferView.swift in Sources */,
-				E49051B81D0B29F20045D5C0 /* ItemDescriptionView.swift in Sources */,
 				10F6B3391D2D5F78008B83A8 /* MatchController.swift in Sources */,
 				101F43CE1D107A55007E0ADE /* HeaderView.swift in Sources */,
 				102331941D13267B002C6B3C /* MiniMatchTransitionManager.swift in Sources */,

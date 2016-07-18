@@ -21,7 +21,7 @@ protocol DraggableViewDelegate {
     func cardSwipedRight(card: UIView) -> Void
 }
 
-public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate {
+public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
     var delegate: DraggableViewDelegate!
     var panGestureRecognizer: UIPanGestureRecognizer!
     var originPoint: CGPoint!
@@ -44,6 +44,14 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     var itemName: UILabel!
     var itemDescription: UILabel!
     var infoOpen: Bool!
+    
+    //for map
+    var mapView: GMSMapView!
+    
+    //location variables
+    
+    let locationManager = CLLocationManager()
+    var myLocation: CLLocation!
     
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -89,9 +97,48 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         itemDescription.text = item.details
         itemDescription.numberOfLines = 0
         itemInfo.addSubview(itemDescription)
+        mapView = GMSMapView(frame: CGRect(x: 0, y: itemInfo.frame.height*2.5, width: itemInfo.frame.width, height: itemInfo.frame.height*3.5))
+        let location = CLLocationCoordinate2DMake(CLLocationDegrees(item.latitude), CLLocationDegrees(item.longitude))
+        mapView.camera = GMSCameraPosition(target: location, zoom: 15, bearing: 0, viewingAngle: 0)
+        let pin = GMSMarker(position: location)
+        pin.map = mapView
+        itemInfo.addSubview(mapView)
         infoOpen = false
         self.addSubview(itemInfo)
         self.bringSubviewToFront(itemInfo)
+    }
+    
+    func calculateDistance(item: Item) {
+        let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
+        let itemLatitude = CLLocationDegrees(item.latitude)
+        let itemLongitude = CLLocationDegrees(item.longitude)
+        let myLatitude = myLocation.coordinate.latitude
+        let myLongitude = myLocation.coordinate.longitude
+        
+        
+        let origins = "origins=\(myLatitude),\(myLongitude)"
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
+        
+    }
+    
+    public func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            
+            myLocation = location
+            locationManager.stopUpdatingLocation()
+        }
+    }
+    
+    public func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        // 3
+        if status == .AuthorizedWhenInUse {
+        
+            locationManager.startUpdatingLocation()
+            
+        }
     }
     
     
