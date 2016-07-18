@@ -160,9 +160,10 @@ struct ItemManager {
         
         //filter by category
         if GlobalItems.currentCategory != nil {
-            ids = ids == nil ? GlobalItems.currentCategory : "\(ids) and (\(GlobalItems.currentCategory))"
+            ids = ids == nil ? GlobalItems.currentCategory : "\(ids) and (category = \(GlobalItems.currentCategory!))"
         }
         
+        print("\(ids)")
         return ids
     }
     

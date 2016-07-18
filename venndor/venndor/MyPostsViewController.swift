@@ -87,7 +87,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     
     func setupButtons() {
         //setting up the buttons needed to control the 2 pages within the controller, NEEDS REFACTORING WITH MATCHES
-        let buttonBar = UIView(frame: CGRect(x: 0, y: 64, width: screenSize.width, height: 35))
+        let buttonBar = UIView(frame: CGRect(x: 0, y: screenSize.height * 0.1, width: screenSize.width, height: 35))
         postsBar = UIView(frame: CGRect(x: 0, y: 32, width: screenSize.width/2, height: 3))
         soldBar = UIView(frame: CGRect(x: screenSize.width/2, y: 32, width: screenSize.width/2, height: 3))
         let postsButtonFrame = CGRectMake(0, 0, screenSize.width/2, 32)
@@ -226,7 +226,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    func none(sender: UIButton) {
+    func none(sender: AnyObject) {
         
     }
     
