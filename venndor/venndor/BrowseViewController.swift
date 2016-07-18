@@ -34,7 +34,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //variabls to help declare and set things
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var miniMatches: UIButton!
-    var menuTransitionManager = MenuTransitionManager()
     let fadeOut = UIView()
     var headerView: HeaderView!
     

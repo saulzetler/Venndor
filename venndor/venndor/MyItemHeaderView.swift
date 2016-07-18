@@ -24,11 +24,11 @@ class MyItemHeaderView: UIView, UITextFieldDelegate {
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
-    override init(frame: CGRect) {
+    init(frame: CGRect, page: String) {
         super.init(frame: frame)
         setUpViewFrame()
         setUpViewMenu()
-        setUpViewCategory()
+        setUpName(page)
     }
     
     func setUpViewFrame() -> Void {
@@ -45,14 +45,11 @@ class MyItemHeaderView: UIView, UITextFieldDelegate {
         menuButton.setImage(menuImage, forState: .Normal)
         self.addSubview(menuButton)
     }
-    
-    func setUpViewCategory() -> Void {
-        
-        //setup category button
-        categoryButton = UIButton(type: UIButtonType.Custom) as UIButton
-        categoryButton.frame = CGRectMake(screenSize.width*0.8, 24, screenSize.width*0.2, 30)
-        categoryButton.setImage(categoryImage, forState: .Normal)
-        self.addSubview(categoryButton)
-        
+    func setUpName(page: String) -> Void {
+        let title = UILabel(frame: CGRectMake(screenSize.width*0.36, 26, screenSize.width*0.6, 30))
+        title.text = page
+        title.textColor = UIColor.whiteColor()
+        title.font = UIFont(name: title.font.fontName, size: 20)
+        self.addSubview(title)
     }
 }
