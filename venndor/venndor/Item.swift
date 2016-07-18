@@ -25,11 +25,11 @@ class Item: NSObject {
     var ownerName: String
     var category: String
     var condition: Int
-    var locationX: Double
-    var locationY: Double
+    var latitude: Double
+    var longitude: Double
     var question1: String
     var question2: String
-    var minPrice: Double
+    var minPrice: Int
 //    var previousOffers: [Double]
     
     //photos, name/title, category, question1, question2, condition, description, address, minPrice
@@ -44,16 +44,16 @@ class Item: NSObject {
         ownerName =  json["ownerName"] as! String
         category = json["category"] as! String
         condition = json["condition"] as! Int
-        locationX = json["locationX"] as! Double
-        locationY = json["locationY"] as! Double
+        latitude = json["locationX"] as! Double
+        longitude = json["locationY"] as! Double
         question1 = json["question1"] as! String
         question2 = json["question2"] as! String
-        minPrice = json["minPrice"] as! Double
+        minPrice = json["minPrice"] as! Int
 //        previousOffers = json["previousOffers"] as! [Double]
     }
     
     //init from the app
-    init(name: String, description: String, owner: String, ownerName: String, category: String, condition: Int, locationX: Double, locationY: Double, photos: [UIImage], question1: String, question2: String, minPrice: Double) {
+    init(name: String, description: String, owner: String, ownerName: String, category: String, condition: Int, latitude: Double, longitude: Double, photos: [UIImage], question1: String, question2: String, minPrice: Int) {
         self.name = name
         self.details = description
         self.owner = owner
@@ -62,8 +62,8 @@ class Item: NSObject {
         self.photoCount = photos.count
         self.category = category
         self.condition = condition
-        self.locationX = locationX
-        self.locationY = locationY
+        self.latitude = latitude
+        self.longitude = longitude
         self.question1 = question1
         self.question2 = question2
         self.minPrice = minPrice
