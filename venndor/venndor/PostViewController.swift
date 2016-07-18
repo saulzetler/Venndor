@@ -25,6 +25,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var itemDescription: UITextView!
     var itemName: UITextField!
+    var priceField: UITextField!
     var imageView1: UIImageView!
     var imageView2: UIImageView!
     var imageView3: UIImageView!
@@ -302,7 +303,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setupPriceInput() {
-        let priceField = UITextField(frame: CGRectMake(self.screenSize.width*0.2, self.screenSize.height*6.3, self.screenSize.width*0.6, screenSize.height*0.1))
+        priceField = UITextField(frame: CGRectMake(self.screenSize.width*0.2, self.screenSize.height*6.3, self.screenSize.width*0.6, screenSize.height*0.1))
         let border = CALayer()
         let width = CGFloat(2.0)
         border.borderColor = UIColor.darkGrayColor().CGColor
@@ -546,16 +547,16 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             else {
                 coordinate = currentPlace.coordinate
             }
-            let locationX = 0.0
-            let locationY = 0.0
-            let minPrice = 0.0
+            let latitude = Double(coordinate.latitude)
+            let longitude = Double(coordinate.longitude)
+            let minPrice = Int(priceField.text!)
             let question1 = ""
             let question2 = ""
             
             /******************************************************************/
             
             //create an item object to past to the manager to create the item
-            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, locationX: locationX, locationY: locationY, photos: images, question1: question1, question2: question2, minPrice: minPrice)
+            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, latitude: latitude, longitude: longitude, photos: images, question1: question1, question2: question2, minPrice: minPrice!)
             
             //decalre the item manager and then call the appropriate function to create an item
             let manager = ItemManager()
