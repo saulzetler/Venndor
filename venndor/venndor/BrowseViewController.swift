@@ -259,6 +259,11 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         }
     }
     
+    func backToSplash() {
+        self.performSegueWithIdentifier("backToSplash", sender: self)
+    }
+    
+    
     func makeMiniPriceLabel(contentLabelFrame: CGRect, matchedPrice: Double) -> UIView {
         let priceLabelHeight = contentLabelFrame.height * 0.25
         let priceLabelWidth = contentLabelFrame.width * 0.55
