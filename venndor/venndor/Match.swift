@@ -18,6 +18,7 @@ class Match: NSObject {
     var sellerID: String!
     var sellerName: String! 
     var matchedPrice: Double!
+    var thumbnail: UIImage?
     
     init(itemID: String, itemName: String, buyerID: String, sellerID: String, sellerName: String, matchedPrice: Double) {
         //self.itemName = itemName

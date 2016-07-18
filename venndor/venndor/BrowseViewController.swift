@@ -22,8 +22,11 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var loadedCards: [DraggableView]!
     var loadedInfos: [DraggableView]!
 
+    //variables for miniMatches
+    var miniMatchContainer = [UIImageView]()
+    var tappedItem: Item!
+    
     //declare the current category so we know what cards we need to filter
-
     var currentCategory: String!
     var itemInfo: UIView!
     var draggableInfo: DraggableView!
@@ -31,7 +34,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var itemDescription: UILabel!
     var itemCondtion: UIView!
     
-    //variabls to help declare and set things
+    //variables to help declare and set things
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var miniMatches: UIButton!
     let fadeOut = UIView()
@@ -129,11 +132,17 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     //code to for when the user swipes right to make an offer
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if (segue.identifier == "toOfferScreen") {
+        switch segue.identifier! {
+        case "toOfferScreen":
             let ovc = segue.destinationViewController as! OfferViewController
-
             ovc.offeredItem = itemList[currentCardIndex]
-
+            
+        case "showItemInfo":
+            let ivc = segue.destinationViewController as! ItemInfoViewController
+            ivc.item = self.tappedItem
+        default:
+            print("The fuck kind of segue are you trying to do?!?!")
+            return
         }
     }
     
@@ -196,29 +205,56 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         for index in 0..<LocalUser.matches.count {
             let match = LocalUser.matches[index]
+            print("Match index: \(index), Match at Index: \(match.itemName)")
             matchManager.retrieveMatchThumbnail(match) { img, error in
                 
-                
                 if let img = img {
+                    
                     //create the mini matches views
                     let xOrigin = index == 0 ? 12 : CGFloat(index) * contentViewDimension + (CGFloat(12) * CGFloat(index) + CGFloat(12))
                     let contentFrame = CGRectMake(xOrigin, 10, contentViewDimension, contentViewDimension)
                     let contentView = self.makeMiniContentView(contentFrame, image: img, matchedPrice: match.matchedPrice)
+                    contentView.match = match
                     
-                    
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(BrowseViewController.toggleItemInfo(_:)))
+                    contentView.addGestureRecognizer(tap)
+                    //self.miniMatchContainer.append(contentView)
+                    //print("MiniMatchContainer Index: \(self.miniMatchContainer.indexOf(contentView)), Match at Index: \(match.itemName)")
+                                        
                     //update the contentScrollView
                     dispatch_async(dispatch_get_main_queue()) {
-                        contentScroll.addSubview(contentView)
+                        
                         let contentLabelFrame = CGRect(x: xOrigin, y: contentFrame.height + 15, width: contentFrame.width, height: 20)
                         let contentLabel = self.makeMiniContentLabel(contentLabelFrame, itemName: match.itemName)
                         let priceLabel = self.makeMiniPriceLabel(contentFrame, matchedPrice: match.matchedPrice)
 
+                        contentScroll.addSubview(contentView)
                         contentScroll.addSubview(contentLabel)
                         contentScroll.addSubview(priceLabel)
                         contentScroll.contentSize = CGSizeMake(contentScrollWidth + CGFloat(16), contentScroll.frame.height)
                     }
                 }
                
+            }
+        }
+
+    }
+    
+    func toggleItemInfo(sender: UITapGestureRecognizer) {
+        let container = sender.view  as! ItemContainer
+        let manager = ItemManager()
+        print("MiniMatch Tapped!")
+        
+        let match = container.match
+        manager.retrieveItemById(match.itemID) { item, error in
+            guard error == nil else {
+                print("Error pulling item from server in miniMatches: \(error)")
+                return
+            }
+                
+            if let item = item {
+                self.tappedItem = item
+                self.performSegueWithIdentifier("showItemInfo", sender: self)
             }
         }
     }
@@ -228,16 +264,17 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         let priceLabelWidth = contentLabelFrame.width * 0.55
         let priceLabelFrame = CGRect(x: contentLabelFrame.origin.x + contentLabelFrame.width - CGFloat(30), y: contentLabelFrame.origin.y - 7, width: priceLabelWidth, height: priceLabelHeight)
         
-        //create the price container + label
-        //let screenSize = frame
+        //create the price container
         let priceContainer = UIView(frame: priceLabelFrame)
         priceContainer.backgroundColor = UIColorFromHex(0x2ecc71)
         
+        //create the price label
         let priceLabel = UILabel(frame: CGRect(x: 3, y:0, width: priceContainer.frame.width, height: priceContainer.frame.height))
         priceLabel.text = "$\(matchedPrice)"
         priceLabel.numberOfLines = 1
         //priceLabel.adjustsFontSizeToFitWidth = true
         priceLabel.font = priceLabel.font.fontWithSize(8)
+        
         priceContainer.addSubview(priceLabel)
         createBorder(priceContainer)
         return priceContainer
@@ -246,12 +283,16 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     //functions to create labels and imgViews for MiniMyMatches
     
-    func makeMiniContentView(frame: CGRect, image: UIImage, matchedPrice: Double) -> UIImageView {
+    func makeMiniContentView(frame: CGRect, image: UIImage, matchedPrice: Double) -> ItemContainer {
         
-        let imgView = UIImageView(frame: frame)
+        let containerView = ItemContainer(frame: frame)
+        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: containerView.frame.width, height: containerView.frame.height))
         imgView.image = image
+        imgView.userInteractionEnabled = true
+        
         createBorder(imgView)
-        return imgView
+        containerView.addSubview(imgView)
+        return containerView
     }
     
     func makeMiniContentLabel(frame: CGRect, itemName: String) -> UILabel {
@@ -328,8 +369,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //loads one new card
     func loadAnotherCard() -> Void {
         let itemManager = ItemManager()
+
         let feedFilter = itemManager.constructFeedFilter()
         itemManager.retrieveMultipleItems(1, offset: cardsLoadedIndex, filter: feedFilter, fields: nil) { items, error in
+
             guard error == nil else {
                 print("Error retrieving items from server: \(error)")
                 return
