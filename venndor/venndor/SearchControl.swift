@@ -9,16 +9,16 @@
 import Foundation
 
 struct SearchControl {
-    func SearchFor(searchString: String) -> String {
-//        let characterset = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ")
-//        if searchString.rangeOfCharacterFromSet(characterset.invertedSet) != nil {
-//            print("string contains special characters")
-//            return ""
-//        }
-//        let searchTerms = searchString.characters.split{$0 == " "}.map(String.init)
-//        for x in 0..<searchTerms.count {
-//            
-//        }
-        return ""
+    func SearchFor(searchString: String) {
+        
+        
+        let characterset = NSCharacterSet(charactersInString: "abcdefghijklmnopqrstuvwxyzABCDEFGHIJKLKMNOPQRSTUVWXYZ")
+        if searchString.rangeOfCharacterFromSet(characterset.invertedSet) != nil {
+            print("string contains special characters")
+        }
+        let searchTerms = searchString.characters.split{$0 == " "}.map(String.init)
+        for x in 0..<searchTerms.count {
+            
+        }
     }
 }

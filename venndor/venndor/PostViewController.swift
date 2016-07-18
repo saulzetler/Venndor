@@ -552,6 +552,9 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let question1 = ""
             let question2 = ""
             
+//            var conversion = LocationConverter()
+//            let geoHash = conversion.coordToGeo(temp, longitudeInput: temp2)
+//            print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
             /******************************************************************/
             
             //create an item object to past to the manager to create the item

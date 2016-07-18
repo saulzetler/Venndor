@@ -41,12 +41,17 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var headerView: HeaderView!
     
     var infoOpen: Bool!
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        
-        print(GlobalItems.currentCategory)
+//        let temp = 45.00
+//        let temp2 = 0.00
+//        var conversion = LocationConverter()
+//        let geoHash = conversion.coordToGeo(temp, longitudeInput: temp2)
+//        print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
+//        
+//        print(GlobalItems.currentCategory)
         
 //        self.view.backgroundColor = UIColor(red: 0.92, green: 0.95, blue: 0.93, alpha: 1)
         
@@ -124,7 +129,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.
     }
-    
     
     //code to for when the user swipes right to make an offer
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
@@ -513,6 +517,5 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             print("Succesfully updated the LocalUser's seen posts.")
         }
     }
-
 }
 

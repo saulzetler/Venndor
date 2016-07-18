@@ -137,6 +137,10 @@ class HeaderView: UIView, UITextFieldDelegate {
                 }
             }
         }
+        if self.sampleTextField.text != "" {
+            let temp = SearchControl()
+            temp.SearchFor(self.sampleTextField.text!)
+        }
     }
     
     func textFieldShouldBeginEditing(textField: UITextField) -> Bool {
