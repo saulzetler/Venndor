@@ -47,6 +47,8 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     //for map
     var mapView: GMSMapView!
+    var distText: String!
+    var distanceSet: Bool!
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -103,14 +105,19 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         let pin = GMSMarker(position: location)
         pin.map = mapView
         itemInfo.addSubview(mapView)
-        let currentItemInfo = itemInfo
-        calculateDistance(item, myLocation: myLocation, itemInfo: currentItemInfo)
+        distanceSet = false
+        calculateDistance(item, myLocation: myLocation)
+        while (!distanceSet) {
+        }
+        let itemDist = UILabel(frame: CGRect(x: itemInfo.frame.width*0.75, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.25, height: itemInfo.frame.height*0.6))
+        itemDist.text = distText
+        itemInfo.addSubview(itemDist)
         infoOpen = false
         self.addSubview(itemInfo)
         self.bringSubviewToFront(itemInfo)
     }
     
-    func calculateDistance(item: Item, myLocation: CLLocation, itemInfo: UIView) {
+    func calculateDistance(item: Item, myLocation: CLLocation) {
         
         print("item name: \(item.name)")
         let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
@@ -148,18 +155,14 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
                         let elements = first["elements"] as! Array<AnyObject>
                         let firstElement = elements[0]
                         if let distDict = firstElement["distance"] as? [String:AnyObject] {
-                            let distText = String(distDict["text"]!)
-                            print(distText)
-                            let itemDist = UILabel(frame: CGRect(x: itemInfo.frame.width*0.75, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.25, height: itemInfo.frame.height*0.6))
-                            itemDist.text = distText
-                            itemInfo.addSubview(itemDist)
+                            self.distText = String(distDict["text"]!)
+                            print("distance: \(self.distText)")
+                            self.distanceSet = true
                         }
                         else {
-                            let distText = "none"
-                            print(distText)
-                            let itemDist = UILabel(frame: CGRect(x: itemInfo.frame.width*0.75, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.25, height: itemInfo.frame.height*0.6))
-                            itemDist.text = distText
-                            itemInfo.addSubview(itemDist)
+                            self.distText = "none"
+                            print("distance: \(self.distText)")
+                            self.distanceSet = true
                         }
                     }
                 } catch {
