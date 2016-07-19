@@ -18,6 +18,7 @@
 		105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB021D08AB790073E3AE /* TempViewController.swift */; };
 		106E96231D3582C600DBBED0 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 106E96221D3582C600DBBED0 /* background.jpg */; };
 		106E96251D35896700DBBED0 /* iphone-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 106E96241D35896700DBBED0 /* iphone-icon.png */; };
+		109D93541D3E9BEB00A14616 /* Splash2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109D93531D3E9BEB00A14616 /* Splash2ViewController.swift */; };
 		10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9A71D0749700028A999 /* AppDelegate.swift */; };
 		10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9A91D0749700028A999 /* ViewController.swift */; };
 		10ADC9AD1D0749700028A999 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10ADC9AB1D0749700028A999 /* Main.storyboard */; };
@@ -131,6 +132,7 @@
 		105FCB021D08AB790073E3AE /* TempViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempViewController.swift; sourceTree = "<group>"; };
 		106E96221D3582C600DBBED0 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		106E96241D35896700DBBED0 /* iphone-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphone-icon.png"; sourceTree = "<group>"; };
+		109D93531D3E9BEB00A14616 /* Splash2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Splash2ViewController.swift; sourceTree = "<group>"; };
 		10ADC9A41D0749700028A999 /* venndor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = venndor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10ADC9A71D0749700028A999 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		10ADC9A91D0749700028A999 /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
@@ -277,6 +279,7 @@
 				E478AB131D2D5DDB00F00D60 /* PopUpViewControllerSwift.swift */,
 				E48002071D2FFAF7009C90E2 /* PopoverViewController.swift */,
 				632236B01D36C2CD00C321D3 /* ItemInfoViewController.swift */,
+				109D93531D3E9BEB00A14616 /* Splash2ViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -799,6 +802,7 @@
 				E43C92B51D189C67003E9CF5 /* ItemNameTextField.swift in Sources */,
 				105FCB011D08A5C70073E3AE /* LoginViewController.swift in Sources */,
 				105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */,
+				109D93541D3E9BEB00A14616 /* Splash2ViewController.swift in Sources */,
 				63859A141D13347C004F4968 /* NIKFile.swift in Sources */,
 				E453F0A91D2EC991002637AB /* STRatingControl.swift in Sources */,
 				103B17081D35686C005AEFDD /* jonasBoettcherController.swift in Sources */,
