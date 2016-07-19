@@ -44,6 +44,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        LocalUser.user.mostRecentAction = "Browsed Item Feed"
+        TimeManager.timeStamp = NSDate()
         
         
         
@@ -218,6 +220,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //function to bring up mini matches bottom menu
     func showAlert(sender: UIButton) {
         
+        LocalUser.user.mostRecentAction = "Browsed MiniMatches."
         //create the controller for the bottom menu
         let alertController = UIAlertController(title: "\n\n\n\n", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
@@ -263,7 +266,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         for index in 0..<LocalUser.matches.count {
             let match = LocalUser.matches[index]
-            print("Match index: \(index), Match at Index: \(match.itemName)")
             matchManager.retrieveMatchThumbnail(match) { img, error in
                 
                 if let img = img {
@@ -411,6 +413,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         loadedCards.removeAtIndex(0)
 //        loadedInfos.removeAtIndex(0)
         LocalUser.seenPosts[itemList[currentCardIndex].id] = NSDate()
+        LocalUser.user.mostRecentAction = "Swiped left."
+        LocalUser.user.nuSwipesLeft! += 1
+        LocalUser.user.nuSwipesTotal! += 1
         loadAnotherCard()
         nextCard()
         
@@ -419,6 +424,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     func cardSwipedRight(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
 //        loadedInfos.removeAtIndex(0)
+        
+        LocalUser.user.mostRecentAction = "Swiped right."
+        LocalUser.user.nuSwipesRight! += 1
+        LocalUser.user.nuSwipesTotal! += 1
         loadAnotherCard()
         nextCard()
     }
@@ -507,6 +516,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
+        LocalUser.user.timePerController["BrowseViewController"] += interval
+        
         let manager = SeenPostsManager()
         manager.updateSeenPostsById(LocalUser.user.id) { error in
             guard error == nil else {

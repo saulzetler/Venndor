@@ -16,8 +16,8 @@ enum UpdateType {
 
 struct UserManager {
 
-    func createUser(first: String, last: String, email: String, completionHandler: (User?, ErrorType?) -> ()) {
-        RESTEngine.sharedEngine.registerUser(email, firstName: first, lastName: last,
+    func createUser(first: String, last: String, email: String, gender: String, ageRange: String,  completionHandler: (User?, ErrorType?) -> ()) {
+        RESTEngine.sharedEngine.registerUser(email, firstName: first, lastName: last, gender: gender, ageRange: ageRange,
             success: { response in
                 
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
@@ -26,15 +26,24 @@ struct UserManager {
                         "last_name": "\(last)",
                         "_id": id as! String,
                         "email": email,
+                        "gender": gender,
+                        "ageRange": ageRange,
                         "rating": 0.0,
                         "nuMatches": 0,
                         "nuItemsSold": 0,
                         "nuItemsBought": 0,
-                        "ads": [String](),
+                        "nuSwipesLeft": 0,
+                        "nuSwipesRight": 0,
+                        "nuSwipesTotal": 0,
+                        "nuVisits": 1, 
+                        "moneySaved": 0,
+                        "mostRecentAction": "Created Account.",
+                        "timeOnAppPerSession": [String:AnyObject](),
+                        "timePerController": ["LoginViewController": 0.0, "BrowseViewController": 0.0, "ProfilePageViewController": 0.0, "PostViewController": 0.0, "SettingsViewController": 0.0, "MyPostsViewController": 0.0, "MyMatchesViewController": 0.0, "OfferViewController": 0.0, "DeleteViewController": 0.0, "PopUpViewController": 0.0, "ItemInfoViewController":0.0],
+                        "ads": [String:AnyObject](),
                         "soldItems": [String:AnyObject](),
                         "matches": [String:AnyObject](),
-                        "boughtItems": [String:AnyObject](),
-                        "moneySaved": 0]
+                        "boughtItems": [String:AnyObject]()]
                     let user = User(json: params)
                     completionHandler(user, nil)
                 }
@@ -99,6 +108,17 @@ struct UserManager {
             } , failure: { error in
                 completionHandler(error)
         })
+    }
+    
+    func updateLocalUserMetrics() {
+        let update: [String:AnyObject] = ["nuItemsSold": LocalUser.user.nuItemsSold, "nuItemsBought": LocalUser.user.nuItemsBought, "nuSwipesLeft": LocalUser.user.nuSwipesLeft, "nuSwipesRight": LocalUser.user.nuSwipesRight, "nuSwipesTotal": LocalUser.user.nuSwipesTotal, "nuPosts": LocalUser.user.nuPosts, "nuVisits": LocalUser.user.nuVisits, "mostRecentAction": LocalUser.user.mostRecentAction, "tiemOnAppPerSession": LocalUser.user.timeOnAppPerSession, "timePerController": LocalUser.user.timePerController, "soldItems": LocalUser.user.soldItems, "boughtItems": LocalUser.user.boughtItems]
+        
+        updateUserById(LocalUser.user.id, update: update) { error in
+            guard error == nil else {
+                print("Error updating user from background: \(error)")
+                return
+            }
+        }
     }
 }
 

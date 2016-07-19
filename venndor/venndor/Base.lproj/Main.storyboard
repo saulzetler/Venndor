@@ -783,17 +783,12 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="T4w-aX-c8F"/>
-        <segue reference="8vX-4e-WnC"/>
-        <segue reference="iP8-l6-ghd"/>
-        <segue reference="dlm-GT-Iep"/>
-        <segue reference="XwR-UP-4A2"/>
-        <segue reference="8vX-4e-WnC"/>
-        <segue reference="mUc-z2-b8r"/>
-        <segue reference="YQC-W7-xKJ"/>
         <segue reference="fH8-HC-wrA"/>
+        <segue reference="iP8-l6-ghd"/>
         <segue reference="Al0-8C-Npd"/>
-        <segue reference="T4w-aX-c8F"/>
+        <segue reference="8vX-4e-WnC"/>
         <segue reference="hrt-cp-q1Q"/>
+        <segue reference="NUc-xW-YrN"/>
+        <segue reference="mUc-z2-b8r"/>
     </inferredMetricsTieBreakers>
 </document>

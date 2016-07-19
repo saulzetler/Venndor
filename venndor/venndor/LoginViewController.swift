@@ -54,7 +54,8 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         //, user_location
         //, location = result["user_location"] as? String
         //parameters for what data the app should pull
-        let parameters = ["fields": "email, first_name, last_name, picture.type(large), id, gender"]
+        LocalUser.user.mostRecentAction = "Logged in through Facebook."
+        let parameters = ["fields": "email, first_name, last_name, picture.type(large), id, gender, age_range, education"]
         
         FBSDKGraphRequest(graphPath: "me", parameters: parameters).startWithCompletionHandler {(
             connection, result, error) -> Void in
@@ -67,7 +68,11 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 LocalUser.firstName = firstName
                 LocalUser.lastName = lastName
                 LocalUser.email = email
-                print (gender)
+                LocalUser.gender = gender
+                if let ageRange = result["age_range"] {
+                    print("Age Range: \(ageRange)")
+                }
+                
                 
                 
                 /* ADD PHOTO HANDLER/STORAGE FOR USER*/
@@ -75,7 +80,7 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
 //                let pictureData = NSData(contentsOfURL: link!)
 //                LocalUser.profilePicture = UIImage(data: pictureData!)
                 print (userID)
-                LocalUser.profilePicture = "https://graph.facebook.com/\(userID)/picture?type=large"
+                LocalUser.profilePictureURL = "https://graph.facebook.com/\(userID)/picture?type=large"
                 
                 
                 //transition when great success

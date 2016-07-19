@@ -18,17 +18,21 @@ class PopUpViewControllerSwift : UIViewController {
 
     let ovc = OfferViewController()
 
-    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
+        LocalUser.user.timePerController["PopUpViewController"] += interval
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
         setupBackground()
         
         let userManager = UserManager()
         let matchManager = MatchesManager()
-        
         let item = matchedItem
-
-    
+        
+        LocalUser.user.mostRecentAction = "Matched on an item."
+        TimeManager.timeStamp = NSDate()
         
         //create the match on the server
         let newMatch = Match(itemID: matchedItem.id, itemName: matchedItem.name, buyerID: LocalUser.user.id, sellerID: matchedItem.owner, sellerName: matchedItem.ownerName, matchedPrice: matchedPrice)

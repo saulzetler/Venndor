@@ -27,8 +27,16 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     var matchObjects = [Match]()
     var onMatches: Bool!
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
+        LocalUser.user.timePerController["MyMatchesViewController"] += interval
+        
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        LocalUser.user.mostRecentAction = "Browsed MyMatches"
+        TimeManager.timeStamp = NSDate()
         
         let manager = MatchesManager()
         

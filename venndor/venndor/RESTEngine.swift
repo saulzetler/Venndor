@@ -178,21 +178,35 @@ final class RESTEngine {
     
     //MARK: - User methods
     
-    func registerUser(email: String, firstName: String, lastName: String, success: SuccessClosure, failure: ErrorClosure) {
+    func registerUser(email: String, firstName: String, lastName: String, gender: String, ageRange: String, success: SuccessClosure, failure: ErrorClosure) {
         
         let params: [String: AnyObject] =
         ["email": email,
             "first_name": firstName,
             "last_name": lastName,
-            "rating": 0.0,
+            "gender": gender,
+            "ageRange": ageRange,
+            "profilePictureURL": LocalUser.profilePictureURL,
+            "howTheyFoundVenndor": "", //NI
+            "university": "",  //NI
+            "rating": 0.0,  //NI
             "nuMatches": 0,
-            "nuItemsSold": 0,
-            "nuItemsBought": 0,
-            "soldItems": [String:AnyObject](),
-            "ads": [String:AnyObject](),
-            "matches": [String:AnyObject](),
-            "boughtItems": [String:AnyObject](),
-            "moneySaved": 0]
+            "nuItemsSold": 0,   //NI
+            "nuItemsBought": 0, //NI
+            "nuSwipesLeft": 0,
+            "nuSwipesRight": 0,
+            "nuSwipesTotal": 0,
+            "nuPosts": 0,
+            "nuVisits": 1,
+            "mostRecentAction": "Created Account.", //NI
+            "timeOnAppPerSession": [String:Double](), //NI
+            "timePerController": ["LoginViewController": 0.0, "BrowseViewController": 0.0, "ProfilePageViewController": 0.0, "PostViewController": 0.0, "SettingsViewController": 0.0, "MyPostsViewController": 0.0, "MyMatchesViewController": 0.0, "OfferViewController": 0.0, "DeleteViewController": 0.0, "PopUpViewController": 0.0, "ItemInfoViewController":0.0],
+            "moneySaved": 0.0, //NI
+            "soldItems": [String:AnyObject](), //NI
+            "boughtItems": [String:AnyObject](), //NI
+            "ads": [String:AnyObject](), 
+            "matches": [String:AnyObject]()]
+       
         let requestBody: [String: AnyObject] = ["resource": params]
         
         callApiWithPath(Routing.Service(tableName: "users").path, method: "POST", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)

@@ -46,8 +46,14 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var coordinate: CLLocationCoordinate2D!
     var photoChoiceDisplayed = false
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
+        LocalUser.user.timePerController["PostViewController"] += interval
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        TimeManager.timeStamp = NSDate()
         setupPickerView()
         setupItemName()
         setupItemDescription()
@@ -524,6 +530,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     //function to controll when the user is finished and decides to post
     func postItem(sender: UIButton) {
         
+        LocalUser.user.mostRecentAction = "Posted an Item"
         //add the iamges from the image view to an array to be passed to the backend function to post an item to server
         if let name = itemName.text, details = itemDescription.text {
             var images = [UIImage]()
@@ -538,7 +545,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let category = pickerData[row]
             let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
             
+            /******************************************************************/
+            /******************************************************************/
             /*NEEDS TO BE SET FROM THE DATA GATHERED BY POSTVIEWCONTROLLER*/
+          
             let condition = ratingControl.rating
             if useMyLocation == true {
                 coordinate = myLocation.coordinate
@@ -553,6 +563,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let question2 = ""
             
             /******************************************************************/
+            /******************************************************************/
             
             //create an item object to past to the manager to create the item
             let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, locationX: locationX, locationY: locationY, photos: images, question1: question1, question2: question2, minPrice: minPrice)
@@ -566,8 +577,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     return
                 }
                 print("YAAAAA BOYZ")
+                
                 LocalUser.user.ads[item.id!] = "Posted"
-                let update = ["ads": LocalUser.user.ads]
+                LocalUser.user.nuPosts! += 1
+                let update : [String:AnyObject] = ["ads": LocalUser.user.ads, "nuPosts": LocalUser.user.nuPosts]
                 uManager.updateUserById(LocalUser.user.id, update: update) { error in
                     guard error == nil else {
                         print("Error updating the LocalUser's ads from post screen: \(error)")

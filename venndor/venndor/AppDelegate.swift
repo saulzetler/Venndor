@@ -17,6 +17,7 @@ var currentUser: String!
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var startupTime: NSDate!
     let googleMapsApiKey = "AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -24,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey(googleMapsApiKey)
         
         // Override point for customization after application launch.
+        
+        startupTime = NSDate()
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
@@ -55,11 +58,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
                 return
             }
         }
-            
+        setSessionTime()
+        
+        let manager = UserManager()
+        manager.updateLocalUserMetrics()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        
+        if LocalUser.user != nil {
+            LocalUser.user.nuVisits! += 1
+        }
+        startupTime = NSDate()
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
@@ -71,6 +82,21 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+       
+        //calculate the time of the current session
+        setSessionTime()
+        
+        let manager = UserManager()
+        manager.updateLocalUserMetrics()
+    }
+    
+    
+    func setSessionTime() {
+        let timeInterval = ((startupTime.timeIntervalSinceNow) / 60 * -1)
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+        let dateString = formatter.stringFromDate(startupTime)
+        LocalUser.user.timeOnAppPerSession[dateString] = timeInterval
     }
 
     // MARK: - Core Data stack

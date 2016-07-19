@@ -30,10 +30,19 @@ class ProfilePageViewController: UIViewController {
     var headerView: HeaderView!
     
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
+        LocalUser.user.timePerController["ProfilePageViewController"] += interval
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        LocalUser.user.mostRecentAction = "Viewed Personal Profile"
+        TimeManager.timeStamp = NSDate()
+        
         //add profile picture
-        let link = NSURL(string: user.profilePicture)
+        let link = NSURL(string: user.profilePictureURL)
         let pictureData = NSData(contentsOfURL: link!)
         profilePicView.image = UIImage(data: pictureData!)
         //set up the side menu

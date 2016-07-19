@@ -14,7 +14,18 @@ class ItemInfoViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        LocalUser.user.mostRecentAction = "Entered ItemInfo Page."
+
+        TimeManager.timeStamp = NSDate()
+    
+        
         let item = self.item
         print("WHO KNOWS?!!?!")
+    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
+        LocalUser.user.timePerController["ItemInfoViewController"] += interval
     }
 }

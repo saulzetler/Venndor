@@ -13,43 +13,83 @@ struct LocalUser {
     static var firstName: String!
     static var lastName: String!
     static var email: String!
+    static var gender: String! 
+    static var education: String!
+    static var ageRange: String!
     static var seenPosts: [String:AnyObject]!
     static var matches: [Match]!
-    static var profilePicture: String!
+    static var profilePictureURL: String!
 }
 
 class User: NSObject {
-    var firstName: String!
-    var lastName: String!
     var id: String!
     var email: String!
+    var firstName: String!
+    var lastName: String!
+    var gender: String!
+    var ageRange: String!
+    var profilePictureURL: String!
+    
+    var university: String!  //NI
+    var howTheyFoundVenndor: String!  //NI
+    
     var rating: Double!
     var nuMatches: Int!
-    var nuItemsSold: Int!
-    var nuItemsBought: Int!
-    var soldItems : [String:AnyObject]!
-    var boughtItems: [String:AnyObject]!
+    
+    var nuItemsSold: Int!    //NI
+    var nuItemsBought: Int!  //NI
+    
+    var nuSwipesLeft: Int!
+    var nuSwipesRight: Int!
+    var nuSwipesTotal: Int!
+    var nuPosts: Int!
+    var nuVisits: Int!
+    var moneySaved: Double!  //NI
+    var mostRecentAction: String!
+    
+    //key: Date, Value: Time Spent
+    var timeOnAppPerSession: [String:AnyObject]!
+    
+    //key: Controller name, Value: Time Spent
+    var timePerController: [String:AnyObject]!
+    
+    //key: itemID, Value: Maybe matched/sold price?
+    var soldItems : [String:AnyObject]!    //NI
+    var boughtItems: [String:AnyObject]!   //NI
     var ads: [String:AnyObject]!
-    var profilePicture: String!
+    
     //key: matchID, value: item in the match
     var matches: [String:AnyObject]!
-    var moneySaved: Double!
     let parseManager = ParserManager()
     
     init(json:JSON) {
-        firstName = json["first_name"] as! String
-        lastName = json["last_name"] as! String
         id = json["_id"] as! String
         email = json["email"] as! String
+        firstName = json["first_name"] as! String
+        lastName = json["last_name"] as! String
+        gender = json["gender"] as! String
+        ageRange = json["ageRange"] as! String
+        profilePictureURL = json["profilePictureURL"] as! String
+        university = json["university"] as! String
+        howTheyFoundVenndor = json["howTheyFoundVenndor"] as! String
         rating = json["rating"] as! Double
         nuMatches = json["nuMatches"] as! Int
         nuItemsBought = json["nuItemsBought"] as! Int
         nuItemsSold = json["nuItemsSold"] as! Int
+        nuSwipesLeft = json["nuSwipesLeft"] as! Int
+        nuSwipesRight = json["nuSwipesRight"] as! Int
+        nuSwipesTotal = json["nuSwipesTotal"] as! Int
+        nuPosts = json["nuPosts"] as! Int
+        nuVisits = json["nuVisits"] as! Int
+        moneySaved = json["moneySaved"] as! Double
+        mostRecentAction = json["mostRecentAction"] as! String
+        timeOnAppPerSession = parseManager.getDict(json["timeOnAppPerSession"]!)
+        timePerController = parseManager.getDict(json["timePerController"]!)
         soldItems = parseManager.getDict(json["soldItems"]!)
+        boughtItems = parseManager.getDict(json["boughtItems"]!)
         ads = parseManager.getDict(json["ads"]!)
         matches = parseManager.getDict(json["matches"]!) 
-        boughtItems = parseManager.getDict(json["boughtItems"]!)
-        moneySaved = Double(json["moneySaved"] as! Int)
     }
+    
     
 }

@@ -21,7 +21,8 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        LocalUser.user.mostRecentAction = "Went to Settings"
+        TimeManager.timeStamp = NSDate()
         //add lable for the title, NEEDS REFACTORING
         let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
         label.center = CGPointMake(160, 284)
@@ -35,6 +36,11 @@ class SettingsViewController: UIViewController {
         
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
+        LocalUser.user.timePerController["SettingsViewController"] += interval
+    }
     
     
 }

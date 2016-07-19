@@ -17,13 +17,22 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
 
     var offer: Double!
 
-    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
+        LocalUser.user.timePerController["OfferViewController"] += interval
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        LocalUser.user.mostRecentAction = "Entered the offer screen."
+        TimeManager.timeStamp = NSDate()
         backgroundImage = offeredItem.photos![0]
+        
         setupBackButton()
         setupWheelSlider()
         setupBackground()
+        
         let promptFrame = CGRect(x: 0, y: screenSize.height*0.2, width: screenSize.width, height: screenSize.height*0.2)
         setupPrompt("How much would you pay?", item: offeredItem, screenSize: screenSize, frame: promptFrame)
 //        setupPrompt()
@@ -78,10 +87,6 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         
         //temp for initial release matching controller
         
-        
-        print("\(temp)")
-        print("offered")
-        
         if temp[0] != 0.00 {
             let matchControllerView = PopUpViewControllerSwift()
             matchControllerView.matchedItem = offeredItem
@@ -90,6 +95,7 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         }
         else {
             LocalUser.seenPosts[offeredItem.id] = NSDate()
+            LocalUser.user.mostRecentAction = "Made an offer on an item."
             self.performSegueWithIdentifier("offerToBrowse", sender: self)
         }
     }

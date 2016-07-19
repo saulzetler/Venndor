@@ -13,6 +13,7 @@ class DeleteViewController: UIViewController {
     
     override func viewDidLoad() {
         FBSDKLoginManager().logOut()
+        TimeManager.timeStamp = NSDate()
         let manager = UserManager()
         let spManager = SeenPostsManager()
         manager.deleteUserById(LocalUser.user.id) { error in
@@ -20,7 +21,6 @@ class DeleteViewController: UIViewController {
                 print("Error deleting user from database: \(error)")
                 return
             }
-            
             print("Succesfully deleted user from server")
             spManager.deleteSeenPostsById(LocalUser.user.id) { error in
                 guard error == nil else {
@@ -38,6 +38,11 @@ class DeleteViewController: UIViewController {
         
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
+        LocalUser.user.timePerController["DeleteViewController"] += interval
+    }
     func clearLocalUser() {
         LocalUser.user = nil
         LocalUser.email = nil
