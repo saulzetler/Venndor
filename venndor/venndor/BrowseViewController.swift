@@ -8,8 +8,8 @@
 
 import UIKit
 
-class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate, UIGestureRecognizerDelegate, UITextViewDelegate {
-    
+class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
+
     var allCards: [DraggableView]!
     var itemList: [Item]!
     
@@ -42,8 +42,17 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     var infoOpen: Bool!
     
+    //location variables
+    
+    let locationManager = CLLocationManager()
+    var myLocation: CLLocation!
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        locationManager.delegate = self
+        locationManager.requestWhenInUseAuthorization()
+        locationManager.startUpdatingLocation()
         
 //        let temp = 45.00
 //        let temp2 = 0.00
@@ -205,7 +214,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         for index in 0..<LocalUser.matches.count {
             let match = LocalUser.matches[index]
-            print("Match index: \(index), Match at Index: \(match.itemName)")
             matchManager.retrieveMatchThumbnail(match) { img, error in
                 
                 if let img = img {
@@ -314,7 +322,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //functions to create dragable views
     
     func createDraggableViewFromItem(item: Item) -> DraggableView {
-        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: item)
+        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: item, myLocation: myLocation)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
         draggableView.delegate = self
@@ -322,7 +330,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
-        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index])
+        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index], myLocation: myLocation)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
         draggableView.delegate = self
@@ -432,6 +440,27 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             }
             
             print("Succesfully updated the LocalUser's seen posts.")
+        }
+    }
+    
+    //delegate functions
+    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+        if let location = locations.first {
+            
+            
+            myLocation = location
+            print("dafuq")
+            locationManager.stopUpdatingLocation()
+            
+        }
+    }
+    
+    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+        // 3
+        if status == .AuthorizedWhenInUse {
+            
+            locationManager.startUpdatingLocation()
+            
         }
     }
 }

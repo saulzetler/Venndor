@@ -94,6 +94,8 @@
 		E49051B61D0B245C0045D5C0 /* PostViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E49051B51D0B245C0045D5C0 /* PostViewController.swift */; };
 		E4992DFF1D2C38D200032221 /* go.png in Resources */ = {isa = PBXBuildFile; fileRef = E4992DFE1D2C38D200032221 /* go.png */; };
 		E4992E041D2C4DB300032221 /* match background.png in Resources */ = {isa = PBXBuildFile; fileRef = E4992E031D2C4DB300032221 /* match background.png */; };
+		E4A550D51D3D52BB001EAAB3 /* Marker Filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = E4A550D41D3D52BB001EAAB3 /* Marker Filled-100.png */; };
+		E4A550D71D3D7E77001EAAB3 /* SwiftyJSON.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4A550D61D3D7E77001EAAB3 /* SwiftyJSON.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		E4AB1FF21D30437F00CC7400 /* ImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4AB1FF11D30437F00CC7400 /* ImagePicker.framework */; };
 		E4C0594C1D358E7A00AE51A3 /* Search Filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C0594B1D358E7A00AE51A3 /* Search Filled-100.png */; };
 		E4D4C9DF1D2EDC0200EF0455 /* Star Filled.png in Resources */ = {isa = PBXBuildFile; fileRef = E4D4C9DD1D2EDC0200EF0455 /* Star Filled.png */; };
@@ -218,6 +220,8 @@
 		E49051B51D0B245C0045D5C0 /* PostViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostViewController.swift; sourceTree = "<group>"; };
 		E4992DFE1D2C38D200032221 /* go.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = go.png; sourceTree = "<group>"; };
 		E4992E031D2C4DB300032221 /* match background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "match background.png"; sourceTree = "<group>"; };
+		E4A550D41D3D52BB001EAAB3 /* Marker Filled-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Marker Filled-100.png"; sourceTree = "<group>"; };
+		E4A550D61D3D7E77001EAAB3 /* SwiftyJSON.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SwiftyJSON.framework; path = "../../../Library/Developer/Xcode/DerivedData/venndor-cjexyuheznflryetuxeryodhnzpo/Build/Products/Debug-iphoneos/SwiftyJSON/SwiftyJSON.framework"; sourceTree = "<group>"; };
 		E4AB1FF11D30437F00CC7400 /* ImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImagePicker.framework; path = "../../../Library/Developer/Xcode/DerivedData/venndor-cjexyuheznflryetuxeryodhnzpo/Build/Products/Debug-iphonesimulator/ImagePicker/ImagePicker.framework"; sourceTree = "<group>"; };
 		E4C0594B1D358E7A00AE51A3 /* Search Filled-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Filled-100.png"; sourceTree = "<group>"; };
 		E4D4C9DD1D2EDC0200EF0455 /* Star Filled.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Star Filled.png"; sourceTree = "<group>"; };
@@ -230,6 +234,7 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				E4A550D71D3D7E77001EAAB3 /* SwiftyJSON.framework in Frameworks */,
 				E4AB1FF21D30437F00CC7400 /* ImagePicker.framework in Frameworks */,
 				10ADC9E01D074CA40028A999 /* FBSDKLoginKit.framework in Frameworks */,
 				10ADC9DF1D074CA40028A999 /* FBSDKCoreKit.framework in Frameworks */,
@@ -418,6 +423,7 @@
 		A89B2DE20CB1A18B3D7B1D64 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				E4A550D61D3D7E77001EAAB3 /* SwiftyJSON.framework */,
 				E4AB1FF11D30437F00CC7400 /* ImagePicker.framework */,
 				051888506CA69C118E1520AC /* Pods_venndor.framework */,
 				8B75E2CD7F1AEC00B6B30F8B /* Pods_venndorTests.framework */,
@@ -429,6 +435,7 @@
 		E44C153E1D11E04F0006EBAD /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				E4A550D41D3D52BB001EAAB3 /* Marker Filled-100.png */,
 				E44B388F1D396B9C00733D96 /* Checked-100.png */,
 				E44B38901D396B9C00733D96 /* Xbox X-100.png */,
 				E44B388B1D39441100733D96 /* use_current_location.png */,
@@ -564,7 +571,7 @@
 				TargetAttributes = {
 					10ADC9A31D0749700028A999 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = N8Y2943A23;
+						DevelopmentTeam = 59THX85PFH;
 					};
 					10ADC9BA1D0749700028A999 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -605,6 +612,7 @@
 				E44C15211D11B9F90006EBAD /* Home-50.png in Resources */,
 				E4845EE71D37E7F000F4A5B2 /* Star Filled White.png in Resources */,
 				E44C151C1D11B9650006EBAD /* Settings-50.png in Resources */,
+				E4A550D51D3D52BB001EAAB3 /* Marker Filled-100.png in Resources */,
 				E49051AD1D09B6690045D5C0 /* Images.xcassets in Resources */,
 				E43070E41D22FDC80035BCF4 /* Back_Arrow.png in Resources */,
 				E4992DFF1D2C38D200032221 /* go.png in Resources */,
