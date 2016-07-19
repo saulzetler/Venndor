@@ -46,6 +46,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     let locationManager = CLLocationManager()
     var myLocation: CLLocation!
+    var locationAuthorized: Bool = false
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -330,6 +331,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
+        while locationAuthorized == false {
+        }
         let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index], myLocation: myLocation)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
@@ -446,10 +449,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //delegate functions
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
-            
-            
+            locationAuthorized = true
             myLocation = location
-            print("dafuq")
             locationManager.stopUpdatingLocation()
             
         }
@@ -458,6 +459,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         // 3
         if status == .AuthorizedWhenInUse {
+            locationAuthorized = true
             
             locationManager.startUpdatingLocation()
             
