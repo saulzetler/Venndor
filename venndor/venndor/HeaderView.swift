@@ -20,7 +20,6 @@ class HeaderView: UIView, UITextFieldDelegate {
     let cancelButton = UIButton(type: UIButtonType.Custom) as UIButton
     var sampleTextField: UITextField!
     
-    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
@@ -137,6 +136,12 @@ class HeaderView: UIView, UITextFieldDelegate {
                     textField.attributedPlaceholder =  NSAttributedString(string:"Venndor", attributes: [NSForegroundColorAttributeName: UIColor.whiteColor()])
                 }
             }
+        }
+        if self.sampleTextField.text != "" {
+            let temp = SearchControl()
+            temp.SearchFor(self.sampleTextField.text!)
+            let temp2 = parentViewController as! BrowseViewController
+            temp2.backToSplash()
         }
     }
     
