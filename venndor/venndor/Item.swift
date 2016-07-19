@@ -45,7 +45,7 @@ class Item: NSObject {
         category = json["category"] as! String
         condition = json["condition"] as! Int
         latitude = json["latitude"] as! Double
-        longitude = json["logitude"] as! Double
+        longitude = json["longitude"] as! Double
         question1 = json["question1"] as! String
         question2 = json["question2"] as! String
         minPrice = json["minPrice"] as! Int
