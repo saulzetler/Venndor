@@ -11,6 +11,7 @@
 
 #import <GoogleMaps/GoogleMaps.h>
 #import <ImagePicker/ImagePicker-Swift.h>
+#import <SwiftyJSON/SwiftyJSON-Swift.h>
 #import <FBSDKCoreKit/FBSDKCorekit.h>
 #import <FBSDKLoginKit/FBSDKLoginKit.h>
 #import <FBSDKShareKit/FBSDKShareKit.h>
