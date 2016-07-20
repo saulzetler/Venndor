@@ -54,7 +54,6 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
         //, user_location
         //, location = result["user_location"] as? String
         //parameters for what data the app should pull
-        LocalUser.user.mostRecentAction = "Logged in through Facebook."
         let parameters = ["fields": "email, first_name, last_name, picture.type(large), id, gender, age_range, education"]
         
         FBSDKGraphRequest(graphPath: "me", parameters: parameters).startWithCompletionHandler {(
@@ -69,8 +68,9 @@ class LoginViewController: UIViewController, FBSDKLoginButtonDelegate {
                 LocalUser.lastName = lastName
                 LocalUser.email = email
                 LocalUser.gender = gender
+                
                 if let ageRange = result["age_range"] {
-                    print("Age Range: \(ageRange)")
+                    LocalUser.ageRange = "\(ageRange["min"]) - \(ageRange["max"])"
                 }
                 
                 

@@ -40,8 +40,7 @@ class DeleteViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
-        LocalUser.user.timePerController["DeleteViewController"] += interval
+        TimeManager.globalManager.setSessionDuration(TimeManager.timeStamp, controller: "DeleteViewController")
     }
     func clearLocalUser() {
         LocalUser.user = nil

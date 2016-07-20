@@ -29,8 +29,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
-        LocalUser.user.timePerController["MyMatchesViewController"] += interval
+        TimeManager.globalManager.setSessionDuration(TimeManager.timeStamp, controller: "MyMatchesViewController")
         
     }
     override func viewDidLoad() {

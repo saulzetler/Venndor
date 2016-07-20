@@ -49,8 +49,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
-        LocalUser.user.timePerController["PostViewController"] += interval
+        TimeManager.globalManager.setSessionDuration(TimeManager.timeStamp, controller: "PostViewController")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -572,7 +571,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             //create an item object to past to the manager to create the item
             let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, latitude: latitude, longitude: longitude, photos: images, question1: question1, question2: question2, minPrice: minPrice!)
             
-            //decalre the item manager and then call the appropriate function to create an item
+            //declare the item manager and then call the appropriate function to create an item
             let manager = ItemManager()
             let uManager = UserManager()
             manager.createItem(item) { error in

@@ -20,8 +20,7 @@ class PopUpViewControllerSwift : UIViewController {
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
-        LocalUser.user.timePerController["PopUpViewController"] += interval
+        TimeManager.globalManager.setSessionDuration(TimeManager.timeStamp, controller: "PopUpViewController")
     }
     override func viewDidLoad() {
         super.viewDidLoad()

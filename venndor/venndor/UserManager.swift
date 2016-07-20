@@ -28,6 +28,9 @@ struct UserManager {
                         "email": email,
                         "gender": gender,
                         "ageRange": ageRange,
+                        "profilePictureURL": LocalUser.profilePictureURL,
+                        "university": "",
+                        "howTheyFoundVenndor": "",
                         "rating": 0.0,
                         "nuMatches": 0,
                         "nuItemsSold": 0,
@@ -35,6 +38,7 @@ struct UserManager {
                         "nuSwipesLeft": 0,
                         "nuSwipesRight": 0,
                         "nuSwipesTotal": 0,
+                        "nuPosts": 0,
                         "nuVisits": 1, 
                         "moneySaved": 0,
                         "mostRecentAction": "Created Account.",
@@ -118,6 +122,7 @@ struct UserManager {
                 print("Error updating user from background: \(error)")
                 return
             }
+            print("Succesfully updated local user's metrics.")
         }
     }
 }

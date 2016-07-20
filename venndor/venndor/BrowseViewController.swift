@@ -43,15 +43,17 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var infoOpen: Bool!
     
     //location variables
-    
     let locationManager = CLLocationManager()
     var myLocation: CLLocation!
     var locationAuthorized: Bool = false
+    
+    var sessionStart: NSDate!
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        LocalUser.user.mostRecentAction = "Browsed Item Feed"
-        TimeManager.timeStamp = NSDate()
+        LocalUser.user.mostRecentAction = "Browsed Item Feed."
+        sessionStart = NSDate()
+        print("\(sessionStart)")
         
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
@@ -445,8 +447,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
-        LocalUser.user.timePerController["BrowseViewController"] += interval
+        print("\(sessionStart)")
+        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "BrowseViewController")
         
         let manager = SeenPostsManager()
         manager.updateSeenPostsById(LocalUser.user.id) { error in

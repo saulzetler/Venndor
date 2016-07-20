@@ -48,10 +48,10 @@ class User: NSObject {
     var mostRecentAction: String!
     
     //key: Date, Value: Time Spent
-    var timeOnAppPerSession: [String:AnyObject]!
+    var timeOnAppPerSession: [String:Double]!
     
     //key: Controller name, Value: Time Spent
-    var timePerController: [String:AnyObject]!
+    var timePerController: [String:Double]!
     
     //key: itemID, Value: Maybe matched/sold price?
     var soldItems : [String:AnyObject]!    //NI
@@ -83,8 +83,8 @@ class User: NSObject {
         nuVisits = json["nuVisits"] as! Int
         moneySaved = json["moneySaved"] as! Double
         mostRecentAction = json["mostRecentAction"] as! String
-        timeOnAppPerSession = parseManager.getDict(json["timeOnAppPerSession"]!)
-        timePerController = parseManager.getDict(json["timePerController"]!)
+        timeOnAppPerSession = parseManager.getDoubleDict(json["timeOnAppPerSession"]!)
+        timePerController = parseManager.getDoubleDict(json["timePerController"]!) 
         soldItems = parseManager.getDict(json["soldItems"]!)
         boughtItems = parseManager.getDict(json["boughtItems"]!)
         ads = parseManager.getDict(json["ads"]!)

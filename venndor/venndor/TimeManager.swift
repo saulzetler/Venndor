@@ -13,9 +13,9 @@ struct TimeManager {
     static var timeStamp: NSDate!
     static let globalManager = TimeManager()
     
-    func getSessionDuration(startupTime: NSDate) -> Double {
-        let timeInterval = ((startupTime.timeIntervalSinceNow) / 60 * -1)
-        return timeInterval
+    func setSessionDuration(startupTime: NSDate, controller: String) {
+        let timeInterval = ( (startupTime.timeIntervalSinceNow) * -1)
+        LocalUser.user.timePerController[controller]! += timeInterval
     }
     
 }

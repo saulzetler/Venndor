@@ -32,8 +32,7 @@ class ProfilePageViewController: UIViewController {
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        let interval = TimeManager.globalManager.getSessionDuration(TimeManager.timeStamp)
-        LocalUser.user.timePerController["ProfilePageViewController"] += interval
+        TimeManager.globalManager.setSessionDuration(TimeManager.timeStamp, controller: "ProfilePageViewController")
     }
     
     override func viewDidLoad() {

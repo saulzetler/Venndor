@@ -14,6 +14,7 @@ class SplashViewController: UIViewController {
     //perform during load to allow for a shorter splash screen/early call.
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let background = UIImage(named: "background.jpg")
         let backgroundView = UIImageView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
@@ -43,6 +44,7 @@ class SplashViewController: UIViewController {
                 //if they do set the data!
                 LocalUser.user = user
                 LocalUser.user.nuVisits! += 1
+                LocalUser.user.mostRecentAction = "Logged in through Facebook."
                 
                 /**************************************************************************/
                 //to be taken out later when the users profile picture is addded to database.
@@ -58,6 +60,7 @@ class SplashViewController: UIViewController {
                 userManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email, gender: LocalUser.gender, ageRange: LocalUser.ageRange) { user, error in
                     LocalUser.user = user
                     LocalUser.seenPosts = [String:AnyObject]()
+                    LocalUser.user.mostRecentAction = "Logged in through Facebook."
                     LocalUser.seenPosts["_id"] = LocalUser.user.id
                     
                     /**************************************************************************/
