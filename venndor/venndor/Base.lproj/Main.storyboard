@@ -1,80 +1,31 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="dSk-Eg-Ksm">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15F34" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ccl-eH-Ycs">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
-        <!--LoginViewController-->
-        <scene sceneID="87O-M7-BGB">
+        <!--Login Page View Controller-->
+        <scene sceneID="ifO-ee-nPQ">
             <objects>
-                <viewController id="dSk-Eg-Ksm" userLabel="LoginViewController" customClass="LoginViewController" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="Ccl-eH-Ycs" customClass="LoginPageViewController" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="UE7-IV-abv"/>
-                        <viewControllerLayoutGuide type="bottom" id="0fA-RC-2RW"/>
+                        <viewControllerLayoutGuide type="top" id="Sip-sx-3co"/>
+                        <viewControllerLayoutGuide type="bottom" id="WH2-yz-G6O"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="goE-03-9rn">
+                    <view key="view" contentMode="scaleToFill" id="Dwi-lq-Cq0">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="AqT-ZL-8E1" customClass="FBSDKLoginButton">
-                                <rect key="frame" x="154" y="424" width="292" height="36"/>
-                                <accessibility key="accessibilityConfiguration" identifier="fbButton"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="36" id="nLM-dp-GU7"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" weight="semibold" pointSize="20"/>
-                                <state key="normal" title="Log In Through Facebook Now!">
-                                    <color key="titleColor" white="0.0" alpha="1" colorSpace="calibratedWhite"/>
-                                </state>
-                            </button>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="app landing page background.png" translatesAutoresizingMaskIntoConstraints="NO" id="owN-2m-UxM">
-                                <rect key="frame" x="200" y="123" width="200" height="200"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="200" id="pCu-zR-tJJ"/>
-                                    <constraint firstAttribute="width" constant="200" id="xo9-LT-qd4"/>
-                                </constraints>
-                            </imageView>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Stop haggling, get a better deal" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="QCF-6j-UE0">
-                                <rect key="frame" x="175" y="359" width="250" height="21"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="250" id="paB-WF-92G"/>
-                                    <constraint firstAttribute="height" constant="21" id="tq2-5a-0Yv"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Venndor" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="gwX-UI-2IX">
-                                <rect key="frame" x="225" y="7.5" width="151.5" height="45.5"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="151.5" id="EfJ-PH-cgk"/>
-                                    <constraint firstAttribute="height" constant="45.5" id="nyC-hi-MHR"/>
-                                </constraints>
-                                <fontDescription key="fontDescription" name="TrebuchetMS" family="Trebuchet MS" pointSize="40"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
-                        <constraints>
-                            <constraint firstItem="owN-2m-UxM" firstAttribute="centerX" secondItem="goE-03-9rn" secondAttribute="centerX" id="QSX-DA-Gov"/>
-                            <constraint firstItem="AqT-ZL-8E1" firstAttribute="centerX" secondItem="goE-03-9rn" secondAttribute="centerX" id="SWL-1I-lFr"/>
-                            <constraint firstAttribute="top" secondItem="AqT-ZL-8E1" secondAttribute="bottom" constant="-460" id="W2l-28-j1p"/>
-                            <constraint firstItem="owN-2m-UxM" firstAttribute="top" secondItem="gwX-UI-2IX" secondAttribute="bottom" constant="70" id="gHW-of-u2S"/>
-                            <constraint firstItem="gwX-UI-2IX" firstAttribute="centerX" secondItem="goE-03-9rn" secondAttribute="centerX" id="hUb-4f-pbT"/>
-                            <constraint firstItem="QCF-6j-UE0" firstAttribute="top" secondItem="owN-2m-UxM" secondAttribute="bottom" constant="35.5" id="kSy-He-tGM"/>
-                            <constraint firstItem="AqT-ZL-8E1" firstAttribute="top" secondItem="QCF-6j-UE0" secondAttribute="bottom" constant="44" id="p6f-5D-lA0"/>
-                            <constraint firstItem="QCF-6j-UE0" firstAttribute="centerX" secondItem="goE-03-9rn" secondAttribute="centerX" id="r5X-EJ-RTa"/>
-                        </constraints>
                     </view>
                     <connections>
-                        <segue destination="gEg-Gc-bT8" kind="presentation" identifier="showSplash" id="T4w-aX-c8F"/>
+                        <segue destination="gEg-Gc-bT8" kind="presentation" identifier="showSplash" id="QCg-3S-kB0"/>
                     </connections>
                 </viewController>
-                <placeholder placeholderIdentifier="IBFirstResponder" id="RRf-bf-PBa" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="K6J-py-m29" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-928" y="273"/>
+            <point key="canvasLocation" x="-968" y="273"/>
         </scene>
         <!--Splash View Controller-->
         <scene sceneID="nnJ-hU-Qtr">
@@ -87,18 +38,6 @@
                     <view key="view" contentMode="scaleToFill" id="Ibf-aM-pjS">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <subviews>
-                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Loading" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="SZj-Qb-7hl">
-                                <rect key="frame" x="233.5" y="409" width="134.5" height="41"/>
-                                <fontDescription key="fontDescription" type="system" weight="heavy" pointSize="34"/>
-                                <color key="textColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
-                                <nil key="highlightedColor"/>
-                            </label>
-                        </subviews>
-                        <constraints>
-                            <constraint firstItem="CZz-kX-AU8" firstAttribute="top" secondItem="SZj-Qb-7hl" secondAttribute="bottom" constant="150" id="DY6-dZ-tkJ"/>
-                            <constraint firstItem="SZj-Qb-7hl" firstAttribute="centerX" secondItem="Ibf-aM-pjS" secondAttribute="centerX" id="hdI-oJ-Qhx"/>
-                        </constraints>
                     </view>
                     <connections>
                         <segue destination="5Q4-WU-6Zg" kind="presentation" identifier="showBrowse" id="XwR-UP-4A2"/>
@@ -107,7 +46,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qux-n2-rnO" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-119" y="248"/>
+            <point key="canvasLocation" x="-91" y="260"/>
         </scene>
         <!--Delete View Controller-->
         <scene sceneID="6ag-Ay-mY6">
@@ -123,7 +62,7 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="dSk-Eg-Ksm" kind="presentation" identifier="showLogin" id="ZUN-gk-Tvc"/>
+                        <segue destination="Ccl-eH-Ycs" kind="presentation" identifier="showLogin" id="Vms-tH-N9F"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="HGT-7O-kMM" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -169,7 +108,7 @@
                     <connections>
                         <segue destination="kYg-o8-mtK" kind="presentation" identifier="toOfferScreen" id="QwB-WW-QHS"/>
                         <segue destination="fCk-qF-h28" kind="presentation" identifier="showItemInfo" id="mUc-z2-b8r"/>
-                        <segue destination="gEg-Gc-bT8" kind="show" identifier="backToSplash" id="nh5-je-T2e"/>
+                        <segue destination="PwZ-B2-mez" kind="show" identifier="backToSplash" id="iGi-df-zpV"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9j-p1-Ii5" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -256,6 +195,27 @@
             </objects>
             <point key="canvasLocation" x="317" y="-499"/>
         </scene>
+        <!--Splash2 View Controller-->
+        <scene sceneID="ii5-eH-0xh">
+            <objects>
+                <viewController id="PwZ-B2-mez" customClass="Splash2ViewController" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="3AH-VL-tdb"/>
+                        <viewControllerLayoutGuide type="bottom" id="Dtu-NG-WIK"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="NRh-dq-LNy">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="5Q4-WU-6Zg" kind="presentation" identifier="showBrowse" id="lxm-w2-NCA"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="gDE-53-CWG" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="1218" y="-484"/>
+        </scene>
         <!--Reveal View Controller-->
         <scene sceneID="pX2-bc-5Qm">
             <objects>
@@ -321,9 +281,6 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
-                                        <connections>
-                                            <segue destination="gEg-Gc-bT8" kind="show" identifier="newCat" id="NUc-xW-YrN"/>
-                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="70" id="5oB-bi-GrF">
                                         <rect key="frame" x="0.0" y="280" width="600" height="70"/>
@@ -332,6 +289,9 @@
                                             <rect key="frame" x="0.0" y="0.0" width="600" height="69.5"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </tableViewCellContentView>
+                                        <connections>
+                                            <segue destination="PwZ-B2-mez" kind="show" identifier="newCat" id="S9k-gu-7hk"/>
+                                        </connections>
                                     </tableViewCell>
                                     <tableViewCell clipsSubviews="YES" contentMode="scaleToFill" selectionStyle="default" indentationWidth="10" rowHeight="70" id="4Bx-gU-O6b">
                                         <rect key="frame" x="0.0" y="350" width="600" height="70"/>
@@ -590,12 +550,12 @@
                         </constraints>
                     </view>
                     <connections>
-                        <segue destination="dSk-Eg-Ksm" kind="show" identifier="showLogin" id="8vX-4e-WnC"/>
+                        <segue destination="Ccl-eH-Ycs" kind="show" identifier="showLogin" id="OzI-1T-yzU"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7zY-uR-K97" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-2662" y="2233"/>
+            <point key="canvasLocation" x="-1906" y="1377"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="MUf-Ly-qQ4">
@@ -780,16 +740,15 @@
         </scene>
     </scenes>
     <resources>
-        <image name="app landing page background.png" width="822" height="1407"/>
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="fH8-HC-wrA"/>
-        <segue reference="iP8-l6-ghd"/>
-        <segue reference="Al0-8C-Npd"/>
-        <segue reference="8vX-4e-WnC"/>
         <segue reference="hrt-cp-q1Q"/>
+        <segue reference="iP8-l6-ghd"/>
+        <segue reference="fH8-HC-wrA"/>
+        <segue reference="iGi-df-zpV"/>
         <segue reference="mUc-z2-b8r"/>
-        <segue reference="nh5-je-T2e"/>
+        <segue reference="Al0-8C-Npd"/>
+        <segue reference="OzI-1T-yzU"/>
     </inferredMetricsTieBreakers>
 </document>
