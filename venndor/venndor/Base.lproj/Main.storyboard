@@ -743,12 +743,12 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
+        <segue reference="hrt-cp-q1Q"/>
         <segue reference="iP8-l6-ghd"/>
         <segue reference="fH8-HC-wrA"/>
         <segue reference="iGi-df-zpV"/>
         <segue reference="mUc-z2-b8r"/>
         <segue reference="Al0-8C-Npd"/>
         <segue reference="OzI-1T-yzU"/>
-        <segue reference="XwR-UP-4A2"/>
     </inferredMetricsTieBreakers>
 </document>
