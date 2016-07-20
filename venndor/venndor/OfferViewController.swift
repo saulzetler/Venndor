@@ -70,9 +70,9 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
             tempOffer = Int(offer)
         }
         let offered = Double(tempOffer)
-//        let posted = offeredItem.minPrice
+        let posted = Double(offeredItem.minPrice)
 //        let offered = 12.00
-        let posted = 10.00
+//        let posted = 10.00
         let matchController = jonasBoettcherController()
         let temp = matchController.calculateMatchedPrice(offered, posted: posted, item: offeredItem)
         

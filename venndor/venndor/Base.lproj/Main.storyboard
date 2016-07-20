@@ -784,13 +784,12 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="T4w-aX-c8F"/>
-        <segue reference="8vX-4e-WnC"/>
-        <segue reference="iP8-l6-ghd"/>
         <segue reference="fH8-HC-wrA"/>
+        <segue reference="iP8-l6-ghd"/>
+        <segue reference="Al0-8C-Npd"/>
+        <segue reference="8vX-4e-WnC"/>
+        <segue reference="hrt-cp-q1Q"/>
         <segue reference="mUc-z2-b8r"/>
         <segue reference="nh5-je-T2e"/>
-        <segue reference="Al0-8C-Npd"/>
-        <segue reference="hrt-cp-q1Q"/>
     </inferredMetricsTieBreakers>
 </document>
