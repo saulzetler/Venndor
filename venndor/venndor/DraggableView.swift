@@ -21,7 +21,7 @@ protocol DraggableViewDelegate {
     func cardSwipedRight(card: UIView) -> Void
 }
 
-public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
+public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate {
     var delegate: DraggableViewDelegate!
     var panGestureRecognizer: UIPanGestureRecognizer!
     var originPoint: CGPoint!
@@ -47,24 +47,22 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     //for map
     var mapView: GMSMapView!
-    
-    //location variables
-    
-    let locationManager = CLLocationManager()
-    var myLocation: CLLocation!
-    
+    var distText: String!
+    var distanceSet: Bool!
+
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    init(frame: CGRect, item: Item) {
+    init(frame: CGRect, item: Item, myLocation: CLLocation) {
+        
         super.init(frame: frame)
 
         self.setupView()
         currentItem = item
         
         setupScrollView(item)
-        setupItemInfo(item)
+        setupItemInfo(item, myLocation: myLocation)
 
         self.backgroundColor = UIColor.whiteColor()
 
@@ -81,8 +79,8 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     }
     
-    func setupItemInfo(item: Item) {
-//        itemInfo = UIView(frame: CGRect(x: (self.view.frame.size.width - CARD_WIDTH)/2, y: (self.view.frame.size.height - CARD_HEIGHT)/2.8 + CARD_HEIGHT, width: CARD_WIDTH, height: self.view.frame.height*0.1))
+    func setupItemInfo(item: Item, myLocation: CLLocation) {
+        
         itemInfo = UIView(frame: CGRect(x: 0, y: self.frame.height*0.9, width: self.frame.width, height: self.frame.height*0.1))
         itemInfo.backgroundColor = UIColor.whiteColor()
         itemInfo.layer.cornerRadius = 20
@@ -97,51 +95,87 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         itemDescription.text = item.details
         itemDescription.numberOfLines = 0
         itemInfo.addSubview(itemDescription)
+        let distIcon = UIImage(named: "Marker Filled-100.png")
+        let distIconView = UIImageView(frame: CGRect(x: itemInfo.frame.width*0.65, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.1, height: itemInfo.frame.height*0.6))
+        distIconView.image = distIcon
+        itemInfo.addSubview(distIconView)
         mapView = GMSMapView(frame: CGRect(x: 0, y: itemInfo.frame.height*2.5, width: itemInfo.frame.width, height: itemInfo.frame.height*3.5))
         let location = CLLocationCoordinate2DMake(CLLocationDegrees(item.latitude), CLLocationDegrees(item.longitude))
         mapView.camera = GMSCameraPosition(target: location, zoom: 15, bearing: 0, viewingAngle: 0)
         let pin = GMSMarker(position: location)
         pin.map = mapView
         itemInfo.addSubview(mapView)
+        distanceSet = false
+        calculateDistance(item, myLocation: myLocation)
+        while (!distanceSet) {
+        }
+        let itemDist = UILabel(frame: CGRect(x: itemInfo.frame.width*0.75, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.25, height: itemInfo.frame.height*0.6))
+        itemDist.text = distText
+        itemInfo.addSubview(itemDist)
         infoOpen = false
         self.addSubview(itemInfo)
         self.bringSubviewToFront(itemInfo)
     }
     
-    func calculateDistance(item: Item) {
+    func calculateDistance(item: Item, myLocation: CLLocation) {
+        
+        print("item name: \(item.name)")
         let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
         let itemLatitude = CLLocationDegrees(item.latitude)
         let itemLongitude = CLLocationDegrees(item.longitude)
         let myLatitude = myLocation.coordinate.latitude
         let myLongitude = myLocation.coordinate.longitude
         
+        let origins = "origins=\(myLatitude),\(myLongitude)&"
+        let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
+        let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
+        let url = baseURL+origins+destinations+key
+        print(url)
         
-        let origins = "origins=\(myLatitude),\(myLongitude)"
-        
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        
-    }
-    
-    public func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
+        let requestURL: NSURL = NSURL(string: url)!
+        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(urlRequest) {
+            (data, response, error) -> Void in
             
-            myLocation = location
-            locationManager.stopUpdatingLocation()
-        }
-    }
-    
-    public func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        // 3
-        if status == .AuthorizedWhenInUse {
-        
-            locationManager.startUpdatingLocation()
+            let httpResponse = response as! NSHTTPURLResponse
+            let statusCode = httpResponse.statusCode
             
+            if (statusCode == 200) {
+                print("Everyone is fine, file downloaded successfully.")
+                
+                do {
+                    
+                    
+                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                    print(item.name)
+                    print(json)
+                    if let rows = json["rows"] as? [[String:AnyObject]] {
+                        let first = rows[0]
+                        let elements = first["elements"] as! Array<AnyObject>
+                        let firstElement = elements[0]
+                        if let distDict = firstElement["distance"] as? [String:AnyObject] {
+                            self.distText = String(distDict["text"]!)
+                            print("distance: \(self.distText)")
+                            self.distanceSet = true
+                        }
+                        else {
+                            self.distText = "none"
+                            print("distance: \(self.distText)")
+                            self.distanceSet = true
+                        }
+                    }
+                } catch {
+                    print("Error with Json: \(error)")
+                }
+                
+            }
         }
+        task.resume()
     }
     
-    
+
+
     //scroll view funcs
     func setupScrollView(item: Item) {
         
