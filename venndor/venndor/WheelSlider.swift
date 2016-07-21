@@ -230,7 +230,6 @@ public class WheelSlider: UIView {
     }
     
     override public func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print("touch moved")
         let touch = touches.first as UITouch?
         if let t = touch{
             let pos = t.locationInView(self)
