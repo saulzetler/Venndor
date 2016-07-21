@@ -10,6 +10,8 @@ import Foundation
 
 struct SeenPostsManager {
     
+    static let globalManager = SeenPostsManager()
+    
     func createSeenPostsById(id: String, completionHandler: (ErrorType?) -> () ) {
         RESTEngine.sharedEngine.createSeenPosts(id,
             success: { response in

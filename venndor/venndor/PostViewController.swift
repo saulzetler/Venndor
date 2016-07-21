@@ -46,13 +46,15 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     let locationManager = CLLocationManager()
     var coordinate: CLLocationCoordinate2D!
     var photoChoiceDisplayed = false
+    var sessionStart: NSDate!
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        TimeManager.globalManager.setSessionDuration(TimeManager.timeStamp, controller: "PostViewController")
+        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "PostViewController")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        sessionStart = NSDate()
         TimeManager.timeStamp = NSDate()
         setupPickerView()
         setupItemName()

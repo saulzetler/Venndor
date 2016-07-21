@@ -12,10 +12,15 @@ import Foundation
 struct TimeManager {
     static var timeStamp: NSDate!
     static let globalManager = TimeManager()
-    
-    func setSessionDuration(startupTime: NSDate, controller: String) {
-        let timeInterval = ( (startupTime.timeIntervalSinceNow) * -1)
-        LocalUser.user.timePerController[controller]! += timeInterval
+    static var formatter: NSDateFormatter {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+        return formatter
     }
     
+    func setSessionDuration(startupTime: NSDate, controller: String) {
+        let timeInterval = ( (startupTime.timeIntervalSinceNow) / 60 * -1)
+        LocalUser.user.timePerController[controller]! += timeInterval
+    }
+
 }

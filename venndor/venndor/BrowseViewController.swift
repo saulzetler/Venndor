@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
+class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, SWRevealViewControllerDelegate {
 
     var allCards: [DraggableView]!
     var itemList: [Item]!
@@ -41,6 +41,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var headerView: HeaderView!
     
     var infoOpen: Bool!
+    var loaded: Bool!
     
     //location variables
     let locationManager = CLLocationManager()
@@ -48,6 +49,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var locationAuthorized: Bool = false
     
     var sessionStart: NSDate!
+    var itemsNeedingUpdates = [Item]()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -55,9 +58,13 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         sessionStart = NSDate()
         print("\(sessionStart)")
         
+        loaded = false
+        
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        
+        self.revealViewController().delegate = self
         
 //        let temp = 45.00
 //        let temp2 = 0.00
@@ -82,9 +89,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 //        let items = GlobalItems.items
         
         
-        let manager = ItemManager()
-        let filter = manager.constructFeedFilter()
-        manager.retrieveMultipleItems(5, offset: nil, filter: filter, fields: nil) { items, error in
+        let filter = ItemManager.globalManager.constructFeedFilter()
+        ItemManager.globalManager.retrieveMultipleItems(5, offset: nil, filter: filter, fields: nil) { items, error in
             guard error == nil else {
                 print("Error retrieving items for browse feed: \(error)")
                 return
@@ -349,23 +355,45 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     func cardSwipedLeft(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
+        let item = itemList[currentCardIndex]
 //        loadedInfos.removeAtIndex(0)
-        LocalUser.seenPosts[itemList[currentCardIndex].id] = NSDate()
+        LocalUser.seenPosts[item.id] = NSDate()
+        
+        //update user metrics
         LocalUser.user.mostRecentAction = "Swiped left."
         LocalUser.user.nuSwipesLeft! += 1
         LocalUser.user.nuSwipesTotal! += 1
+        
+        //update item metrics
+        item.nuSwipesLeft! += 1
+        ItemManager.globalManager.updateItemById(item.id, update: ["nuSwipesLeft": item.nuSwipesLeft]) { error in
+            guard error == nil else {
+                print("Error updating item metrics on left swipe.")
+                return
+            }
+        }
+            
+        
         loadAnotherCard()
         nextCard()
-        
     }
     
     func cardSwipedRight(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
 //        loadedInfos.removeAtIndex(0)
-        
+        let item = itemList[currentCardIndex]
         LocalUser.user.mostRecentAction = "Swiped right."
         LocalUser.user.nuSwipesRight! += 1
         LocalUser.user.nuSwipesTotal! += 1
+        
+        //update item metrics
+        item.nuSwipesRight! += 1
+        ItemManager.globalManager.updateItemById(item.id, update: ["nuSwipesRight": item.nuSwipesRight]) { error in
+            guard error == nil else {
+                print("Error updating item metrics on right swipe.")
+                return 
+            }
+        }
         loadAnotherCard()
         nextCard()
     }
@@ -441,17 +469,15 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 }
                 cardsLoadedIndex = cardsLoadedIndex + 1
             }
-            
+            loaded = true
         }
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        print("\(sessionStart)")
         TimeManager.globalManager.setSessionDuration(sessionStart, controller: "BrowseViewController")
-        
-        let manager = SeenPostsManager()
-        manager.updateSeenPostsById(LocalUser.user.id) { error in
+        SeenPostsManager.globalManager.updateSeenPostsById(LocalUser.user.id) { error in
             guard error == nil else {
                 print("Error updating LocalUser's seen posts: \(error)")
                 return
@@ -480,5 +506,40 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             
         }
     }
+    
+    func revealController(revealController: SWRevealViewController, willMoveToPosition position: FrontViewPosition){
+        if((position == FrontViewPosition.Left)) {
+//            self.view.userInteractionEnabled = true
+            if loaded == true {
+                loadedCards[currentCardIndex].userInteractionEnabled = true
+                reactivate()
+            }
+            
+        }else {
+//            self.view.userInteractionEnabled = false
+            if loaded == true {
+                loadedCards[currentCardIndex].userInteractionEnabled = false
+                print("deactivated")
+                deactivate()
+            }
+            
+        }
+    }
+    
+    func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
+        if((position == FrontViewPosition.Left)) {
+//            self.view.userInteractionEnabled = true
+            if loaded == true {
+                loadedCards[currentCardIndex].userInteractionEnabled = true
+            }
+        } else {
+            if loaded == true {
+                loadedCards[currentCardIndex].userInteractionEnabled = false
+            }
+//            self.view.userInteractionEnabled = false
+            
+        }
+    }
+    
 }
 

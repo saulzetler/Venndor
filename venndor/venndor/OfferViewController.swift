@@ -16,16 +16,17 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     var backgroundImage: UIImage!
 
     var offer: Double!
+    var sessionStart: NSDate!
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        TimeManager.globalManager.setSessionDuration(TimeManager.timeStamp, controller: "OfferViewController")
+        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "OfferViewController")
     }
 
     override func viewDidLoad() {
         super.viewDidLoad()
         LocalUser.user.mostRecentAction = "Entered the offer screen."
-        TimeManager.timeStamp = NSDate()
+        sessionStart = NSDate()
         backgroundImage = offeredItem.photos![0]
         
         setupBackButton()
@@ -78,9 +79,20 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
             tempOffer = Int(offer)
         }
         let offered = Double(tempOffer)
-//        let posted = offeredItem.minPrice
+        
+        //update item metrics
+        offeredItem.offersMade.append(offered)
+        offeredItem.setAverageOffer()
+        ItemManager.globalManager.updateItemById(offeredItem.id, update: ["offersMade": offeredItem.offersMade, "avgOffer": offeredItem.avgOffer]) { error in
+            guard error == nil else {
+                print("Error updating offered item: \(error)")
+                return
+            }
+        }
+        
+        let posted = Double(offeredItem.minPrice)
 //        let offered = 12.00
-        let posted = 10.00
+//        let posted = 10.00
         let matchController = jonasBoettcherController()
         let temp = matchController.calculateMatchedPrice(offered, posted: posted, item: offeredItem)
         

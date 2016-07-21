@@ -14,20 +14,27 @@ class Match: NSObject {
     //var itemName: String!
     var itemID: String!
     var itemName: String!
+    var itemDescription: String!
     var buyerID: String!
     var sellerID: String!
     var sellerName: String! 
     var matchedPrice: Double!
     var thumbnail: UIImage?
+    var itemLongitude: Double!
+    var itemLatitude: Double!
     
-    init(itemID: String, itemName: String, buyerID: String, sellerID: String, sellerName: String, matchedPrice: Double) {
+    
+    init(itemID: String, itemName: String, itemDescription: String, buyerID: String, sellerID: String, sellerName: String, matchedPrice: Double, itemLongitude: Double, itemLatitude: Double) {
         //self.itemName = itemName
         self.itemID = itemID
         self.itemName = itemName
+        self.itemDescription = itemDescription
         self.buyerID = buyerID
         self.sellerID = sellerID
         self.sellerName = sellerName
         self.matchedPrice = matchedPrice
+        self.itemLongitude = itemLongitude
+        self.itemLatitude = itemLatitude
     }
     
     init(json: JSON) {
@@ -38,6 +45,8 @@ class Match: NSObject {
         self.sellerID = json["sellerID"] as! String
         self.sellerName = json["sellerName"] as! String
         self.matchedPrice = json["matchedPrice"] as! Double
+        self.itemLongitude = json["itemLongitude"] as! Double
+        self.itemLatitude = json["itemLatitude"] as! Double 
     }
     
 }

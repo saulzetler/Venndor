@@ -15,6 +15,8 @@ enum UpdateType {
 }
 
 struct UserManager {
+    
+    static let globalManager = UserManager() 
 
     func createUser(first: String, last: String, email: String, gender: String, ageRange: String,  completionHandler: (User?, ErrorType?) -> ()) {
         RESTEngine.sharedEngine.registerUser(email, firstName: first, lastName: last, gender: gender, ageRange: ageRange,

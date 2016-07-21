@@ -26,16 +26,17 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     var boughtContainerView = UIView()
     var matchObjects = [Match]()
     var onMatches: Bool!
+    var sessionStart: NSDate!
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        TimeManager.globalManager.setSessionDuration(TimeManager.timeStamp, controller: "MyMatchesViewController")
+        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "MyMatchesViewController")
         
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         LocalUser.user.mostRecentAction = "Browsed MyMatches"
-        TimeManager.timeStamp = NSDate()
+        sessionStart = NSDate()
         
         let manager = MatchesManager()
         

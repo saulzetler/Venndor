@@ -25,11 +25,12 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     var postsContainerView = UIView()
     var soldContainerView = UIView()
     var onPosts: Bool!
+    var sessionStart: NSDate!
     
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        TimeManager.globalManager.setSessionDuration(TimeManager.timeStamp, controller: "MyPostsViewController")
+        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "MyPostsViewController")
     }
 
     //set up the page accordingly
@@ -37,7 +38,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         
         LocalUser.user.mostRecentAction = "Browsed MyPosts"
-        TimeManager.timeStamp = NSDate()
+        sessionStart = NSDate()
     
         
         let manager = ItemManager()

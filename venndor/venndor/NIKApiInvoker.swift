@@ -172,10 +172,8 @@ final class NIKRequestBuilder {
             var data: NSData!
             
             if body is [String: AnyObject] || body is [AnyObject] {
-//                print("\(body)")
+                
                 data = try? NSJSONSerialization.dataWithJSONObject(body, options: [])
-                let body2 = try? NSJSONSerialization.JSONObjectWithData(data, options: [])
-//                print("\(body2)")
             } else if let body = body as? NIKFile {
                 data = body.data
             } else {

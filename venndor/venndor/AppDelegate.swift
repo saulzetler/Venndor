@@ -17,7 +17,7 @@ var currentUser: String!
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
-    var startupTime: NSDate!
+    var sessionStart: NSDate!
     let googleMapsApiKey = "AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -26,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         
         // Override point for customization after application launch.
         
-        startupTime = NSDate()
+        sessionStart = NSDate()
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
@@ -51,17 +51,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
-        let seenPostsManager = SeenPostsManager()
-        seenPostsManager.patchSeenPostsById(LocalUser.user.id) { error in
-            guard error == nil else {
-                print("Error patching the user: \(error)")
-                return
-            }
-        }
         setSessionTime()
-        
-        let manager = UserManager()
-        manager.updateLocalUserMetrics()
+        UserManager.globalManager.updateLocalUserMetrics()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -70,7 +61,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if LocalUser.user != nil {
             LocalUser.user.nuVisits! += 1
         }
-        startupTime = NSDate()
+        sessionStart = NSDate()
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
@@ -85,17 +76,13 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         //calculate the time of the current session
         setSessionTime()
-        
-        let manager = UserManager()
-        manager.updateLocalUserMetrics()
+        UserManager.globalManager.updateLocalUserMetrics()
     }
     
     
     func setSessionTime() {
-        let timeInterval = ((startupTime.timeIntervalSinceNow) / 60 * -1)
-        let formatter = NSDateFormatter()
-        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
-        let dateString = formatter.stringFromDate(startupTime)
+        let timeInterval = ((sessionStart.timeIntervalSinceNow) / 60 * -1)
+        let dateString = TimeManager.formatter.stringFromDate(sessionStart)
         LocalUser.user.timeOnAppPerSession[dateString] = timeInterval
     }
 

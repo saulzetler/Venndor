@@ -153,7 +153,6 @@ class SplashViewController: UIViewController {
             
             print("Succesfully patched LocalUser's seen posts")
         }
-        
     }
     
     func triggerSegueTutorial(){

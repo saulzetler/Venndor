@@ -88,7 +88,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         let tap = UITapGestureRecognizer(target: self, action: #selector(DraggableView.handleTap(_:)))
         tap.delegate = self
         itemInfo.addGestureRecognizer(tap)
-        itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*0.6))
+        itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.7, height: itemInfo.frame.height*0.6))
         itemName.text = item.name
         itemInfo.addSubview(itemName)
         itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*1.2, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))

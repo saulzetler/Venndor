@@ -27,18 +27,19 @@ class ProfilePageViewController: UIViewController {
     @IBOutlet weak var soldStack: UIStackView!
     @IBOutlet weak var savedStack: UIStackView!
     
+    var sessionStart: NSDate!
     var headerView: HeaderView!
     
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        TimeManager.globalManager.setSessionDuration(TimeManager.timeStamp, controller: "ProfilePageViewController")
+        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "ProfilePageViewController")
     }
     
     override func viewDidLoad() {
         super.viewDidLoad()
         LocalUser.user.mostRecentAction = "Viewed Personal Profile"
-        TimeManager.timeStamp = NSDate()
+        sessionStart = NSDate()
         
         //add profile picture
         let link = NSURL(string: user.profilePictureURL)

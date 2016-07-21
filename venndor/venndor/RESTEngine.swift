@@ -95,9 +95,7 @@ final class RESTEngine {
     }
     //MARK: - Matches Methods
     
-    func createMatchOnServer(match: Match, success: SuccessClosure, failure: ErrorClosure) {
-        let params = ["itemID": match.itemID, "itemName": match.itemName, "buyerID": match.buyerID, "sellerID": match.sellerID, "sellerName": match.sellerName, "matchedPrice":match.matchedPrice]
-        
+    func createMatchOnServer(params: [String:AnyObject], success: SuccessClosure, failure: ErrorClosure) {
         let requestBody: [String:AnyObject] = ["resource": params]
         
         callApiWithPath(Routing.Service(tableName: "matches").path, method: "POST", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
