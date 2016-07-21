@@ -224,10 +224,6 @@ public class WheelSlider: UIView {
             }
         }
     }
-
-    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        print("touch began")
-    }
     
     override public func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
         let touch = touches.first as UITouch?
