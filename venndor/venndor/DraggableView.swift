@@ -35,6 +35,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     var containerView = UIView()
     var pageControl: UIPageControl! = UIPageControl()
     var picNum: Int!
+    var numberOfPics: Int!
     
     //save current item
     var currentItem: Item!
@@ -91,28 +92,21 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.7, height: itemInfo.frame.height*0.6))
         itemName.text = item.name
         itemInfo.addSubview(itemName)
-        itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*1.2, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
+        itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
         itemDescription.text = item.details
+        itemDescription.font = itemDescription.font.fontWithSize(10)
+        itemDescription.sizeToFit()
         itemDescription.numberOfLines = 0
         itemInfo.addSubview(itemDescription)
-        let distIcon = UIImage(named: "Marker Filled-100.png")
-        let distIconView = UIImageView(frame: CGRect(x: itemInfo.frame.width*0.65, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.1, height: itemInfo.frame.height*0.6))
-        distIconView.image = distIcon
-        itemInfo.addSubview(distIconView)
-        mapView = GMSMapView(frame: CGRect(x: 0, y: itemInfo.frame.height*2.5, width: itemInfo.frame.width, height: itemInfo.frame.height*3.5))
+        mapView = GMSMapView(frame: CGRect(x: 0, y: itemInfo.frame.height*3, width: itemInfo.frame.width, height: itemInfo.frame.height*3.5))
         let location = CLLocationCoordinate2DMake(CLLocationDegrees(item.latitude), CLLocationDegrees(item.longitude))
         mapView.camera = GMSCameraPosition(target: location, zoom: 15, bearing: 0, viewingAngle: 0)
         let pin = GMSMarker(position: location)
         pin.map = mapView
         itemInfo.addSubview(mapView)
-        distanceSet = false
-        calculateDistance(item, myLocation: myLocation)
-        while (!distanceSet) {
-        }
-        let itemDist = UILabel(frame: CGRect(x: itemInfo.frame.width*0.75, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.25, height: itemInfo.frame.height*0.6))
-        itemDist.text = distText
-        itemInfo.addSubview(itemDist)
-        infoOpen = false
+        setupDistance(item, myLocation: myLocation)
+        
+        
         self.addSubview(itemInfo)
         self.bringSubviewToFront(itemInfo)
     }
@@ -174,11 +168,26 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         task.resume()
     }
     
-
+    // called from setup item info
+    func setupDistance(item: Item, myLocation: CLLocation) {
+        distanceSet = false
+        let distIcon = UIImage(named: "Marker Filled-100.png")
+        let distIconView = UIImageView(frame: CGRect(x: itemInfo.frame.width*0.65, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.1, height: itemInfo.frame.height*0.6))
+        distIconView.image = distIcon
+        itemInfo.addSubview(distIconView)
+        calculateDistance(item, myLocation: myLocation)
+        while (!distanceSet) {
+        }
+        let itemDist = UILabel(frame: CGRect(x: itemInfo.frame.width*0.75, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.25, height: itemInfo.frame.height*0.6))
+        itemDist.text = distText
+        itemDist.textAlignment = .Center
+        itemInfo.addSubview(itemDist)
+        infoOpen = false
+    }
 
     //scroll view funcs
     func setupScrollView(item: Item) {
-        
+        numberOfPics = item.photoCount
         scrollView = UIScrollView()
         let cardWidth = self.frame.width
         let cardHeight = self.frame.height
@@ -207,6 +216,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
                     dispatch_async(dispatch_get_main_queue()) {
                         let temp2 = UIImageView(frame: CGRectMake(0, scrollViewHeight*CGFloat(x),scrollViewWidth, scrollViewHeight))
                         temp2.image = phonto
+                        temp2.contentMode = .ScaleToFill
                         self.containerView.addSubview(temp2)
                     }
                 }
@@ -228,6 +238,9 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     }
     
     func adjustPage() {
+        if picNum == numberOfPics-1 {
+            openInfo()
+        }
         
         // Test the offset and calculate the current page after scrolling ends
         let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
@@ -235,7 +248,6 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         // Change the indicator
         picNum = Int(currentPage)
         self.pageControl.currentPage = picNum
-
         switch picNum {
         case 0:
             print("pic 1")
@@ -251,12 +263,16 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
             break
         }
         
+        
+        
         for y in 0...6 {
             if y == picNum {
                 let yOffset = CGPointMake(0, pageHeight*CGFloat(y));
                 self.scrollView.setContentOffset(yOffset, animated: true)
             }
         }
+        
+        
     }
 
     func setupView() -> Void {
@@ -269,23 +285,29 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     func handleTap(sender: AnyObject?) {
         if infoOpen == false { //open info
-            UIView.animateWithDuration(1, animations: { () -> Void in
-                self.itemInfo.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
-                self.itemInfo.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.95)
-            }) { (finished: Bool) -> Void in
-            }
-            infoOpen = true
+            openInfo()
         }
         else { //close info
-            UIView.animateWithDuration(1, animations: { () -> Void in
-                self.itemInfo.frame = CGRect(x: 0, y: self.frame.height*0.9, width: self.frame.width, height: self.frame.height*0.1)
-                self.itemInfo.backgroundColor = UIColor.whiteColor()
-            }) { (finished: Bool) -> Void in
-            }
-            infoOpen = false
+            closeInfo()
         }
-        
-        
+    }
+    
+    func openInfo() {
+        UIView.animateWithDuration(1, animations: { () -> Void in
+            self.itemInfo.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
+            self.itemInfo.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.95)
+        }) { (finished: Bool) -> Void in
+        }
+        infoOpen = true
+    }
+    
+    func closeInfo() {
+        UIView.animateWithDuration(1, animations: { () -> Void in
+            self.itemInfo.frame = CGRect(x: 0, y: self.frame.height*0.9, width: self.frame.width, height: self.frame.height*0.1)
+            self.itemInfo.backgroundColor = UIColor.whiteColor()
+        }) { (finished: Bool) -> Void in
+        }
+        infoOpen = false
     }
 
     func beingDragged(gestureRecognizer: UIPanGestureRecognizer) -> Void {
