@@ -238,9 +238,6 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     }
     
     func adjustPage() {
-        if picNum == numberOfPics-1 {
-            openInfo()
-        }
         
         // Test the offset and calculate the current page after scrolling ends
         let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
@@ -391,6 +388,9 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         print("swiped down")
         adjustPage()
         resetView()
+        if picNum == numberOfPics-1 {
+            openInfo()
+        }
     }
     
     func rightAction() -> Void {
