@@ -58,19 +58,19 @@ public class WheelSlider: UIView {
     
     @IBInspectable public var backStrokeColor : UIColor = UIColor(red: 26/255, green: 188/255, blue: 156/255, alpha: 1)
     @IBInspectable public var backFillColor : UIColor = UIColor.whiteColor().colorWithAlphaComponent(0.5)
-    @IBInspectable public var backWidth : CGFloat = 5.0
+    @IBInspectable public var backWidth : CGFloat = 10.0
     
     
     //knobParameter
     @IBInspectable public var knobStrokeColor : UIColor = UIColor.whiteColor()
     @IBInspectable public var knobWidth : CGFloat = 30.0
-    @IBInspectable public var knobLength : CGFloat = 0.05
+    @IBInspectable public var knobLength : CGFloat = 0.01
     public var knobLineCap = WSKnobLineCap.WSLineCapRound
     
  
     @IBInspectable public var minVal:Int = 0
     @IBInspectable public var maxVal:Int = 50
-    @IBInspectable public var speed:Int = 90
+    @IBInspectable public var speed:Int = 80
     @IBInspectable public var isLimited:Bool = false
     @IBInspectable public var allowNegativeNumber:Bool = false
     @IBInspectable public var isValueText:Bool = true
@@ -164,10 +164,13 @@ public class WheelSlider: UIView {
     
     private func calcCurrentValue() -> Double{
         let normalization = Double(maxVal) / Double(speed)
-        let val = currentPoint*normalization/2.0
+        var val = currentPoint*normalization/2.0
         if(isLimited && val > Double(maxVal)){
             beforePoint = 0
             currentPoint = 0
+        }
+        if (val < 0 && allowNegativeNumber == false) {
+            val = 0
         }
         return val
     }
@@ -177,55 +180,71 @@ public class WheelSlider: UIView {
         let displacementY = abs(beganTouchPosition.y - moveTouchPosition.y)
         let displacementX = abs(beganTouchPosition.x - moveTouchPosition.x)
         
-        guard(max(displacementX,displacementY) > 1.0)else{
-            return
-        }
+        let distance = Double(sqrt(displacementX + displacementY)*0.8)
+        
+//        guard(max(displacementX,displacementY) > 1.0)else{
+//            return
+//        }
         guard(allowNegativeNumber || calcCurrentValue() > 0)else{
-            currentPoint += 1
+            currentPoint += distance
             return
         }
         
         let centerX = bounds.size.width/2.0
         let centerY = bounds.size.height/2.0
         beforePoint = currentPoint
+        
         if(displacementX > displacementY){
             if(centerY > beganTouchPosition.y){
                 if(moveTouchPosition.x >= beganTouchPosition.x){
-                    currentPoint += 1
+                    currentPoint += distance
                 }else{
-                    currentPoint -= 1
+                    currentPoint -= distance
                 }
             }else{
                 if(moveTouchPosition.x > beganTouchPosition.x){
-                    currentPoint -= 1
+                    currentPoint -= distance
                 }else{
-                    currentPoint += 1
+                    currentPoint += distance
                 }
             }
         }else{
             if(centerX <= beganTouchPosition.x){
                 if(moveTouchPosition.y >= beganTouchPosition.y){
-                    currentPoint += 1
+                    currentPoint += distance
                 }else{
-                    currentPoint -= 1
+                    currentPoint -= distance
                 }
             }else{
                 if(moveTouchPosition.y > beganTouchPosition.y){
-                    currentPoint -= 1
+                    currentPoint -= distance
                 }else{
-                    currentPoint += 1
+                    currentPoint += distance
                 }
             }
         }
     }
+
+    override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        print("touch began")
+    }
+    
     override public func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+        print("touch moved")
         let touch = touches.first as UITouch?
         if let t = touch{
             let pos = t.locationInView(self)
+//            print(pos)
+            
             beganTouchPosition = moveTouchPosition
             moveTouchPosition = pos
+//            print("BTP: \(beganTouchPosition)")
+//            print("MTB: \(moveTouchPosition)")
+            
         }
     }
+ 
+
     
     // Only override drawRect: if you perform custom drawing.
     // An empty implementation adversely affects performance during animation.
