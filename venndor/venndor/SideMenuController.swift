@@ -1,136 +1,91 @@
-
 //
 //  SideMenuController.swift
 //  venndor
 //
-//  Created by Saul Zetler on 2016-06-09.
+//  Created by Tynan Davis on 2016-06-09.
 //  Copyright © 2016 Venndor. All rights reserved.
 //
 
 import Foundation
-import FBSDKLoginKit
 
-
-//class to control the side menu which should be available in most pages.
-class SideMenuController: UITableViewController {
+class SideMenuController: UIViewController {
     
     let screenSize: CGRect = UIScreen.mainScreen().bounds
-    
-    //declare all the outlets or the buttons
-    @IBOutlet weak var profileCell: UITableViewCell!
-    
-    @IBOutlet weak var browseCell: UITableViewCell!
-    
-    @IBOutlet weak var myMatchesCell: UITableViewCell!
-    
-    @IBOutlet weak var myPostsCell: UITableViewCell!
-    
-    @IBOutlet weak var settingsCell: UITableViewCell!
-    
-    @IBOutlet weak var sellCell: UITableViewCell!
-    
     //declare the various buttons
-    var postButton: UIButton!
     var browseButton: UIButton!
     var myMatchesButton: UIButton!
     var myPostsButton: UIButton!
     var settingsButton: UIButton!
     
-    //and their icons
-    var browseIconButton: UIButton!
-    var myMatchesIconButton: UIButton!
-    var myPostsIconButton: UIButton!
-    var settingsIconButton: UIButton!
-    
-    
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        self.view.backgroundColor = (UIColorFromHex(0x2c3e50))
         //create and load the users profile picture
-        let profilePic: UIImageView! = UIImageView(frame: CGRectMake(screenSize.width*0.08, screenSize.height*0.02, screenSize.width*0.4, screenSize.width*0.425))
+        let profilePic: UIImageView! = UIImageView(frame: CGRectMake(screenSize.width*0.16, screenSize.height*0.06, screenSize.width*0.27, screenSize.width*0.27))
         
         /*NEEDS REFACTORING*/
         let link = NSURL(string: LocalUser.profilePicture)
         let pictureData = NSData(contentsOfURL: link!)
         profilePic.image = UIImage(data: pictureData!)
         
-        profilePic.layer.borderWidth = 2.0
         profilePic.layer.masksToBounds = false
-        profilePic.layer.borderColor = UIColor.blackColor().CGColor
         profilePic.layer.cornerRadius = (profilePic.frame.size.width)/2
         profilePic.clipsToBounds = true
-        profileCell.selectionStyle = .None
-        profileCell.addSubview(profilePic)
+//        profilePic.contentMode = .ScaleAspectFill
+        self.view.addSubview(profilePic)
         
-//        profileCell.frame = CGRectMake(0, 0, screenSize.width, screenSize.height*0.4)
-//        browseCell.frame = CGRectMake(0, screenSize.height*0.4, screenSize.width, screenSize.height*0.35/4)
-//        myMatchesCell.frame = CGRectMake(0, screenSize.height*0.4+screenSize.height*0.35/4, screenSize.width, screenSize.height*0.35/4)
-//        myPostsCell.frame = CGRectMake(0, screenSize.height*0.4+screenSize.height*0.35/2, screenSize.width, screenSize.height*0.35/4)
-//        settingsCell.frame = CGRectMake(0, screenSize.height*0.4+screenSize.height*3*0.35/4, screenSize.width, screenSize.height*0.35/4)
-//        sellCell.frame = CGRectMake(0, screenSize.height*0.75, screenSize.width, screenSize.height*0.25)
-        
-        //create a tap gesture recognizer and assign it to the profile picture view
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SideMenuController.profilePictureTapped))
         profilePic.userInteractionEnabled = true
         profilePic.addGestureRecognizer(tapGestureRecognizer)
+        let profileName: UILabel = UILabel(frame: CGRectMake(0, screenSize.height*0.18, screenSize.width*0.6, screenSize.width*0.25))
+        profileName.textAlignment = .Center
+        profileName.text = LocalUser.firstName + " " + LocalUser.lastName
+        profileName.textColor = UIColor.whiteColor()
+        profileName.font = UIFont(name: "Avenir", size: 16)
+        profileName.addGestureRecognizer(tapGestureRecognizer)
+        self.view.addSubview(profileName)
         
-        //setupCells()
-        //setup calls for the page
+        let whiteLine = UIView(frame: CGRectMake(0, screenSize.height*0.3, screenSize.width*0.6, 1))
+        whiteLine.backgroundColor = UIColor.whiteColor()
+        self.view.addSubview(whiteLine)
+        
+        
         setupButtons()
-    
+        let sellButton = makeTextButton("SELL", frame: CGRect(x: screenSize.width*0.03, y: screenSize.height*0.8, width: screenSize.width*0.54, height: screenSize.height*0.18), target: #selector(SideMenuController.sellPage(_:)), circle: false, textColor: UIColorFromHex(0x1abc9c), tinted: false, backgroundColor: UIColorFromHex(0x2c3e50
+, alpha: 1))
+        sellButton.titleLabel?.font = UIFont(name: "Avenir", size: 42)
+        sellButton.layer.cornerRadius = 10
+        self.view.addSubview(sellButton)
+            //2c3e50
     }
-    
-    
     func setupButtons() {
+        //create the buttons
+        browseButton = makeTextButton("BROWSE", frame: CGRect(x: screenSize.width*0.1, y: screenSize.height*0.35, width: screenSize.width*0.4, height: screenSize.width*0.1), target: #selector(SideMenuController.browsePage(_:)))
+        self.view.addSubview(browseButton)
+        browseButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        browseButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
         
-        //declare various size variables for the buttons to reference allowing for cleaner code.
-        let imageButtonSize = CGRect(x: screenSize.width*0.04, y: screenSize.height*0.01, width: screenSize.width*0.1, height: screenSize.width*0.1)
-        let textButtonSize = CGRect(x: screenSize.width*0.2, y: screenSize.height*0.01, width: screenSize.width*0.4, height: screenSize.width*0.1)
-        let postButtonSize = CGRect(x: 0, y: 0, width: screenSize.width*0.6, height: screenSize.width*0.3)
+        myMatchesButton = makeTextButton("MY MATCHES", frame: CGRect(x: screenSize.width*0.1, y: screenSize.height*0.45, width: screenSize.width*0.4, height: screenSize.width*0.1), target: #selector(SideMenuController.myMatchesPage(_:)))
+        self.view.addSubview(myMatchesButton)
+        myMatchesButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        myMatchesButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
         
-        // create all the buttons themselves
+        myPostsButton = makeTextButton("MY POSTS", frame: CGRect(x: screenSize.width*0.1, y: screenSize.height*0.55, width: screenSize.width*0.4, height: screenSize.width*0.1), target: #selector(SideMenuController.myPostsPage(_:)))
+        self.view.addSubview(myPostsButton)
+        myPostsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        myPostsButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
         
-        browseButton = makeTextButton("Browse", frame: textButtonSize, target: #selector(SideMenuController.browsePage(_:)))
-        browseCell.addSubview(browseButton)
-        
-        myMatchesButton = makeTextButton("My Matches", frame: textButtonSize, target: #selector(SideMenuController.myMatchesPage(_:)))
-        myMatchesCell.addSubview(myMatchesButton)
-        
-        myPostsButton = makeTextButton("My Posts", frame: textButtonSize, target: #selector(SideMenuController.myPostsPage(_:)))
-        myPostsCell.addSubview(myPostsButton)
-        
-        settingsButton = makeTextButton("Settings", frame: textButtonSize, target: #selector(SideMenuController.settingsPage(_:)))
-        settingsCell.addSubview(settingsButton)
-        
-        postButton = makeTextButton("Sell", frame: postButtonSize, target: #selector(SideMenuController.sellPage(_:)))
-        postButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        postButton.backgroundColor = UIColorFromHex(0x1abc9c, alpha: 1)
-        sellCell.addSubview(postButton)
-        
-        
-        
-        // create all the button icons/images
-        
-        browseIconButton = makeImageButton("Home-50", frame: imageButtonSize, target: #selector(SideMenuController.browsePage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
-        browseCell.addSubview(browseIconButton)
-        
-        myMatchesIconButton = makeImageButton("Shopping Cart Loaded-50", frame: imageButtonSize, target: #selector(SideMenuController.myMatchesPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
-        myMatchesCell.addSubview(myMatchesIconButton)
-        
-        myPostsIconButton = makeImageButton("New Product-50", frame: imageButtonSize, target: #selector(SideMenuController.myPostsPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
-        myPostsCell.addSubview(myPostsIconButton)
-        
-        
-        settingsIconButton = makeImageButton("Settings-50", frame: imageButtonSize, target: #selector(SideMenuController.settingsPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
-        settingsCell.addSubview(settingsIconButton)
-        
+        settingsButton = makeTextButton("SETTINGS", frame: CGRect(x: screenSize.width*0.1, y: screenSize.height*0.65, width: screenSize.width*0.4, height: screenSize.width*0.1), target: #selector(SideMenuController.settingsPage(_:)))
+        self.view.addSubview(settingsButton)
+        settingsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
+        settingsButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
     }
     
-
+    
     //various functions to perform the buttons segues
     
     //add check facebook login token anf if none log them in.
-
+    
     func sellPage(sender: UIButton) {
         self.performSegueWithIdentifier("toSellPage", sender: self)
     }
