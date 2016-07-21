@@ -45,7 +45,7 @@ class SideMenuController: UIViewController {
         profileName.addGestureRecognizer(tapGestureRecognizer)
         self.view.addSubview(profileName)
         
-        let whiteLine = UIView(frame: CGRectMake(0, screenSize.height*0.3, screenSize.width*0.6, 1))
+        let whiteLine = UIView(frame: CGRectMake(0, screenSize.height*0.3, screenSize.width, 1))
         whiteLine.backgroundColor = UIColor.whiteColor()
         self.view.addSubview(whiteLine)
         

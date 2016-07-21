@@ -102,6 +102,7 @@ class SplashViewController: UIViewController {
         while LocalUser.seenPosts == nil {
             continue
         }
+        print (LocalUser.seenPosts)
         updateSeenPosts()
         
         let matchManager = MatchesManager()
