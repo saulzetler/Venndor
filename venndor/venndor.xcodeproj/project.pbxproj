@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		100264531D4155C6009349CA /* venn_price_image.png in Resources */ = {isa = PBXBuildFile; fileRef = 100264521D4155C6009349CA /* venn_price_image.png */; };
 		101F43CE1D107A55007E0ADE /* HeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F43CD1D107A55007E0ADE /* HeaderView.swift */; };
 		101F43D01D11A203007E0ADE /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F43CF1D11A203007E0ADE /* TutorialViewController.swift */; };
 		102331941D13267B002C6B3C /* MiniMatchTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */; };
@@ -17,6 +18,7 @@
 		105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB021D08AB790073E3AE /* TempViewController.swift */; };
 		106E96231D3582C600DBBED0 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 106E96221D3582C600DBBED0 /* background.jpg */; };
 		106E96251D35896700DBBED0 /* iphone-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 106E96241D35896700DBBED0 /* iphone-icon.png */; };
+		109452B91D41661A00931DA8 /* venn.png in Resources */ = {isa = PBXBuildFile; fileRef = 109452B81D41661A00931DA8 /* venn.png */; };
 		109D93541D3E9BEB00A14616 /* Splash2ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 109D93531D3E9BEB00A14616 /* Splash2ViewController.swift */; };
 		10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9A71D0749700028A999 /* AppDelegate.swift */; };
 		10ADC9AA1D0749700028A999 /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9A91D0749700028A999 /* ViewController.swift */; };
@@ -122,6 +124,7 @@
 /* Begin PBXFileReference section */
 		051888506CA69C118E1520AC /* Pods_venndor.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_venndor.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		0CA8EC29EA93828B89F7DE15 /* Pods-venndor.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-venndor.release.xcconfig"; path = "Pods/Target Support Files/Pods-venndor/Pods-venndor.release.xcconfig"; sourceTree = "<group>"; };
+		100264521D4155C6009349CA /* venn_price_image.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = venn_price_image.png; sourceTree = "<group>"; };
 		101F43CD1D107A55007E0ADE /* HeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = HeaderView.swift; sourceTree = "<group>"; };
 		101F43CF1D11A203007E0ADE /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniMatchTransitionManager.swift; sourceTree = "<group>"; };
@@ -132,6 +135,7 @@
 		105FCB021D08AB790073E3AE /* TempViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempViewController.swift; sourceTree = "<group>"; };
 		106E96221D3582C600DBBED0 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		106E96241D35896700DBBED0 /* iphone-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphone-icon.png"; sourceTree = "<group>"; };
+		109452B81D41661A00931DA8 /* venn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = venn.png; sourceTree = "<group>"; };
 		109D93531D3E9BEB00A14616 /* Splash2ViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = Splash2ViewController.swift; sourceTree = "<group>"; };
 		10ADC9A41D0749700028A999 /* venndor.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = venndor.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		10ADC9A71D0749700028A999 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -436,6 +440,8 @@
 		E44C153E1D11E04F0006EBAD /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				109452B81D41661A00931DA8 /* venn.png */,
+				100264521D4155C6009349CA /* venn_price_image.png */,
 				E4A550D41D3D52BB001EAAB3 /* Marker Filled-100.png */,
 				E44B388F1D396B9C00733D96 /* Checked-100.png */,
 				E44B38901D396B9C00733D96 /* Xbox X-100.png */,
@@ -611,6 +617,7 @@
 			files = (
 				E44C15391D11E0430006EBAD /* Generic Book File Type-50.png in Resources */,
 				E44C15211D11B9F90006EBAD /* Home-50.png in Resources */,
+				109452B91D41661A00931DA8 /* venn.png in Resources */,
 				E4845EE71D37E7F000F4A5B2 /* Star Filled White.png in Resources */,
 				E44C151C1D11B9650006EBAD /* Settings-50.png in Resources */,
 				E4A550D51D3D52BB001EAAB3 /* Marker Filled-100.png in Resources */,
@@ -622,6 +629,7 @@
 				E4C0594C1D358E7A00AE51A3 /* Search Filled-100.png in Resources */,
 				E44C151F1D11B9B90006EBAD /* New Product-50.png in Resources */,
 				106E96251D35896700DBBED0 /* iphone-icon.png in Resources */,
+				100264531D4155C6009349CA /* venn_price_image.png in Resources */,
 				E4992E041D2C4DB300032221 /* match background.png in Resources */,
 				E4D4C9E01D2EDC0200EF0455 /* Star Empty.png in Resources */,
 				E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */,

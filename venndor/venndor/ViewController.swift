@@ -108,7 +108,7 @@ extension UIViewController {
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: action)
         imgView.userInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
-        createBorder(imgView, color: boarderColor)
+        imgView.layer.masksToBounds = true
         imgView.contentMode = .ScaleAspectFill
         superView.addSubview(imgView)
         return imgView
