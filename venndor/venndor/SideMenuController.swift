@@ -31,7 +31,7 @@ class SideMenuController: UIViewController {
         profilePic.layer.masksToBounds = false
         profilePic.layer.cornerRadius = (profilePic.frame.size.width)/2
         profilePic.clipsToBounds = true
-//        profilePic.contentMode = .ScaleAspectFill
+        profilePic.contentMode = .ScaleToFill
         self.view.addSubview(profilePic)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SideMenuController.profilePictureTapped))

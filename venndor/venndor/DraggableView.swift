@@ -381,6 +381,9 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         print("swiped up")
         adjustPage()
         resetView()
+        if picNum == numberOfPics-1 {
+            openInfo()
+        }
     }
     
     func downAction() -> Void {
@@ -388,9 +391,6 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         print("swiped down")
         adjustPage()
         resetView()
-        if picNum == numberOfPics-1 {
-            openInfo()
-        }
     }
     
     func rightAction() -> Void {
