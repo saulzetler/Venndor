@@ -14,7 +14,6 @@
 		103B17081D35686C005AEFDD /* jonasBoettcherController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103B17071D35686C005AEFDD /* jonasBoettcherController.swift */; };
 		103D11481D382EB5004CE297 /* OtherHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D11471D382EB5004CE297 /* OtherHeaderView.swift */; };
 		103D114A1D3831CD004CE297 /* MyItemHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D11491D3831CD004CE297 /* MyItemHeaderView.swift */; };
-		105FCB011D08A5C70073E3AE /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB001D08A5C70073E3AE /* LoginViewController.swift */; };
 		105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 105FCB021D08AB790073E3AE /* TempViewController.swift */; };
 		106E96231D3582C600DBBED0 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 106E96221D3582C600DBBED0 /* background.jpg */; };
 		106E96251D35896700DBBED0 /* iphone-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 106E96241D35896700DBBED0 /* iphone-icon.png */; };
@@ -130,7 +129,6 @@
 		103B17071D35686C005AEFDD /* jonasBoettcherController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = jonasBoettcherController.swift; sourceTree = "<group>"; };
 		103D11471D382EB5004CE297 /* OtherHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherHeaderView.swift; sourceTree = "<group>"; };
 		103D11491D3831CD004CE297 /* MyItemHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyItemHeaderView.swift; sourceTree = "<group>"; };
-		105FCB001D08A5C70073E3AE /* LoginViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginViewController.swift; sourceTree = "<group>"; };
 		105FCB021D08AB790073E3AE /* TempViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TempViewController.swift; sourceTree = "<group>"; };
 		106E96221D3582C600DBBED0 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		106E96241D35896700DBBED0 /* iphone-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphone-icon.png"; sourceTree = "<group>"; };
@@ -267,7 +265,6 @@
 		105FCAFF1D08A5490073E3AE /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
-				105FCB001D08A5C70073E3AE /* LoginViewController.swift */,
 				63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */,
 				E49051A81D09B0250045D5C0 /* BrowseViewController.swift */,
 				631F4F561D2AB5F4005EEFE2 /* ProfilePageViewController.swift */,
@@ -810,7 +807,6 @@
 				E44C152D1D11CC300006EBAD /* MyMatchesViewController.swift in Sources */,
 				63C8F7331D189E3D00FFC1E2 /* SplashViewController.swift in Sources */,
 				E43C92B51D189C67003E9CF5 /* ItemNameTextField.swift in Sources */,
-				105FCB011D08A5C70073E3AE /* LoginViewController.swift in Sources */,
 				105FCB031D08AB790073E3AE /* TempViewController.swift in Sources */,
 				109D93541D3E9BEB00A14616 /* Splash2ViewController.swift in Sources */,
 				63859A141D13347C004F4968 /* NIKFile.swift in Sources */,
