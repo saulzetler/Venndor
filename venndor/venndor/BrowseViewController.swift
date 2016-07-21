@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
+class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, SWRevealViewControllerDelegate {
 
     var allCards: [DraggableView]!
     var itemList: [Item]!
@@ -41,19 +41,25 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var headerView: HeaderView!
     
     var infoOpen: Bool!
+    var loaded: Bool!
     
     //location variables
     
     let locationManager = CLLocationManager()
     var myLocation: CLLocation!
     var locationAuthorized: Bool = false
+    
 
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        loaded = false
+        
         locationManager.delegate = self
         locationManager.requestWhenInUseAuthorization()
         locationManager.startUpdatingLocation()
+        
+        self.revealViewController().delegate = self
         
 //        let temp = 45.00
 //        let temp2 = 0.00
@@ -429,8 +435,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 }
                 cardsLoadedIndex = cardsLoadedIndex + 1
             }
-            
+            loaded = true
         }
+        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -465,5 +472,43 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             
         }
     }
+    
+    func revealController(revealController: SWRevealViewController, willMoveToPosition position: FrontViewPosition){
+        if((position == FrontViewPosition.Left)) {
+//            self.view.userInteractionEnabled = true
+            if loaded == true {
+                loadedCards[currentCardIndex].userInteractionEnabled = true
+                reactivate()
+            }
+            
+        }else {
+//            self.view.userInteractionEnabled = false
+            if loaded == true {
+                loadedCards[currentCardIndex].userInteractionEnabled = false
+                print("deactivated")
+                deactivate()
+            }
+            
+        }
+    }
+    
+    func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
+        if((position == FrontViewPosition.Left)) {
+//            self.view.userInteractionEnabled = true
+            if loaded == true {
+                loadedCards[currentCardIndex].userInteractionEnabled = true
+            }
+        } else {
+            if loaded == true {
+                loadedCards[currentCardIndex].userInteractionEnabled = false
+            }
+//            self.view.userInteractionEnabled = false
+            
+        }
+    }
+    
+    
+    
+    
 }
 

@@ -138,28 +138,31 @@ extension UIViewController {
         view.endEditing(true)
     }
     
-    func deactivateWhenSideMenuIsOpen() {
-        let deactivateView = UIView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.height*0.1, 0, UIScreen.mainScreen().bounds.height*0.9))
-        deactivateView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.7)
+    //deactivate when side menu is open
+    
+    //me trying to do it
+    
+    func deactivate() {
+        removeViewIfPresent()
+        let deactivateView = UIView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.height*0.1, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height*0.9))
+        deactivateView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         deactivateView.tag = 100
-        let tap = UITapGestureRecognizer(target: deactivateView, action: #selector(UIViewController.reactivate))
-        deactivateView.addGestureRecognizer(tap)
-        
+//        let tap = UITapGestureRecognizer(target: deactivateView, action: #selector(UIViewController.reactivate))
+//        deactivateView.addGestureRecognizer(tap)
+        self.view.addSubview(deactivateView)
     }
     
     func reactivate() {
+        removeViewIfPresent()
+    }
+    
+    func removeViewIfPresent() {
         for view in self.view.subviews {
             if (view.tag == 100) {
                 view.removeFromSuperview()
             }
         }
-        if revealViewController() != nil {
-            revealViewController().revealToggle(self)
-        }
     }
-    
-    
-    //my match/post functions
     
     
 }
