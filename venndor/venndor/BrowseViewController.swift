@@ -119,14 +119,14 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         //MiniMyMatches button at bottom of browse.
         let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
-        miniMatches = makeImageButton("ic_keyboard_arrow_up_white.png", frame: buttonSize, target: #selector(BrowseViewController.showAlert(_:)), tinted: false, circle: true, backgroundColor: 0x006666, backgroundAlpha: 1)
+        miniMatches = makeImageButton("ic_keyboard_arrow_up_white.png", frame: buttonSize, target: #selector(BrowseViewController.showAlert(_:)), tinted: false, circle: true, backgroundColor: 0x2c3e50, backgroundAlpha: 1)
         
         miniMatches.layer.cornerRadius = 0.5 * miniMatches.bounds.size.width
         miniMatches.layer.masksToBounds = true
         
         let bottomBar = CGRect(x: 0, y: screenSize.height*0.93, width: screenSize.width, height: screenSize.height*0.07)
         let bottomBarButton = UIButton(frame: bottomBar)
-        bottomBarButton.backgroundColor = UIColorFromHex(0x006666)
+        bottomBarButton.backgroundColor = UIColorFromHex(0x2c3e50)
         bottomBarButton.addTarget(self, action: #selector(BrowseViewController.showAlert(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
         self.view.addSubview(bottomBarButton)
@@ -344,6 +344,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
         while locationAuthorized == false {
         }
+//        myLocation = CLLocation(latitude: 10, longitude: 10)
         let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index], myLocation: myLocation)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
@@ -499,9 +500,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
         // 3
-        if status == .AuthorizedWhenInUse {
-            locationAuthorized = true
-            
+        if status == .AuthorizedWhenInUse {            
             locationManager.startUpdatingLocation()
             
         }

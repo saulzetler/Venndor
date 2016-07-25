@@ -25,7 +25,6 @@ class Match: NSObject {
     
     
     init(itemID: String, itemName: String, itemDescription: String, buyerID: String, sellerID: String, sellerName: String, matchedPrice: Double, itemLongitude: Double, itemLatitude: Double) {
-        //self.itemName = itemName
         self.itemID = itemID
         self.itemName = itemName
         self.itemDescription = itemDescription

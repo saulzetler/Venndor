@@ -103,13 +103,16 @@ extension UIViewController {
         view.layer.masksToBounds = true
     }
     
-    func createImgView(frame: CGRect, action: Selector, superView: UIView, boarderColor: UIColor = UIColor.blackColor()) -> UIImageView {
+    func createImgView(frame: CGRect, action: Selector, superView: UIView, boarderColor: UIColor = UIColor.blackColor(), boardered: Bool = false) -> UIImageView {
         let imgView = UIImageView(frame: frame)
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: action)
         imgView.userInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
-        createBorder(imgView, color: boarderColor)
-        imgView.contentMode = .ScaleAspectFill
+        imgView.layer.masksToBounds = true
+        imgView.contentMode = .ScaleToFill
+        if boardered {
+            createBorder(imgView, color: boarderColor)
+        }
         superView.addSubview(imgView)
         return imgView
     }
@@ -162,6 +165,164 @@ extension UIViewController {
                 view.removeFromSuperview()
             }
         }
+    }
+    
+    
+    //calculate your distance away from the item
+    func calculateDistance(item: Item, myLocation: CLLocation) -> String {
+        
+        var distText: String!
+        
+        let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
+        let itemLatitude = CLLocationDegrees(item.latitude)
+        let itemLongitude = CLLocationDegrees(item.longitude)
+        let myLatitude = myLocation.coordinate.latitude
+        let myLongitude = myLocation.coordinate.longitude
+        
+        let origins = "origins=\(myLatitude),\(myLongitude)&"
+        let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
+        let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
+        let url = baseURL+origins+destinations+key
+        
+        let requestURL: NSURL = NSURL(string: url)!
+        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(urlRequest) {
+            (data, response, error) -> Void in
+            
+            let httpResponse = response as! NSHTTPURLResponse
+            let statusCode = httpResponse.statusCode
+            
+            if (statusCode == 200) {
+                print("Everyone is fine, file downloaded successfully.")
+                
+                do {
+                    
+                    
+                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                    if let rows = json["rows"] as? [[String:AnyObject]] {
+                        let first = rows[0]
+                        let elements = first["elements"] as! Array<AnyObject>
+                        let firstElement = elements[0]
+                        if let distDict = firstElement["distance"] as? [String:AnyObject] {
+                            distText = String(distDict["text"]!)
+                        }
+                        else {
+                            distText = "none"
+                        }
+                    }
+                } catch {
+                    print("Error with Json: \(error)")
+                }
+                
+            }
+        }
+        task.resume()
+        return distText
+    }
+    
+    func calculateDistanceFromItem(item: Item, myLocation: CLLocation) -> String {
+        
+        var distText: String!
+        
+        let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
+        let itemLatitude = CLLocationDegrees(item.latitude)
+        let itemLongitude = CLLocationDegrees(item.longitude)
+        let myLatitude = myLocation.coordinate.latitude
+        let myLongitude = myLocation.coordinate.longitude
+        
+        let origins = "origins=\(myLatitude),\(myLongitude)&"
+        let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
+        let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
+        let url = baseURL+origins+destinations+key
+        
+        let requestURL: NSURL = NSURL(string: url)!
+        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(urlRequest) {
+            (data, response, error) -> Void in
+            
+            let httpResponse = response as! NSHTTPURLResponse
+            let statusCode = httpResponse.statusCode
+            
+            if (statusCode == 200) {
+                print("Everyone is fine, file downloaded successfully.")
+                
+                do {
+                    
+                    
+                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                    if let rows = json["rows"] as? [[String:AnyObject]] {
+                        let first = rows[0]
+                        let elements = first["elements"] as! Array<AnyObject>
+                        let firstElement = elements[0]
+                        if let distDict = firstElement["distance"] as? [String:AnyObject] {
+                            distText = String(distDict["text"]!)
+                        }
+                        else {
+                            distText = "none"
+                        }
+                    }
+                } catch {
+                    print("Error with Json: \(error)")
+                }
+                
+            }
+        }
+        task.resume()
+        return distText
+    }
+    
+    func calculateDistanceFromLocation(latitude: Double, longitude: Double, myLocation: CLLocation) -> String {
+        
+        var distText: String!
+        
+        let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
+        let itemLatitude = CLLocationDegrees(latitude)
+        let itemLongitude = CLLocationDegrees(longitude)
+        let myLatitude = myLocation.coordinate.latitude
+        let myLongitude = myLocation.coordinate.longitude
+        
+        let origins = "origins=\(myLatitude),\(myLongitude)&"
+        let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
+        let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
+        let url = baseURL+origins+destinations+key
+        
+        let requestURL: NSURL = NSURL(string: url)!
+        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(urlRequest) {
+            (data, response, error) -> Void in
+            
+            let httpResponse = response as! NSHTTPURLResponse
+            let statusCode = httpResponse.statusCode
+            
+            if (statusCode == 200) {
+                print("Everyone is fine, file downloaded successfully.")
+                
+                do {
+                    
+                    
+                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                    if let rows = json["rows"] as? [[String:AnyObject]] {
+                        let first = rows[0]
+                        let elements = first["elements"] as! Array<AnyObject>
+                        let firstElement = elements[0]
+                        if let distDict = firstElement["distance"] as? [String:AnyObject] {
+                            distText = String(distDict["text"]!)
+                        }
+                        else {
+                            distText = "none"
+                        }
+                    }
+                } catch {
+                    print("Error with Json: \(error)")
+                }
+                
+            }
+        }
+        task.resume()
+        return distText
     }
     
     
