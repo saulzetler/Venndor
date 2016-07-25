@@ -16,14 +16,23 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     var backgroundImage: UIImage!
 
     var offer: Double!
+    var sessionStart: NSDate!
 
-    
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "OfferViewController")
+    }
+
     override func viewDidLoad() {
         super.viewDidLoad()
+        LocalUser.user.mostRecentAction = "Entered the offer screen."
+        sessionStart = NSDate()
         backgroundImage = offeredItem.photos![0]
+        
         setupBackButton()
         setupWheelSlider()
         setupBackground()
+        
         let promptFrame = CGRect(x: 0, y: screenSize.height*0.2, width: screenSize.width, height: screenSize.height*0.2)
         setupPrompt("How much would you pay?", item: offeredItem, screenSize: screenSize, frame: promptFrame)
 //        setupPrompt()
@@ -70,6 +79,17 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
             tempOffer = Int(offer)
         }
         let offered = Double(tempOffer)
+        
+        //update item metrics
+        offeredItem.offersMade.append(offered)
+        offeredItem.setAverageOffer()
+        ItemManager.globalManager.updateItemById(offeredItem.id, update: ["offersMade": offeredItem.offersMade, "avgOffer": offeredItem.avgOffer]) { error in
+            guard error == nil else {
+                print("Error updating offered item: \(error)")
+                return
+            }
+        }
+        
         let posted = Double(offeredItem.minPrice)
 //        let offered = 12.00
 //        let posted = 10.00
@@ -77,10 +97,6 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         let temp = matchController.calculateMatchedPrice(offered, posted: posted, item: offeredItem)
         
         //temp for initial release matching controller
-        
-        
-        print("\(temp)")
-        print("offered")
         
         if temp[0] != 0.00 {
             let matchControllerView = PopUpViewControllerSwift()
@@ -90,6 +106,7 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         }
         else {
             LocalUser.seenPosts[offeredItem.id] = NSDate()
+            LocalUser.user.mostRecentAction = "Made an offer on an item."
             self.performSegueWithIdentifier("offerToBrowse", sender: self)
         }
     }

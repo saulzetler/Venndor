@@ -113,7 +113,6 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     func calculateDistance(item: Item, myLocation: CLLocation) {
         
-        print("item name: \(item.name)")
         let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
         let itemLatitude = CLLocationDegrees(item.latitude)
         let itemLongitude = CLLocationDegrees(item.longitude)
@@ -124,7 +123,6 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
         let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
         let url = baseURL+origins+destinations+key
-        print(url)
         
         let requestURL: NSURL = NSURL(string: url)!
         let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
@@ -142,20 +140,16 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
                     
                     
                     let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
-                    print(item.name)
-                    print(json)
                     if let rows = json["rows"] as? [[String:AnyObject]] {
                         let first = rows[0]
                         let elements = first["elements"] as! Array<AnyObject>
                         let firstElement = elements[0]
                         if let distDict = firstElement["distance"] as? [String:AnyObject] {
                             self.distText = String(distDict["text"]!)
-                            print("distance: \(self.distText)")
                             self.distanceSet = true
                         }
                         else {
                             self.distText = "none"
-                            print("distance: \(self.distText)")
                             self.distanceSet = true
                         }
                     }

@@ -44,14 +44,18 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var loaded: Bool!
     
     //location variables
-    
     let locationManager = CLLocationManager()
     var myLocation: CLLocation!
     var locationAuthorized: Bool = false
     
+    var sessionStart: NSDate!
+    var itemsNeedingUpdates = [Item]()
+
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        LocalUser.user.mostRecentAction = "Browsed Item Feed."
+        sessionStart = NSDate()
         
         loaded = false
         
@@ -84,9 +88,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 //        let items = GlobalItems.items
         
         
-        let manager = ItemManager()
-        let filter = manager.constructFeedFilter()
-        manager.retrieveMultipleItems(5, offset: nil, filter: filter, fields: nil) { items, error in
+        let filter = ItemManager.globalManager.constructFeedFilter()
+        ItemManager.globalManager.retrieveMultipleItems(5, offset: nil, filter: filter, fields: nil) { items, error in
             guard error == nil else {
                 print("Error retrieving items for browse feed: \(error)")
                 return
@@ -176,6 +179,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //function to bring up mini matches bottom menu
     func showAlert(sender: UIButton) {
         
+        LocalUser.user.mostRecentAction = "Browsed MiniMatches."
         //create the controller for the bottom menu
         let alertController = UIAlertController(title: "\n\n\n\n", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
@@ -351,16 +355,39 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     func cardSwipedLeft(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
+        let item = itemList[currentCardIndex]
 //        loadedInfos.removeAtIndex(0)
-        LocalUser.seenPosts[itemList[currentCardIndex].id] = NSDate()
+        LocalUser.seenPosts[item.id] = NSDate()
+        
+        //update user metrics
+        LocalUser.user.mostRecentAction = "Swiped left."
+        LocalUser.user.nuSwipesLeft! += 1
+        LocalUser.user.nuSwipesTotal! += 1
+        
+        //add the item to the array of items that need updating
+        item.nuSwipesLeft! += 1
+        GlobalItems.itemsToUpdate.append(item)
+        
         loadAnotherCard()
         nextCard()
-        
     }
     
     func cardSwipedRight(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)
 //        loadedInfos.removeAtIndex(0)
+        let item = itemList[currentCardIndex]
+        
+        //update user metrics
+        LocalUser.user.mostRecentAction = "Swiped right."
+        LocalUser.user.nuSwipesRight! += 1
+        LocalUser.user.nuSwipesTotal! += 1
+        
+        //update item metrics
+        item.nuSwipesRight! += 1
+        
+        //add the item to the array of items that need updating
+        GlobalItems.itemsToUpdate.append(item)
+        
         loadAnotherCard()
         nextCard()
     }
@@ -443,14 +470,23 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        let manager = SeenPostsManager()
-        manager.updateSeenPostsById(LocalUser.user.id) { error in
+        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "BrowseViewController")
+        SeenPostsManager.globalManager.updateSeenPostsById(LocalUser.user.id) { error in
             guard error == nil else {
                 print("Error updating LocalUser's seen posts: \(error)")
                 return
             }
             
             print("Succesfully updated the LocalUser's seen posts.")
+        }
+        
+        ItemManager.globalManager.updateItemMetrics(GlobalItems.itemsToUpdate) { error in
+            guard error == nil else {
+                print("Error updating item metrics: \(error)")
+                return
+            }
+            print("Succesfully updated item metrics.")
+            GlobalItems.itemsToUpdate = [Item]()
         }
     }
     
@@ -505,9 +541,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             
         }
     }
-    
-    
-    
     
 }
 

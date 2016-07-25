@@ -11,6 +11,7 @@ import UIKit
 
 class SettingsViewController: UIViewController {
     
+    var sessionStart: NSDate!
     //logout button for when the user wants to log out
     @IBAction func logOut(sender: UIButton) {
         //logs the user out of facebook along with out app
@@ -21,7 +22,8 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        LocalUser.user.mostRecentAction = "Went to Settings"
+        sessionStart = NSDate()
         //add lable for the title, NEEDS REFACTORING
         let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
         label.center = CGPointMake(160, 284)
@@ -35,6 +37,10 @@ class SettingsViewController: UIViewController {
         
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "SettingsViewController")
+    }
     
     
 }
