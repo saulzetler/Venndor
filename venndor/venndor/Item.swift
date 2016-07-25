@@ -97,6 +97,7 @@ class Item: NSObject {
         self.timeBought = nil
         self.nuSwipesLeft = 0
         self.nuSwipesRight = 0
+        self.nuMatches = 0
         self.offersMade = [Double]()
         self.avgOffer = 0
         self.geoHash = geoHash
