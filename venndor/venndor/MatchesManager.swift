@@ -10,8 +10,12 @@ import Foundation
 
 class MatchesManager: NSObject {
     
+    static let globalManager = MatchesManager()
+    
     func createMatch(match: Match, completionHandler: (Match?, ErrorType?) -> () ) {
-        RESTEngine.sharedEngine.createMatchOnServer(match,
+        let params = ["itemID": match.itemID, "itemName": match.itemName, "itemDescription": match.itemDescription, "buyerID": match.buyerID, "sellerID": match.sellerID, "sellerName": match.sellerName, "matchedPrice":match.matchedPrice, "itemLongitude": match.itemLongitude, "itemLatitude": match.itemLatitude]
+        
+        RESTEngine.sharedEngine.createMatchOnServer(params as! [String : AnyObject],
             success: { response in
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
                     match.id = id as? String

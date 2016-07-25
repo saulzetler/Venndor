@@ -12,6 +12,7 @@ import UIKit
 struct GlobalItems {
     static var items = [Item]()
     static var currentCategory: String?
+    static var itemsToUpdate = [Item]()
     static var currentSearch = [String]()
 }
 
@@ -30,12 +31,29 @@ class Item: NSObject {
     var question1: String
     var question2: String
     var minPrice: Int
-//    var previousOffers: [Double]
+    
+    //metrics
+    var timeMatched: NSDate?
+    var timeBought: NSDate?
+    var nuSwipesLeft: Int!
+    var nuSwipesRight: Int!
+    var nuMatches: Int!
+    var offersMade: [Double]!
+    var avgOffer: Double!
+    var geoHash: String!
+    
+    var formatter: NSDateFormatter {
+        let formatter = NSDateFormatter()
+        formatter.dateFormat = "yyyy-MM-dd'T'HH:mm"
+        return formatter
+    }
+    
     
     //photos, name/title, category, question1, question2, condition, description, address, minPrice
     
     //init from the server
     init(json: JSON) {
+
         name = json["name"] as! String
         details = json["details"] as! String
         id = json["_id"] as! String
@@ -49,11 +67,19 @@ class Item: NSObject {
         question1 = json["question1"] as! String
         question2 = json["question2"] as! String
         minPrice = json["minPrice"] as! Int
-//        previousOffers = json["previousOffers"] as! [Double]
+        timeMatched = json["timeMatched"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeMatched"] as! String)
+        timeBought = json["timeBought"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeBought"]! as! String)
+        nuSwipesLeft = json["nuSwipesLeft"] == nil ? nil : json["nuSwipesLeft"] as! Int
+        nuSwipesRight = json["nuSwipesRight"] as! Int
+        nuMatches =  json["nuMatches"] as! Int
+        offersMade = json["offersMade"] as! [Double]
+        avgOffer = json["avgOffer"] as! Double
+        geoHash = json["geoHash"] as! String
+        //        previousOffers = json["previousOffers"] as! [Double]
     }
     
     //init from the app
-    init(name: String, description: String, owner: String, ownerName: String, category: String, condition: Int, latitude: Double, longitude: Double, photos: [UIImage], question1: String, question2: String, minPrice: Int) {
+    init(name: String, description: String, owner: String, ownerName: String, category: String, condition: Int, latitude: Double, longitude: Double, geoHash: String, photos: [UIImage], question1: String, question2: String, minPrice: Int) {
         self.name = name
         self.details = description
         self.owner = owner
@@ -67,7 +93,22 @@ class Item: NSObject {
         self.question1 = question1
         self.question2 = question2
         self.minPrice = minPrice
-//        self.previousOffers = [Double]()
+        self.timeMatched = nil
+        self.timeBought = nil
+        self.nuSwipesLeft = 0
+        self.nuSwipesRight = 0
+        self.offersMade = [Double]()
+        self.avgOffer = 0
+        self.geoHash = geoHash
+
+    }
+    
+    func setAverageOffer() {
+        var x = 0.0
+        for offer in self.offersMade {
+            x += offer
+        }
+        self.avgOffer = x / Double(self.offersMade.count)
     }
 
     /*

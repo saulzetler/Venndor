@@ -14,7 +14,7 @@ struct ItemManager {
     
     func createItem(item: Item, completionHandler: (ErrorType?) -> () ) {
 
-        let params = ["name": item.name, "details": item.details, "photoCount": item.photoCount, "owner": item.owner, "ownerName": item.ownerName, "category": item.category,  "condition": item.condition, "latitude": item.latitude, "longitude": item.longitude, "question1": item.question1, "question2": item.question2, "minPrice": item.minPrice] as JSON
+        let params = ["name": item.name, "details": item.details, "photoCount": item.photoCount, "owner": item.owner, "ownerName": item.ownerName, "category": item.category,  "condition": item.condition, "latitude": item.latitude, "longitude": item.longitude, "question1": item.question1, "question2": item.question2, "minPrice": item.minPrice, "nuSwipesLeft": item.nuSwipesLeft, "nuSwipesRight": item.nuSwipesRight, "nuMatches": item.nuMatches, "offersMade": item.offersMade, "avgOffer": item.avgOffer, "geoHash": item.geoHash] as JSON
     
         RESTEngine.sharedEngine.addItemToServerWithDetails(params,
             success: { response in
@@ -40,26 +40,6 @@ struct ItemManager {
         })
     }
     
-    func retrieveItem(offset: Int?, filter: String?, fields: [String]?, completionHandler: (Item?, ErrorType?) -> () ) {
-        retrieveMultipleItems(1, offset: offset, filter: filter, fields: fields) { items, error in
-            guard error == nil else {
-                completionHandler(nil, error)
-                return
-            }
-            
-            if let items = items {
-                
-                //check if theres an item for us to return 
-                if items.count == 0 {
-                    completionHandler(nil, nil)
-                }
-                else {
-                    completionHandler(items[0], nil)
-                }
-            }
-        }
-    }
-    
     func retrieveMultipleItems(count: Int, offset: Int?, filter: String?, fields: [String]?, completionHandler: ([Item]?, ErrorType?) -> () ) {
         RESTEngine.sharedEngine.getItemsFromServer(count, offset: offset, filter: filter, fields: fields,
             success: { response in
@@ -81,7 +61,6 @@ struct ItemManager {
                                 item.photos = [img]
                             }
                         }
-                        
                         itemsArray.append(item)
                     }
                     completionHandler(itemsArray, nil)
@@ -130,6 +109,25 @@ struct ItemManager {
         })
     }
     
+    func updateItemById(id: String, update: [String:AnyObject], completionHandler: (ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.updateItemById(id, itemDetails: update,
+            success: { response in
+                completionHandler(nil)
+            }, failure: { error in
+                completionHandler(error)
+        })
+    }
+    
+    func updateItemMetrics(items: [Item], completionHandler:(ErrorType?) -> () ) {
+        var resourceArray = [[String:AnyObject]]()
+        for item in items {
+            let updateDict = ["_id": item.id, "nuSwipesLeft": item.nuSwipesLeft!, "nuSwipesRight": item.nuSwipesRight!]
+            resourceArray.append(updateDict as! [String : AnyObject])
+        }
+        
+        RESTEngine.sharedEngine.updateItems(resourceArray, success: { _ in }, failure: { error in completionHandler(error) })
+    }
+    
     func constructFeedFilter() -> String? {
         var ids: String!
         var index = 0
@@ -163,7 +161,6 @@ struct ItemManager {
             ids = ids == nil ? GlobalItems.currentCategory : "\(ids) and (category = \(GlobalItems.currentCategory!))"
         }
         
-        //print("\(ids)")
         return ids
     }
     

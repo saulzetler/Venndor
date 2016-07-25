@@ -17,6 +17,7 @@ var currentUser: String!
 class AppDelegate: UIResponder, UIApplicationDelegate {
 
     var window: UIWindow?
+    var sessionStart: NSDate!
     let googleMapsApiKey = "AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
@@ -24,6 +25,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         GMSServices.provideAPIKey(googleMapsApiKey)
         
         // Override point for customization after application launch.
+        
+        sessionStart = NSDate()
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
@@ -48,18 +51,29 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
-        let seenPostsManager = SeenPostsManager()
-        seenPostsManager.patchSeenPostsById(LocalUser.user.id) { error in
+        //update item metrics 
+        ItemManager.globalManager.updateItemMetrics(GlobalItems.itemsToUpdate) { error in
             guard error == nil else {
-                print("Error patching the user: \(error)")
+                print("Error updating item metrics: \(error)")
                 return
             }
+            print("Succesfully updated item metrics.")
+            GlobalItems.itemsToUpdate = [Item]()
         }
-            
+
+        //update user metrics
+        setSessionTime()
+        UserManager.globalManager.updateLocalUserMetrics()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
         // Called as part of the transition from the background to the inactive state; here you can undo many of the changes made on entering the background.
+        
+        if LocalUser.user != nil {
+            LocalUser.user.nuVisits! += 1
+        }
+
+        sessionStart = NSDate()
     }
 
     func applicationDidBecomeActive(application: UIApplication) {
@@ -71,6 +85,28 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+        
+        //update swiped item metrics
+        ItemManager.globalManager.updateItemMetrics(GlobalItems.itemsToUpdate) { error in
+            guard error == nil else {
+                print("Error updating item metrics: \(error)")
+                return
+            }
+            print("Succesfully updated item metrics.")
+            GlobalItems.itemsToUpdate = [Item]()
+        }
+
+       
+        //calculate the time of the current session
+        setSessionTime()
+        UserManager.globalManager.updateLocalUserMetrics()
+    }
+    
+    
+    func setSessionTime() {
+        let timeInterval = ((sessionStart.timeIntervalSinceNow) / 60 * -1)
+        let dateString = TimeManager.formatter.stringFromDate(sessionStart)
+        LocalUser.user.timeOnAppPerSession[dateString] = timeInterval
     }
 
     // MARK: - Core Data stack

@@ -14,6 +14,7 @@ class SplashViewController: UIViewController {
     //perform during load to allow for a shorter splash screen/early call.
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let background = UIImage(named: "background.jpg")
         let backgroundView = UIImageView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
@@ -42,26 +43,26 @@ class SplashViewController: UIViewController {
                 
                 //if they do set the data!
                 LocalUser.user = user
-                print("\(LocalUser.user.email)")
+                LocalUser.user.nuVisits! += 1
+                LocalUser.user.mostRecentAction = "Logged in through Facebook."
+                
                 /**************************************************************************/
                 //to be taken out later when the users profile picture is addded to database.
-                LocalUser.user.profilePicture = LocalUser.profilePicture
+                
+                //LocalUser.user.profilePictureURL = LocalUser.profilePictureURL
+                
                 /**************************************************************************/
                 seenPostsMade = true
             }
             else {
                 
                 //create the user on the server
-                userManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email) { user, error in
+                userManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email, gender: LocalUser.gender, ageRange: LocalUser.ageRange) { user, error in
                     LocalUser.user = user
                     LocalUser.seenPosts = [String:AnyObject]()
+                    LocalUser.user.mostRecentAction = "Logged in through Facebook."
                     LocalUser.seenPosts["_id"] = LocalUser.user.id
-                    
-                    /**************************************************************************/
-                    //to be taken out later when the users profile picture is addded to database.
-                    LocalUser.user.profilePicture = LocalUser.profilePicture
-                    /**************************************************************************/
-                    
+             
                     //create the seenPosts object on the server
                     seenPostsManager.createSeenPostsById(LocalUser.user.id, completionHandler: { error in
                         guard error == nil else {
@@ -102,7 +103,7 @@ class SplashViewController: UIViewController {
         while LocalUser.seenPosts == nil {
             continue
         }
-        print (LocalUser.seenPosts)
+        
         updateSeenPosts()
         
         let matchManager = MatchesManager()
@@ -146,7 +147,6 @@ class SplashViewController: UIViewController {
             
             print("Succesfully patched LocalUser's seen posts")
         }
-        
     }
     
     func triggerSegueTutorial(){

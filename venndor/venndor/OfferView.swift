@@ -29,7 +29,7 @@ class OfferView: UIView {
     
     func setupBackButton() {
         let buttonSize = CGRect(x: screenSize.width * 0.1, y: screenSize.height * 0.05, width: screenSize.width * 0.13, height: screenSize.width * 0.13)
-        let backButton = makeImageButton("Back_Arrow.png", frame: buttonSize, target: "goBack:", tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        let backButton = makeImageButton("Back_Arrow.png", frame: buttonSize, target: #selector(OfferView.goBack(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         self.addSubview(backButton)
     }
     

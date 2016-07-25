@@ -32,4 +32,14 @@ struct ParserManager {
             return response as! [String:AnyObject]
         }
     }
+    
+    func getDoubleDict(response: AnyObject) -> [String:Double] {
+        if let _ = response as? NSArray {
+            return [String:Double]()
+        }
+        else {
+            return response as! [String:Double]
+        }
+    }
+
 }

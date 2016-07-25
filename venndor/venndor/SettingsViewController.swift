@@ -14,6 +14,8 @@ class SettingsViewController: UIViewController {
     var containerView: UIView!
     let screenSize = UIScreen.mainScreen().bounds
     
+    var sessionStart: NSDate!
+
     //logout button for when the user wants to log out
     @IBAction func logOut(sender: UIButton) {
         //logs the user out of facebook along with out app
@@ -24,8 +26,10 @@ class SettingsViewController: UIViewController {
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
         containerView = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height*0.9))
+        
+        LocalUser.user.mostRecentAction = "Went to Settings"
+        sessionStart = NSDate()
         
         //add lable for the title, NEEDS REFACTORING
         let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
@@ -54,6 +58,10 @@ class SettingsViewController: UIViewController {
         }
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "SettingsViewController")
+    }
     
     
 }

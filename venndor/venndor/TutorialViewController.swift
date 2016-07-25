@@ -25,6 +25,7 @@ class TutorialViewController: UIViewController, UIScrollViewDelegate {
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        LocalUser.user.mostRecentAction = "Went through the Tutorial"
         
         //first create the scroll view frame specifcations
         self.scrollView.frame = CGRectMake(0, 0, self.view.frame.width, self.view.frame.height)

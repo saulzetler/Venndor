@@ -27,13 +27,22 @@ class ProfilePageViewController: UIViewController {
     @IBOutlet weak var soldStack: UIStackView!
     @IBOutlet weak var savedStack: UIStackView!
     
+    var sessionStart: NSDate!
     var headerView: HeaderView!
     
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "ProfilePageViewController")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
+        LocalUser.user.mostRecentAction = "Viewed Personal Profile"
+        sessionStart = NSDate()
+        
         //add profile picture
-        let link = NSURL(string: user.profilePicture)
+        let link = NSURL(string: user.profilePictureURL)
         let pictureData = NSData(contentsOfURL: link!)
         profilePicView.image = UIImage(data: pictureData!)
         //set up the side menu

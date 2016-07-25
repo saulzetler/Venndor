@@ -148,7 +148,7 @@ class CategoriesMenuController: UITableViewController {
         otherButton.selected = false
         //make the sender highlighted
         sender.selected = true
-        
+        LocalUser.user.mostRecentAction = "Filtered by category: \(GlobalItems.currentCategory)"
         self.performSegueWithIdentifier("newCat", sender: self)
     }
     
