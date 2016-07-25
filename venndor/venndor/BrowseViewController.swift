@@ -45,7 +45,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     //location variables
     let locationManager = CLLocationManager()
-    var myLocation: CLLocation!
     var locationAuthorized: Bool = false
     
     var sessionStart: NSDate!
@@ -333,7 +332,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     //functions to create dragable views
     
     func createDraggableViewFromItem(item: Item) -> DraggableView {
-        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: item, myLocation: myLocation)
+        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: item, myLocation: LocalUser.myLocation)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
         draggableView.delegate = self
@@ -343,8 +342,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
 //        while locationAuthorized == false {
 //        }
-        myLocation = CLLocation(latitude: 10, longitude: 10)
-        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index], myLocation: myLocation)
+        LocalUser.myLocation = CLLocation(latitude: 10, longitude: 10)
+        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index], myLocation: LocalUser.myLocation)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
         draggableView.delegate = self
@@ -494,7 +493,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             locationAuthorized = true
-            myLocation = location
+            LocalUser.myLocation = location
             locationManager.stopUpdatingLocation()
             
         }
