@@ -70,16 +70,16 @@ class Item: NSObject {
         timeMatched = json["timeMatched"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeMatched"] as! String)
         timeBought = json["timeBought"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeBought"]! as! String)
         nuSwipesLeft = json["nuSwipesLeft"] == nil ? nil : json["nuSwipesLeft"] as! Int
-        nuSwipesRight = json["nuSwipesRight"] == nil ? nil : json["nuSwipesRight"] as! Int
-        nuMatches = json["nuMatches"] == nil ? nil : json["nuMatches"] as! Int
-        offersMade = json["offersMade"] == nil ? nil : json["offersMade"] as! [Double]
-        avgOffer = json["avgOffer"] == nil ? nil : json["avgOffer"] as! Double
-        geoHash = json["geoHash"] == nil ? nil : json["geoHash"] as! String
+        nuSwipesRight = json["nuSwipesRight"] as! Int
+        nuMatches =  json["nuMatches"] as! Int
+        offersMade = json["offersMade"] as! [Double]
+        avgOffer = json["avgOffer"] as! Double
+        geoHash = json["geoHash"] as! String
         //        previousOffers = json["previousOffers"] as! [Double]
     }
     
     //init from the app
-    init(name: String, description: String, owner: String, ownerName: String, category: String, condition: Int, latitude: Double, longitude: Double, photos: [UIImage], question1: String, question2: String, minPrice: Int) {
+    init(name: String, description: String, owner: String, ownerName: String, category: String, condition: Int, latitude: Double, longitude: Double, geoHash: String, photos: [UIImage], question1: String, question2: String, minPrice: Int) {
         self.name = name
         self.details = description
         self.owner = owner
@@ -99,9 +99,7 @@ class Item: NSObject {
         self.nuSwipesRight = 0
         self.offersMade = [Double]()
         self.avgOffer = 0
-        
-        //DUMMY VALUE
-        self.geoHash = ""
+        self.geoHash = geoHash
 
     }
     
