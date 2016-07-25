@@ -32,9 +32,10 @@ class SideMenuController: UIViewController {
         profilePic.layer.cornerRadius = (profilePic.frame.size.width)/2
         profilePic.clipsToBounds = true
         profilePic.contentMode = .ScaleToFill
-        self.view.addSubview(profilePic)
         
         let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: #selector(SideMenuController.profilePictureTapped))
+        let tapGestureRecognizer2 = UITapGestureRecognizer(target: self, action: #selector(SideMenuController.profilePictureTapped))
+        
         profilePic.userInteractionEnabled = true
         profilePic.addGestureRecognizer(tapGestureRecognizer)
         let profileName: UILabel = UILabel(frame: CGRectMake(0, screenSize.height*0.18, screenSize.width*0.6, screenSize.width*0.25))
@@ -42,7 +43,9 @@ class SideMenuController: UIViewController {
         profileName.text = LocalUser.firstName + " " + LocalUser.lastName
         profileName.textColor = UIColor.whiteColor()
         profileName.font = UIFont(name: "Avenir", size: 16)
-        profileName.addGestureRecognizer(tapGestureRecognizer)
+        profileName.addGestureRecognizer(tapGestureRecognizer2)
+        profileName.userInteractionEnabled = true
+        self.view.addSubview(profilePic)
         self.view.addSubview(profileName)
         
         let whiteLine = UIView(frame: CGRectMake(0, screenSize.height*0.3, screenSize.width, 1))
@@ -107,6 +110,7 @@ class SideMenuController: UIViewController {
     }
     
     func profilePictureTapped() {
+        print ("wtfisthishsit")
         self.performSegueWithIdentifier("showProfile", sender: self)
     }
     
