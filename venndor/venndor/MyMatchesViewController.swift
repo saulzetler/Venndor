@@ -30,6 +30,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.revealViewController().delegate = self
+        
         let manager = MatchesManager()
         
         //set up prelimenary variables to make for-loop more readable
@@ -251,6 +253,23 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
 //        view.sendSubviewToBack(scrollView)
 //        view.sendSubviewToBack(matchContainerView)
     }
+    
+    func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
+        if((position == FrontViewPosition.Left)) {
+            print("active")
+            matchContainerView.userInteractionEnabled = true
+            reactivate()
+        } else {
+            print("inactive")
+            matchContainerView.userInteractionEnabled = false
+            deactivate()
+        }
+    }
+    
+    
+    
+    
+    
 //    
 //    //function to control the switching between the 2 possible views given a passed boolean.
 //    func toggleView(toMatches: Bool) {

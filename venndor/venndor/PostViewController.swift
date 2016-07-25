@@ -64,6 +64,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setupDownArrow()
         setupMap()
         hideKeyboardWhenTappedAround()
+        self.revealViewController().delegate = self
     }
     
     //setup functions
@@ -604,4 +605,18 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         //        myLabel.text = pickerData[row]
     }
     
+    
+    //deactivation methods
+    
+    func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
+        if((position == FrontViewPosition.Left)) {
+            print("active")
+            containerView.userInteractionEnabled = true
+            reactivate()
+        } else {
+            print("inactive")
+            containerView.userInteractionEnabled = false
+            deactivate()
+        }
+    }
 }

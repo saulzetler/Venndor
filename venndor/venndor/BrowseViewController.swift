@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, SWRevealViewControllerDelegate {
+class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
 
     var allCards: [DraggableView]!
     var itemList: [Item]!
@@ -33,6 +33,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var itemName: UILabel!
     var itemDescription: UILabel!
     var itemCondtion: UIView!
+    var mainView: UIView!
     
     //variables to help declare and set things
     let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -52,6 +53,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        mainView = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height*0.9))
         
         loaded = false
         
@@ -105,7 +108,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         
         
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
+//        let screenSize: CGRect = UIScreen.mainScreen().bounds
         
         //cover view
 //        let cover = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height*0.9))
@@ -125,9 +128,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         bottomBarButton.backgroundColor = UIColorFromHex(0x2c3e50)
         bottomBarButton.addTarget(self, action: #selector(BrowseViewController.showAlert(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
-        self.view.addSubview(bottomBarButton)
+        mainView.addSubview(bottomBarButton)
 
-        self.view.addSubview(miniMatches)
+        mainView.addSubview(miniMatches)
         
         //prepare the reveal view controller to allow swipping and side menus.
         if revealViewController() != nil {
@@ -376,14 +379,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     func insertNewCard() {
         if cardsLoadedIndex - currentCardIndex > 0 {
             let newCard = loadedCards[cardsLoadedIndex - currentCardIndex - 1]
-            self.view.addSubview(newCard)
-            self.view.sendSubviewToBack(newCard)
-//            self.view.addSubview(newInfo)
-//            self.view.sendSubviewToBack(newInfo)
-//            updateItemInfo()
-        }
-        else {
-//            itemInfo.removeFromSuperview()
+            mainView.addSubview(newCard)
+            mainView.sendSubviewToBack(newCard)
         }
     }
     
@@ -429,10 +426,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             
             while cardsLoadedIndex < loadedCards.count {
                 if cardsLoadedIndex == 0 {
-                    self.view.addSubview(loadedCards[cardsLoadedIndex])
+                    mainView.addSubview(loadedCards[cardsLoadedIndex])
                 }
                 else {
-                    self.view.insertSubview(loadedCards[cardsLoadedIndex], belowSubview: loadedCards[cardsLoadedIndex - 1])
+                    mainView.insertSubview(loadedCards[cardsLoadedIndex], belowSubview: loadedCards[cardsLoadedIndex - 1])
                 }
                 cardsLoadedIndex = cardsLoadedIndex + 1
             }
@@ -472,42 +469,14 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         }
     }
     
-    func revealController(revealController: SWRevealViewController, willMoveToPosition position: FrontViewPosition){
-        if((position == FrontViewPosition.Left)) {
-//            self.view.userInteractionEnabled = true
-            if loaded == true {
-                loadedCards[currentCardIndex].userInteractionEnabled = true
-                reactivate()
-            }
-            
-        }else {
-//            self.view.userInteractionEnabled = false
-            if loaded == true {
-                loadedCards[currentCardIndex].userInteractionEnabled = false
-                print("deactivated")
-                deactivate()
-            }
-            
-        }
-    }
-    
     func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
         if((position == FrontViewPosition.Left)) {
-//            self.view.userInteractionEnabled = true
-            if loaded == true {
-                loadedCards[currentCardIndex].userInteractionEnabled = true
-            }
+            mainView.userInteractionEnabled = true
+            reactivate()
         } else {
-            if loaded == true {
-                loadedCards[currentCardIndex].userInteractionEnabled = false
-            }
-//            self.view.userInteractionEnabled = false
-            
+            mainView.userInteractionEnabled = false
+            deactivate()
         }
     }
-    
-    
-    
-    
 }
 

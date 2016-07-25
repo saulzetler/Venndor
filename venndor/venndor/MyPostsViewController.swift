@@ -30,7 +30,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        super.viewDidLoad()
+        self.revealViewController().delegate = self
         
         let manager = ItemManager()
         
@@ -230,6 +230,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
+    
     //control for the gesture to allow swipingleft and right for the menu
     func respondToSwipeGesture(gesture: UIGestureRecognizer) {
         
@@ -245,6 +246,18 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             default:
                 break
             }
+        }
+    }
+    
+    func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
+        if((position == FrontViewPosition.Left)) {
+            print("active")
+            postsContainerView.userInteractionEnabled = true
+            reactivate()
+        } else {
+            print("inactive")
+            postsContainerView.userInteractionEnabled = false
+            deactivate()
         }
     }
     
