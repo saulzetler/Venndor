@@ -68,7 +68,7 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
         //, user_location
         //, location = result["user_location"] as? String
         //parameters for what data the app should pull
-        let parameters = ["fields": "email, first_name, last_name, picture.type(large), id, gender"]
+        let parameters = ["fields": "email, first_name, last_name, picture.type(large), id, gender, age_range"]
         
         FBSDKGraphRequest(graphPath: "me", parameters: parameters).startWithCompletionHandler {(
             connection, result, error) -> Void in
@@ -76,21 +76,15 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
                 print(error)
                 return
             }
-            if let firstName = result["first_name"] as? String, lastName = result["last_name"] as? String, email = result["email"] as? String, userID = result["id"] as? NSString, gender = result["gender"] as? String {
+            if let firstName = result["first_name"] as? String, lastName = result["last_name"] as? String, email = result["email"] as? String, userID = result["id"] as? NSString, gender = result["gender"] as? String, ageRange = result["age_range"] {
                 //if there is great success store the pulled data
                 LocalUser.firstName = firstName
                 LocalUser.lastName = lastName
                 LocalUser.email = email
                 LocalUser.gender = gender
-                //LocalUser.ageRange = "\(ageRange["min"])-\(ageRange["max"])"
-                
-                
-                /* ADD PHOTO HANDLER/STORAGE FOR USER*/
-                //                let link = NSURL(string: "https://graph.facebook.com/\(userID)/picture?type=large")
-                //                let pictureData = NSData(contentsOfURL: link!)
-                //                LocalUser.profilePicture = UIImage(data: pictureData!)
-                print (userID)
+                LocalUser.ageRange = "\(ageRange["min"])-\(ageRange["max"])"
                 LocalUser.profilePictureURL = "https://graph.facebook.com/\(userID)/picture?type=large"
+                LocalUser.facebookID = userID
                 
                 
                 //transition when great success
