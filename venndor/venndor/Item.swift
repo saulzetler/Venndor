@@ -12,7 +12,7 @@ import UIKit
 struct GlobalItems {
     static var items = [Item]()
     static var currentCategory: String?
-
+    static var itemsToUpdate = [Item]()
     static var currentSearch = [String]()
 }
 
@@ -67,14 +67,14 @@ class Item: NSObject {
         question1 = json["question1"] as! String
         question2 = json["question2"] as! String
         minPrice = json["minPrice"] as! Int
-        timeMatched = json["timeMatched"] as! String == "" ? nil : TimeManager.formatter.dateFromString(json["timeMatched"] as! String)
-        timeBought = json["timeBought"] as! String == "" ? nil : TimeManager.formatter.dateFromString(json["timeBought"]! as! String)
-        nuSwipesLeft = json["nuSwipesLeft"] as! Int
-        nuSwipesRight = json["nuSwipesRight"] as! Int
-        nuMatches = json["nuMatches"] as! Int
-        offersMade = json["offersMade"] as! [Double]
-        avgOffer = json["avgOffer"] as! Double
-        geoHash = json["geoHash"] as! String 
+        timeMatched = json["timeMatched"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeMatched"] as! String)
+        timeBought = json["timeBought"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeBought"]! as! String)
+        nuSwipesLeft = json["nuSwipesLeft"] == nil ? nil : json["nuSwipesLeft"] as! Int
+        nuSwipesRight = json["nuSwipesRight"] == nil ? nil : json["nuSwipesRight"] as! Int
+        nuMatches = json["nuMatches"] == nil ? nil : json["nuMatches"] as! Int
+        offersMade = json["offersMade"] == nil ? nil : json["offersMade"] as! [Double]
+        avgOffer = json["avgOffer"] == nil ? nil : json["avgOffer"] as! Double
+        geoHash = json["geoHash"] == nil ? nil : json["geoHash"] as! String
         //        previousOffers = json["previousOffers"] as! [Double]
     }
     

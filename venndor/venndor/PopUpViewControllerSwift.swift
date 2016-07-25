@@ -32,7 +32,7 @@ class PopUpViewControllerSwift : UIViewController {
         let item = matchedItem
         item.timeMatched = NSDate()
         item.nuMatches! += 1
-        let itemUpdate  = ["nuMatches": item.nuMatches, "timeBought": TimeManager.formatter.stringFromDate(item.timeMatched!)]
+        let itemUpdate  = ["nuMatches": item.nuMatches, "timeMatched": TimeManager.formatter.stringFromDate(item.timeMatched!)]
         ItemManager.globalManager.updateItemById(item.id, update: itemUpdate as! [String : AnyObject]) { error in
             guard error == nil else {
                 print("Error updating item metrics in match screen: \(error)")
@@ -45,6 +45,7 @@ class PopUpViewControllerSwift : UIViewController {
         
         //create the match on the server
         let newMatch = Match(itemID: matchedItem.id, itemName: matchedItem.name, itemDescription: matchedItem.details, buyerID: LocalUser.user.id, sellerID: matchedItem.owner, sellerName: matchedItem.ownerName, matchedPrice: matchedPrice, itemLongitude: matchedItem.longitude, itemLatitude: matchedItem.latitude)
+       
         MatchesManager.globalManager.createMatch(newMatch) { match, error in
             guard error == nil else {
                 print("Error creating match on server: \(error)")

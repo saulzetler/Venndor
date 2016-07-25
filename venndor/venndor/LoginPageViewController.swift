@@ -81,7 +81,8 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
                 LocalUser.firstName = firstName
                 LocalUser.lastName = lastName
                 LocalUser.email = email
-                print (gender)
+                LocalUser.gender = gender
+                //LocalUser.ageRange = "\(ageRange["min"])-\(ageRange["max"])"
                 
                 
                 /* ADD PHOTO HANDLER/STORAGE FOR USER*/

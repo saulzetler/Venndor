@@ -56,7 +56,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         super.viewDidLoad()
         LocalUser.user.mostRecentAction = "Browsed Item Feed."
         sessionStart = NSDate()
-        print("\(sessionStart)")
         
         loaded = false
         
@@ -365,15 +364,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         LocalUser.user.nuSwipesLeft! += 1
         LocalUser.user.nuSwipesTotal! += 1
         
-        //update item metrics
+        //add the item to the array of items that need updating
         item.nuSwipesLeft! += 1
-        ItemManager.globalManager.updateItemById(item.id, update: ["nuSwipesLeft": item.nuSwipesLeft]) { error in
-            guard error == nil else {
-                print("Error updating item metrics on left swipe.")
-                return
-            }
-        }
-            
+        GlobalItems.itemsToUpdate.append(item)
         
         loadAnotherCard()
         nextCard()
@@ -383,18 +376,18 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         loadedCards.removeAtIndex(0)
 //        loadedInfos.removeAtIndex(0)
         let item = itemList[currentCardIndex]
+        
+        //update user metrics
         LocalUser.user.mostRecentAction = "Swiped right."
         LocalUser.user.nuSwipesRight! += 1
         LocalUser.user.nuSwipesTotal! += 1
         
         //update item metrics
         item.nuSwipesRight! += 1
-        ItemManager.globalManager.updateItemById(item.id, update: ["nuSwipesRight": item.nuSwipesRight]) { error in
-            guard error == nil else {
-                print("Error updating item metrics on right swipe.")
-                return 
-            }
-        }
+        
+        //add the item to the array of items that need updating
+        GlobalItems.itemsToUpdate.append(item)
+        
         loadAnotherCard()
         nextCard()
     }
@@ -485,6 +478,15 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             }
             
             print("Succesfully updated the LocalUser's seen posts.")
+        }
+        
+        ItemManager.globalManager.updateItemMetrics(GlobalItems.itemsToUpdate) { error in
+            guard error == nil else {
+                print("Error updating item metrics: \(error)")
+                return
+            }
+            print("Succesfully updated item metrics.")
+            GlobalItems.itemsToUpdate = [Item]()
         }
     }
     

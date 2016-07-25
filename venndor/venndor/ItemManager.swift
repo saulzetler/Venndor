@@ -40,26 +40,6 @@ struct ItemManager {
         })
     }
     
-//    func retrieveItem(offset: Int?, filter: String?, fields: [String]?, completionHandler: (Item?, ErrorType?) -> () ) {
-//        retrieveMultipleItems(1, offset: offset, filter: filter, fields: fields) { items, error in
-//            guard error == nil else {
-//                completionHandler(nil, error)
-//                return
-//            }
-//            
-//            if let items = items {
-//                
-//                //check if theres an item for us to return 
-//                if items.count == 0 {
-//                    completionHandler(nil, nil)
-//                }
-//                else {
-//                    completionHandler(items[0], nil)
-//                }
-//            }
-//        }
-//    }
-    
     func retrieveMultipleItems(count: Int, offset: Int?, filter: String?, fields: [String]?, completionHandler: ([Item]?, ErrorType?) -> () ) {
         RESTEngine.sharedEngine.getItemsFromServer(count, offset: offset, filter: filter, fields: fields,
             success: { response in
@@ -81,7 +61,6 @@ struct ItemManager {
                                 item.photos = [img]
                             }
                         }
-                        
                         itemsArray.append(item)
                     }
                     completionHandler(itemsArray, nil)
@@ -137,6 +116,16 @@ struct ItemManager {
             }, failure: { error in
                 completionHandler(error)
         })
+    }
+    
+    func updateItemMetrics(items: [Item], completionHandler:(ErrorType?) -> () ) {
+        var resourceArray = [[String:AnyObject]]()
+        for item in items {
+            let updateDict = ["_id": item.id, "nuSwipesLeft": item.nuSwipesLeft!, "nuSwipesRight": item.nuSwipesRight!]
+            resourceArray.append(updateDict as! [String : AnyObject])
+        }
+        
+        RESTEngine.sharedEngine.updateItems(resourceArray, success: { _ in }, failure: { error in completionHandler(error) })
     }
     
     func constructFeedFilter() -> String? {

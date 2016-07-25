@@ -51,6 +51,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Use this method to release shared resources, save user data, invalidate timers, and store enough application state information to restore your application to its current state in case it is terminated later.
         // If your application supports background execution, this method is called instead of applicationWillTerminate: when the user quits.
         
+        //update item metrics 
+        ItemManager.globalManager.updateItemMetrics(GlobalItems.itemsToUpdate) { error in
+            guard error == nil else {
+                print("Error updating item metrics: \(error)")
+                return
+            }
+            print("Succesfully updated item metrics.")
+            GlobalItems.itemsToUpdate = [Item]()
+        }
+
+        //update user metrics
         setSessionTime()
         UserManager.globalManager.updateLocalUserMetrics()
     }
@@ -61,6 +72,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         if LocalUser.user != nil {
             LocalUser.user.nuVisits! += 1
         }
+
         sessionStart = NSDate()
     }
 
@@ -73,6 +85,17 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Called when the application is about to terminate. Save data if appropriate. See also applicationDidEnterBackground:.
         // Saves changes in the application's managed object context before the application terminates.
         self.saveContext()
+        
+        //update swiped item metrics
+        ItemManager.globalManager.updateItemMetrics(GlobalItems.itemsToUpdate) { error in
+            guard error == nil else {
+                print("Error updating item metrics: \(error)")
+                return
+            }
+            print("Succesfully updated item metrics.")
+            GlobalItems.itemsToUpdate = [Item]()
+        }
+
        
         //calculate the time of the current session
         setSessionTime()

@@ -62,14 +62,7 @@ class SplashViewController: UIViewController {
                     LocalUser.seenPosts = [String:AnyObject]()
                     LocalUser.user.mostRecentAction = "Logged in through Facebook."
                     LocalUser.seenPosts["_id"] = LocalUser.user.id
-                    
-                    /**************************************************************************/
-                    //to be taken out later when the users profile picture is addded to database.
-                    
-                    //LocalUser.user.profilePictureURL = LocalUser.profilePictureURL
-                    
-                    /**************************************************************************/
-                    
+             
                     //create the seenPosts object on the server
                     seenPostsManager.createSeenPostsById(LocalUser.user.id, completionHandler: { error in
                         guard error == nil else {
@@ -110,7 +103,7 @@ class SplashViewController: UIViewController {
         while LocalUser.seenPosts == nil {
             continue
         }
-        print (LocalUser.seenPosts)
+        
         updateSeenPosts()
         
         let matchManager = MatchesManager()

@@ -250,6 +250,9 @@ final class RESTEngine {
     }
 
     
+    
+    
+    
     //MARK: - Item methods
     
     /**
@@ -318,7 +321,15 @@ final class RESTEngine {
         
         callApiWithPath(path, method: "PATCH", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
     }
-  
+    
+    /**
+     Update multiple items at once
+    */
+    
+    func updateItems(update: [[String:AnyObject]], success: SuccessClosure, failure: ErrorClosure) {
+        let requestBody: [String:AnyObject] = ["resource": update]
+        callApiWithPath(Routing.Service(tableName: "items").path, method: "PATCH", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
+    }
     
     
     

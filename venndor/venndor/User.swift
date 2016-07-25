@@ -90,6 +90,4 @@ class User: NSObject {
         ads = parseManager.getDict(json["ads"]!)
         matches = parseManager.getDict(json["matches"]!) 
     }
-    
-    
 }
