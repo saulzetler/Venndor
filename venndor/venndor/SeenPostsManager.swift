@@ -10,6 +10,8 @@ import Foundation
 
 struct SeenPostsManager {
     
+    static let globalManager = SeenPostsManager()
+    
     func createSeenPostsById(id: String, completionHandler: (ErrorType?) -> () ) {
         RESTEngine.sharedEngine.createSeenPosts(id,
             success: { response in
@@ -48,11 +50,9 @@ struct SeenPostsManager {
     func deleteSeenPostsById(id: String, completionHandler: (ErrorType?) -> () ) {
         RESTEngine.sharedEngine.removeSeenPostsById(id,
             success: { response in
-                print("\(response)")
                 completionHandler(nil)
             }, failure: { error in
-                print("\(error)")
-                completionHandler(nil)
+                completionHandler(error)
         })
 
     }

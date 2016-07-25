@@ -20,7 +20,6 @@ class DeleteViewController: UIViewController {
                 print("Error deleting user from database: \(error)")
                 return
             }
-            
             print("Succesfully deleted user from server")
             spManager.deleteSeenPostsById(LocalUser.user.id) { error in
                 guard error == nil else {
@@ -38,6 +37,9 @@ class DeleteViewController: UIViewController {
         
     }
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+    }
     func clearLocalUser() {
         LocalUser.user = nil
         LocalUser.email = nil

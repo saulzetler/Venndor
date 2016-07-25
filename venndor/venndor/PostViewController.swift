@@ -46,9 +46,16 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     let locationManager = CLLocationManager()
     var coordinate: CLLocationCoordinate2D!
     var photoChoiceDisplayed = false
+    var sessionStart: NSDate!
     
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "PostViewController")
+    }
     override func viewDidLoad() {
         super.viewDidLoad()
+        sessionStart = NSDate()
+        TimeManager.timeStamp = NSDate()
         setupPickerView()
         setupItemName()
         setupItemDescription()
@@ -525,6 +532,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     //function to controll when the user is finished and decides to post
     func postItem(sender: UIButton) {
         
+        LocalUser.user.mostRecentAction = "Posted an Item"
         //add the iamges from the image view to an array to be passed to the backend function to post an item to server
         if let name = itemName.text, details = itemDescription.text {
             var images = [UIImage]()
@@ -539,7 +547,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let category = pickerData[row]
             let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
             
+            /******************************************************************/
+            /******************************************************************/
             /*NEEDS TO BE SET FROM THE DATA GATHERED BY POSTVIEWCONTROLLER*/
+          
             let condition = ratingControl.rating
             if useMyLocation == true {
                 coordinate = myLocation.coordinate
@@ -556,12 +567,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             var conversion = LocationConverter()
             let geoHash = conversion.coordToGeo(latitude, longitudeInput: longitude)
             print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
-            /******************************************************************/
             
             //create an item object to past to the manager to create the item
-            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, latitude: latitude, longitude: longitude, photos: images, question1: question1, question2: question2, minPrice: minPrice!)
+            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, latitude: latitude, longitude: longitude, geoHash: geoHash, photos: images, question1: question1, question2: question2, minPrice: minPrice!)
             
-            //decalre the item manager and then call the appropriate function to create an item
+            //declare the item manager and then call the appropriate function to create an item
             let manager = ItemManager()
             let uManager = UserManager()
             manager.createItem(item) { error in
@@ -570,8 +580,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     return
                 }
                 print("YAAAAA BOYZ")
+                
                 LocalUser.user.ads[item.id!] = "Posted"
-                let update = ["ads": LocalUser.user.ads]
+                LocalUser.user.nuPosts! += 1
+                let update : [String:AnyObject] = ["ads": LocalUser.user.ads, "nuPosts": LocalUser.user.nuPosts]
                 uManager.updateUserById(LocalUser.user.id, update: update) { error in
                     guard error == nil else {
                         print("Error updating the LocalUser's ads from post screen: \(error)")

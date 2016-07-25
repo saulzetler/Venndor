@@ -24,7 +24,7 @@ class SideMenuController: UIViewController {
         let profilePic: UIImageView! = UIImageView(frame: CGRectMake(screenSize.width*0.16, screenSize.height*0.06, screenSize.width*0.27, screenSize.width*0.27))
         
         /*NEEDS REFACTORING*/
-        let link = NSURL(string: LocalUser.profilePicture)
+        let link = NSURL(string: LocalUser.profilePictureURL)
         let pictureData = NSData(contentsOfURL: link!)
         profilePic.image = UIImage(data: pictureData!)
         

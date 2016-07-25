@@ -17,7 +17,7 @@ struct LocationConverter {
         longitude = longitudeInput
         var geoHash = ""
         var quadrentSize = 180.00
-        for x in 0..<9 {
+        for _ in 0..<9 {
             quadrentSize = quadrentSize/3
             geoHash = setQuadrent(quadrentSize, geoHash: geoHash)
         }
