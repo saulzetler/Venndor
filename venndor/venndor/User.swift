@@ -19,7 +19,8 @@ struct LocalUser {
     static var seenPosts: [String:AnyObject]!
     static var matches: [Match]!
     static var profilePictureURL: String!
-    static var facebookID: String! 
+    static var facebookID: String!
+    static var myLocation: CLLocation!
 }
 
 class User: NSObject {
