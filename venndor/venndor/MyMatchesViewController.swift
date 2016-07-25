@@ -34,7 +34,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         //set up prelimenary variables to make for-loop more readable
         var index:CGFloat = 0.0
-        let yOrigin = screenSize.height * 0.13
+        let yOrigin = screenSize.height * 0.1
         let containerHeight = screenSize.height * 0.27
         
         
@@ -156,6 +156,10 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                 descriptionLabel.numberOfLines = 2
             }
         }
+        
+        let blueLine = UIView(frame: CGRectMake(15, screenSize.height * 0.245, matchContainer.frame.width-30, 1))
+        blueLine.backgroundColor = UIColorFromHex(0x2c3e50)
+        matchContainer.addSubview(blueLine)
         
         //create the match info labels
         let nameLabel = UILabel(frame: CGRect(x: imgWidth+10, y: 5, width: matchContainer.frame.width - imgWidth - 20, height: imgHeight * 0.15))
