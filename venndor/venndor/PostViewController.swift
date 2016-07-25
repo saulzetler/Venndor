@@ -41,7 +41,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var imagePickerController: ImagePickerController!
     var mapView: GMSMapView!
     var currentPlace: GMSPlace!
-    var myLocation: CLLocation!
     var useMyLocation: Bool!
     let locationManager = CLLocationManager()
     var coordinate: CLLocationCoordinate2D!
@@ -204,9 +203,9 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func curLocationClicked(sender: UIButton) {
         print("curLoc")
         mapView.clear()
-        mapView.animateToLocation(myLocation.coordinate)
+        mapView.animateToLocation(LocalUser.myLocation.coordinate)
 //        mapView.camera = GMSCameraPosition(target: myLocation.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-        let pin = GMSMarker(position: myLocation.coordinate)
+        let pin = GMSMarker(position: LocalUser.myLocation.coordinate)
         pin.appearAnimation = kGMSMarkerAnimationPop
         pin.map = mapView
         useMyLocation = true
@@ -225,7 +224,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             
-            myLocation = location
+            LocalUser.myLocation = location
             
             // 7
             mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
@@ -554,7 +553,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
           
             let condition = ratingControl.rating
             if useMyLocation == true {
-                coordinate = myLocation.coordinate
+                coordinate = LocalUser.myLocation.coordinate
             }
             else {
                 coordinate = currentPlace.coordinate
@@ -562,6 +561,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let latitude = Double(coordinate.latitude)
             let longitude = Double(coordinate.longitude)
             let minPrice = Int(priceField.text!)
+            
             let question1 = ""
             let question2 = ""
             

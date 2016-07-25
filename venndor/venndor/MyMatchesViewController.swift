@@ -44,7 +44,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         //set up prelimenary variables to make for-loop more readable
         var index:CGFloat = 0.0
-        let yOrigin = screenSize.height * 0.13
+        let yOrigin = screenSize.height * 0.1
         let containerHeight = screenSize.height * 0.27
         
         
@@ -80,6 +80,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         setupScrollView(containerHeight + 10)
         addHeaderItems("Your Matches")
+        sideMenuGestureSetup()
 //        addGestureRecognizer()
 //        setupButtons()
         
@@ -153,19 +154,16 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         let imgWidth = imgView.frame.width
         
         let descriptionLabel = UILabel(frame: CGRect(x: imgWidth+10, y: 5+imgHeight * 0.15, width: matchContainer.frame.width - imgWidth - 5, height: imgHeight * 0.30))
-        itemManager.retrieveItemById(match.itemID) { item, error in
-            guard error == nil else {
-                print("Error retrieving item from server: \(error)")
-                return
-            }
-            if let item = item {
-                print("Succesfully set the LocalUser's matches")
-                descriptionLabel.text = item.details
-                descriptionLabel.font = UIFont(name: "Avenir", size: 14)
-                descriptionLabel.textColor = self.UIColorFromHex(0x808080)
-                descriptionLabel.numberOfLines = 2
-            }
-        }
+ 
+        print("Succesfully set the LocalUser's matches")
+        descriptionLabel.text = match.itemDescription
+        descriptionLabel.font = UIFont(name: "Avenir", size: 14)
+        descriptionLabel.textColor = self.UIColorFromHex(0x808080)
+        descriptionLabel.numberOfLines = 2
+        
+        let blueLine = UIView(frame: CGRectMake(15, screenSize.height * 0.245, matchContainer.frame.width-30, 1))
+        blueLine.backgroundColor = UIColorFromHex(0x2c3e50)
+        matchContainer.addSubview(blueLine)
         
         //create the match info labels
         let nameLabel = UILabel(frame: CGRect(x: imgWidth+10, y: 5, width: matchContainer.frame.width - imgWidth - 20, height: imgHeight * 0.15))
@@ -176,7 +174,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         matchContainer.addSubview(nameLabel)
         
         let distanceLabel = UILabel(frame: CGRect(x: matchContainer.frame.width - 40, y: 5, width:30, height: imgHeight * 0.15))
-        distanceLabel.text = "2.3km"
+        let tempDistance = calculateDistanceFromLocation(match.itemLatitude, longitude: match.itemLongitude, myLocation: LocalUser.myLocation)
+        distanceLabel.text = "\(tempDistance) km"
         distanceLabel.font = UIFont(name: "Avenir", size: 10)
 //        distanceLabel.textAlignment = .Center
         matchContainer.addSubview(distanceLabel)

@@ -72,7 +72,7 @@ class Item: NSObject {
         nuSwipesLeft = json["nuSwipesLeft"] == nil ? nil : json["nuSwipesLeft"] as! Int
         nuSwipesRight = json["nuSwipesRight"] as! Int
         nuMatches =  json["nuMatches"] as! Int
-        offersMade = json["offersMade"] as! [Double]
+        offersMade = ParserManager.globalManager.getDoubleArray(json["offersMade"]!)
         avgOffer = json["avgOffer"] as! Double
         geoHash = json["geoHash"] as! String
         //        previousOffers = json["previousOffers"] as! [Double]

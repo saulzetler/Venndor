@@ -10,7 +10,9 @@ import Foundation
 
 struct ParserManager {
     
-    func getArray(response: AnyObject) -> [String] {
+    static let globalManager = ParserManager()
+    
+    func getStringArray(response: AnyObject) -> [String] {
         if let arr = response as? NSArray {
             return arr as! [String]
         }
@@ -21,6 +23,20 @@ struct ParserManager {
                 stringArray.append(str as! String)
             }
             return stringArray
+        }
+    }
+    
+    func getDoubleArray(response: AnyObject) -> [Double] {
+        if let arr = response as? NSArray {
+            return arr as! [Double]
+        }
+        else {
+            let dict = response as? NSDictionary
+            var doubleArray = [Double]()
+            for (_, doub) in dict! {
+                doubleArray.append(doub as! Double)
+            }
+            return doubleArray
         }
     }
     
