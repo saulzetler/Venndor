@@ -51,43 +51,43 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         
         
         //populate the postContainerView
-        for (post, _) in LocalUser.user.ads {
-            
-            //create the match container view
-            let postContainer = UIView(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight), width: screenSize.width, height: containerHeight))
-            
-            //pull the item info
-            manager.retrieveItemById(post) { item, error in
-                guard error == nil else {
-                    print("Error retrieving item for myPosts: \(error)")
-                    return
-                }
-                
-                if let item = item {
-                    
-                    //pull item images
-                    manager.retrieveItemImageById(item.id, imageIndex: 0) { img, error in
-                        guard error == nil else {
-                            print("Error retrieving image for myPosts: \(error)")
-                            return
-                        }
-                        if let img = img {
-                            item.photos = [img]
-                            
-                            //set postContainer view with retrieved data
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.addContainerContent(postContainer, item: item)
-                            }
-                            
-                        }
-                    }
-                    
-                }
-            }
-            
-            postsContainerView.addSubview(postContainer)
-            index += 1
-        }
+//        for (post, _) in LocalUser.user.ads {
+//            
+//            //create the match container view
+//            let postContainer = UIView(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight), width: screenSize.width, height: containerHeight))
+//            
+//            //pull the item info
+//            manager.retrieveItemById(post) { item, error in
+//                guard error == nil else {
+//                    print("Error retrieving item for myPosts: \(error)")
+//                    return
+//                }
+//                
+//                if let item = item {
+//                    
+//                    //pull item images
+//                    manager.retrieveItemImageById(item.id, imageIndex: 0) { img, error in
+//                        guard error == nil else {
+//                            print("Error retrieving image for myPosts: \(error)")
+//                            return
+//                        }
+//                        if let img = img {
+//                            item.photos = [img]
+//                            
+//                            //set postContainer view with retrieved data
+//                            dispatch_async(dispatch_get_main_queue()) {
+//                                self.addContainerContent(postContainer, item: item)
+//                            }
+//                            
+//                        }
+//                    }
+//                    
+//                }
+//            }
+//            
+//            postsContainerView.addSubview(postContainer)
+//            index += 1
+//        }
         
         setupScrollView()
         addHeaderItems("Your Posts")
@@ -332,11 +332,9 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     
     func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
         if((position == FrontViewPosition.Left)) {
-            print("active")
             postsContainerView.userInteractionEnabled = true
             reactivate()
         } else {
-            print("inactive")
             postsContainerView.userInteractionEnabled = false
             deactivate()
         }

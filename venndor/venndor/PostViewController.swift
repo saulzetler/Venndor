@@ -267,7 +267,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func curLocationClicked(sender: UIButton) {
-        print("curLoc")
         mapView.clear()
         mapView.animateToLocation(LocalUser.myLocation.coordinate)
 //        mapView.camera = GMSCameraPosition(target: myLocation.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
@@ -279,7 +278,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func searchClicked(sender: UIButton) {
-        print("seach clicked")
         let acController = GMSAutocompleteViewController()
         acController.delegate = self
         self.presentViewController(acController, animated: true, completion: nil)
@@ -557,13 +555,13 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func wrapperDidPress(images: [UIImage]){
         print("cool")
     }
+    
     func doneButtonDidPress(images: [UIImage]){
         imagePickerController.dismissViewControllerAnimated(true, completion: nil)
         var i = 0
         var startIndex = currentImgView.tag
         let images = imageAssets
         for imageView in imageViewArray {
-//            print("image tag: \(imageView.tag) Start Index: \(startIndex) i: \(i)")
             if imageView.tag == startIndex {
                 if i < images.count {
                     imageView.image = images[i]
@@ -659,29 +657,33 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             //create an item object to past to the manager to create the item
             let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, latitude: latitude, longitude: longitude, geoHash: geoHash, photos: images, question1: question1, question2: question2, minPrice: minPrice!)
             
-            //declare the item manager and then call the appropriate function to create an item
-            let manager = ItemManager()
-            let uManager = UserManager()
-            manager.createItem(item) { error in
+            //create the item object on the server
+            ItemManager.globalManager.createItem(item) { error in
                 guard error == nil else {
                     print("GOOD FUCKING JOB BUDDY YOU BROKE EVERYTHING i fucking hate u")
                     return
                 }
-                print("YAAAAA BOYZ")
                 
-                LocalUser.user.ads[item.id!] = "Posted"
-                LocalUser.user.nuPosts! += 1
-                let update : [String:AnyObject] = ["ads": LocalUser.user.ads, "nuPosts": LocalUser.user.nuPosts]
-                uManager.updateUserById(LocalUser.user.id, update: update) { error in
-                    guard error == nil else {
-                        print("Error updating the LocalUser's ads from post screen: \(error)")
-                        return
+                //create the post object on the server
+                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, itemLongitude: item.longitude, itemLatitude: item.latitude)
+                
+                PostManager.globalManager.createPost(post) { post, error in
+                    LocalUser.user.posts[post!.id] = item.id
+                    LocalUser.user.nuPosts! += 1
+                    LocalUser.posts.append(post!)
+
+                    let update : [String:AnyObject] = ["posts": LocalUser.user.posts, "nuPosts": LocalUser.user.nuPosts]
+                    UserManager.globalManager.updateUserById(LocalUser.user.id, update: update) { error in
+                        guard error == nil else {
+                            print("Error updating the LocalUser's posts from post screen: \(error)")
+                            return
+                        }
+                        
+                        print("Succesfully updated LocalUser's ads from post screen.")
+                        self.performSegueWithIdentifier("backToBrowse", sender: self)
                     }
-                    
-                    print("Succesfully updated LocalUser's ads from post screen.")
-                    self.performSegueWithIdentifier("backToBrowse", sender: self)
-                }
                 
+                }
             }
         }
     }
@@ -709,11 +711,9 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
         if((position == FrontViewPosition.Left)) {
-            print("active")
             containerView.userInteractionEnabled = true
             reactivate()
         } else {
-            print("inactive")
             containerView.userInteractionEnabled = false
             deactivate()
         }

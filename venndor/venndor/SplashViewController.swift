@@ -66,8 +66,7 @@ class SplashViewController: UIViewController {
                     //create the seenPosts object on the server
                     seenPostsManager.createSeenPostsById(LocalUser.user.id, completionHandler: { error in
                         guard error == nil else {
-                            print("IT DOESN'T FUKIN WORK BRO FIGURE IT OUT.")
-                            print("\(error)")
+                            print("Error creating user's seen posts: \(error)")
                             return
                         }
                         seenPostsMade = true
@@ -89,8 +88,7 @@ class SplashViewController: UIViewController {
         seenPostsManager.getSeenPostsById(LocalUser.user.id) { seenPosts, error in
             
             guard error == nil else {
-                print("YOU AINT PULLIN SHIT YOU PUNKASS")
-                print("\(error)")
+                print("Error pulling seen posts by id: \(error)")
                 return
             }
             
@@ -106,8 +104,7 @@ class SplashViewController: UIViewController {
         
         updateSeenPosts()
         
-        let matchManager = MatchesManager()
-        matchManager.retrieveUserMatches(LocalUser.user) { matches, error in
+        MatchesManager.globalManager.retrieveUserMatches(LocalUser.user) { matches, error in
             guard error == nil else {
                 print("Error retrieving user matches from server: \(error)")
                 return
@@ -118,7 +115,17 @@ class SplashViewController: UIViewController {
             }
         }
         
-        print("Ready to segue")
+        PostManager.globalManager.retrieveUserPosts(LocalUser.user) { posts, error in
+            guard error == nil else {
+                print("Error retrieving user posts from the server: \(error)")
+                return
+            }
+            
+            if let posts = posts {
+                LocalUser.posts = posts
+                print("Succesfully set the LocalUser's posts.")
+            }
+        }
             
         dispatch_async(dispatch_get_main_queue()) {
             self.performSegueWithIdentifier("showBrowse", sender: self)
@@ -138,8 +145,7 @@ class SplashViewController: UIViewController {
             }
         }
         
-        let manager = SeenPostsManager()
-        manager.patchSeenPostsById(LocalUser.user.id) { error in
+        SeenPostsManager.globalManager.patchSeenPostsById(LocalUser.user.id) { error in
             guard error == nil else {
                 print("Error patching LocalUser's seen posts: \(error)")
                 return

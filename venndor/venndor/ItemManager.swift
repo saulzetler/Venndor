@@ -95,7 +95,6 @@ struct ItemManager {
                     let fileData = NSData(base64EncodedString: content as String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
                     if let data = fileData {
                         let img = UIImage(data: data)
-//                        print("YYYYAARRGGGGHHHH!!!!")
                         completionHandler(img, nil)
                     }
                         
@@ -152,8 +151,8 @@ struct ItemManager {
         }
         
         //filter out user's ads
-        for (key, _) in LocalUser.user.ads {
-            ids = ids == nil ? "(_id != \(key))" : "\(ids) and (_id != \(key))"
+        for (_, value) in LocalUser.user.posts {
+            ids = ids == nil ? "(_id != \(value))" : "\(ids) and (_id != \(value))"
         }
         
         //filter by category

@@ -18,6 +18,7 @@ struct LocalUser {
     static var ageRange: String!
     static var seenPosts: [String:AnyObject]!
     static var matches: [Match]!
+    static var posts: [Post]! 
     static var profilePictureURL: String!
     static var facebookID: String!
     static var myLocation: CLLocation!
@@ -58,7 +59,7 @@ class User: NSObject {
     //key: itemID, Value: Maybe matched/sold price?
     var soldItems : [String:AnyObject]!    //NI
     var boughtItems: [String:AnyObject]!   //NI
-    var ads: [String:AnyObject]!
+    var posts: [String:AnyObject]!
     
     //key: matchID, value: item in the match
     var matches: [String:AnyObject]!
@@ -89,7 +90,7 @@ class User: NSObject {
         timePerController = parseManager.getDoubleDict(json["timePerController"]!) 
         soldItems = parseManager.getDict(json["soldItems"]!)
         boughtItems = parseManager.getDict(json["boughtItems"]!)
-        ads = parseManager.getDict(json["ads"]!)
+        posts = parseManager.getDict(json["posts"]!)
         matches = parseManager.getDict(json["matches"]!) 
     }
 }

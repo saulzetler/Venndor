@@ -93,6 +93,54 @@ final class RESTEngine {
             }
         })
     }
+    
+    
+    
+    
+    //MARK: - Post Methods
+    
+    func createPostOnServer(params: [String:AnyObject], success: SuccessClosure, failure: ErrorClosure) {
+        let requestBody: [String:AnyObject] = ["resource": params]
+        callApiWithPath(Routing.Service(tableName: "posts").path, method: "POST", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    func getPostById(id: String, success: SuccessClosure, failure: ErrorClosure) {
+        let path = "\(Routing.Service(tableName: "posts").path)/\(id)"
+        
+        callApiWithPath(path, method: "GET", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    func getPostsFromServer(count: Int?, filter: String?, offset: Int?, fields: [String]?, success: SuccessClosure, failure: ErrorClosure) {
+        var queryParams = [String:AnyObject]()
+        
+        if let count = count {
+            queryParams["count"] = count
+        }
+        
+        if let filter = filter {
+            queryParams["filter"] = filter
+        }
+        
+        if let offset = offset {
+            queryParams["offset"] = offset
+        }
+        
+        if let fields = fields {
+            queryParams["fields"] = fields
+        }
+        
+        callApiWithPath(Routing.Service(tableName: "posts").path, method: "GET", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
+    }
+
+    func deletePostFromServerById(id: String, success: SuccessClosure, failure: ErrorClosure) {
+        let path = "\(Routing.Service(tableName: "posts").path)/\(id)"
+        
+        callApiWithPath(path, method: "DELETE", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
+    }
+
+    
+    
+    
     //MARK: - Matches Methods
     
     func createMatchOnServer(params: [String:AnyObject], success: SuccessClosure, failure: ErrorClosure) {
@@ -202,7 +250,7 @@ final class RESTEngine {
             "moneySaved": 0.0, //NI
             "soldItems": [String:AnyObject](), //NI
             "boughtItems": [String:AnyObject](), //NI
-            "ads": [String:AnyObject](), 
+            "posts": [String:AnyObject](),
             "matches": [String:AnyObject]()]
        
         let requestBody: [String: AnyObject] = ["resource": params]
@@ -252,6 +300,7 @@ final class RESTEngine {
     
     
     
+ 
     
     //MARK: - Item methods
     
@@ -335,8 +384,6 @@ final class RESTEngine {
     
     
     
-    
-    
     //MARK: - Image methods
     
     /**
@@ -373,24 +420,6 @@ final class RESTEngine {
             
             }, failure: failure)
     }
-    
-    
-    /*
-    
-    //try posting every image at once
-    func putImagesToFolderWithPath(folderPath: String, images: [UIImage], success: SuccessClosure, failure: ErrorClosure) {
-        var i = 0
-        var files = [NIKFile]()
-        for image in images {
-            let imageData = UIImageJPEGRepresentation(image, 0.1)
-            let file = NIKFile(name: "image\(i)", mimeType: "application/octet-stream", data: imageData!)
-            files.append(file)
-            i++
-        }
-        
-        callApiWithPath(Routing.ResourceFolder(folderPath: folderPath).path, method: "POST", queryParams: nil, body: files, headerParams: headerParams, success: { success in }, failure: { error in print("Error posting to folder/files to server: \(error)") })
-    }
-    */
     
     
     func putImageToFolderWithPath(folderPath: String, image: UIImage, fileName: String, success: SuccessClosure, failure: ErrorClosure) {

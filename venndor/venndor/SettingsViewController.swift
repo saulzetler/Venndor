@@ -48,11 +48,9 @@ class SettingsViewController: UIViewController {
     
     func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
         if((position == FrontViewPosition.Left)) {
-            print("active")
             containerView.userInteractionEnabled = true
             reactivate()
         } else {
-            print("inactive")
             containerView.userInteractionEnabled = false
             deactivate()
         }

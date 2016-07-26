@@ -211,7 +211,6 @@ extension UIViewController: SWRevealViewControllerDelegate {
             let statusCode = httpResponse.statusCode
             
             if (statusCode == 200) {
-                print("Everyone is fine, file downloaded successfully.")
                 
                 do {
                     
@@ -263,8 +262,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
             let statusCode = httpResponse.statusCode
             
             if (statusCode == 200) {
-                print("Everyone is fine, file downloaded successfully.")
-                
+
                 do {
                     
                     
@@ -315,7 +313,6 @@ extension UIViewController: SWRevealViewControllerDelegate {
             let statusCode = httpResponse.statusCode
             
             if (statusCode == 200) {
-                print("Everyone is fine, file downloaded successfully.")
                 
                 do {
                     

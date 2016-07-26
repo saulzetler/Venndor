@@ -90,7 +90,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func toggleItemInfo(sender: UITapGestureRecognizer) {
-        print("Match tapped!")
         let containerView = sender.view as! ItemContainer
         let manager = ItemManager()
         manager.retrieveItemById(containerView.match.itemID) { item, error in
@@ -155,7 +154,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         let descriptionLabel = UILabel(frame: CGRect(x: imgWidth+10, y: 5+imgHeight * 0.15, width: matchContainer.frame.width - imgWidth - 5, height: imgHeight * 0.30))
  
-        print("Succesfully set the LocalUser's matches")
         descriptionLabel.text = match.itemDescription
         descriptionLabel.font = UIFont(name: "Avenir", size: 14)
         descriptionLabel.textColor = self.UIColorFromHex(0x808080)
@@ -213,31 +211,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-//    //function to control when the bought category is pressed
-//    func matchesPressed(sender: UIButton) {
-//        print("matches pressed")
-//        //calls a function to adjust the page correctly
-//        toggleView(true)
-//    }
-//    
-//    //function to control when the bought category is pressed
-//    func boughtPressed(sender: UIButton) {
-//        print("bought pressed")
-//        //calls a function to adjust the page correctly
-//        toggleView(false)
-//    }
-//    
-//    //gesture recognizer function to allow functionality of swipping left or right to control which menu to look at
-//    func addGestureRecognizer() {
-//        let swipeRight = UISwipeGestureRecognizer(target: self, action: #selector(MyMatchesViewController.respondToSwipeGesture(_:)))
-//        swipeRight.direction = UISwipeGestureRecognizerDirection.Right
-//        self.view.addGestureRecognizer(swipeRight)
-//        
-//        let swipeLeft = UISwipeGestureRecognizer(target: self, action: #selector(MyMatchesViewController.respondToSwipeGesture(_:)))
-//        swipeLeft.direction = UISwipeGestureRecognizerDirection.Left
-//        self.view.addGestureRecognizer(swipeLeft)
-//    }
-    
     //hard coded for now but we can change to size scroll view based on number of matches
     func setupScrollView(containerHeight: CGFloat) {
         scrollView = UIScrollView()
@@ -257,17 +230,13 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         //add subviews accordingly
         scrollView.addSubview(matchContainerView)
         view.addSubview(scrollView)
-//        view.sendSubviewToBack(scrollView)
-//        view.sendSubviewToBack(matchContainerView)
     }
     
     func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
         if((position == FrontViewPosition.Left)) {
-            print("active")
             matchContainerView.userInteractionEnabled = true
             reactivate()
         } else {
-            print("inactive")
             matchContainerView.userInteractionEnabled = false
             deactivate()
         }
