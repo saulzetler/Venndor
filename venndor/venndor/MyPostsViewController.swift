@@ -37,9 +37,10 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        self.revealViewController().delegate = self
+
         LocalUser.user.mostRecentAction = "Browsed MyPosts"
         sessionStart = NSDate()
-    
         
         let manager = ItemManager()
         
@@ -90,6 +91,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         
         setupScrollView()
         addHeaderItems("Your Posts")
+        sideMenuGestureSetup()
 //        addGestureRecognizer()
 //        setupButtons()
     }
@@ -310,7 +312,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-//    //control for the gesture to allow swipingleft and right for the menu
+    //control for the gesture to allow swipingleft and right for the menu
 //    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
 //        
 //        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
@@ -327,5 +329,17 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
 //            }
 //        }
 //    }
+    
+    func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
+        if((position == FrontViewPosition.Left)) {
+            print("active")
+            postsContainerView.userInteractionEnabled = true
+            reactivate()
+        } else {
+            print("inactive")
+            postsContainerView.userInteractionEnabled = false
+            deactivate()
+        }
+    }
     
 }

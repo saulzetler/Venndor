@@ -6,7 +6,7 @@
 //  Copyright © 2016 Venndor. All rights reserved.
 //
 
-extension UIViewController {
+extension UIViewController: SWRevealViewControllerDelegate {
     
     func makeImageButton(imageName: String, frame: CGRect, target: Selector, tinted: Bool, circle: Bool, backgroundColor: UInt32, backgroundAlpha: Double) -> UIButton {
         
@@ -150,7 +150,7 @@ extension UIViewController {
         let deactivateView = UIView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.height*0.1, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height*0.9))
         deactivateView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         deactivateView.tag = 100
-//        let tap = UITapGestureRecognizer(target: deactivateView, action: #selector(UIViewController.reactivate))
+//        let tap = UITapGestureRecognizer(target: deactivateView, action: #selector(UIViewController.activate))
 //        deactivateView.addGestureRecognizer(tap)
         self.view.addSubview(deactivateView)
     }
@@ -166,7 +166,6 @@ extension UIViewController {
             }
         }
     }
-    
     
     //calculate your distance away from the item
     func calculateDistance(item: Item, myLocation: CLLocation) -> String {
@@ -324,6 +323,8 @@ extension UIViewController {
         task.resume()
         return distText
     }
+    
+    
     
     
 }
