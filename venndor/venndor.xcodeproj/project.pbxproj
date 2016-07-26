@@ -48,6 +48,7 @@
 		631F4F551D2829FC005EEFE2 /* ItemManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631F4F541D2829FC005EEFE2 /* ItemManager.swift */; };
 		631F4F571D2AB5F4005EEFE2 /* ProfilePageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631F4F561D2AB5F4005EEFE2 /* ProfilePageViewController.swift */; };
 		631F4F591D2AEFCD005EEFE2 /* DeleteViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 631F4F581D2AEFCD005EEFE2 /* DeleteViewController.swift */; };
+		63220ECC1D469CE9006D02C9 /* UnDraggableView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63220ECB1D469CE9006D02C9 /* UnDraggableView.swift */; };
 		632236AF1D36C06900C321D3 /* ItemContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632236AE1D36C06900C321D3 /* ItemContainer.swift */; };
 		632236B11D36C2CD00C321D3 /* ItemInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632236B01D36C2CD00C321D3 /* ItemInfoViewController.swift */; };
 		63859A131D13347C004F4968 /* NIKApiInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A101D13347C004F4968 /* NIKApiInvoker.swift */; };
@@ -171,6 +172,7 @@
 		631F4F541D2829FC005EEFE2 /* ItemManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemManager.swift; sourceTree = "<group>"; };
 		631F4F561D2AB5F4005EEFE2 /* ProfilePageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfilePageViewController.swift; sourceTree = "<group>"; };
 		631F4F581D2AEFCD005EEFE2 /* DeleteViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = DeleteViewController.swift; sourceTree = "<group>"; };
+		63220ECB1D469CE9006D02C9 /* UnDraggableView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UnDraggableView.swift; sourceTree = "<group>"; };
 		632236AE1D36C06900C321D3 /* ItemContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemContainer.swift; sourceTree = "<group>"; };
 		632236B01D36C2CD00C321D3 /* ItemInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemInfoViewController.swift; sourceTree = "<group>"; };
 		63859A101D13347C004F4968 /* NIKApiInvoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKApiInvoker.swift; sourceTree = "<group>"; };
@@ -481,6 +483,7 @@
 				E453F0A81D2EC991002637AB /* STRatingControl.swift */,
 				E42E04C21D2563330043779F /* WheelSlider.swift */,
 				E49051A21D09AF7B0045D5C0 /* DraggableView.swift */,
+				63220ECB1D469CE9006D02C9 /* UnDraggableView.swift */,
 				E49051A41D09AF7B0045D5C0 /* OverlayView.swift */,
 				101F43CD1D107A55007E0ADE /* HeaderView.swift */,
 				E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */,
@@ -806,6 +809,7 @@
 				10F2CB421D3D4428007C6477 /* LocationConverter.swift in Sources */,
 				E43070E01D22F0B70035BCF4 /* View.swift in Sources */,
 				10F2CB401D3D1D38007C6477 /* SearchControl.swift in Sources */,
+				63220ECC1D469CE9006D02C9 /* UnDraggableView.swift in Sources */,
 				E49051B21D09E5E80045D5C0 /* SideMenuController.swift in Sources */,
 				632236AF1D36C06900C321D3 /* ItemContainer.swift in Sources */,
 				E49051A71D09AF7B0045D5C0 /* OverlayView.swift in Sources */,
