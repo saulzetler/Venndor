@@ -58,6 +58,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         sessionStart = NSDate()
         
         mainView = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height*0.9))
+        self.view.addSubview(mainView)
         
         loaded = false
         
@@ -66,28 +67,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         locationManager.startUpdatingLocation()
         
         self.revealViewController().delegate = self
-        
-//        let temp = 45.00
-//        let temp2 = 0.00
-//        var conversion = LocationConverter()
-//        let geoHash = conversion.coordToGeo(temp, longitudeInput: temp2)
-//        print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
-//        
-//        print(GlobalItems.currentCategory)
-        
-//        self.view.backgroundColor = UIColor(red: 0.92, green: 0.95, blue: 0.93, alpha: 1)
-        
-//        let globalItems = GlobalItems()
-
-        
-        //intialize the global items in this controller
-//        let globalItems = GlobalItems()
-        
-        /* ADD FUNCTION ON WHEN SWIPPING TO ROTATE THE GLOBAL ITEM */
-        
-        // Do any additional setup after loading the view, typically from a nib.	
-//        let user = LocalUser.user
-//        let items = GlobalItems.items
         
         
         let filter = ItemManager.globalManager.constructFeedFilter()
@@ -101,22 +80,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 GlobalItems.items = items
                 dispatch_async(dispatch_get_main_queue()) {
                     self.setupView()
-//                    self.setupItemInfo()
                 }
             }
         }
-//        setupView()
-//        setupItemInfo()
-        
-        
-        
-//        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        
-        //cover view
-//        let cover = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height*0.9))
-//        cover.backgroundColor = UIColorFromHex(0xffffff, alpha: 0.6)
-//        cover.hidden = false
-//        self.view.addSubview(cover)
         
         //MiniMyMatches button at bottom of browse.
         let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
@@ -239,8 +205,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                     
                     let tap = UITapGestureRecognizer(target: self, action: #selector(BrowseViewController.toggleItemInfo(_:)))
                     contentView.addGestureRecognizer(tap)
-                    //self.miniMatchContainer.append(contentView)
-                    //print("MiniMatchContainer Index: \(self.miniMatchContainer.indexOf(contentView)), Match at Index: \(match.itemName)")
                                         
                     //update the contentScrollView
                     dispatch_async(dispatch_get_main_queue()) {
@@ -285,7 +249,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     
-    func makeMiniPriceLabel(contentLabelFrame: CGRect, matchedPrice: Double) -> UIView {
+    func makeMiniPriceLabel(contentLabelFrame: CGRect, matchedPrice: Int) -> UIView {
         let priceLabelHeight = contentLabelFrame.height * 0.25
         let priceLabelWidth = contentLabelFrame.width * 0.55
         let priceLabelFrame = CGRect(x: contentLabelFrame.origin.x + contentLabelFrame.width - CGFloat(30), y: contentLabelFrame.origin.y - 7, width: priceLabelWidth, height: priceLabelHeight)
@@ -309,7 +273,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     //functions to create labels and imgViews for MiniMyMatches
     
-    func makeMiniContentView(frame: CGRect, image: UIImage, matchedPrice: Double) -> ItemContainer {
+    func makeMiniContentView(frame: CGRect, image: UIImage, matchedPrice: Int) -> ItemContainer {
         
         let containerView = ItemContainer(frame: frame)
         let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: containerView.frame.width, height: containerView.frame.height))

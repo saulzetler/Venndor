@@ -46,7 +46,7 @@ struct UserManager {
                         "mostRecentAction": "Created Account.",
                         "timeOnAppPerSession": [String:AnyObject](),
                         "timePerController": ["LoginViewController": 0.0, "BrowseViewController": 0.0, "ProfilePageViewController": 0.0, "PostViewController": 0.0, "SettingsViewController": 0.0, "MyPostsViewController": 0.0, "MyMatchesViewController": 0.0, "OfferViewController": 0.0, "DeleteViewController": 0.0, "PopUpViewController": 0.0, "ItemInfoViewController":0.0],
-                        "ads": [String:AnyObject](),
+                        "posts": [String:AnyObject](),
                         "soldItems": [String:AnyObject](),
                         "matches": [String:AnyObject](),
                         "boughtItems": [String:AnyObject]()]

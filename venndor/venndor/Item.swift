@@ -53,7 +53,6 @@ class Item: NSObject {
     
     //init from the server
     init(json: JSON) {
-
         name = json["name"] as! String
         details = json["details"] as! String
         id = json["_id"] as! String
@@ -69,13 +68,12 @@ class Item: NSObject {
         minPrice = json["minPrice"] as! Int
         timeMatched = json["timeMatched"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeMatched"] as! String)
         timeBought = json["timeBought"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeBought"]! as! String)
-        nuSwipesLeft = json["nuSwipesLeft"] == nil ? nil : json["nuSwipesLeft"] as! Int
+        nuSwipesLeft = json["nuSwipesLeft"] as! Int
         nuSwipesRight = json["nuSwipesRight"] as! Int
         nuMatches =  json["nuMatches"] as! Int
         offersMade = ParserManager.globalManager.getDoubleArray(json["offersMade"]!)
         avgOffer = json["avgOffer"] as! Double
         geoHash = json["geoHash"] as! String
-        //        previousOffers = json["previousOffers"] as! [Double]
     }
     
     //init from the app
@@ -112,32 +110,4 @@ class Item: NSObject {
         self.avgOffer = x / Double(self.offersMade.count)
     }
 
-    /*
-    
-    func getImagesFromStrings(imageStrings: [String]) {
-        var images = [UIImage]()
-        for str in imageStrings {
-            let data = NSData(base64EncodedString: str, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-            let img = UIImage(data: data!)
-            images.append(img!)
-        }
-        self.photos = images
-    }
-    
-    func getStringsFromImages(images: [UIImage]) {
-        var imageStrings = [String]()
-        for img in images {
-            let imgData = UIImageJPEGRepresentation(img, 1.0)
-            var imgString: String?
-            if let data = imgData {
-                imgString = data.base64EncodedStringWithOptions(NSDataBase64EncodingOptions.Encoding64CharacterLineLength)
-                
-            }
-            if let str = imgString {
-                imageStrings.append(str)
-            }
-        }
-        self.photoStrings = imageStrings
-    }
-    */
 }
