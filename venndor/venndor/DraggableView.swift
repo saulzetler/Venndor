@@ -134,7 +134,6 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
             let statusCode = httpResponse.statusCode
             
             if (statusCode == 200) {
-                print("Everyone is fine, file downloaded successfully.")
                 
                 do {
                     
@@ -222,7 +221,6 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     }
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView){
-        print("decel")
         adjustPage()
     }
 
@@ -239,22 +237,6 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         // Change the indicator
         picNum = Int(currentPage)
         self.pageControl.currentPage = picNum
-        switch picNum {
-        case 0:
-            print("pic 1")
-        case 1:
-            print("pic 2")
-        case 2:
-            print("pic 3")
-        case 3:
-            print("pic 4")
-        case 4:
-            print("pic 5")
-        default:
-            break
-        }
-        
-        
         
         for y in 0...6 {
             if y == picNum {
@@ -372,7 +354,6 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     func upAction() -> Void {
         //use this function to go to next picture
-        print("swiped up")
         adjustPage()
         resetView()
         if picNum == numberOfPics-1 {
@@ -382,7 +363,6 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     func downAction() -> Void {
         //use this function to go to previous picture
-        print("swiped down")
         adjustPage()
         resetView()
     }

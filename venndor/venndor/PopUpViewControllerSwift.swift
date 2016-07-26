@@ -44,7 +44,8 @@ class PopUpViewControllerSwift : UIViewController {
         sessionStart = NSDate()
         
         //create the match on the server
-        let newMatch = Match(itemID: matchedItem.id, itemName: matchedItem.name, itemDescription: matchedItem.details, buyerID: LocalUser.user.id, sellerID: matchedItem.owner, sellerName: matchedItem.ownerName, matchedPrice: matchedPrice, itemLongitude: matchedItem.longitude, itemLatitude: matchedItem.latitude)
+
+        let newMatch = Match(itemID: matchedItem.id, itemName: matchedItem.name, itemDescription: matchedItem.details, userID: LocalUser.user.id, sellerID: matchedItem.owner, sellerName: matchedItem.ownerName, matchedPrice: matchedItem.minPrice, itemLongitude: matchedItem.longitude, itemLatitude: matchedItem.latitude, dateMatched: NSDate())
        
         MatchesManager.globalManager.createMatch(newMatch) { match, error in
             guard error == nil else {
@@ -56,7 +57,7 @@ class PopUpViewControllerSwift : UIViewController {
                 
                 //update the LocalUser's matches info
                 LocalUser.matches.append(match)
-                LocalUser.user.matches[match.id!] = item.id
+                LocalUser.user.matches[match.id!] = "Matched"
                 LocalUser.user.nuMatches = LocalUser.user.nuMatches + 1
                 let update = ["matches": LocalUser.user.matches, "nuMatches": LocalUser.user.nuMatches]
 
@@ -71,30 +72,6 @@ class PopUpViewControllerSwift : UIViewController {
                     print("LocalUser matches succesfully updated.")
                 }
                 
-                //retrieve the item's owner from the server and update their info as well
-                UserManager.globalManager.retrieveUserById(self.matchedItem.owner) { user, error in
-                    guard error == nil else {
-                        print("Error retrieving user for match update: \(error)")
-                        return
-                    }
-                    
-                    if let user = user {
-                        //update item owner's info
-                        user.ads[item.id!] = "Matched"
-                        
-                        //post the update to the server
-                        let update = ["matches": user.matches, "nuMatches": user.nuMatches, "ads": user.ads]
-                        UserManager.globalManager.updateUserById(user.id, update: update as! [String:AnyObject]) { error in
-                            guard error == nil else {
-                                print("Error updating item owner's matches: \(error)")
-                                return
-                            }
-                            
-                            print("Item's owner updated.")
-                        }
-                    }
-                }
-
             }
         }
     }
