@@ -161,7 +161,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         
         let customViewTwo = UIView(frame: CGRect(x: -10, y: 125, width: alertController.view.bounds.size.width+10, height: 75))
-        customViewTwo.backgroundColor = UIColorFromHex(0x1abc9c, alpha: 1)
+        customViewTwo.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 1)
 
         //create the custom cancel view for the user to quit the menu
         //note this function also cancels when a user presses outside the frame
