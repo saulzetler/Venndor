@@ -44,7 +44,6 @@ class PopUpViewControllerSwift : UIViewController {
         sessionStart = NSDate()
         
         //create the match on the server
-
         let newMatch = Match(itemID: matchedItem.id, itemName: matchedItem.name, itemDescription: matchedItem.details, userID: LocalUser.user.id, sellerID: matchedItem.owner, sellerName: matchedItem.ownerName, matchedPrice: matchedPrice, itemLongitude: matchedItem.longitude, itemLatitude: matchedItem.latitude, dateMatched: NSDate())
        
         MatchesManager.globalManager.createMatch(newMatch) { match, error in
@@ -85,7 +84,7 @@ class PopUpViewControllerSwift : UIViewController {
         self.view.addSubview(backgroundImageView)
     }
     
-    func showInView(aView: UIView!, price: Double, item: Item)
+    func showInView(aView: UIView!, price: Int, item: Item)
     {
         let message = UILabel(frame: CGRect(x: screenSize.width*0.1, y: screenSize.height*0.2, width: screenSize.width*0.8, height: screenSize.height*0.2))
         message.text = "You Matched!"
