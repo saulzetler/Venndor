@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 //class to control the post/sell page in the application requires many delegates
-class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, STRatingControlDelegate, ImagePickerDelegate, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
+class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ImagePickerDelegate, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
     
     //declare the needed variables for the page to work.
     
@@ -32,15 +32,16 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var imageView5: UIImageView!
     var imageView6: UIImageView!
     var imageViewArray: [UIImageView]!
+    var filledImagesArray: [Int]!
     var currentImgView: UIImageView!
     var postButton: UIButton!
     var condition: Int!
     let categoryPickerData = ["Furniture", "Kitchen", "Household", "Electronics", "Clothing", "Books", "Other"]
-    let yearsPickerData = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10+"]
+    let yearsPickerData = ["0", "1", "2", "3", "4", "5", "6", "7", "8", "9", "10+"]
     var pageNumArray = [UIButton]()
     var categoryPicker: UIPickerView!
     var yearsPicker: UIPickerView!
-    var ratingControl: STRatingControl!
+    var ratingControl: RatingControl!
     var imagePickerController: ImagePickerController!
     var mapView: GMSMapView!
     var currentPlace: GMSPlace!
@@ -67,6 +68,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         sideMenuGestureSetup()
         setupImageViews()
         setupScrollView()
+        setupDivide()
         setupPageControll()
         setupPostButton()
         setupRatingControl()
@@ -75,6 +77,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setupMap()
         hideKeyboardWhenTappedAround()
         self.revealViewController().delegate = self
+        filledImagesArray = []
     }
     
     //setup functions
@@ -85,7 +88,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         var upArrowFrame = CGRect(x: screenSize.width*0.4, y: screenSize.height*0.15, width: screenSize.width*0.2, height: screenSize.height*0.1)
         let upArrowOrigin = upArrowFrame.origin.y
         
-        for page in 0...6 {
+        for page in 0...7 {
             switch page {
             case 0:
                 addTitlesToArrows(page, upTitle: "", downTitle: "Title")
@@ -106,10 +109,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             default:
                 break
             }
+            if page != 7 {
+                downArrowFrame.origin.y = downArrowOrigin + CGFloat(page)*self.view.frame.height
+                let downArrow = makeImageButton("Expand Arrow Blue.png", frame: downArrowFrame, target: #selector(PostViewController.nextPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+                containerView.addSubview(downArrow)
+            }
             
-            downArrowFrame.origin.y = downArrowOrigin + CGFloat(page)*self.view.frame.height
-            let downArrow = makeImageButton("Expand Arrow Blue.png", frame: downArrowFrame, target: #selector(PostViewController.nextPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
-            containerView.addSubview(downArrow)
             if page != 0 {
                 upArrowFrame.origin.y = upArrowOrigin + CGFloat(page)*self.view.frame.height
                 let upArrow = makeImageButton("Collapse Arrow Blue.png", frame: upArrowFrame, target: #selector(PostViewController.prevPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
@@ -184,12 +189,13 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //create the text field required for the user to input a basic description of the item
     func setupItemDescription() {
-        itemDescription = UITextView(frame: CGRectMake(10, screenSize.height*4.18, self.screenSize.width*0.95, screenSize.height*0.3))
+        itemDescription = UITextView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*4.3, self.screenSize.width*0.7, screenSize.height*0.25))
         itemDescription.text = "Additional Info"
-        itemDescription.font = itemDescription.font?.fontWithSize(15)
+        itemDescription.font = UIFont(name: "Avenir", size: 15)
+        itemDescription.textColor = UIColorFromHex(0x34495e)
         itemDescription.delegate = self
         containerView.addSubview(itemDescription)
-        createBorder(itemDescription)
+        createBorder(itemDescription, color: UIColorFromHex(0x34495e))
         itemDescription.returnKeyType = .Done
     }
     
@@ -229,7 +235,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //function to allow the user to pick from a certain list of categories to assign the item.
     func setupCategoryPickerView() {
-        categoryPicker = UIPickerView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*2.3, self.screenSize.width*0.6, screenSize.height*0.4))
+        categoryPicker = UIPickerView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*2.38, self.screenSize.width*0.6, screenSize.height*0.4))
         
         //asign the needed points to allow the pickerview to function as intended
         categoryPicker.dataSource = self
@@ -239,7 +245,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setupYearsPickerView() {
-        yearsPicker = UIPickerView(frame: CGRectMake(screenSize.width*0.45, screenSize.height*3.3, screenSize.width*0.2, screenSize.height*0.2))
+        yearsPicker = UIPickerView(frame: CGRectMake(screenSize.width*0.42, screenSize.height*3.3, screenSize.width*0.17, screenSize.height*0.2))
         
         yearsPicker.dataSource = self
         yearsPicker.delegate = self
@@ -248,26 +254,27 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        var myTitle: NSAttributedString!
-        
+        let titleData: String
         if pickerView.tag == 1 {
-            let titleData = categoryPickerData[row]
-            myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Avenir", size: 15.0)!,NSForegroundColorAttributeName:UIColorFromHex(0x34495e)])
+            titleData = categoryPickerData[row]
         }
-        else if pickerView.tag == 2 {
-            let titleData = yearsPickerData[row]
-            myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Avenir", size: 15.0)!,NSForegroundColorAttributeName:UIColorFromHex(0x34495e)])
+        else {
+            titleData = yearsPickerData[row]
         }
-        
+        let myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Avenir", size: 15.0)!,NSForegroundColorAttributeName:UIColorFromHex(0x34495e)])
         return myTitle
     }
     
     //setup rating control
     func setupRatingControl() {
-        ratingControl = STRatingControl(frame: CGRectMake(screenSize.width*0.2, screenSize.height*3.7, screenSize.width*0.6, screenSize.height*0.08))
-        ratingControl.delegate = self
-        ratingControl.layoutSubviews()
+        ratingControl = RatingControl(frame: CGRectMake(screenSize.width*0.2, screenSize.height*3.65, screenSize.width*0.6, screenSize.height*0.07))
         containerView.addSubview(ratingControl)
+    }
+    
+    func setupDivide() {
+        let seperator = UIView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*3.52, screenSize.width*0.6, 1))
+        seperator.backgroundColor = UIColorFromHex(0x34495e)
+        containerView.addSubview(seperator)
     }
     
     /***********************************************************
@@ -275,15 +282,15 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     ***********************************************************/
     
     func setupMap() {
-        mapView = GMSMapView(frame: CGRectMake(0, screenSize.height*5.2, screenSize.width, screenSize.height*0.5))
+        mapView = GMSMapView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*5.37, screenSize.width*0.8, screenSize.height*0.25))
         mapView.backgroundColor = UIColorFromHex(0xecf0f1)
         containerView.addSubview(mapView)
         
-        let currentLocationButton = makeImageButton("use_current_location.png", frame: CGRectMake(screenSize.width*0.15, screenSize.height*5.75, self.screenSize.width*0.7, self.screenSize.height*0.1), target: #selector(PostViewController.curLocationClicked(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0.0)
+        let currentLocationButton = makeImageButton("sell_currentlocation_button.png", frame: CGRectMake(screenSize.width*0.25, screenSize.height*5.65, screenSize.width*0.5, screenSize.height*0.1), target: #selector(PostViewController.curLocationClicked(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0.0)
         
         containerView.addSubview(currentLocationButton)
         
-        let searchImageButton = makeImageButton("Search Filled-100.png", frame: CGRectMake(screenSize.width*0.85, screenSize.height*5.12, self.screenSize.width*0.1, self.screenSize.width*0.1), target: #selector(PostViewController.searchClicked(_:)), tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.0)
+        let searchImageButton = makeImageButton("Search Filled-100.png", frame: CGRectMake(screenSize.width*0.27, screenSize.height*5.28, screenSize.width*0.13, screenSize.width*0.13), target: #selector(PostViewController.searchClicked(_:)), tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.0)
         
         containerView.addSubview(searchImageButton)
         
@@ -382,10 +389,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //function to create the final post button which is called when the user completes the process.
     func setupPostButton() {
-        let buttonFrame = CGRectMake(screenSize.width*0.3, screenSize.height*7.3, screenSize.width*0.4, screenSize.height*0.4)
+        let buttonFrame = CGRectMake(0, screenSize.height*7.85, screenSize.width, screenSize.height*0.15)
         postButton = makeTextButton("Post!", frame: buttonFrame, target: #selector(PostViewController.postItem(_:)))
         postButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
-        postButton.titleLabel!.font = postButton.titleLabel!.font.fontWithSize(40)
+        postButton.titleLabel!.font = UIFont(name: "Avenir", size: 35)
+        postButton.backgroundColor = UIColorFromHex(0x34495e)
         containerView.addSubview(postButton)
     }
     
@@ -396,6 +404,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         for pageNum in 0...7 {
             pageIndicatorFrame.origin.y = pageIndOrigin + CGFloat(pageNum*20)
             let pageInd = makeIndicatorButton(pageIndicatorFrame, color: UIColorFromHex(0x34495e))
+            pageInd.tag = pageNum
             if pageNum == 0 {
                 pageInd.backgroundColor = UIColorFromHex(0x34495e)
             }
@@ -409,28 +418,24 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setupPriceInput() {
-        priceField = UITextField(frame: CGRectMake(self.screenSize.width*0.2, self.screenSize.height*6.3, self.screenSize.width*0.6, screenSize.height*0.1))
+        priceField = UITextField(frame: CGRectMake(self.screenSize.width*0.25, self.screenSize.height*6.4, self.screenSize.width*0.5, screenSize.height*0.1))
         let border = CALayer()
         let width = CGFloat(2.0)
-        border.borderColor = UIColor.darkGrayColor().CGColor
         border.frame = CGRect(x: 0, y: priceField.frame.size.height - width, width:  priceField.frame.size.width, height: priceField.frame.size.height)
-        
         border.borderWidth = width
-        border.borderColor = UIColor.whiteColor().CGColor
+        border.borderColor = UIColorFromHex(0x34495e).CGColor
         priceField.layer.addSublayer(border)
         priceField.layer.masksToBounds = true
         
-        priceField.textColor = UIColor.whiteColor()
+        priceField.textColor = UIColorFromHex(0x34495e)
         priceField.textAlignment = .Center
         priceField.clearsOnBeginEditing = true
-        priceField.font = priceField.font?.fontWithSize(50)
+        priceField.font = UIFont(name: "Avenir", size: 50)
         priceField.returnKeyType = .Done
         priceField.keyboardType = .NumberPad
         
-        let dollarSign = UILabel(frame: CGRectMake(0, 0, priceField.frame.width*0.2, priceField.frame.height))
-        dollarSign.text = "$"
-        dollarSign.textColor = UIColor.whiteColor()
-        dollarSign.font = dollarSign.font.fontWithSize(50)
+        let dollarSignFrame = CGRectMake(0, 0, priceField.frame.width*0.2, priceField.frame.height)
+        let dollarSign = customLabel(dollarSignFrame, text: "$", color: UIColorFromHex(0x34495e), fontSize: 50)
         priceField.addSubview(dollarSign)
         
         containerView.addSubview(priceField)
@@ -441,47 +446,24 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let photosLabelFrame = CGRectMake(screenSize.width*0.3, screenSize.height*0.15, screenSize.width*0.4, screenSize.height*0.15)
         let photosLabel = customLabel(photosLabelFrame, text: "Add Photos", color: UIColorFromHex(0x34495e), fontSize: 20)
         containerView.addSubview(photosLabel)
-//        let nameLabel = UILabel(frame: CGRectMake(10, screenSize.height*1.1, screenSize.width*0.95, screenSize.height*0.2))
-//        nameLabel.text = "What is the name of your item?"
-//        nameLabel.numberOfLines = 0
-//        nameLabel.textColor = UIColor.whiteColor()
-//        nameLabel.textAlignment = .Center
-//        nameLabel.font = nameLabel.font.fontWithSize(30)
-//        containerView.addSubview(nameLabel)
-        let categoriesLabel = UILabel(frame: CGRectMake(10, screenSize.height*2.2, self.screenSize.width*0.95, 30))
-        categoriesLabel.text = "What category does your item fit into"
-        categoriesLabel.textColor = UIColor.whiteColor()
-        categoriesLabel.textAlignment = .Center
-        containerView.addSubview(categoriesLabel)
-        let dataLabel = UILabel(frame: CGRectMake(10, screenSize.height*3.12, self.screenSize.width*0.95, 30))
-        dataLabel.text = "Give some info on your item"
-        dataLabel.textColor = UIColor.whiteColor()
-        dataLabel.textAlignment = .Center
-        dataLabel.font = dataLabel.font.fontWithSize(20)
-        containerView.addSubview(dataLabel)
-        let descriptionLabel = UILabel(frame: CGRectMake(10, screenSize.height*4.12, self.screenSize.width*0.95, 30))
-        descriptionLabel.text = "Give a description of your item"
-        descriptionLabel.textColor = UIColor.whiteColor()
-        descriptionLabel.textAlignment = .Center
-        descriptionLabel.font = descriptionLabel.font.fontWithSize(20)
-        containerView.addSubview(descriptionLabel)
-        let addressLabel = UILabel(frame: CGRectMake(10, screenSize.height*5.1, self.screenSize.width*0.95, screenSize.height*0.1))
-        addressLabel.textColor = UIColor.whiteColor()
-        addressLabel.font = addressLabel.font.fontWithSize(20)
-        addressLabel.text = "Where are you located?"
-        containerView.addSubview(addressLabel)
-        let priceLabel = UILabel(frame: CGRectMake(10, screenSize.height*6.08, self.screenSize.width*0.95, screenSize.height*0.3))
-        priceLabel.text = "I want to sell this for"
-        priceLabel.font = priceLabel.font.fontWithSize(30)
-        priceLabel.textColor = UIColor.whiteColor()
-        priceLabel.textAlignment = .Center
+        let categoryLabel = customLabel(CGRectMake(screenSize.width*0.15, screenSize.height*2.3, self.screenSize.width*0.7, screenSize.height*0.1), text: "Pick a category", color: UIColorFromHex(0x34495e), fontSize: 25)
+        containerView.addSubview(categoryLabel)
+        let conditionLabel = customLabel(CGRectMake(screenSize.width*0.2, screenSize.height*3.55, self.screenSize.width*0.6, screenSize.height*0.1), text: "Condition", color: UIColorFromHex(0x34495e), fontSize: 30)
+        containerView.addSubview(conditionLabel)
+        let itemIs = customLabel(CGRectMake(screenSize.width*0.2, screenSize.height*3.357, self.screenSize.width*0.2, screenSize.height*0.08), text: "Item is", color: UIColorFromHex(0x34495e), fontSize: 20)
+        containerView.addSubview(itemIs)
+        let yearsOld = customLabel(CGRectMake(screenSize.width*0.6, screenSize.height*3.357, self.screenSize.width*0.3, screenSize.height*0.08), text: "years old", color: UIColorFromHex(0x34495e), fontSize: 20)
+        containerView.addSubview(yearsOld)
+        let locationLabel = customLabel(CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), text: "Location", color: UIColorFromHex(0x34495e), fontSize: 30)
+        containerView.addSubview(locationLabel)
+        
+        let priceLabelFrame = CGRectMake(screenSize.width*0.15, screenSize.height*6.3, self.screenSize.width*0.7, screenSize.height*0.1)
+        let priceLabel = customLabel(priceLabelFrame, text: "I want to sell this for", color: UIColorFromHex(0x34495e), fontSize: 25)
         priceLabel.numberOfLines = 0
         containerView.addSubview(priceLabel)
-        let orMore = UILabel(frame: CGRectMake(10, screenSize.height*6.33, self.screenSize.width*0.95, screenSize.height*0.3))
-        orMore.font = orMore.font.fontWithSize(30)
-        orMore.textColor = UIColor.whiteColor()
-        orMore.textAlignment = .Center
-        orMore.text = "or more!"
+        let orMoreFrame = CGRectMake(screenSize.width*0.2, screenSize.height*6.5, self.screenSize.width*0.6, screenSize.height*0.1)
+        let orMore = customLabel(orMoreFrame, text: "or more!", color: UIColorFromHex(0x34495e), fontSize: 25)
+        
         containerView.addSubview(orMore)
         let confirmLabel = UILabel(frame: CGRectMake(10, screenSize.height*7.2, self.screenSize.width*0.95, 30))
         confirmLabel.text = "Confirm Post"
@@ -490,7 +472,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //delegate functions that control parts of the view controller
     
-    func didSelectRating(control: STRatingControl, rating: Int) {
+    func didSelectRating(control: RatingControl, rating: Int) {
         print(rating)
     }
     
@@ -509,7 +491,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         view.endEditing(true)
         // Test the offset and calculate the current page after scrolling ends
         let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
-        let currentPage:CGFloat = floor((scrollView.contentOffset.y-pageHeight/4)/pageHeight)+1
+        let currentPage:CGFloat = floor((scrollView.contentOffset.y-pageHeight/2)/pageHeight)+1
         
         // Change the indicator
         pageNum = Int(currentPage)
@@ -520,6 +502,18 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             if y == Int(currentPage) {
                 let yOffset = CGPointMake(0, pageHeight*CGFloat(y));
                 self.scrollView.setContentOffset(yOffset, animated: true)
+                updateIndicators()
+            }
+        }
+    }
+    
+    func updateIndicators() {
+        for pageInd in pageNumArray {
+            if pageInd.tag <= pageNum {
+                pageInd.backgroundColor = UIColorFromHex(0x34495e)
+            }
+            else {
+                pageInd.backgroundColor = UIColor.clearColor()
             }
         }
     }
@@ -585,6 +579,9 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             if imageView.tag == startIndex {
                 if i < images.count {
                     imageView.image = images[i]
+                    if !filledImagesArray.contains(imageView.tag) {
+                        filledImagesArray.append(imageView.tag)
+                    }
                     i += 1
                     startIndex += 1
                 }
@@ -626,12 +623,14 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         pageNum += 1
         let y = CGFloat(pageNum) * scrollView.frame.size.height
         scrollView.setContentOffset(CGPointMake(0, y), animated: true)
+        updateIndicators()
     }
     
     func prevPage(sender: UIButton) {
         pageNum -= 1
         let y = CGFloat(pageNum) * scrollView.frame.size.height
         scrollView.setContentOffset(CGPointMake(0, y), animated: true)
+        updateIndicators()
     }
     
     //function to controll when the user is finished and decides to post
@@ -642,8 +641,10 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         if let name = itemName.text, details = itemDescription.text {
             var images = [UIImage]()
             for imgView in imageViewArray {
-                if let img = imgView.image {
-                    images.append(img)
+                if filledImagesArray.contains(imgView.tag) {
+                    if let img = imgView.image {
+                        images.append(img)
+                    }
                 }
             }
             
@@ -737,6 +738,26 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //        myLabel.text = pickerData[row]
     }
+    
+//    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
+//        var pickerLabel = view as! UILabel!
+//        if view == nil {  //if no label there yet
+//            pickerLabel = UILabel()
+//        }
+//        let titleData: String
+//        if pickerView.tag == 1 {
+//            titleData = categoryPickerData[row]
+//        }
+//        else {
+//            titleData = yearsPickerData[row]
+//        }
+//        
+//        let myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Avenir", size: 2)!,NSForegroundColorAttributeName:UIColorFromHex(0x34495e)])
+//        pickerLabel!.attributedText = myTitle
+//        pickerLabel!.textAlignment = .Center
+//        return pickerLabel
+//        
+//    }
     
     
     //deactivation methods
