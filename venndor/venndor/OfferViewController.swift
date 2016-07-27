@@ -102,7 +102,7 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
             let matchControllerView = PopUpViewControllerSwift()
             matchControllerView.matchedItem = offeredItem
             matchControllerView.matchedPrice = temp[0] + temp[1]
-            matchControllerView.showInView(self.view, price: temp[0] + temp[1], item: offeredItem)
+            matchControllerView.showInView(self.view, price: Int(temp[0] + temp[1]), item: offeredItem)
         }
         else {
             LocalUser.seenPosts[offeredItem.id] = NSDate()
