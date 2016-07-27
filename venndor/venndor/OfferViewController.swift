@@ -125,13 +125,11 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
 //    }
     
     func goBackToBrowse(sender: UIButton) {
-        print("toBrowse")
         LocalUser.seenPosts[offeredItem.id] = NSDate()
         self.performSegueWithIdentifier("offerToBrowse", sender: self)
     }
     
     func toMatches(sender: UIButton) {
-        print("toMatches")
         self.performSegueWithIdentifier("offerToMatches", sender: self)
     }
     

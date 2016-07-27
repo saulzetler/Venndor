@@ -6,7 +6,7 @@
 //  Copyright © 2016 Venndor. All rights reserved.
 //
 
-extension UIViewController {
+extension UIViewController: SWRevealViewControllerDelegate {
     
     func makeImageButton(imageName: String, frame: CGRect, target: Selector, tinted: Bool, circle: Bool, backgroundColor: UInt32, backgroundAlpha: Double) -> UIButton {
         
@@ -150,7 +150,7 @@ extension UIViewController {
         let deactivateView = UIView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.height*0.1, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height*0.9))
         deactivateView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         deactivateView.tag = 100
-//        let tap = UITapGestureRecognizer(target: deactivateView, action: #selector(UIViewController.reactivate))
+//        let tap = UITapGestureRecognizer(target: deactivateView, action: #selector(UIViewController.activate))
 //        deactivateView.addGestureRecognizer(tap)
         self.view.addSubview(deactivateView)
     }
@@ -166,6 +166,161 @@ extension UIViewController {
             }
         }
     }
+    
+//    //calculate your distance away from the item
+//    func calculateDistance(item: Item, myLocation: CLLocation) -> String {
+//        
+//        var distText: String!
+//        
+//        let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
+//        let itemLatitude = CLLocationDegrees(item.latitude)
+//        let itemLongitude = CLLocationDegrees(item.longitude)
+//        let myLatitude = myLocation.coordinate.latitude
+//        let myLongitude = myLocation.coordinate.longitude
+//        
+//        let origins = "origins=\(myLatitude),\(myLongitude)&"
+//        let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
+//        let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
+//        let url = baseURL+origins+destinations+key
+//        
+//        let requestURL: NSURL = NSURL(string: url)!
+//        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+//        let session = NSURLSession.sharedSession()
+//        let task = session.dataTaskWithRequest(urlRequest) {
+//            (data, response, error) -> Void in
+//            
+//            let httpResponse = response as! NSHTTPURLResponse
+//            let statusCode = httpResponse.statusCode
+//            
+//            if (statusCode == 200) {
+//                
+//                do {
+//                    
+//                    
+//                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+//                    if let rows = json["rows"] as? [[String:AnyObject]] {
+//                        let first = rows[0]
+//                        let elements = first["elements"] as! Array<AnyObject>
+//                        let firstElement = elements[0]
+//                        if let distDict = firstElement["distance"] as? [String:AnyObject] {
+//                            distText = String(distDict["text"]!)
+//                        }
+//                        else {
+//                            distText = "none"
+//                        }
+//                    }
+//                } catch {
+//                    print("Error with Json: \(error)")
+//                }
+//                
+//            }
+//        }
+//        task.resume()
+//        return distText
+//    }
+//    
+//    func calculateDistanceFromItem(item: Item, myLocation: CLLocation) -> String {
+//        
+//        var distText: String!
+//        
+//        let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
+//        let itemLatitude = CLLocationDegrees(item.latitude)
+//        let itemLongitude = CLLocationDegrees(item.longitude)
+//        let myLatitude = myLocation.coordinate.latitude
+//        let myLongitude = myLocation.coordinate.longitude
+//        
+//        let origins = "origins=\(myLatitude),\(myLongitude)&"
+//        let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
+//        let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
+//        let url = baseURL+origins+destinations+key
+//        
+//        let requestURL: NSURL = NSURL(string: url)!
+//        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+//        let session = NSURLSession.sharedSession()
+//        let task = session.dataTaskWithRequest(urlRequest) {
+//            (data, response, error) -> Void in
+//            
+//            let httpResponse = response as! NSHTTPURLResponse
+//            let statusCode = httpResponse.statusCode
+//            
+//            if (statusCode == 200) {
+//
+//                do {
+//                    
+//                    
+//                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+//                    if let rows = json["rows"] as? [[String:AnyObject]] {
+//                        let first = rows[0]
+//                        let elements = first["elements"] as! Array<AnyObject>
+//                        let firstElement = elements[0]
+//                        if let distDict = firstElement["distance"] as? [String:AnyObject] {
+//                            distText = String(distDict["text"]!)
+//                        }
+//                        else {
+//                            distText = "none"
+//                        }
+//                    }
+//                } catch {
+//                    print("Error with Json: \(error)")
+//                }
+//                
+//            }
+//        }
+//        task.resume()
+//        return distText
+//    }
+//    
+//    func calculateDistanceFromLocation(latitude: Double, longitude: Double, myLocation: CLLocation) -> String {
+//        
+//        var distText: String!
+//        
+//        let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
+//        let itemLatitude = CLLocationDegrees(latitude)
+//        let itemLongitude = CLLocationDegrees(longitude)
+//        let myLatitude = myLocation.coordinate.latitude
+//        let myLongitude = myLocation.coordinate.longitude
+//        
+//        let origins = "origins=\(myLatitude),\(myLongitude)&"
+//        let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
+//        let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
+//        let url = baseURL+origins+destinations+key
+//        
+//        let requestURL: NSURL = NSURL(string: url)!
+//        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+//        let session = NSURLSession.sharedSession()
+//        let task = session.dataTaskWithRequest(urlRequest) {
+//            (data, response, error) -> Void in
+//            
+//            let httpResponse = response as! NSHTTPURLResponse
+//            let statusCode = httpResponse.statusCode
+//            
+//            if (statusCode == 200) {
+//                
+//                do {
+//                    
+//                    
+//                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+//                    if let rows = json["rows"] as? [[String:AnyObject]] {
+//                        let first = rows[0]
+//                        let elements = first["elements"] as! Array<AnyObject>
+//                        let firstElement = elements[0]
+//                        if let distDict = firstElement["distance"] as? [String:AnyObject] {
+//                            distText = String(distDict["text"]!)
+//                        }
+//                        else {
+//                            distText = "none"
+//                        }
+//                    }
+//                } catch {
+//                    print("Error with Json: \(error)")
+//                }
+//                
+//            }
+//        }
+//        task.resume()
+//        return distText
+//    }
+//    
 }
 class ViewController: UIViewController {
     

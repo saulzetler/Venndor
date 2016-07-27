@@ -98,13 +98,10 @@ class ProfilePageViewController: UIViewController {
         _ = user
         switch sender.view! {
         case matchesStack:
-            print("Matches tapped!")
             content = user.matches
         case boughtStack:
-            print("Bought tapped!")
             content = user.boughtItems
         case soldStack:
-            print("Sold tapped!")
             content = user.soldItems
         default:
             print("Idk why the fuck you're getting this here error, bruh, but lets set a default...")

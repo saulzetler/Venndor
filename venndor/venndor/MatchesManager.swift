@@ -13,7 +13,7 @@ class MatchesManager: NSObject {
     static let globalManager = MatchesManager()
     
     func createMatch(match: Match, completionHandler: (Match?, ErrorType?) -> () ) {
-        let params = ["itemID": match.itemID, "itemName": match.itemName, "itemDescription": match.itemDescription, "buyerID": match.buyerID, "sellerID": match.sellerID, "sellerName": match.sellerName, "matchedPrice":match.matchedPrice, "itemLongitude": match.itemLongitude, "itemLatitude": match.itemLatitude]
+        let params = ["itemID": match.itemID, "itemName": match.itemName, "itemDescription": match.itemDescription, "userID": match.sellerID, "sellerID": match.sellerID, "sellerName": match.sellerName, "matchedPrice":match.matchedPrice, "itemLongitude": match.itemLongitude, "itemLatitude": match.itemLatitude, "bought": match.bought, "dateMatched": TimeManager.formatter.stringFromDate(match.dateMatched)]
         
         RESTEngine.sharedEngine.createMatchOnServer(params as! [String : AnyObject],
             success: { response in
@@ -43,11 +43,10 @@ class MatchesManager: NSObject {
         let filterString = createFilterString(user.matches)
         RESTEngine.sharedEngine.getMatchesFromServer(nil, filter: filterString, offset: nil, fields: nil,
             success: { response in
-                if let response = response, matchesData = response["resource"] {
+                if let response = response, matchesData = response["resource"] as? NSArray {
                     var matchesArray = [Match]()
-                    let arr = matchesData as! NSArray
-                    
-                    for data in arr {
+    
+                    for data in matchesData {
                         let data = data as! JSON
                         let match = Match(json: data)
                         matchesArray.append(match)

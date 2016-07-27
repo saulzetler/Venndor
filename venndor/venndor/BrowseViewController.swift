@@ -8,7 +8,7 @@
 
 import UIKit
 
-class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate, SWRevealViewControllerDelegate {
+class BrowseViewController: UIViewController, UIPopoverPresentationControllerDelegate, DraggableViewDelegate, UIGestureRecognizerDelegate, CLLocationManagerDelegate {
 
     var allCards: [DraggableView]!
     var itemList: [Item]!
@@ -33,6 +33,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var itemName: UILabel!
     var itemDescription: UILabel!
     var itemCondtion: UIView!
+    var mainView: UIView!
     
     //variables to help declare and set things
     let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -56,6 +57,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         LocalUser.user.mostRecentAction = "Browsed Item Feed."
         sessionStart = NSDate()
         
+        mainView = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height*0.9))
+        self.view.addSubview(mainView)
+        
         loaded = false
         
         locationManager.delegate = self
@@ -63,28 +67,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         locationManager.startUpdatingLocation()
         
         self.revealViewController().delegate = self
-        
-//        let temp = 45.00
-//        let temp2 = 0.00
-//        var conversion = LocationConverter()
-//        let geoHash = conversion.coordToGeo(temp, longitudeInput: temp2)
-//        print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
-//        
-//        print(GlobalItems.currentCategory)
-        
-//        self.view.backgroundColor = UIColor(red: 0.92, green: 0.95, blue: 0.93, alpha: 1)
-        
-//        let globalItems = GlobalItems()
-
-        
-        //intialize the global items in this controller
-//        let globalItems = GlobalItems()
-        
-        /* ADD FUNCTION ON WHEN SWIPPING TO ROTATE THE GLOBAL ITEM */
-        
-        // Do any additional setup after loading the view, typically from a nib.	
-//        let user = LocalUser.user
-//        let items = GlobalItems.items
         
         
         let filter = ItemManager.globalManager.constructFeedFilter()
@@ -98,22 +80,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 GlobalItems.items = items
                 dispatch_async(dispatch_get_main_queue()) {
                     self.setupView()
-//                    self.setupItemInfo()
                 }
             }
         }
-//        setupView()
-//        setupItemInfo()
-        
-        
-        
-        let screenSize: CGRect = UIScreen.mainScreen().bounds
-        
-        //cover view
-//        let cover = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height*0.9))
-//        cover.backgroundColor = UIColorFromHex(0xffffff, alpha: 0.6)
-//        cover.hidden = false
-//        self.view.addSubview(cover)
         
         //MiniMyMatches button at bottom of browse.
         let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
@@ -127,9 +96,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         bottomBarButton.backgroundColor = UIColorFromHex(0x2c3e50)
         bottomBarButton.addTarget(self, action: #selector(BrowseViewController.showAlert(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
-        self.view.addSubview(bottomBarButton)
+        mainView.addSubview(bottomBarButton)
 
-        self.view.addSubview(miniMatches)
+        mainView.addSubview(miniMatches)
         
         //prepare the reveal view controller to allow swipping and side menus.
         if revealViewController() != nil {
@@ -236,8 +205,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                     
                     let tap = UITapGestureRecognizer(target: self, action: #selector(BrowseViewController.toggleItemInfo(_:)))
                     contentView.addGestureRecognizer(tap)
-                    //self.miniMatchContainer.append(contentView)
-                    //print("MiniMatchContainer Index: \(self.miniMatchContainer.indexOf(contentView)), Match at Index: \(match.itemName)")
                                         
                     //update the contentScrollView
                     dispatch_async(dispatch_get_main_queue()) {
@@ -282,7 +249,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     
-    func makeMiniPriceLabel(contentLabelFrame: CGRect, matchedPrice: Double) -> UIView {
+    func makeMiniPriceLabel(contentLabelFrame: CGRect, matchedPrice: Int) -> UIView {
         let priceLabelHeight = contentLabelFrame.height * 0.25
         let priceLabelWidth = contentLabelFrame.width * 0.55
         let priceLabelFrame = CGRect(x: contentLabelFrame.origin.x + contentLabelFrame.width - CGFloat(30), y: contentLabelFrame.origin.y - 7, width: priceLabelWidth, height: priceLabelHeight)
@@ -306,7 +273,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     //functions to create labels and imgViews for MiniMyMatches
     
-    func makeMiniContentView(frame: CGRect, image: UIImage, matchedPrice: Double) -> ItemContainer {
+    func makeMiniContentView(frame: CGRect, image: UIImage, matchedPrice: Int) -> ItemContainer {
         
         let containerView = ItemContainer(frame: frame)
         let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: containerView.frame.width, height: containerView.frame.height))
@@ -340,9 +307,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
-        while locationAuthorized == false {
-        }
-//        LocalUser.myLocation = CLLocation(latitude: 10, longitude: 10)
+//        while locationAuthorized == false {
+//        }
+        LocalUser.myLocation = CLLocation(latitude: 10, longitude: 10)
         let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index], myLocation: LocalUser.myLocation)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
@@ -402,14 +369,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     func insertNewCard() {
         if cardsLoadedIndex - currentCardIndex > 0 {
             let newCard = loadedCards[cardsLoadedIndex - currentCardIndex - 1]
-            self.view.addSubview(newCard)
-            self.view.sendSubviewToBack(newCard)
-//            self.view.addSubview(newInfo)
-//            self.view.sendSubviewToBack(newInfo)
-//            updateItemInfo()
-        }
-        else {
-//            itemInfo.removeFromSuperview()
+            mainView.addSubview(newCard)
+            mainView.sendSubviewToBack(newCard)
         }
     }
     
@@ -455,10 +416,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             
             while cardsLoadedIndex < loadedCards.count {
                 if cardsLoadedIndex == 0 {
-                    self.view.addSubview(loadedCards[cardsLoadedIndex])
+                    mainView.addSubview(loadedCards[cardsLoadedIndex])
                 }
                 else {
-                    self.view.insertSubview(loadedCards[cardsLoadedIndex], belowSubview: loadedCards[cardsLoadedIndex - 1])
+                    mainView.insertSubview(loadedCards[cardsLoadedIndex], belowSubview: loadedCards[cardsLoadedIndex - 1])
                 }
                 cardsLoadedIndex = cardsLoadedIndex + 1
             }
@@ -507,39 +468,14 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         }
     }
     
-    func revealController(revealController: SWRevealViewController, willMoveToPosition position: FrontViewPosition){
-        if((position == FrontViewPosition.Left)) {
-//            self.view.userInteractionEnabled = true
-            if loaded == true {
-                loadedCards[currentCardIndex].userInteractionEnabled = true
-                reactivate()
-            }
-            
-        }else {
-//            self.view.userInteractionEnabled = false
-            if loaded == true {
-                loadedCards[currentCardIndex].userInteractionEnabled = false
-                print("deactivated")
-                deactivate()
-            }
-            
-        }
-    }
-    
     func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
         if((position == FrontViewPosition.Left)) {
-//            self.view.userInteractionEnabled = true
-            if loaded == true {
-                loadedCards[currentCardIndex].userInteractionEnabled = true
-            }
+            mainView.userInteractionEnabled = true
+            reactivate()
         } else {
-            if loaded == true {
-                loadedCards[currentCardIndex].userInteractionEnabled = false
-            }
-//            self.view.userInteractionEnabled = false
-            
+            mainView.userInteractionEnabled = false
+            deactivate()
         }
     }
-    
 }
 
