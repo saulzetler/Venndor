@@ -14,8 +14,6 @@ protocol STRatingControlDelegate {
 
 public class STRatingControl: UIView {
     
-//    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
-    
     var screenSize: CGRect = UIScreen.mainScreen().bounds
   
   // MARK: Properties

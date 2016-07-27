@@ -10,27 +10,54 @@ import UIKit
 
 class RatingControl: UIView {
     
-    let screenSize: CGRect = UIScreen.mainScreen().bounds
+    var buttonArray: [UIButton]!
+    var rating: Int!
     
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
+    
     override init(frame: CGRect) {
         super.init(frame: frame)
-        setUpViewFrame()
+        buttonArray = []
+        setUpViewFrame(frame)
+        rating = 0
     }
     
-    func setUpViewFrame() -> Void {
+    func setUpViewFrame(frame: CGRect) -> Void {
         //initial view frame
+        var buttonFrame: CGRect!
         
-        self.frame = CGRectMake(0, screenSize.height*3.6, screenSize.width, screenSize.height*0.3)
-        self.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
+        for rating in 0...4 {
+            buttonFrame = CGRect(x: CGFloat(rating)*frame.width*0.2, y: 0, width: frame.width*0.19, height: frame.height)
+            let button = makeImageButton("Star.png", frame: buttonFrame, target: #selector(RatingControl.handleTap(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+            let filledStarImage = UIImage(named: "Star_Filled.png")
+            button.setImage(filledStarImage, forState: .Selected)
+            button.tag = rating + 1
+            buttonArray.append(button)
+            self.addSubview(button)
+        }
         
     }
     
-    func setUpButton() -> Void {
-        let button = UIButton(frame: CGRect(x: 0, y: 0, width: 44, height: 44))
-        button.backgroundColor = UIColor.redColor()
-        addSubview(button)
+    func handleTap(sender: UIButton) {
+        if (rating == 1 && sender.tag == 1) {
+            rating = 0
+        }
+        else {
+            rating = sender.tag
+        }
+        
+        print(rating)
+        
+        for button in buttonArray {
+            if button.tag <= rating {
+                button.selected = true
+            }
+            else {
+                button.selected = false
+            }
+        }
     }
+    
 }
