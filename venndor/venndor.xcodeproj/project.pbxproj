@@ -62,6 +62,7 @@
 		63859A131D13347C004F4968 /* NIKApiInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A101D13347C004F4968 /* NIKApiInvoker.swift */; };
 		63859A141D13347C004F4968 /* NIKFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A111D13347C004F4968 /* NIKFile.swift */; };
 		638DF3E81D2C3C7C00319FD8 /* MatchesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638DF3E71D2C3C7C00319FD8 /* MatchesManager.swift */; };
+		63A7A6D41D490F9400A33DC2 /* ItemInfoView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63A7A6D31D490F9400A33DC2 /* ItemInfoView.swift */; };
 		63C8F7331D189E3D00FFC1E2 /* SplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */; };
 		63E8DC421D3EB5C70043FEF9 /* TimeManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63E8DC411D3EB5C70043FEF9 /* TimeManager.swift */; };
 		A61EB1AABD768E2B14D59749 /* Pods_venndorUITests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = CA9387DB34016E826A2BBEF5 /* Pods_venndorUITests.framework */; };
@@ -196,6 +197,7 @@
 		63859A101D13347C004F4968 /* NIKApiInvoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKApiInvoker.swift; sourceTree = "<group>"; };
 		63859A111D13347C004F4968 /* NIKFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKFile.swift; sourceTree = "<group>"; };
 		638DF3E71D2C3C7C00319FD8 /* MatchesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesManager.swift; sourceTree = "<group>"; };
+		63A7A6D31D490F9400A33DC2 /* ItemInfoView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemInfoView.swift; sourceTree = "<group>"; };
 		63C8F7321D189E3D00FFC1E2 /* SplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SplashViewController.swift; sourceTree = "<group>"; };
 		63E8DC411D3EB5C70043FEF9 /* TimeManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TimeManager.swift; sourceTree = "<group>"; };
 		7C9AD43D3AAC3204D361DD5E /* Pods-venndorUITests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-venndorUITests.release.xcconfig"; path = "Pods/Target Support Files/Pods-venndorUITests/Pods-venndorUITests.release.xcconfig"; sourceTree = "<group>"; };
@@ -515,6 +517,7 @@
 				E453F0A81D2EC991002637AB /* STRatingControl.swift */,
 				E42E04C21D2563330043779F /* WheelSlider.swift */,
 				E49051A21D09AF7B0045D5C0 /* DraggableView.swift */,
+				63A7A6D31D490F9400A33DC2 /* ItemInfoView.swift */,
 				E49051A41D09AF7B0045D5C0 /* OverlayView.swift */,
 				101F43CD1D107A55007E0ADE /* HeaderView.swift */,
 				E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */,
@@ -613,7 +616,7 @@
 				TargetAttributes = {
 					10ADC9A31D0749700028A999 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = 59THX85PFH;
+						DevelopmentTeam = QA24C9EBQB;
 					};
 					10ADC9BA1D0749700028A999 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -655,7 +658,6 @@
 				E44C15211D11B9F90006EBAD /* Home-50.png in Resources */,
 				109452B91D41661A00931DA8 /* venn.png in Resources */,
 				109452C51D47E6FF00931DA8 /* Computer Filled.png in Resources */,
-				E4845EE71D37E7F000F4A5B2 /* Star Filled White.png in Resources */,
 				E44C151C1D11B9650006EBAD /* Settings-50.png in Resources */,
 				E495BB241D47BFCA00CC1EEC /* add_main_photo.png in Resources */,
 				E4A550D51D3D52BB001EAAB3 /* Marker Filled-100.png in Resources */,
@@ -677,7 +679,6 @@
 				10CAD5DC1D3955B800147F66 /* title.png in Resources */,
 				E48002061D2FEEEE009C90E2 /* Expand Arrow.png in Resources */,
 				109452C61D47E6FF00931DA8 /* Generic Book File Type Filled.png in Resources */,
-				E4845EE81D37E7F000F4A5B2 /* Star White.png in Resources */,
 				109452C41D47E6FF00931DA8 /* Clothes Filled.png in Resources */,
 				E495BB281D47CBE600CC1EEC /* Expand Arrow Blue.png in Resources */,
 				E44C15381D11E0430006EBAD /* Chair-50.png in Resources */,
@@ -866,6 +867,7 @@
 				109D93541D3E9BEB00A14616 /* Splash2ViewController.swift in Sources */,
 				63859A141D13347C004F4968 /* NIKFile.swift in Sources */,
 				E453F0A91D2EC991002637AB /* STRatingControl.swift in Sources */,
+				63A7A6D41D490F9400A33DC2 /* ItemInfoView.swift in Sources */,
 				103B17081D35686C005AEFDD /* jonasBoettcherController.swift in Sources */,
 				101F43D01D11A203007E0ADE /* TutorialViewController.swift in Sources */,
 				10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */,
@@ -1057,7 +1059,7 @@
 				);
 				INFOPLIST_FILE = venndor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";
@@ -1084,7 +1086,7 @@
 				);
 				INFOPLIST_FILE = venndor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";

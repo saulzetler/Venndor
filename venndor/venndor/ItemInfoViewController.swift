@@ -19,9 +19,8 @@ class ItemInfoViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         LocalUser.user.mostRecentAction = "Entered ItemInfo Page."
-//        let undraggableView = UnDraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: item, myLocation: LocalUser.myLocation)
-//        undraggableView.layer.cornerRadius = 20
-//        undraggableView.layer.masksToBounds = true
+        let infoView = createItemInfoView(item)
+        self.view.addSubview(infoView)
 
         sessionStart = NSDate()
     }
@@ -30,4 +29,13 @@ class ItemInfoViewController: UIViewController {
         super.viewWillDisappear(animated)
         TimeManager.globalManager.setSessionDuration(sessionStart, controller: "ItemInfoViewController")
     }
+    
+    func createItemInfoView(item: Item) -> ItemInfoView {
+        let frame = CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT)
+        let infoView = ItemInfoView(frame: frame, item: item, myLocation: LocalUser.myLocation)
+        infoView.layer.cornerRadius = 20
+        infoView.layer.masksToBounds = true
+        return infoView
+    }
+
 }

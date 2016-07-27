@@ -101,7 +101,7 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         if temp[0] != 0.00 {
             let matchControllerView = PopUpViewControllerSwift()
             matchControllerView.matchedItem = offeredItem
-            matchControllerView.matchedPrice = temp[0] + temp[1]
+            matchControllerView.matchedPrice = Int(temp[0] + temp[1])
             matchControllerView.showInView(self.view, price: temp[0] + temp[1], item: offeredItem)
         }
         else {
