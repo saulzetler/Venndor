@@ -192,7 +192,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         
         let customViewTwo = UIView(frame: CGRect(x: -10, y: 125, width: alertController.view.bounds.size.width+10, height: 75))
-        customViewTwo.backgroundColor = UIColorFromHex(0x1abc9c, alpha: 1)
+        customViewTwo.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 1)
 
         //create the custom cancel view for the user to quit the menu
         //note this function also cancels when a user presses outside the frame
@@ -340,9 +340,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
-//        while locationAuthorized == false {
-//        }
-        LocalUser.myLocation = CLLocation(latitude: 10, longitude: 10)
+        while locationAuthorized == false {
+        }
+//        LocalUser.myLocation = CLLocation(latitude: 10, longitude: 10)
         let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index], myLocation: LocalUser.myLocation)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
