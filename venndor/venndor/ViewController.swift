@@ -42,7 +42,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
         let button = UIButton(frame: frame)
         button.addTarget(self, action: target, forControlEvents: .TouchUpInside)
         button.setTitle(text, forState: .Normal)
-        button.titleLabel?.font = UIFont(name: "Avenir", size: 8)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: 12)
         button.setTitleColor(textColor, forState: UIControlState.Normal)
         if tinted == true {
             button.setTitleColor(UIColorFromHex(0x3498db, alpha: 1), forState: UIControlState.Selected)

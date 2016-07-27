@@ -57,7 +57,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         LocalUser.user.mostRecentAction = "Browsed Item Feed."
         sessionStart = NSDate()
         
-        mainView = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height*0.9))
+        mainView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
         self.view.addSubview(mainView)
         
         loaded = false
