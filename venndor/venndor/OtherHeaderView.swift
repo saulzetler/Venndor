@@ -42,6 +42,7 @@ class OtherHeaderView: UIView, UITextFieldDelegate {
         title.text = page
         title.textColor = UIColor.whiteColor()
         title.font = UIFont(name: title.font.fontName, size: 20)
+        title.textAlignment = .Center
         self.addSubview(title)
     }
     

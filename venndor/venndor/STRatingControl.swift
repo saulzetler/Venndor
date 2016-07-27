@@ -14,6 +14,8 @@ protocol STRatingControlDelegate {
 
 public class STRatingControl: UIView {
     
+//    let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: "handleTap:")
+    
     var screenSize: CGRect = UIScreen.mainScreen().bounds
   
   // MARK: Properties
@@ -34,8 +36,8 @@ public class STRatingControl: UIView {
       setNeedsLayout()
     }
   }
-  var filledStarImage = UIImage(named: "Star Filled White.png")
-  var emptyStarImage = UIImage(named: "Star White.png")
+  var filledStarImage = UIImage(named: "Star_Filled.png")
+  var emptyStarImage = UIImage(named: "Star.png")
   var spacing : Int = 5
   
   var delegate : STRatingControlDelegate?
@@ -99,15 +101,21 @@ public class STRatingControl: UIView {
   
   override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
     handleStarTouches(touches, withEvent: event)
+    print("touched")
   }
   
-  override public func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-    handleStarTouches(touches, withEvent: event)
-  }
+//  override public func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//    handleStarTouches(touches, withEvent: event)
+//  }
   
   override public func touchesEnded(touches: Set<UITouch>, withEvent event: UIEvent?) {
     delegate?.didSelectRating(self, rating: self.rating)
   }
+    
+    
+    
+
+
   
   func handleStarTouches(touches: Set<UITouch>, withEvent event: UIEvent?) {
     if let touch = touches.first {
@@ -118,7 +126,7 @@ public class STRatingControl: UIView {
       }
     }
   }
-  
+    
   func ratingButtonSelected(position: CGPoint) {
     for (index, button) in ratingButtons.enumerate() {
       if position.x > CGRectGetMinX(button.frame) {
