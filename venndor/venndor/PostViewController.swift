@@ -18,8 +18,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var numberOfPages: CGFloat = 8
     var scrollView: UIScrollView!
     var containerView = UIView()
-    var pageControl: UIPageControl!
-    var pageNum: Int!
+    var pageNum = 0
     
     //all the various post view requirement variables
     let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -31,12 +30,16 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var imageView3: UIImageView!
     var imageView4: UIImageView!
     var imageView5: UIImageView!
+    var imageView6: UIImageView!
     var imageViewArray: [UIImageView]!
     var currentImgView: UIImageView!
     var postButton: UIButton!
     var condition: Int!
-    let pickerData = ["Furniture", "Kitchen", "Household", "Electronics", "Clothing", "Books", "Other"]
+    let categoryPickerData = ["Furniture", "Kitchen", "Household", "Electronics", "Clothing", "Books", "Other"]
+    let yearsPickerData = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "10+"]
+    var pageNumArray = [UIButton]()
     var categoryPicker: UIPickerView!
+    var yearsPicker: UIPickerView!
     var ratingControl: STRatingControl!
     var imagePickerController: ImagePickerController!
     var mapView: GMSMapView!
@@ -55,7 +58,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         super.viewDidLoad()
         sessionStart = NSDate()
         TimeManager.timeStamp = NSDate()
-        setupPickerView()
+        setupCategoryPickerView()
+        setupYearsPickerView()
         setupItemName()
         setupItemDescription()
         setupLabels()
@@ -66,8 +70,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setupPageControll()
         setupPostButton()
         setupRatingControl()
-        addHeaderOther("Sell an Item")
-        setupDownArrow()
+        addHeaderOther("Sell")
+        setupArrows()
         setupMap()
         hideKeyboardWhenTappedAround()
         self.revealViewController().delegate = self
@@ -75,11 +79,62 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //setup functions
     
-    func setupDownArrow() {
-        let downArrowFrame = CGRect(x: screenSize.width*0.45, y: screenSize.height*0.95, width: screenSize.width*0.1, height: screenSize.height*0.05)
-        let downArrow = makeImageButton("Expand Arrow-100.png", frame: downArrowFrame, target: #selector(PostViewController.nextPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
-        self.view.addSubview(downArrow)
-        self.view.bringSubviewToFront(downArrow)
+    func setupArrows() {
+        var downArrowFrame = CGRect(x: screenSize.width*0.4, y: screenSize.height*0.85, width: screenSize.width*0.2, height: screenSize.height*0.1)
+        let downArrowOrigin = downArrowFrame.origin.y
+        var upArrowFrame = CGRect(x: screenSize.width*0.4, y: screenSize.height*0.15, width: screenSize.width*0.2, height: screenSize.height*0.1)
+        let upArrowOrigin = upArrowFrame.origin.y
+        
+        for page in 0...6 {
+            switch page {
+            case 0:
+                addTitlesToArrows(page, upTitle: "", downTitle: "Title")
+            case 1:
+                addTitlesToArrows(page, upTitle: "Photos", downTitle: "Category")
+            case 2:
+                addTitlesToArrows(page, upTitle: "Title", downTitle: "Info")
+            case 3:
+                addTitlesToArrows(page, upTitle: "Category", downTitle: "Description")
+            case 4:
+                addTitlesToArrows(page, upTitle: "Info", downTitle: "Location")
+            case 5:
+                addTitlesToArrows(page, upTitle: "Description", downTitle: "Price")
+            case 6:
+                addTitlesToArrows(page, upTitle: "Location", downTitle: "Confirm")
+            case 7:
+                addTitlesToArrows(page, upTitle: "Price", downTitle: "")
+            default:
+                break
+            }
+            
+            downArrowFrame.origin.y = downArrowOrigin + CGFloat(page)*self.view.frame.height
+            let downArrow = makeImageButton("Expand Arrow Blue.png", frame: downArrowFrame, target: #selector(PostViewController.nextPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+            containerView.addSubview(downArrow)
+            if page != 0 {
+                upArrowFrame.origin.y = upArrowOrigin + CGFloat(page)*self.view.frame.height
+                let upArrow = makeImageButton("Collapse Arrow Blue.png", frame: upArrowFrame, target: #selector(PostViewController.prevPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+                containerView.addSubview(upArrow)
+            }
+            
+        }
+    }
+    
+    func addTitlesToArrows(page: Int, upTitle: String, downTitle: String)  {
+        var upButtonFrame = CGRect(x: screenSize.width*0.4, y: screenSize.height*0.1, width: screenSize.width*0.2, height: screenSize.height*0.1)
+        let upButtonOrigin = upButtonFrame.origin.y
+        var downButtonFrame = CGRect(x: screenSize.width*0.4, y: screenSize.height*0.9, width: screenSize.width*0.2, height: screenSize.height*0.1)
+        let downButtonOrigin = downButtonFrame.origin.y
+        var button: UIButton!
+        if page != 0 {
+            upButtonFrame.origin.y = upButtonOrigin + CGFloat(page)*screenSize.height
+            button = makeTextButton(upTitle, frame: upButtonFrame, target: #selector(PostViewController.prevPage(_:)))
+            containerView.addSubview(button)
+        }
+        if page != 7 {
+            downButtonFrame.origin.y = downButtonOrigin + CGFloat(page)*screenSize.height
+            button = makeTextButton(downTitle, frame: downButtonFrame, target: #selector(PostViewController.nextPage(_:)))
+            containerView.addSubview(button)
+        }
     }
     
     //first function to setup the scroll view for the page.
@@ -87,7 +142,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         scrollView = UIScrollView()
         scrollView.delegate = self
         scrollView.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
-        scrollView.backgroundColor = UIColorFromHex(0x1abc9c)
+        scrollView.backgroundColor = UIColorFromHex(0xecf0f1)
         let scrollViewWidth: CGFloat = scrollView.frame.width
         let scrollViewHeight: CGFloat = scrollView.frame.height
         
@@ -108,14 +163,22 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //create the text field required for the user to input the name of the item.
     func setupItemName() {
-        itemName = ItemNameTextField(frame: CGRectMake(10, screenSize.height*1.35, screenSize.width*0.95, screenSize.height*0.1))
-        itemName.text = "Name"
-        itemName.textColor = UIColor.whiteColor()
-        itemName.font = itemName.font?.fontWithSize(30)
+        itemName = ItemNameTextField(frame: CGRectMake(screenSize.width*0.2, screenSize.height*1.4, screenSize.width*0.7, screenSize.height*0.1))
+        itemName.text = "Item Name"
+        itemName.textColor = UIColorFromHex(0x34495e)
+        itemName.font = UIFont(name: "Avenir", size: 30)
         itemName.delegate = self
         itemName.clearsOnBeginEditing = true
+        itemName.textAlignment = .Center
         containerView.addSubview(itemName)
-        createBorder(itemName, color: UIColor.whiteColor())
+        
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColorFromHex(0x34495e).CGColor
+        border.frame = CGRect(x: 0, y: itemName.frame.size.height - width, width:  itemName.frame.size.width, height: itemName.frame.size.height)
+        border.borderWidth = width
+        itemName.layer.addSublayer(border)
+        itemName.layer.masksToBounds = true
         itemName.returnKeyType = .Done
     }
     
@@ -135,41 +198,73 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
         //each view performs the same action/function in allowing a user to upload an image, thus it is refactored to allow for neater code
         
-        imageView1 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.13, screenSize.width*0.7, screenSize.width*0.7), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: true)
+        let padding = screenSize.width*0.01
+        let smallImgWidth = screenSize.width*0.22
+        let largeImgWidth = screenSize.width*0.45
+        let originX = screenSize.width*0.2
+        let originY = screenSize.height*0.3
+        
+        imageView1 = createImgView(CGRectMake(originX, originY, largeImgWidth, largeImgWidth), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
         imageView1.tag = 0
-        imageView2 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: true)
+        imageView2 = createImgView(CGRectMake(originX+padding+largeImgWidth, originY, smallImgWidth, smallImgWidth), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
         imageView2.tag = 1
-        imageView3 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.55, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: true)
+        imageView3 = createImgView(CGRectMake(originX+padding+largeImgWidth, originY+smallImgWidth+padding, smallImgWidth, smallImgWidth), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
         imageView3.tag = 2
-        imageView4 = createImgView(CGRectMake(screenSize.width*0.15, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: true)
+        imageView4 = createImgView(CGRectMake(originX+padding+largeImgWidth, originY+largeImgWidth+padding, smallImgWidth, smallImgWidth), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
         imageView4.tag = 3
-        imageView5 = createImgView(CGRectMake(screenSize.width*0.55, screenSize.height*0.75, screenSize.width*0.3, screenSize.width*0.3), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: true)
+        imageView5 = createImgView(CGRectMake(originX+smallImgWidth+padding, originY+largeImgWidth+padding, smallImgWidth, smallImgWidth), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
         imageView5.tag = 4
+        imageView6 = createImgView(CGRectMake(originX, originY+largeImgWidth+padding, smallImgWidth, smallImgWidth), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
+        imageView6.tag = 5
+        
         
         //store the image views in an array for easier future use
-        imageViewArray = [imageView1, imageView2, imageView3, imageView4, imageView5]
+        imageViewArray = [imageView1, imageView2, imageView3, imageView4, imageView5, imageView6]
+        
+        for imgView in imageViewArray {
+            imgView.image = UIImage(named: "add_main_photo.png")
+        }
         
     }
     
     //function to allow the user to pick from a certain list of categories to assign the item.
-    func setupPickerView() {
-        categoryPicker = UIPickerView(frame: CGRectMake(10, screenSize.height*2.2, self.screenSize.width*0.95, screenSize.height*0.4))
+    func setupCategoryPickerView() {
+        categoryPicker = UIPickerView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*2.3, self.screenSize.width*0.6, screenSize.height*0.4))
         
         //asign the needed points to allow the pickerview to function as intended
         categoryPicker.dataSource = self
         categoryPicker.delegate = self
+        categoryPicker.tag = 1
         containerView.addSubview(categoryPicker)
     }
     
+    func setupYearsPickerView() {
+        yearsPicker = UIPickerView(frame: CGRectMake(screenSize.width*0.45, screenSize.height*3.3, screenSize.width*0.2, screenSize.height*0.2))
+        
+        yearsPicker.dataSource = self
+        yearsPicker.delegate = self
+        yearsPicker.tag = 2
+        containerView.addSubview(yearsPicker)
+    }
+    
     func pickerView(pickerView: UIPickerView, attributedTitleForRow row: Int, forComponent component: Int) -> NSAttributedString? {
-        let titleData = pickerData[row]
-        let myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Georgia", size: 15.0)!,NSForegroundColorAttributeName:UIColor.whiteColor()])
+        var myTitle: NSAttributedString!
+        
+        if pickerView.tag == 1 {
+            let titleData = categoryPickerData[row]
+            myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Avenir", size: 15.0)!,NSForegroundColorAttributeName:UIColorFromHex(0x34495e)])
+        }
+        else if pickerView.tag == 2 {
+            let titleData = yearsPickerData[row]
+            myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Avenir", size: 15.0)!,NSForegroundColorAttributeName:UIColorFromHex(0x34495e)])
+        }
+        
         return myTitle
     }
     
     //setup rating control
     func setupRatingControl() {
-        ratingControl = STRatingControl(frame: CGRectMake(screenSize.width*0.11, screenSize.height*3.2, screenSize.width, screenSize.height*0.08))
+        ratingControl = STRatingControl(frame: CGRectMake(screenSize.width*0.2, screenSize.height*3.7, screenSize.width*0.6, screenSize.height*0.08))
         ratingControl.delegate = self
         ratingControl.layoutSubviews()
         containerView.addSubview(ratingControl)
@@ -296,15 +391,21 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //this function is created to setup the page control image in the bottom left hand corner.
     func setupPageControll() {
-        pageControl = UIPageControl(frame: CGRectMake(screenSize.width*0.005, screenSize.height*0.87, screenSize.width*0.17, screenSize.height*0.03))
-        //rotate the page control image to allow for a more intuitive visual
-        pageControl.transform = CGAffineTransformMakeRotation(CGFloat(M_PI_2))
-        pageControl.addTarget(self, action: #selector(PostViewController.changePage(_:)), forControlEvents: UIControlEvents.ValueChanged)
-        pageControl.numberOfPages = Int(scrollView.contentSize.height/screenSize.height)
-        pageControl.currentPage = 0
-        self.pageControl.pageIndicatorTintColor = UIColor.grayColor()
-        self.pageControl.currentPageIndicatorTintColor = UIColorFromHex(0x3498db, alpha: 1)
-        self.view.addSubview(pageControl)
+        var pageIndicatorFrame = CGRect(x: screenSize.width*0.08, y: screenSize.height*0.35, width: 15, height: 15)
+        let pageIndOrigin = pageIndicatorFrame.origin.y
+        for pageNum in 0...7 {
+            pageIndicatorFrame.origin.y = pageIndOrigin + CGFloat(pageNum*20)
+            let pageInd = makeIndicatorButton(pageIndicatorFrame, color: UIColorFromHex(0x34495e))
+            if pageNum == 0 {
+                pageInd.backgroundColor = UIColorFromHex(0x34495e)
+            }
+            self.view.addSubview(pageInd)
+            pageNumArray.append(pageInd)
+        }
+        
+
+        
+        
     }
     
     func setupPriceInput() {
@@ -337,16 +438,16 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //function to setup the various labels/titles needed for each page to help direct the user.
     func setupLabels() {
-        let photosLabel = UILabel(frame: CGRectMake(10, screenSize.height*0.2, self.screenSize.width*0.95, 30))
-        photosLabel.text = "Photos"
-//        containerView.addSubview(photosLabel)
-        let nameLabel = UILabel(frame: CGRectMake(10, screenSize.height*1.1, screenSize.width*0.95, screenSize.height*0.2))
-        nameLabel.text = "What is the name of your item?"
-        nameLabel.numberOfLines = 0
-        nameLabel.textColor = UIColor.whiteColor()
-        nameLabel.textAlignment = .Center
-        nameLabel.font = nameLabel.font.fontWithSize(30)
-        containerView.addSubview(nameLabel)
+        let photosLabelFrame = CGRectMake(screenSize.width*0.3, screenSize.height*0.15, screenSize.width*0.4, screenSize.height*0.15)
+        let photosLabel = customLabel(photosLabelFrame, text: "Add Photos", color: UIColorFromHex(0x34495e), fontSize: 20)
+        containerView.addSubview(photosLabel)
+//        let nameLabel = UILabel(frame: CGRectMake(10, screenSize.height*1.1, screenSize.width*0.95, screenSize.height*0.2))
+//        nameLabel.text = "What is the name of your item?"
+//        nameLabel.numberOfLines = 0
+//        nameLabel.textColor = UIColor.whiteColor()
+//        nameLabel.textAlignment = .Center
+//        nameLabel.font = nameLabel.font.fontWithSize(30)
+//        containerView.addSubview(nameLabel)
         let categoriesLabel = UILabel(frame: CGRectMake(10, screenSize.height*2.2, self.screenSize.width*0.95, 30))
         categoriesLabel.text = "What category does your item fit into"
         categoriesLabel.textColor = UIColor.whiteColor()
@@ -412,7 +513,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         
         // Change the indicator
         pageNum = Int(currentPage)
-        self.pageControl.currentPage = pageNum
         
         //go through the possibilties of what the current page could be
         for y in 0...7 {
@@ -426,7 +526,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //text field editing delegates
     func textFieldShouldClear(textField: UITextField) -> Bool {
-        if textField.text == "Name" {
+        if textField.text == "Item Name" {
             return true
         } else {
             return false
@@ -435,7 +535,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func textFieldDidEndEditing(textField: UITextField) {
         if textField.text == "" {
-            textField.text = "Name"
+            textField.text = "Item Name"
         }
     }
     
@@ -517,13 +617,20 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     /* TO BE FIXED */
     
     func changePage(sender: AnyObject) -> () {
-        let y = CGFloat(pageControl.currentPage) * scrollView.frame.size.height
+        let y = CGFloat(pageNum) * scrollView.frame.size.height
         scrollView.setContentOffset(CGPointMake(0, y), animated: true)
+        
     }
     
     func nextPage(sender: UIButton) {
-        pageControl.currentPage += 1
-        let y = CGFloat(pageControl.currentPage) * scrollView.frame.size.height
+        pageNum += 1
+        let y = CGFloat(pageNum) * scrollView.frame.size.height
+        scrollView.setContentOffset(CGPointMake(0, y), animated: true)
+    }
+    
+    func prevPage(sender: UIButton) {
+        pageNum -= 1
+        let y = CGFloat(pageNum) * scrollView.frame.size.height
         scrollView.setContentOffset(CGPointMake(0, y), animated: true)
     }
     
@@ -542,7 +649,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             
             //get the category of the item from the picker controller
             let row = categoryPicker.selectedRowInComponent(0)
-            let category = pickerData[row]
+            let category = categoryPickerData[row]
             let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
             
             /******************************************************************/
@@ -607,12 +714,24 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         return 1
     }
     func pickerView(pickerView: UIPickerView, numberOfRowsInComponent component: Int) -> Int {
-        return pickerData.count
+        if pickerView.tag == 1 {
+            return categoryPickerData.count
+        }
+        else {
+            return yearsPickerData.count
+        }
+        
     }
     
     //MARK: Delegates
     func pickerView(pickerView: UIPickerView, titleForRow row: Int, forComponent component: Int) -> String? {
-        return pickerData[row]
+        if pickerView.tag == 1 {
+            return categoryPickerData[row]
+        }
+        else {
+            return yearsPickerData[row]
+        }
+        
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {

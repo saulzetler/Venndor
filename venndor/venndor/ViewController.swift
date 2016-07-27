@@ -8,6 +8,15 @@
 
 extension UIViewController: SWRevealViewControllerDelegate {
     
+    func customLabel(frame: CGRect, text: String, color: UIColor, fontSize: CGFloat) -> UILabel {
+        let label = UILabel(frame: frame)
+        label.text = text
+        label.textColor = color
+        label.font = UIFont(name: "Avenir", size: fontSize)
+        label.textAlignment = .Center
+        return label
+    }
+    
     func makeImageButton(imageName: String, frame: CGRect, target: Selector, tinted: Bool, circle: Bool, backgroundColor: UInt32, backgroundAlpha: Double) -> UIButton {
         
         let button = UIButton(frame: frame)
@@ -33,6 +42,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
         let button = UIButton(frame: frame)
         button.addTarget(self, action: target, forControlEvents: .TouchUpInside)
         button.setTitle(text, forState: .Normal)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: 12)
         button.setTitleColor(textColor, forState: UIControlState.Normal)
         if tinted == true {
             button.setTitleColor(UIColorFromHex(0x3498db, alpha: 1), forState: UIControlState.Selected)
@@ -41,6 +51,14 @@ extension UIViewController: SWRevealViewControllerDelegate {
             button.layer.cornerRadius = 0.5 * button.bounds.size.width
         }
         button.backgroundColor = backgroundColor
+        return button
+    }
+    
+    func makeIndicatorButton(frame: CGRect, color: UIColor) -> UIButton {
+        let button = UIButton (frame: frame)
+        button.layer.cornerRadius = 0.5*button.bounds.size.width
+        createBorder(button, color: color, circle: true)
+        button.backgroundColor = UIColor.clearColor()
         return button
     }
     
@@ -109,7 +127,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
         imgView.userInteractionEnabled = true
         imgView.addGestureRecognizer(tapGestureRecognizer)
         imgView.layer.masksToBounds = true
-        imgView.contentMode = .ScaleToFill
+        imgView.contentMode = .ScaleAspectFill
         if boardered {
             createBorder(imgView, color: boarderColor)
         }
@@ -146,7 +164,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
     //me trying to do it
     
     func deactivate() {
-        removeViewIfPresent()
+        removeViewIfPresent(100)
         let deactivateView = UIView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.height*0.1, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height*0.9))
         deactivateView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
         deactivateView.tag = 100
@@ -156,12 +174,12 @@ extension UIViewController: SWRevealViewControllerDelegate {
     }
     
     func reactivate() {
-        removeViewIfPresent()
+        removeViewIfPresent(100)
     }
     
-    func removeViewIfPresent() {
+    func removeViewIfPresent(tag: Int) {
         for view in self.view.subviews {
-            if (view.tag == 100) {
+            if (view.tag == tag) {
                 view.removeFromSuperview()
             }
         }

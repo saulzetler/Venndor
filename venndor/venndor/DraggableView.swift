@@ -209,7 +209,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
                     dispatch_async(dispatch_get_main_queue()) {
                         let temp2 = UIImageView(frame: CGRectMake(0, scrollViewHeight*CGFloat(x),scrollViewWidth, scrollViewHeight))
                         temp2.image = phonto
-                        temp2.contentMode = .ScaleToFill
+                        temp2.contentMode = .ScaleAspectFill
                         self.containerView.addSubview(temp2)
                     }
                 }
