@@ -13,6 +13,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     //declaring screen size for future reference
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var tappedItem: Item!
+    var distSet: Bool!
+    var distText: String!
     
     //declaring the buttons needed for the 2 views
 //    var matchesButton: UIButton!
@@ -35,6 +37,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
         LocalUser.user.mostRecentAction = "Browsed MyMatches"
         sessionStart = NSDate()
         
@@ -46,13 +49,24 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         var index:CGFloat = 0.0
         let yOrigin = screenSize.height * 0.1
         let containerHeight = screenSize.height * 0.27
+        let boughtTitle = CGFloat(40)
         
+        setupScrollView(containerHeight + 10)
+        
+        let boughtLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.08, width: screenSize.width, height: boughtTitle))
+        boughtLabel.text = "Bought Items"
+        boughtLabel.backgroundColor = UIColorFromHex(0x2c3e50)
+        boughtLabel.font = UIFont(name: "Avenir", size: 22)
+        boughtLabel.textColor = UIColor.whiteColor()
+        boughtLabel.textAlignment = .Center
+        self.matchContainerView.addSubview(boughtLabel)
+        distSet = false
         
         //populate the matchContainerView
         for match in LocalUser.matches {
             
             //create the match container view
-            let matchContainer = ItemContainer(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight), width: screenSize.width, height: containerHeight))
+            let matchContainer = ItemContainer(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight) + boughtTitle, width: screenSize.width, height: containerHeight))
             
             let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
             matchContainer.addGestureRecognizer(tap)
@@ -69,6 +83,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     //self.addContainerContent(matchContainer, img: img, match: match)
                     dispatch_async(dispatch_get_main_queue()) {
                         self.addContainerContent(matchContainer, img: img, match: match)
+                        self.distSet = false
                     }
                 }
             }
@@ -77,8 +92,49 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             index += 1
         }
         
+        //matchtitle to distinguis the shit fuck shit
+        let matchTitle = CGFloat(40)
+        let matchLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.09 + (index * containerHeight) + boughtTitle - screenSize.height*0.016, width: screenSize.width, height: matchTitle))
+        matchLabel.text = "Match Items"
+        matchLabel.backgroundColor = UIColorFromHex(0x2c3e50)
+        matchLabel.font = UIFont(name: "Avenir", size: 22)
+        matchLabel.textColor = UIColor.whiteColor()
+        matchLabel.textAlignment = .Center
+        self.matchContainerView.addSubview(matchLabel)
         
-        setupScrollView(containerHeight + 10)
+        //populate the matchContainerView
+        for match in LocalUser.matches {
+            
+            //create the match container view
+            let matchContainer = ItemContainer(frame: CGRect(x: 0, y: screenSize.height * 0.11 + (index * containerHeight) + matchTitle + boughtTitle-screenSize.height*0.018, width: screenSize.width, height: containerHeight))
+            
+            let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
+            matchContainer.addGestureRecognizer(tap)
+            
+            //retrieve the match thumbnail
+            manager.retrieveMatchThumbnail(match) { img, error in
+                guard error == nil else {
+                    print("Error retrieving match images: \(error)")
+                    return
+                }
+                if let img = img {
+                    match.thumbnail = img
+                    matchContainer.match = match
+                    //self.addContainerContent(matchContainer, img: img, match: match)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.addContainerContent(matchContainer, img: img, match: match)
+                        self.distSet = false
+                    }
+                }
+            }
+            
+            matchContainerView.addSubview(matchContainer)
+            index += 1
+        }
+
+        
+        
+        
         addHeaderItems("Your Matches")
         sideMenuGestureSetup()
 //        addGestureRecognizer()
@@ -143,7 +199,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     
 
     func addContainerContent(matchContainer: UIView, img: UIImage, match: Match) {
-        let itemManager = ItemManager()
         
         //create the match photo
         let imgView = createImgView(CGRect(x: 0, y: 0, width: screenSize.width*0.4, height: screenSize.width*0.4), action: #selector(MyMatchesViewController.none(_:)), superView: matchContainer)
@@ -164,16 +219,18 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         matchContainer.addSubview(blueLine)
         
         //create the match info labels
-        let nameLabel = UILabel(frame: CGRect(x: imgWidth+10, y: 5, width: matchContainer.frame.width - imgWidth - 20, height: imgHeight * 0.15))
+        let nameLabel = UILabel(frame: CGRect(x: imgWidth+10, y: 5, width: matchContainer.frame.width - imgWidth - 40, height: imgHeight * 0.15))
         nameLabel.text = match.itemName
         nameLabel.textColor = UIColor.blackColor()
         nameLabel.font = UIFont(name: "Avenir", size: 16)
 //        nameLabel.textAlignment = .Center
         matchContainer.addSubview(nameLabel)
         
-        let distanceLabel = UILabel(frame: CGRect(x: matchContainer.frame.width - 40, y: 5, width:30, height: imgHeight * 0.15))
-        let tempDistance = calculateDistanceFromLocation(match.itemLatitude, longitude: match.itemLongitude, myLocation: LocalUser.myLocation)
-        distanceLabel.text = "\(tempDistance) km"
+        let distanceLabel = UILabel(frame: CGRect(x: matchContainer.frame.width - 45, y: 5, width:45, height: imgHeight * 0.15))
+        calculateDistanceFromLocation(match.itemLatitude, longitude: match.itemLongitude, myLocation: LocalUser.myLocation)
+        while(distSet == false){
+        }
+        distanceLabel.text = "\(self.distText)"
         distanceLabel.font = UIFont(name: "Avenir", size: 10)
 //        distanceLabel.textAlignment = .Center
         matchContainer.addSubview(distanceLabel)
@@ -219,7 +276,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         //set up scroll view frame and create variables for the contentView frame
         scrollView.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
         let contentWidth: CGFloat = scrollView.frame.width
-        let contentHeight = CGFloat(LocalUser.user.matches.count) * containerHeight * CGFloat(1.2)
+        let contentHeight = CGFloat(LocalUser.user.matches.count) * 2 * containerHeight * CGFloat(1.2) + CGFloat(80)
         
         
         scrollView.contentSize = CGSizeMake(contentWidth, contentHeight)
@@ -281,6 +338,56 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     
     func none(sender: UIButton) {
         
+    }
+    func calculateDistanceFromLocation(latitude: Double, longitude: Double, myLocation: CLLocation){
+        
+        let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
+        let itemLatitude = CLLocationDegrees(latitude)
+        let itemLongitude = CLLocationDegrees(longitude)
+        let myLatitude = myLocation.coordinate.latitude
+        let myLongitude = myLocation.coordinate.longitude
+        
+        let origins = "origins=\(myLatitude),\(myLongitude)&"
+        let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
+        let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
+        let url = baseURL+origins+destinations+key
+        
+        let requestURL: NSURL = NSURL(string: url)!
+        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(urlRequest) {
+            (data, response, error) -> Void in
+            
+            let httpResponse = response as! NSHTTPURLResponse
+            let statusCode = httpResponse.statusCode
+            
+            if (statusCode == 200) {
+                print("Everyone is fine, file downloaded successfully.")
+                
+                do {
+                    
+                    
+                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                    if let rows = json["rows"] as? [[String:AnyObject]] {
+                        let first = rows[0]
+                        let elements = first["elements"] as! Array<AnyObject>
+                        let firstElement = elements[0]
+                        if let distDict = firstElement["distance"] as? [String:AnyObject] {
+                            self.distText = String(distDict["text"]!)
+                            self.distSet = true
+                        }
+                        else {
+                            self.distText = "none"
+                            self.distSet = true
+                        }
+                    }
+                } catch {
+                    print("Error with Json: \(error)")
+                }
+                
+            }
+        }
+        task.resume()
     }
 
 //    //control for the gesture to allow swipingleft and right for the menu
