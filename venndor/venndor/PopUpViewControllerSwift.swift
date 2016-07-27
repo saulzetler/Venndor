@@ -14,7 +14,7 @@ class PopUpViewControllerSwift : UIViewController {
     var screenSize = UIScreen.mainScreen().bounds
 
     var matchedItem: Item!
-    var matchedPrice: Double!
+    var matchedPrice: Int!
     var sessionStart: NSDate!
 
     let ovc = OfferViewController()
@@ -45,7 +45,7 @@ class PopUpViewControllerSwift : UIViewController {
         
         //create the match on the server
 
-        let newMatch = Match(itemID: matchedItem.id, itemName: matchedItem.name, itemDescription: matchedItem.details, userID: LocalUser.user.id, sellerID: matchedItem.owner, sellerName: matchedItem.ownerName, matchedPrice: matchedItem.minPrice, itemLongitude: matchedItem.longitude, itemLatitude: matchedItem.latitude, dateMatched: NSDate())
+        let newMatch = Match(itemID: matchedItem.id, itemName: matchedItem.name, itemDescription: matchedItem.details, userID: LocalUser.user.id, sellerID: matchedItem.owner, sellerName: matchedItem.ownerName, matchedPrice: matchedPrice, itemLongitude: matchedItem.longitude, itemLatitude: matchedItem.latitude, dateMatched: NSDate())
        
         MatchesManager.globalManager.createMatch(newMatch) { match, error in
             guard error == nil else {

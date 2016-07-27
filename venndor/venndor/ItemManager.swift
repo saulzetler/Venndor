@@ -144,9 +144,9 @@ struct ItemManager {
         }
         
         //filter out user matches
-        for (_, value) in LocalUser.user.matches {
+        for match in LocalUser.matches {
             
-            ids = ids == nil ? "(_id != \(value))" : "\(ids) and (_id != \(value))"
+            ids = ids == nil ? "(_id != \(match.itemID))" : "\(ids) and (_id != \(match.itemID))"
             
         }
         
