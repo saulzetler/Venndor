@@ -40,6 +40,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         LocalUser.user.mostRecentAction = "Browsed MyMatches"
         sessionStart = NSDate()
+        let matches = LocalUser.matches
         
         self.revealViewController().delegate = self
         
@@ -131,9 +132,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             matchContainerView.addSubview(matchContainer)
             index += 1
         }
-
-        
-        
         
         addHeaderItems("Your Matches")
         sideMenuGestureSetup()
