@@ -616,7 +616,7 @@
 				TargetAttributes = {
 					10ADC9A31D0749700028A999 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = QA24C9EBQB;
+						DevelopmentTeam = 59THX85PFH;
 					};
 					10ADC9BA1D0749700028A999 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -667,9 +667,7 @@
 				E495BB2C1D4903E700CC1EEC /* Star.png in Resources */,
 				E4992DFF1D2C38D200032221 /* go.png in Resources */,
 				E44C153C1D11E0430006EBAD /* Kitchen-50.png in Resources */,
-				E44B388C1D39441100733D96 /* use_current_location.png in Resources */,
 				109452C71D47E6FF00931DA8 /* Home.png in Resources */,
-				E4C0594C1D358E7A00AE51A3 /* Search Filled-100.png in Resources */,
 				E44C151F1D11B9B90006EBAD /* New Product-50.png in Resources */,
 				109452CA1D47E6FF00931DA8 /* More Filled.png in Resources */,
 				106E96251D35896700DBBED0 /* iphone-icon.png in Resources */,
@@ -1061,7 +1059,7 @@
 				);
 				INFOPLIST_FILE = venndor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";
@@ -1088,7 +1086,7 @@
 				);
 				INFOPLIST_FILE = venndor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor.venndor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";

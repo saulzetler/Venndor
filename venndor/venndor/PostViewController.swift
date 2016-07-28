@@ -403,7 +403,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let pageIndOrigin = pageIndicatorFrame.origin.y
         for pageNum in 0...7 {
             pageIndicatorFrame.origin.y = pageIndOrigin + CGFloat(pageNum*20)
-            let pageInd = makeIndicatorButton(pageIndicatorFrame, color: UIColorFromHex(0x34495e))
+            let pageInd = makeIndicatorButton(pageIndicatorFrame, color: UIColorFromHex(0x34495e), target: #selector(PostViewController.indicatorTouched(_:)))
             pageInd.tag = pageNum
             if pageNum == 0 {
                 pageInd.backgroundColor = UIColorFromHex(0x34495e)
@@ -411,9 +411,14 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             self.view.addSubview(pageInd)
             pageNumArray.append(pageInd)
         }
-        
-
-        
+    }
+    
+    func indicatorTouched(sender: UIButton) {
+        let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
+        pageNum = sender.tag
+        let yOffset = CGPointMake(0, pageHeight*CGFloat(pageNum));
+        self.scrollView.setContentOffset(yOffset, animated: true)
+        updateIndicators()
         
     }
     

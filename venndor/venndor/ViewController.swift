@@ -54,9 +54,10 @@ extension UIViewController: SWRevealViewControllerDelegate {
         return button
     }
     
-    func makeIndicatorButton(frame: CGRect, color: UIColor) -> UIButton {
+    func makeIndicatorButton(frame: CGRect, color: UIColor, target: Selector) -> UIButton {
         let button = UIButton (frame: frame)
         button.layer.cornerRadius = 0.5*button.bounds.size.width
+        button.addTarget(self, action: target, forControlEvents: .TouchDown)
         createBorder(button, color: color, circle: true)
         button.backgroundColor = UIColor.clearColor()
         return button
