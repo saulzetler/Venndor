@@ -52,85 +52,114 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         let containerHeight = screenSize.height * 0.27
         let boughtTitle = CGFloat(40)
         
-        setupScrollView(containerHeight + 10)
-        
-        let boughtLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.08, width: screenSize.width, height: boughtTitle))
-        boughtLabel.text = "Bought Items"
-        boughtLabel.backgroundColor = UIColorFromHex(0x2c3e50)
-        boughtLabel.font = UIFont(name: "Avenir", size: 22)
-        boughtLabel.textColor = UIColor.whiteColor()
-        boughtLabel.textAlignment = .Center
-        self.matchContainerView.addSubview(boughtLabel)
-        distSet = false
-        
-        //populate the matchContainerView
-        for match in LocalUser.matches {
+        if LocalUser.matches.count != 0 {
+            setupScrollView(containerHeight + 10)
             
-            //create the match container view
-            let matchContainer = ItemContainer(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight) + boughtTitle, width: screenSize.width, height: containerHeight))
+            let boughtLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.08, width: screenSize.width, height: boughtTitle))
+            boughtLabel.text = "Bought Items"
+            boughtLabel.backgroundColor = UIColorFromHex(0x2c3e50)
+            boughtLabel.font = UIFont(name: "Avenir", size: 22)
+            boughtLabel.textColor = UIColor.whiteColor()
+            boughtLabel.textAlignment = .Center
+            self.matchContainerView.addSubview(boughtLabel)
+            distSet = false
             
-            let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
-            matchContainer.addGestureRecognizer(tap)
-            
-            //retrieve the match thumbnail
-            manager.retrieveMatchThumbnail(match) { img, error in
-                guard error == nil else {
-                    print("Error retrieving match images: \(error)")
-                    return
-                }
-                if let img = img {
-                    match.thumbnail = img
-                    matchContainer.match = match
-                    //self.addContainerContent(matchContainer, img: img, match: match)
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.addContainerContent(matchContainer, img: img, match: match)
-                        self.distSet = false
+            //populate the matchContainerView
+            for match in LocalUser.matches {
+                if match.bought == 1 {
+                    //create the match container view
+                    let matchContainer = ItemContainer(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight) + boughtTitle, width: screenSize.width, height: containerHeight))
+                    
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
+                    matchContainer.addGestureRecognizer(tap)
+                    
+                    //retrieve the match thumbnail
+                    manager.retrieveMatchThumbnail(match) { img, error in
+                        guard error == nil else {
+                            print("Error retrieving match images: \(error)")
+                            return
+                        }
+                        if let img = img {
+                            match.thumbnail = img
+                            matchContainer.match = match
+                            //self.addContainerContent(matchContainer, img: img, match: match)
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.addContainerContent(matchContainer, img: img, match: match)
+                                self.distSet = false
+                            }
+                        }
                     }
+                    
+                    matchContainerView.addSubview(matchContainer)
+                    index += 1
                 }
             }
             
-            matchContainerView.addSubview(matchContainer)
-            index += 1
+            //matchtitle to distinguis the shit fuck shit
+            let matchTitle = CGFloat(40)
+            let matchLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.09 + (index * containerHeight) + boughtTitle - screenSize.height*0.016, width: screenSize.width, height: matchTitle))
+            matchLabel.text = "Match Items"
+            matchLabel.backgroundColor = UIColorFromHex(0x2c3e50)
+            matchLabel.font = UIFont(name: "Avenir", size: 22)
+            matchLabel.textColor = UIColor.whiteColor()
+            matchLabel.textAlignment = .Center
+            self.matchContainerView.addSubview(matchLabel)
+            
+            //populate the matchContainerView
+            for match in LocalUser.matches {
+                if match.bought == 0 {
+                    //create the match container view
+                    let matchContainer = ItemContainer(frame: CGRect(x: 0, y: screenSize.height * 0.11 + (index * containerHeight) + matchTitle + boughtTitle-screenSize.height*0.018, width: screenSize.width, height: containerHeight))
+                    
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
+                    matchContainer.addGestureRecognizer(tap)
+                    
+                    //retrieve the match thumbnail
+                    manager.retrieveMatchThumbnail(match) { img, error in
+                        guard error == nil else {
+                            print("Error retrieving match images: \(error)")
+                            return
+                        }
+                        if let img = img {
+                            match.thumbnail = img
+                            matchContainer.match = match
+                            //self.addContainerContent(matchContainer, img: img, match: match)
+                            dispatch_async(dispatch_get_main_queue()) {
+                                self.addContainerContent(matchContainer, img: img, match: match)
+                                self.distSet = false
+                            }
+                        }
+                    }
+                    
+                    matchContainerView.addSubview(matchContainer)
+                    index += 1
+                }
+            }
         }
-        
-        //matchtitle to distinguis the shit fuck shit
-        let matchTitle = CGFloat(40)
-        let matchLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.09 + (index * containerHeight) + boughtTitle - screenSize.height*0.016, width: screenSize.width, height: matchTitle))
-        matchLabel.text = "Match Items"
-        matchLabel.backgroundColor = UIColorFromHex(0x2c3e50)
-        matchLabel.font = UIFont(name: "Avenir", size: 22)
-        matchLabel.textColor = UIColor.whiteColor()
-        matchLabel.textAlignment = .Center
-        self.matchContainerView.addSubview(matchLabel)
-        
-        //populate the matchContainerView
-        for match in LocalUser.matches {
-            
-            //create the match container view
-            let matchContainer = ItemContainer(frame: CGRect(x: 0, y: screenSize.height * 0.11 + (index * containerHeight) + matchTitle + boughtTitle-screenSize.height*0.018, width: screenSize.width, height: containerHeight))
-            
-            let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
-            matchContainer.addGestureRecognizer(tap)
-            
-            //retrieve the match thumbnail
-            manager.retrieveMatchThumbnail(match) { img, error in
-                guard error == nil else {
-                    print("Error retrieving match images: \(error)")
-                    return
-                }
-                if let img = img {
-                    match.thumbnail = img
-                    matchContainer.match = match
-                    //self.addContainerContent(matchContainer, img: img, match: match)
-                    dispatch_async(dispatch_get_main_queue()) {
-                        self.addContainerContent(matchContainer, img: img, match: match)
-                        self.distSet = false
-                    }
-                }
-            }
-            
-            matchContainerView.addSubview(matchContainer)
-            index += 1
+        else {
+            let emptyView = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height-screenSize.height*0.1))
+            let emptyLogo = UIImageView(frame: CGRect(x: screenSize.width*0.35, y: screenSize.height*0.15, width: screenSize.width*0.3, height: screenSize.width*0.3))
+            emptyLogo.image = UIImage(named: "iphone-icon.png")
+//            emptyLogo.contentMode = .ScaleAspectFit
+            emptyLogo.layer.cornerRadius = emptyLogo.bounds.size.width * 0.5
+            emptyLogo.layer.masksToBounds = true
+            emptyView.addSubview(emptyLogo)
+            let emptyLabel = UILabel(frame: CGRect(x: screenSize.width*0.05, y: screenSize.height*0.2, width: screenSize.width*0.9, height: screenSize.height*0.3))
+            emptyLabel.text = "Nothing here yet!"
+            emptyLabel.font = UIFont(name: "Avenir", size: 26)
+            emptyLabel.adjustsFontSizeToFitWidth = true
+            emptyLabel.textColor = UIColorFromHex(0x2c3e50)
+            emptyLabel.textAlignment = .Center
+            emptyView.addSubview(emptyLabel)
+            let emptyLabel2 = UILabel(frame: CGRect(x: screenSize.width*0.05, y: screenSize.height*0.25, width: screenSize.width*0.9, height: screenSize.height*0.3))
+            emptyLabel2.text = "Start browsing and start matching!"
+            emptyLabel2.font = UIFont(name: "Avenir", size: 22)
+            emptyLabel2.adjustsFontSizeToFitWidth = true
+            emptyLabel2.textColor = UIColorFromHex(0x2c3e50)
+            emptyLabel2.textAlignment = .Center
+            emptyView.addSubview(emptyLabel2)
+
+            self.view.addSubview(emptyView)
         }
         
         addHeaderItems("Your Matches")
@@ -274,7 +303,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         //set up scroll view frame and create variables for the contentView frame
         scrollView.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
         let contentWidth: CGFloat = scrollView.frame.width
-        let contentHeight = CGFloat(LocalUser.user.matches.count) * 2 * containerHeight * CGFloat(1.2) + CGFloat(80)
+        let contentHeight = CGFloat(LocalUser.user.matches.count) * containerHeight * CGFloat(1.2) + CGFloat(80)
         
         
         scrollView.contentSize = CGSizeMake(contentWidth, contentHeight)
