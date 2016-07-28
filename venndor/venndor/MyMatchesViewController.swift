@@ -40,6 +40,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         LocalUser.user.mostRecentAction = "Browsed MyMatches"
         sessionStart = NSDate()
+        let matches = LocalUser.matches
         
         self.revealViewController().delegate = self
         
@@ -160,9 +161,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
 
             self.view.addSubview(emptyView)
         }
-
-        
-        
         
         addHeaderItems("Your Matches")
         sideMenuGestureSetup()
@@ -176,8 +174,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     
     func toggleItemInfo(sender: UITapGestureRecognizer) {
         let containerView = sender.view as! ItemContainer
-        let manager = ItemManager()
-        manager.retrieveItemById(containerView.match.itemID) { item, error in
+        ItemManager.globalManager.retrieveItemById(containerView.match.itemID) { item, error in
             guard error == nil else {
                 print("error pulling item data from tapped match: \(error)")
                 return
@@ -185,46 +182,13 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             if let item = item {
                 self.tappedItem = item
                 dispatch_async(dispatch_get_main_queue()) {
-                   self.performSegueWithIdentifier("showItemInfo", sender: self)
+                    let itemInfoController = ItemInfoViewController()
+                    itemInfoController.item = item
+                    self.presentViewController(itemInfoController, animated: true, completion: nil)
                 }
             }
         }
     }
-    
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showItemInfo" {
-            let ivc = segue.destinationViewController as! ItemInfoViewController
-            ivc.item = tappedItem
-        }
-    }
-    
-//    func setupButtons() {
-//        //setting up the buttons needed to control the 2 pages within the controller, NEEDS REFACTORING WITH POST
-//        let buttonBar = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: 35))
-//        buttonBar.backgroundColor = UIColor.whiteColor()
-//        
-//        matchesBar = UIView(frame: CGRect(x: 0, y: 32, width: screenSize.width/2, height: 3))
-//        boughtBar = UIView(frame: CGRect(x: screenSize.width/2, y: 32, width: screenSize.width/2, height: 3))
-//        
-//        
-//        //setup the buttons on the button bar
-//        let boughtButtonFrame = CGRectMake(screenSize.width/2, 0, screenSize.width/2, 32)
-//        boughtButton = makeTextButton("Bought", frame: boughtButtonFrame, target: #selector(MyMatchesViewController.boughtPressed(_:)))
-//        
-//        let matchesButtonFrame = CGRectMake(0, 0, screenSize.width/2, 32)
-//        matchesButton = makeTextButton("Matches", frame: matchesButtonFrame, target: #selector(MyMatchesViewController.matchesPressed(_:)))
-//        matchesButton.selected = true
-//        matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
-//        
-//        //set up the subviews for the bar and add it to the master view hierarchy
-//        buttonBar.addSubview(matchesBar)
-//        buttonBar.addSubview(boughtBar)
-//        buttonBar.addSubview(matchesButton)
-//        buttonBar.addSubview(boughtButton)
-//        
-//        self.view.addSubview(buttonBar)
-//        self.view.bringSubviewToFront(buttonBar)
-//    }
     
 
     func addContainerContent(matchContainer: UIView, img: UIImage, match: Match) {

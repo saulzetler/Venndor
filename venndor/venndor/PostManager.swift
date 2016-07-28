@@ -39,6 +39,10 @@ class PostManager: NSObject {
     
     func retrieveUserPosts(user: User, completionHandler: ([Post]?, ErrorType?) -> () ) {
         let filterString = createFilterString(user.posts)
+        if filterString == "" {
+            completionHandler([Post](), nil)
+            return
+        }
         RESTEngine.sharedEngine.getPostsFromServer(nil, filter: filterString, offset: nil, fields: nil,
             success: { response in
                 if let response = response, postsData = response["resource"] as? NSArray {
@@ -84,7 +88,7 @@ class PostManager: NSObject {
         var filterString = ""
         var index = 0
         for (key, _) in posts {
-            filterString = index == 0 ? "(_id = \(key)" : "\(filterString) or (_id = \(key))"
+            filterString = index == 0 ? "(_id = \(key))" : "\(filterString) or (_id = \(key))"
             index += 1
         }
         return filterString
