@@ -54,7 +54,7 @@ class SideMenuController: UIViewController {
         
         
         setupButtons()
-        let sellButton = makeTextButton("SELL", frame: CGRect(x: screenSize.width*0.03, y: screenSize.height*0.8, width: screenSize.width*0.54, height: screenSize.height*0.18), target: #selector(SideMenuController.sellPage(_:)), circle: false, textColor: UIColorFromHex(0x1abc9c), tinted: false, backgroundColor: UIColorFromHex(0x2c3e50
+        let sellButton = makeTextButton("SELL", frame: CGRect(x: screenSize.width*0.03, y: screenSize.height*0.8, width: screenSize.width*0.54, height: screenSize.height*0.18), target: #selector(SideMenuController.sellPage(_:)), circle: false, textColor: UIColorFromHex(0xFFFFFF), tinted: false, backgroundColor: UIColorFromHex(0x1abc9c
 , alpha: 1))
         sellButton.titleLabel?.font = UIFont(name: "Avenir", size: 42)
         sellButton.layer.cornerRadius = 10
