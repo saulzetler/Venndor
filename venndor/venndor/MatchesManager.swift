@@ -46,7 +46,6 @@ class MatchesManager: NSObject {
             completionHandler([Match](), nil)
             return
         }
-        
         RESTEngine.sharedEngine.getMatchesFromServer(nil, filter: filterString, offset: nil, fields: nil,
             success: { response in
                 if let response = response, matchesData = response["resource"] as? NSArray {

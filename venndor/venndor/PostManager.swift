@@ -43,7 +43,6 @@ class PostManager: NSObject {
             completionHandler([Post](), nil)
             return
         }
-
         RESTEngine.sharedEngine.getPostsFromServer(nil, filter: filterString, offset: nil, fields: nil,
             success: { response in
                 if let response = response, postsData = response["resource"] as? NSArray {
