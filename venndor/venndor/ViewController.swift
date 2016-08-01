@@ -38,11 +38,11 @@ extension UIViewController: SWRevealViewControllerDelegate {
         return button
     }
     
-    func makeTextButton(text: String, frame: CGRect, target: Selector, circle: Bool = false, textColor: UIColor = UIColor.blackColor(), tinted: Bool = true, backgroundColor: UIColor = UIColor.clearColor()) -> UIButton {
+    func makeTextButton(text: String, frame: CGRect, target: Selector, circle: Bool = false, textColor: UIColor = UIColor.blackColor(), tinted: Bool = true, backgroundColor: UIColor = UIColor.clearColor(), textSize: CGFloat = 12) -> UIButton {
         let button = UIButton(frame: frame)
         button.addTarget(self, action: target, forControlEvents: .TouchUpInside)
         button.setTitle(text, forState: .Normal)
-        button.titleLabel?.font = UIFont(name: "Avenir", size: 12)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: textSize)
         button.setTitleColor(textColor, forState: UIControlState.Normal)
         if tinted == true {
             button.setTitleColor(UIColorFromHex(0x3498db, alpha: 1), forState: UIControlState.Selected)
