@@ -101,7 +101,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         //prepare the reveal view controller to allow swipping and side menus.
         if revealViewController() != nil {
-            revealViewController().rightViewRevealWidth = screenSize.width*0.3
+            revealViewController().rightViewRevealWidth = screenSize.width*0.5
             revealViewController().rearViewRevealWidth = screenSize.width*0.6
             self.view.addGestureRecognizer(revealViewController().panGestureRecognizer())
         }

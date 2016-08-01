@@ -110,7 +110,7 @@ final class RESTEngine {
         callApiWithPath(path, method: "GET", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
     
-    func getPostsFromServer(count: Int?, filter: String?, offset: Int?, fields: [String]?, success: SuccessClosure, failure: ErrorClosure) {
+    func getPostsFromServer(count: String?, filter: String?, offset: Int?, fields: [String]?, success: SuccessClosure, failure: ErrorClosure) {
         var queryParams = [String:AnyObject]()
         
         if let count = count {

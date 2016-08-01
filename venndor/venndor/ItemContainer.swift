@@ -10,5 +10,6 @@ import UIKit
 
 class ItemContainer: UIView {
     var match: Match!
+    var post: Post!
     var item: Item! 
 }
