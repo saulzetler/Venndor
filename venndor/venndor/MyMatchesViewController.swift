@@ -40,11 +40,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         LocalUser.user.mostRecentAction = "Browsed MyMatches"
         sessionStart = NSDate()
-        let matches = LocalUser.matches
         
         self.revealViewController().delegate = self
-        
-        let manager = MatchesManager()
         
         //set up prelimenary variables to make for-loop more readable
         var index:CGFloat = 0.0
@@ -74,7 +71,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     matchContainer.addGestureRecognizer(tap)
                     
                     //retrieve the match thumbnail
-                    manager.retrieveMatchThumbnail(match) { img, error in
+                    MatchesManager.globalManager.retrieveMatchThumbnail(match) { img, error in
                         guard error == nil else {
                             print("Error retrieving match images: \(error)")
                             return
@@ -115,7 +112,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     matchContainer.addGestureRecognizer(tap)
                     
                     //retrieve the match thumbnail
-                    manager.retrieveMatchThumbnail(match) { img, error in
+                    MatchesManager.globalManager.retrieveMatchThumbnail(match) { img, error in
                         guard error == nil else {
                             print("Error retrieving match images: \(error)")
                             return

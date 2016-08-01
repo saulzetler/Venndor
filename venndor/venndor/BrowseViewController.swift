@@ -23,7 +23,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var loadedInfos: [DraggableView]!
 
     //variables for miniMatches
-    var miniMatchContainer = [UIImageView]()
     var tappedItem: Item!
     
     //declare the current category so we know what cards we need to filter
@@ -189,11 +188,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         let scalar:Double = 4/19
         let contentViewDimension = contentScroll.frame.width * CGFloat(scalar)
         let contentScrollWidth = CGFloat(LocalUser.matches.count) * (contentViewDimension + CGFloat(12)) - CGFloat(12)
-        let matchManager = MatchesManager()
         
         for index in 0..<LocalUser.matches.count {
             let match = LocalUser.matches[index]
-            matchManager.retrieveMatchThumbnail(match) { img, error in
+            MatchesManager.globalManager.retrieveMatchThumbnail(match) { img, error in
                 
                 if let img = img {
                     
@@ -203,9 +201,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                     let contentView = self.makeMiniContentView(contentFrame, image: img, matchedPrice: match.matchedPrice)
                     contentView.match = match
                     
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(BrowseViewController.toggleItemInfo(_:)))
-                    contentView.addGestureRecognizer(tap)
-                                        
                     //update the contentScrollView
                     dispatch_async(dispatch_get_main_queue()) {
                         
@@ -222,24 +217,23 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                
             }
         }
-
     }
     
     func toggleItemInfo(sender: UITapGestureRecognizer) {
         let container = sender.view  as! ItemContainer
-        let manager = ItemManager()
         print("MiniMatch Tapped!")
         
         let match = container.match
-        manager.retrieveItemById(match.itemID) { item, error in
+        ItemManager.globalManager.retrieveItemById(match.itemID) { item, error in
             guard error == nil else {
                 print("Error pulling item from server in miniMatches: \(error)")
                 return
             }
                 
             if let item = item {
-                self.tappedItem = item
-                self.performSegueWithIdentifier("showItemInfo", sender: self)
+                let infoViewController = ItemInfoViewController()
+                infoViewController.item = item
+                self.presentViewController(infoViewController, animated: true, completion: nil)
             }
         }
     }
@@ -280,7 +274,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         imgView.image = image
         imgView.userInteractionEnabled = true
         
-        createBorder(imgView)
+        let tap = UITapGestureRecognizer(target: self, action: #selector(BrowseViewController.toggleItemInfo(_:)))
+        imgView.addGestureRecognizer(tap)
+
         containerView.addSubview(imgView)
         return containerView
     }

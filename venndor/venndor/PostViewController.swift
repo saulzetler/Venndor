@@ -53,12 +53,14 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        print("PostViewController end: \(NSDate())")
         TimeManager.globalManager.setSessionDuration(sessionStart, controller: "PostViewController")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         sessionStart = NSDate()
-        TimeManager.timeStamp = NSDate()
+        print("PostViewController start: \(sessionStart)")
+
         setupCategoryPickerView()
         setupYearsPickerView()
         setupItemName()
@@ -738,26 +740,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
         //        myLabel.text = pickerData[row]
     }
-    
-//    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
-//        var pickerLabel = view as! UILabel!
-//        if view == nil {  //if no label there yet
-//            pickerLabel = UILabel()
-//        }
-//        let titleData: String
-//        if pickerView.tag == 1 {
-//            titleData = categoryPickerData[row]
-//        }
-//        else {
-//            titleData = yearsPickerData[row]
-//        }
-//        
-//        let myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Avenir", size: 2)!,NSForegroundColorAttributeName:UIColorFromHex(0x34495e)])
-//        pickerLabel!.attributedText = myTitle
-//        pickerLabel!.textAlignment = .Center
-//        return pickerLabel
-//        
-//    }
     
     
     //deactivation methods
