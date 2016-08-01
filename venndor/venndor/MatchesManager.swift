@@ -41,6 +41,12 @@ class MatchesManager: NSObject {
     
     func retrieveUserMatches(user: User, completionHandler: ([Match]?, ErrorType?) -> () ){
         let filterString = createFilterString(user.matches)
+        
+        if filterString == "" {
+            completionHandler([Match](), nil)
+            return
+        }
+        
         RESTEngine.sharedEngine.getMatchesFromServer(nil, filter: filterString, offset: nil, fields: nil,
             success: { response in
                 if let response = response, matchesData = response["resource"] as? NSArray {

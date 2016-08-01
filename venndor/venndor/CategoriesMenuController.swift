@@ -15,6 +15,8 @@ class CategoriesMenuController: UITableViewController {
     //link the table and buttons
     @IBOutlet var table: UITableView!
     
+    @IBOutlet weak var titleCell: UIView!
+    
     @IBOutlet weak var allCell: UITableViewCell!
     
     @IBOutlet weak var furnitureCell: UITableViewCell!
@@ -45,7 +47,7 @@ class CategoriesMenuController: UITableViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         self.tableView.separatorStyle = UITableViewCellSeparatorStyle.None
-        self.view.backgroundColor = UIColorFromHex(0x2c3e50)
+        self.view.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 1)
         
         setupButtons()
         setupCells()
@@ -53,6 +55,18 @@ class CategoriesMenuController: UITableViewController {
     }
     //setup the cells for the menu
     func setupCells() {
+        titleCell.frame = CGRect(x: screenSize.width*0.7, y: 0, width: screenSize.width*0.3, height: screenSize.height*0.1)
+        titleCell.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 1)
+        let title = UILabel(frame: CGRect(x: screenSize.width*0.27, y: -10, width: titleCell.frame.width, height: screenSize.height*0.1))
+        title.text = "Browse By..."
+        title.textAlignment = .Center
+        title.textColor = UIColor.whiteColor()
+        titleCell.addSubview(title)
+        
+        let whiteLine = UIView(frame: CGRectMake(0, 40, screenSize.width, 1))
+        whiteLine.backgroundColor = UIColor.whiteColor()
+        titleCell.addSubview(whiteLine)
+        
         allCell.selectionStyle = UITableViewCellSelectionStyle.None
         furnitureCell.selectionStyle = UITableViewCellSelectionStyle.None
         householdCell.selectionStyle = UITableViewCellSelectionStyle.None
@@ -78,51 +92,72 @@ class CategoriesMenuController: UITableViewController {
         } else {
             otherButton.selected = true
         }
-        allCell.backgroundColor = UIColorFromHex(0x2c3e50)
-        furnitureCell.backgroundColor = UIColorFromHex(0x2c3e50)
-        householdCell.backgroundColor = UIColorFromHex(0x2c3e50)
-        kitchenCell.backgroundColor = UIColorFromHex(0x2c3e50)
-        electronicsCell.backgroundColor = UIColorFromHex(0x2c3e50)
-        booksCell.backgroundColor = UIColorFromHex(0x2c3e50)
-        clothingCell.backgroundColor = UIColorFromHex(0x2c3e50)
-        otherCell.backgroundColor = UIColorFromHex(0x2c3e50)
+        allCell.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 0.8)
+        furnitureCell.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 0.8)
+        householdCell.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 0.8)
+        kitchenCell.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 0.8)
+        electronicsCell.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 0.8)
+        booksCell.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 0.8)
+        clothingCell.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 0.8)
+        otherCell.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 0.8)
     }
     
     //create the buttons for the menu
     func setupButtons() {
         //declare the button sizes for the refactored methods to create the buttons
-        let buttonSize = CGRect(x: screenSize.width * 0.25, y: screenSize.height * 0.007, width: screenSize.width * 0.15, height: screenSize.width * 0.15)
+        let buttonSize = CGRect(x: allCell.frame.width*0.165, y: screenSize.height * 0.007, width: screenSize.width * 0.3, height: screenSize.width * 0.15)
         
-        allButton = makeImageButton("Home.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        allButton = makeTextButton("All", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), circle: false, textColor: UIColorFromHex(0xFFFFFF), tinted: true, backgroundColor: UIColorFromHex(0x2c3e50, alpha: 0.8))
+//        allButton = makeImageButton("Home.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         allButton.tag = 1
+        allButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
+//        allButton.titleLabel?.textAlignment = .Center
         allCell.addSubview(allButton)
         
-        furnitureButton = makeImageButton("Sofa.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        furnitureButton = makeTextButton("Furniture", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), circle: false, textColor: UIColorFromHex(0xFFFFFF), tinted: true, backgroundColor: UIColorFromHex(0x2c3e50, alpha: 0.8))
+//        furnitureButton = makeImageButton("Sofa.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         furnitureButton.tag = 2
+        furnitureButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
         furnitureCell.addSubview(furnitureButton)
         
-        householdButton = makeImageButton("Lamp Filled.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        householdButton = makeTextButton("Household", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), circle: false, textColor: UIColorFromHex(0xFFFFFF), tinted: true, backgroundColor: UIColorFromHex(0x2c3e50, alpha: 0.8))
+//        householdButton = makeImageButton("Lamp Filled.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         householdButton.tag = 3
+        householdButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
         householdCell.addSubview(householdButton)
         
-        kitchenButton = makeImageButton("Kitchen Filled.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        kitchenButton = makeTextButton("Kitchen", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), circle: false, textColor: UIColorFromHex(0xFFFFFF), tinted: true, backgroundColor: UIColorFromHex(0x2c3e50, alpha: 0.8))
+//        kitchenButton = makeImageButton("Kitchen Filled.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         kitchenButton.tag = 4
+        kitchenButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
         kitchenCell.addSubview(kitchenButton)
         
-        electronicsButton = makeImageButton("Computer Filled.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        electronicsButton = makeTextButton("Electronics", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), circle: false, textColor: UIColorFromHex(0xFFFFFF), tinted: true, backgroundColor: UIColorFromHex(0x2c3e50, alpha: 0.8))
+//        electronicsButton = makeImageButton("Computer Filled.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         electronicsButton.tag = 5
+
+        electronicsButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
         electronicsCell.addSubview(electronicsButton)
         
-        booksButton = makeImageButton("Generic Book File Type Filled.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        booksButton = makeTextButton("Books", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), circle: false, textColor: UIColorFromHex(0xFFFFFF), tinted: true, backgroundColor: UIColorFromHex(0x2c3e50, alpha: 0.8))
+//        booksButton = makeImageButton("Generic Book File Type Filled.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         booksButton.tag = 6
+
+        booksButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
         booksCell.addSubview(booksButton)
         
-        clothingButton = makeImageButton("Clothes Filled.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        clothingButton = makeTextButton("Clothing", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), circle: false, textColor: UIColorFromHex(0xFFFFFF), tinted: true, backgroundColor: UIColorFromHex(0x2c3e50, alpha: 0.8))
+//        clothingButton = makeImageButton("Clothes Filled.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         clothingButton.tag = 7
+
+        clothingButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
         clothingCell.addSubview(clothingButton)
         
-        otherButton = makeImageButton("More Filled.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+        otherButton = makeTextButton("Other", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), circle: false, textColor: UIColorFromHex(0xFFFFFF), tinted: true, backgroundColor: UIColorFromHex(0x2c3e50, alpha: 0.8))
+//        otherButton = makeImageButton("More Filled.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         otherButton.tag = 8
+
+        otherButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
         otherCell.addSubview(otherButton)
         
     }

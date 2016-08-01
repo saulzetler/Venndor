@@ -45,6 +45,7 @@ class Match: NSObject {
         self.id = json["_id"] as? String
         self.itemID = json["itemID"] as! String
         self.itemName = json["itemName"] as! String
+        self.itemDescription = json["itemDescription"] as! String
         self.userID = json["userID"] as! String
         self.sellerID = json["sellerID"] as! String
         self.sellerName = json["sellerName"] as! String

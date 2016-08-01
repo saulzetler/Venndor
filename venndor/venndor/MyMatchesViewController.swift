@@ -49,11 +49,26 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         var index:CGFloat = 0.0
         let yOrigin = screenSize.height * 0.1
         let containerHeight = screenSize.height * 0.27
-        let boughtTitle = CGFloat(40)
+        var boughtTitle = CGFloat(40)
+        var matchTitle = CGFloat(40)
         
         if LocalUser.matches.count != 0 {
             setupScrollView(containerHeight + 10)
-            
+            var tempBought = false
+            var tempMatch = false
+            for match in LocalUser.matches {
+                if match.bought == 1 {
+                    tempBought = true
+                } else if match.bought == 0 {
+                    tempMatch = true
+                }
+            }
+            if tempBought == false {
+                boughtTitle = 0
+            }
+            if tempMatch == false {
+                matchTitle = 0
+            }
             let boughtLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.08, width: screenSize.width, height: boughtTitle))
             boughtLabel.text = "Bought Items"
             boughtLabel.backgroundColor = UIColorFromHex(0x2c3e50)
@@ -95,7 +110,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             }
             
             //matchtitle to distinguis the shit fuck shit
-            let matchTitle = CGFloat(40)
             let matchLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.09 + (index * containerHeight) + boughtTitle - screenSize.height*0.016, width: screenSize.width, height: matchTitle))
             matchLabel.text = "Match Items"
             matchLabel.backgroundColor = UIColorFromHex(0x2c3e50)
