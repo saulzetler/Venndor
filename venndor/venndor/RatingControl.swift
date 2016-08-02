@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol RatingControlDelegate {
+    func ratingSelected(control: RatingControl, rating: Int)
+}
+
 class RatingControl: UIView {
+    
+    var delegate : RatingControlDelegate?
     
     var buttonArray: [UIButton]!
     var rating: Int!
@@ -48,7 +54,9 @@ class RatingControl: UIView {
             rating = sender.tag
         }
         
-        print(rating)
+        delegate?.ratingSelected(self, rating: self.rating)
+        
+//        print(rating)
         
         for button in buttonArray {
             if button.tag <= rating {

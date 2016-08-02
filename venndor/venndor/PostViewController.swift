@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 //class to control the post/sell page in the application requires many delegates
-class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ImagePickerDelegate, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
+class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ImagePickerDelegate, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, RatingControlDelegate {
     
     //declare the needed variables for the page to work.
     
@@ -39,6 +39,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var previewCategory: UIButton!
     var previewYears: UIButton!
     var previewCondition: UIButton!
+    var previewDescription: UILabel!
     
     var postButton: UIButton!
     var condition: Int!
@@ -84,10 +85,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setPreviewItemName()
         setCategoryPreview()
         setYearsPreview()
+        setDescriptionPreview()
         hideKeyboardWhenTappedAround()
         self.revealViewController().delegate = self
         filledImagesArray = []
         previewImageViewArray = []
+        self.ratingControl.delegate = self
     }
     
     //setup functions
@@ -449,11 +452,24 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         priceField.returnKeyType = .Done
         priceField.keyboardType = .NumberPad
         
+        //Add done button to numeric pad keyboard
+        let toolbarDone = UIToolbar.init()
+        toolbarDone.sizeToFit()
+        let barBtnDone = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.Done,
+                                              target: self, action: #selector(PostViewController.doneButtonClicked(_:)))
+        
+        toolbarDone.items = [barBtnDone] // You can even add cancel button too
+        priceField.inputAccessoryView = toolbarDone
+        
         let dollarSignFrame = CGRectMake(0, 0, priceField.frame.width*0.2, priceField.frame.height)
         let dollarSign = customLabel(dollarSignFrame, text: "$", color: UIColorFromHex(0x34495e), fontSize: 50)
         priceField.addSubview(dollarSign)
         
         containerView.addSubview(priceField)
+    }
+    
+    func doneButtonClicked(sender: AnyObject) {
+        priceField.resignFirstResponder()
     }
     
     //function to setup the various labels/titles needed for each page to help direct the user.
@@ -469,8 +485,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         containerView.addSubview(itemIs)
         let yearsOld = customLabel(CGRectMake(screenSize.width*0.6, screenSize.height*3.357, self.screenSize.width*0.3, screenSize.height*0.08), text: "years old", color: UIColorFromHex(0x34495e), fontSize: 20)
         containerView.addSubview(yearsOld)
-        let locationLabel = customLabel(CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), text: "Location", color: UIColorFromHex(0x34495e), fontSize: 30)
-        containerView.addSubview(locationLabel)
+//        let locationLabel = customLabel(CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), text: "Location", color: UIColorFromHex(0x34495e), fontSize: 30)
+//        containerView.addSubview(locationLabel)
+        
+        let locationButton = makeTextButton("Location", frame: CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), target: #selector(PostViewController.searchClicked(_:)), textColor: UIColorFromHex(0x34495e), textSize: 30)
+        containerView.addSubview(locationButton)
         
         let priceLabelFrame = CGRectMake(screenSize.width*0.15, screenSize.height*6.3, self.screenSize.width*0.7, screenSize.height*0.1)
         let priceLabel = customLabel(priceLabelFrame, text: "I want to sell this for", color: UIColorFromHex(0x34495e), fontSize: 25)
@@ -567,7 +586,15 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         textView.resignFirstResponder()
         if textView.text == "" {
             textView.text = "Additional Info"
+            previewDescription.text = "Description"
+            previewDescription.sizeToFit()
+
         }
+        else {
+            previewDescription.text = textView.text
+            previewDescription.sizeToFit()
+        }
+        
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -614,6 +641,43 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func updateYearsPreview(years: String) {
         previewYears.setTitle("\(years) years old", forState: .Normal)
+    }
+    
+    func setConditionPreview() {
+        
+        let size = screenSize.width*0.1
+        let container = UIView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*7.5, size*5, size))
+        container.tag = 20
+        containerView.addSubview(container)
+        var ratingFrame = CGRectMake(0, 0, size, size)
+        for rating in 0...ratingControl.rating {
+            let star = makeImageButton("Star_Filled.png", frame: ratingFrame, target: #selector(PostViewController.changePage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+            star.tag = 3
+            ratingFrame.origin.x = CGFloat(rating) * size
+            container.addSubview(star)
+        }
+    }
+    
+    func ratingSelected(control: RatingControl, rating: Int) {
+        for view in containerView.subviews {
+            if view.tag == 20 {
+                view.removeFromSuperview()
+            }
+        }
+        setConditionPreview()
+//        print("rating selected")
+    }
+    
+    func setDescriptionPreview() {
+        let descriptionPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.55, screenSize.width*0.8, screenSize.height*0.1)
+        let descriptionContainer = UIView(frame: descriptionPreviewFrame)
+        
+        previewDescription = customLabel(descriptionPreviewFrame, text: "Description", color: UIColorFromHex(0x34495e), fontSize: 12)
+        previewDescription.tag = 4
+        previewDescription.numberOfLines = 3
+        previewDescription.sizeToFit()
+        descriptionContainer.addSubview(previewDescription)
+        containerView.addSubview(descriptionContainer)
     }
     
     //IMAGE SELECTION METHODS
@@ -691,12 +755,15 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         pageNum = sender.tag
         let y = CGFloat(pageNum) * scrollView.frame.size.height
         scrollView.setContentOffset(CGPointMake(0, y), animated: true)
+        updateIndicators()
         
     }
     
-    func goToCurrentPage() {
+    func goToPage(page: Int) {
+        pageNum = page
         let y = CGFloat(pageNum) * scrollView.frame.size.height
         scrollView.setContentOffset(CGPointMake(0, y), animated: true)
+        updateIndicators()
     }
     
     func nextPage(sender: UIButton) {
@@ -715,6 +782,29 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //function to controll when the user is finished and decides to post
     func postItem(sender: UIButton) {
+        
+        if filledImagesArray.count == 0 {
+            let popup = PopoverViewController()
+            popup.showInView(self.view, message: "Please select at least one image")
+            goToPage(0)
+            return
+        }
+        
+        if itemName.text == "Item Name" {
+            let popup = PopoverViewController()
+            popup.showInView(self.view, message: "Please enter a name for your item")
+            goToPage(1)
+            return
+        }
+        
+        if Int(priceField.text!) == nil {
+            let popup = PopoverViewController()
+            popup.showInView(self.view, message: "Please enter a minimum price for your item")
+            goToPage(6)
+            return
+        }
+        
+        
         
         LocalUser.user.mostRecentAction = "Posted an Item"
         //add the iamges from the image view to an array to be passed to the backend function to post an item to server

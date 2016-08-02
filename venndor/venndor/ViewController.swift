@@ -167,7 +167,9 @@ extension UIViewController: SWRevealViewControllerDelegate {
     func deactivate() {
         removeViewIfPresent(100)
         let deactivateView = UIView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.height*0.1, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height*0.9))
-        deactivateView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+//        UIView.animateWithDuration(30, animations: {
+            deactivateView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+//        })
         deactivateView.tag = 100
 //        let tap = UITapGestureRecognizer(target: deactivateView, action: #selector(UIViewController.activate))
 //        deactivateView.addGestureRecognizer(tap)
@@ -182,6 +184,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
         for view in self.view.subviews {
             if (view.tag == tag) {
                 view.removeFromSuperview()
+                print("view removed")
             }
         }
     }
