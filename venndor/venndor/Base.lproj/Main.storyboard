@@ -368,8 +368,8 @@
                         <segue destination="RnH-ph-BVQ" kind="custom" identifier="toSellPage" customClass="SWRevealViewControllerSeguePushController" id="Ib2-aj-cpW"/>
                         <segue destination="q8m-ke-uIK" kind="custom" identifier="toMyMatches" customClass="SWRevealViewControllerSeguePushController" id="J63-VY-ZTI"/>
                         <segue destination="UaQ-m2-eNN" kind="custom" identifier="toMyPosts" customClass="SWRevealViewControllerSeguePushController" id="6z6-fr-0Q3"/>
-                        <segue destination="yti-rD-WXZ" kind="custom" identifier="toBrowse" customClass="SWRevealViewControllerSeguePushController" id="dWy-Fc-7oC"/>
                         <segue destination="xZd-1d-xuv" kind="custom" identifier="toSettings" customClass="SWRevealViewControllerSeguePushController" id="vVc-EK-JHw"/>
+                        <segue destination="5Q4-WU-6Zg" kind="custom" identifier="toBrowse" customClass="SWRevealViewControllerSeguePushController" id="No4-7w-fgQ"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="KW5-dN-Nud" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -679,12 +679,11 @@
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="iGi-df-zpV"/>
-        <segue reference="dWy-Fc-7oC"/>
+        <segue reference="OzI-1T-yzU"/>
         <segue reference="rJe-8o-Yiu"/>
         <segue reference="pMb-c4-TUY"/>
-        <segue reference="YQC-W7-xKJ"/>
-        <segue reference="gbD-Lm-gkJ"/>
-        <segue reference="OzI-1T-yzU"/>
+        <segue reference="iGi-df-zpV"/>
+        <segue reference="mUc-z2-b8r"/>
+        <segue reference="J63-VY-ZTI"/>
     </inferredMetricsTieBreakers>
 </document>
