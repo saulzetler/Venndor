@@ -235,11 +235,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     func toggleItemInfo(sender: UITapGestureRecognizer) {
         let container = sender.view  as! ItemContainer
-        let manager = ItemManager()
         print("MiniMatch Tapped!")
         
         let match = container.match
-        manager.retrieveItemById(match.itemID) { item, error in
+        ItemManager.globalManager.retrieveItemById(match.itemID) { item, error in
             guard error == nil else {
                 print("Error pulling item from server in miniMatches: \(error)")
                 return
