@@ -18,7 +18,8 @@ class Match: NSObject {
     var sellerID: String!
     var sellerName: String! 
     var matchedPrice: Int!
-    var thumbnail: UIImage?
+    var thumbnailString: String!
+    var thumbnail: UIImage!
     var itemLongitude: Double!
     var itemLatitude: Double!
     var bought: Int!
@@ -27,7 +28,7 @@ class Match: NSObject {
     var matchTimeRemaining: String!
     
     
-    init(itemID: String, itemName: String, itemDescription: String, userID: String, sellerID: String, sellerName: String, matchedPrice: Int, itemLongitude: Double, itemLatitude: Double, dateMatched: NSDate!) {
+    init(itemID: String, itemName: String, itemDescription: String, userID: String, sellerID: String, sellerName: String, matchedPrice: Int, thumbnailString: String, itemLongitude: Double, itemLatitude: Double, dateMatched: NSDate!) {
         self.itemID = itemID
         self.itemName = itemName
         self.itemDescription = itemDescription
@@ -35,6 +36,7 @@ class Match: NSObject {
         self.sellerID = sellerID
         self.sellerName = sellerName
         self.matchedPrice = matchedPrice
+        self.thumbnailString = thumbnailString
         self.itemLongitude = itemLongitude
         self.itemLatitude = itemLatitude
         self.bought = 0
@@ -50,6 +52,7 @@ class Match: NSObject {
         self.sellerID = json["sellerID"] as! String
         self.sellerName = json["sellerName"] as! String
         self.matchedPrice = json["matchedPrice"] as! Int
+        self.thumbnail = ParserManager.globalManager.getPhotoFromString(json["thumbnailString"] as! String)
         self.itemLongitude = json["itemLongitude"] as! Double
         self.itemLatitude = json["itemLatitude"] as! Double
         self.bought = json["bought"] as! Int

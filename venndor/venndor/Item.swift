@@ -28,8 +28,7 @@ class Item: NSObject {
     var condition: Int
     var latitude: Double
     var longitude: Double
-    var question1: String
-    var question2: String
+    var itemAge: String
     var minPrice: Int
     
     //metrics
@@ -63,8 +62,7 @@ class Item: NSObject {
         condition = json["condition"] as! Int
         latitude = json["latitude"] as! Double
         longitude = json["longitude"] as! Double
-        question1 = json["question1"] as! String
-        question2 = json["question2"] as! String
+        itemAge = json["itemAge"] as! String
         minPrice = json["minPrice"] as! Int
         timeMatched = json["timeMatched"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeMatched"] as! String)
         timeBought = json["timeBought"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeBought"]! as! String)
@@ -77,7 +75,7 @@ class Item: NSObject {
     }
     
     //init from the app
-    init(name: String, description: String, owner: String, ownerName: String, category: String, condition: Int, latitude: Double, longitude: Double, geoHash: String, photos: [UIImage], question1: String, question2: String, minPrice: Int) {
+    init(name: String, description: String, owner: String, ownerName: String, category: String, condition: Int, latitude: Double, longitude: Double, geoHash: String, photos: [UIImage], itemAge: String, minPrice: Int) {
         self.name = name
         self.details = description
         self.owner = owner
@@ -88,8 +86,7 @@ class Item: NSObject {
         self.condition = condition
         self.latitude = latitude
         self.longitude = longitude
-        self.question1 = question1
-        self.question2 = question2
+        self.itemAge = itemAge
         self.minPrice = minPrice
         self.timeMatched = nil
         self.timeBought = nil
