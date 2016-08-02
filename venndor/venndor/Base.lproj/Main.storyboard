@@ -633,7 +633,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RCV-Q8-VOi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="947" y="2362"/>
+            <point key="canvasLocation" x="1531" y="2212"/>
         </scene>
         <!--My Matches View Controller-->
         <scene sceneID="FT3-WY-5kC">

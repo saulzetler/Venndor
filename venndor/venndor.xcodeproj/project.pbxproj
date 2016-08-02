@@ -13,6 +13,7 @@
 		102331941D13267B002C6B3C /* MiniMatchTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */; };
 		102806D71D22F11D0019C7FF /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102806D61D22F11D0019C7FF /* RatingControl.swift */; };
 		103B17081D35686C005AEFDD /* jonasBoettcherController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103B17071D35686C005AEFDD /* jonasBoettcherController.swift */; };
+		103CBEFF1D50EBE000EF89C7 /* BoughtController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103CBEFE1D50EBE000EF89C7 /* BoughtController.swift */; };
 		103D11481D382EB5004CE297 /* OtherHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D11471D382EB5004CE297 /* OtherHeaderView.swift */; };
 		103D114A1D3831CD004CE297 /* MyItemHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D11491D3831CD004CE297 /* MyItemHeaderView.swift */; };
 		106E96231D3582C600DBBED0 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 106E96221D3582C600DBBED0 /* background.jpg */; };
@@ -143,6 +144,7 @@
 		102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniMatchTransitionManager.swift; sourceTree = "<group>"; };
 		102806D61D22F11D0019C7FF /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		103B17071D35686C005AEFDD /* jonasBoettcherController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = jonasBoettcherController.swift; sourceTree = "<group>"; };
+		103CBEFE1D50EBE000EF89C7 /* BoughtController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoughtController.swift; sourceTree = "<group>"; };
 		103D11471D382EB5004CE297 /* OtherHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherHeaderView.swift; sourceTree = "<group>"; };
 		103D11491D3831CD004CE297 /* MyItemHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyItemHeaderView.swift; sourceTree = "<group>"; };
 		106E96221D3582C600DBBED0 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
@@ -416,6 +418,7 @@
 				63E8DC411D3EB5C70043FEF9 /* TimeManager.swift */,
 				10F2CB3F1D3D1D38007C6477 /* SearchControl.swift */,
 				10F2CB411D3D4428007C6477 /* LocationConverter.swift */,
+				103CBEFE1D50EBE000EF89C7 /* BoughtController.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -616,7 +619,12 @@
 				TargetAttributes = {
 					10ADC9A31D0749700028A999 = {
 						CreatedOnToolsVersion = 7.2.1;
-						DevelopmentTeam = QA24C9EBQB;
+						DevelopmentTeam = DEGVV5LLK6;
+						SystemCapabilities = {
+							com.apple.Push = {
+								enabled = 1;
+							};
+						};
 					};
 					10ADC9BA1D0749700028A999 = {
 						CreatedOnToolsVersion = 7.2.1;
@@ -667,9 +675,7 @@
 				E495BB2C1D4903E700CC1EEC /* Star.png in Resources */,
 				E4992DFF1D2C38D200032221 /* go.png in Resources */,
 				E44C153C1D11E0430006EBAD /* Kitchen-50.png in Resources */,
-				E44B388C1D39441100733D96 /* use_current_location.png in Resources */,
 				109452C71D47E6FF00931DA8 /* Home.png in Resources */,
-				E4C0594C1D358E7A00AE51A3 /* Search Filled-100.png in Resources */,
 				E44C151F1D11B9B90006EBAD /* New Product-50.png in Resources */,
 				109452CA1D47E6FF00931DA8 /* More Filled.png in Resources */,
 				106E96251D35896700DBBED0 /* iphone-icon.png in Resources */,
@@ -899,6 +905,7 @@
 				E48002081D2FFAF7009C90E2 /* PopoverViewController.swift in Sources */,
 				631F4F551D2829FC005EEFE2 /* ItemManager.swift in Sources */,
 				63088BAD1D187CBA00F67931 /* Item.swift in Sources */,
+				103CBEFF1D50EBE000EF89C7 /* BoughtController.swift in Sources */,
 				631F4F591D2AEFCD005EEFE2 /* DeleteViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -1061,7 +1068,7 @@
 				);
 				INFOPLIST_FILE = venndor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.getvenndor.venndor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";
@@ -1088,7 +1095,7 @@
 				);
 				INFOPLIST_FILE = venndor/Info.plist;
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
-				PRODUCT_BUNDLE_IDENTIFIER = com.Venndor;
+				PRODUCT_BUNDLE_IDENTIFIER = com.getvenndor.venndor;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";

@@ -45,6 +45,8 @@ class ProfilePageViewController: UIViewController {
         let link = NSURL(string: user.profilePictureURL)
         let pictureData = NSData(contentsOfURL: link!)
         profilePicView.image = UIImage(data: pictureData!)
+        profilePicView.layer.cornerRadius = profilePicView.frame.size.width/2
+        profilePicView.clipsToBounds = true
         //set up the side menu
         setSideMenu()
         
