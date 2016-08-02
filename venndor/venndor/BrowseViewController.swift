@@ -117,6 +117,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         addHeader()
         
         
+        
 //        self.view.bringSubviewToFront(cover)
     }
     
