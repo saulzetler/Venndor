@@ -460,10 +460,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         //Add done button to numeric pad keyboard
         let toolbarDone = UIToolbar.init()
         toolbarDone.sizeToFit()
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         let barBtnDone = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.Done,
                                               target: self, action: #selector(PostViewController.doneButtonClicked(_:)))
         
-        toolbarDone.items = [barBtnDone] // You can even add cancel button too
+        toolbarDone.items = [flexSpace, barBtnDone] // You can even add cancel button too
         priceField.inputAccessoryView = toolbarDone
         
         let dollarSignFrame = CGRectMake(0, 0, priceField.frame.width*0.2, priceField.frame.height)
