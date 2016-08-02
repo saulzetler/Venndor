@@ -236,6 +236,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: containerView.frame.width, height: containerView.frame.height))
         imgView.image = image
         imgView.layer.cornerRadius = 5
+        imgView.contentMode = .ScaleAspectFill
         imgView.layer.masksToBounds = true
         imgView.userInteractionEnabled = true
         
@@ -306,8 +307,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
-        while locationAuthorized == false {
-        }
+//        while locationAuthorized == false {
+//        }
 //        LocalUser.myLocation = CLLocation(latitude: 10, longitude: 10)
         let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index], myLocation: LocalUser.myLocation)
         draggableView.layer.cornerRadius = 20
