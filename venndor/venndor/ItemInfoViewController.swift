@@ -70,7 +70,7 @@ class ItemInfoViewController: UIViewController {
         let backImage = UIImage(named: "Back-50.png")
 
         backButton = UIButton(type: UIButtonType.Custom) as UIButton
-        backButton.frame = CGRectMake(20, 27, screenSize.width*0.1, 20)
+        backButton.frame = CGRectMake(17, 27, screenSize.width*0.15, 25)
         backButton.setImage(backImage, forState: .Normal)
         backButton.imageView?.contentMode = UIViewContentMode.Center
         backButton.addTarget(self, action: #selector(ItemInfoViewController.dismissController(_:)), forControlEvents: UIControlEvents.TouchUpInside)
