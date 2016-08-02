@@ -38,11 +38,11 @@ extension UIViewController: SWRevealViewControllerDelegate {
         return button
     }
     
-    func makeTextButton(text: String, frame: CGRect, target: Selector, circle: Bool = false, textColor: UIColor = UIColor.blackColor(), tinted: Bool = true, backgroundColor: UIColor = UIColor.clearColor()) -> UIButton {
+    func makeTextButton(text: String, frame: CGRect, target: Selector, circle: Bool = false, textColor: UIColor = UIColor.blackColor(), tinted: Bool = true, backgroundColor: UIColor = UIColor.clearColor(), textSize: CGFloat = 12) -> UIButton {
         let button = UIButton(frame: frame)
         button.addTarget(self, action: target, forControlEvents: .TouchUpInside)
         button.setTitle(text, forState: .Normal)
-        button.titleLabel?.font = UIFont(name: "Avenir", size: 12)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: textSize)
         button.setTitleColor(textColor, forState: UIControlState.Normal)
         if tinted == true {
             button.setTitleColor(UIColorFromHex(0x3498db, alpha: 1), forState: UIControlState.Selected)
@@ -54,9 +54,10 @@ extension UIViewController: SWRevealViewControllerDelegate {
         return button
     }
     
-    func makeIndicatorButton(frame: CGRect, color: UIColor) -> UIButton {
+    func makeIndicatorButton(frame: CGRect, color: UIColor, target: Selector) -> UIButton {
         let button = UIButton (frame: frame)
         button.layer.cornerRadius = 0.5*button.bounds.size.width
+        button.addTarget(self, action: target, forControlEvents: .TouchDown)
         createBorder(button, color: color, circle: true)
         button.backgroundColor = UIColor.clearColor()
         return button
@@ -166,7 +167,9 @@ extension UIViewController: SWRevealViewControllerDelegate {
     func deactivate() {
         removeViewIfPresent(100)
         let deactivateView = UIView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.height*0.1, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height*0.9))
-        deactivateView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+//        UIView.animateWithDuration(30, animations: {
+            deactivateView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+//        })
         deactivateView.tag = 100
 //        let tap = UITapGestureRecognizer(target: deactivateView, action: #selector(UIViewController.activate))
 //        deactivateView.addGestureRecognizer(tap)
@@ -181,6 +184,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
         for view in self.view.subviews {
             if (view.tag == tag) {
                 view.removeFromSuperview()
+                print("view removed")
             }
         }
     }

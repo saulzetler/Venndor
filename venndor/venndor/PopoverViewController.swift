@@ -24,13 +24,22 @@ class PopoverViewController : UIViewController {
         self.view.frame = CGRectMake(screenSize.width*0.3, screenSize.height*0.3, screenSize.width*0.4, screenSize.height*0.2)
         self.view.layer.cornerRadius = 10
         self.view.layer.masksToBounds = true
-        self.view.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.7)
+        self.view.backgroundColor = UIColor.grayColor().colorWithAlphaComponent(0.9)
     }
     
-    func showInView(aView: UIView!)
+    func showInView(aView: UIView!, message: String)
     {
+        let labelFrame = CGRect(x: 0, y: 0, width: self.view.frame.width, height: self.view.frame.height)
+        let label = customLabel(labelFrame, text: message, color: UIColor.whiteColor(), fontSize: 12)
+        label.numberOfLines = 0
+        self.view.addSubview(label)
         aView.addSubview(self.view)
         self.showAnimate()
+        _ = NSTimer.scheduledTimerWithTimeInterval(3, target: self, selector: #selector(PopoverViewController.update), userInfo: nil, repeats: false)
+    }
+    
+    func update() {
+        removeAnimate()
     }
     
     func showAnimate()
