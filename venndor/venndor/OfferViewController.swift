@@ -134,6 +134,10 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         self.performSegueWithIdentifier("offerToMatches", sender: self)
     }
     
+    func toBuy(sender: UIButton) {
+        
+    }
+    
     //function to set up the wheel slider and control.
     func setupWheelSlider() {
         let wheelFrame = CGRectMake(screenSize.width*0.2, screenSize.height*0.6, screenSize.width*0.6, screenSize.width*0.6)
