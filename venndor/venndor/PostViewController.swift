@@ -25,6 +25,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var itemDescription: UITextView!
     var itemName: UITextField!
     var priceField: UITextField!
+   
+    //imgViews
     var imageView1: UIImageView!
     var imageView2: UIImageView!
     var imageView3: UIImageView!
@@ -35,11 +37,13 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var previewImageViewArray: [UIImageView]!
     var filledImagesArray: [Int]!
     var currentImgView: UIImageView!
+
     var previewName: UIButton!
     var previewCategory: UIButton!
     var previewYears: UIButton!
     var previewCondition: UIButton!
     var previewDescription: UILabel!
+
     
     var postButton: UIButton!
     var condition: Int!
@@ -60,12 +64,13 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        print("PostViewController end: \(NSDate())")
         TimeManager.globalManager.setSessionDuration(sessionStart, controller: "PostViewController")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         sessionStart = NSDate()
-        TimeManager.timeStamp = NSDate()
+
         setupCategoryPickerView()
         setupYearsPickerView()
         setupItemName()
@@ -821,6 +826,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             //get the category of the item from the picker controller
             let row = categoryPicker.selectedRowInComponent(0)
             let category = categoryPickerData[row]
+            let age = yearsPickerData[yearsPicker.selectedRowInComponent(0)]
             let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
             
             /******************************************************************/
@@ -838,15 +844,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let longitude = Double(coordinate.longitude)
             let minPrice = Int(priceField.text!)
             
-            let question1 = ""
-            let question2 = ""
-            
             var conversion = LocationConverter()
             let geoHash = conversion.coordToGeo(latitude, longitudeInput: longitude)
             print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
             
             //create an item object to past to the manager to create the item
-            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, latitude: latitude, longitude: longitude, geoHash: geoHash, photos: images, question1: question1, question2: question2, minPrice: minPrice!)
+            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, latitude: latitude, longitude: longitude, geoHash: geoHash, photos: images, itemAge: age, minPrice: minPrice!)
             
             //create the item object on the server
             ItemManager.globalManager.createItem(item) { error in
@@ -855,8 +858,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     return
                 }
                 
+
+                
+                let thumbnailString = ParserManager.globalManager.getStringFromPhoto(self.imageView1.image!)
                 //create the post object on the server
-                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, itemLongitude: item.longitude, itemLatitude: item.latitude)
+                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, thumbnailString: thumbnailString, itemLongitude: item.longitude, itemLatitude: item.latitude)
                 
                 PostManager.globalManager.createPost(post) { post, error in
                     LocalUser.user.posts[post!.id] = item.id
@@ -913,26 +919,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             updateYearsPreview(yearsPickerData[row])
         }
     }
-    
-//    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
-//        var pickerLabel = view as! UILabel!
-//        if view == nil {  //if no label there yet
-//            pickerLabel = UILabel()
-//        }
-//        let titleData: String
-//        if pickerView.tag == 1 {
-//            titleData = categoryPickerData[row]
-//        }
-//        else {
-//            titleData = yearsPickerData[row]
-//        }
-//        
-//        let myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Avenir", size: 2)!,NSForegroundColorAttributeName:UIColorFromHex(0x34495e)])
-//        pickerLabel!.attributedText = myTitle
-//        pickerLabel!.textAlignment = .Center
-//        return pickerLabel
-//        
-//    }
     
     
     //deactivation methods

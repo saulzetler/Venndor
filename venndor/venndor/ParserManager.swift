@@ -57,5 +57,18 @@ struct ParserManager {
             return response as! [String:Double]
         }
     }
+    
+    func getStringFromPhoto(photo: UIImage) -> String {
+        let data = UIImageJPEGRepresentation(photo, 0.5)
+        let string = data!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+        return string
+        
+    }
+    
+    func getPhotoFromString(str: String) -> UIImage {
+        let dataDecoded:NSData = NSData(base64EncodedString: str, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)!
+        let img = UIImage(data: dataDecoded)
+        return img!
+    }
 
 }

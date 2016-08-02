@@ -23,9 +23,9 @@ struct MatchController {
         let delta = offered - posted
         let buyerWeight: Double!
         let sellerWeight: Double!
-        let TEMPARRAYOFPREVIOUSOFFERSTOSIMULATE1: [Double]
-        TEMPARRAYOFPREVIOUSOFFERSTOSIMULATE1 = []
-        let TEMPARRAYOFPREVIOUSOFFERSTOSIMULATE2 = [10.00,12.00,14.00,15.00]
+//        let TEMPARRAYOFPREVIOUSOFFERSTOSIMULATE1: [Double]
+//        TEMPARRAYOFPREVIOUSOFFERSTOSIMULATE1 = []
+//        let TEMPARRAYOFPREVIOUSOFFERSTOSIMULATE2 = [10.00,12.00,14.00,15.00]
         let TEMPARRAYOFPREVIOUSOFFERSTOSIMULATE3 = [11.00,12.00,9.00,14.00,8.00,10.00,20.00,11.00,9.00,8.00]
         averagePrice = (offered+posted)/2
         if offered > posted + stripePercent*averagePrice + stripeFlat {

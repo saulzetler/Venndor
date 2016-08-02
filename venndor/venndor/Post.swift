@@ -18,18 +18,20 @@ class Post: NSObject {
     var buyerName: String! //to be set when item is sold
     var minPrice: Int!
     var soldPrice: Double! //to be set when item is sold
-    var thumbnail: UIImage?
+    var thumbnailString: String!
+    var thumbnail: UIImage!
     var itemLongitude: Double!
     var itemLatitude: Double!
     var sold: Int!
     var dateSold: NSDate! //to be set when item is sold
     
-    init(itemID: String, itemName: String, itemDescription: String, userID: String, minPrice: Int, itemLongitude: Double!, itemLatitude: Double!) {
+    init(itemID: String, itemName: String, itemDescription: String, userID: String, minPrice: Int, thumbnailString: String, itemLongitude: Double!, itemLatitude: Double!) {
         self.itemID = itemID
         self.itemName = itemName
         self.itemDescription = itemDescription
         self.userID = userID
         self.minPrice = minPrice
+        self.thumbnailString = thumbnailString
         self.itemLongitude = itemLongitude
         self.itemLatitude = itemLatitude
         self.sold = 0
@@ -45,6 +47,7 @@ class Post: NSObject {
         self.buyerName = json["buyerName"] == nil ? nil : json["buyerName"] as! String
         self.minPrice = json["minPrice"] as! Int
         self.soldPrice = json["soldPrice"] == nil ? nil : json["soldPrice"] as! Double
+        self.thumbnail = ParserManager.globalManager.getPhotoFromString(json["thumbnailString"] as! String)
         self.itemLongitude = json["itemLongitude"] as! Double
         self.itemLatitude = json["itemLatitude"] as! Double
         self.sold = json["sold"] as! Int

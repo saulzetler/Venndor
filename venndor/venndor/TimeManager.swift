@@ -19,7 +19,7 @@ struct TimeManager {
     }
     
     func setSessionDuration(startupTime: NSDate, controller: String) {
-        let timeInterval = ( (startupTime.timeIntervalSinceNow) / 60 * -1)
+        let timeInterval = ((startupTime.timeIntervalSinceNow) / 60 * -1)
         LocalUser.user.timePerController[controller]! += timeInterval
     }
 
