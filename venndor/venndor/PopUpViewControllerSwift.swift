@@ -42,35 +42,45 @@ class PopUpViewControllerSwift : UIViewController {
         
         LocalUser.user.mostRecentAction = "Matched on an item."
         sessionStart = NSDate()
-        
-        //create the match on the server
-        let newMatch = Match(itemID: matchedItem.id, itemName: matchedItem.name, itemDescription: matchedItem.details, userID: LocalUser.user.id, sellerID: matchedItem.owner, sellerName: matchedItem.ownerName, matchedPrice: matchedPrice, itemLongitude: matchedItem.longitude, itemLatitude: matchedItem.latitude, dateMatched: NSDate())
-       
-        MatchesManager.globalManager.createMatch(newMatch) { match, error in
+        ItemManager.globalManager.retrieveItemImageById(matchedItem.id, imageIndex: 0) { img, error in
             guard error == nil else {
-                print("Error creating match on server: \(error)")
+                print("Error retrieving item id for match thumbnail: \(error)")
                 return
             }
             
-            if let match = match {
-                
-                //update the LocalUser's matches info
-                LocalUser.matches.append(match)
-                LocalUser.user.matches[match.id!] = "Matched"
-                LocalUser.user.nuMatches = LocalUser.user.nuMatches + 1
-                let update = ["matches": LocalUser.user.matches, "nuMatches": LocalUser.user.nuMatches]
+            if let img = img, data = UIImageJPEGRepresentation(img, 0.5) {
 
+                let thumbnailString = data.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)
+                //create the match on the server
+                let newMatch = Match(itemID: self.matchedItem.id, itemName: self.matchedItem.name, itemDescription: self.matchedItem.details, userID: LocalUser.user.id, sellerID: self.matchedItem.owner, sellerName: self.matchedItem.ownerName, matchedPrice: self.matchedPrice, thumbnailString: thumbnailString, itemLongitude: self.matchedItem.longitude, itemLatitude: self.matchedItem.latitude, dateMatched: NSDate())
                 
-                //update the LocalUser on the server
-                UserManager.globalManager.updateUserById(LocalUser.user.id, update: update as! [String : AnyObject]) { error in
+                MatchesManager.globalManager.createMatch(newMatch) { match, error in
                     guard error == nil else {
-                        print("Error updating the local user's matches: \(error)")
+                        print("Error creating match on server: \(error)")
                         return
                     }
                     
-                    print("LocalUser matches succesfully updated.")
+                    if let match = match {
+                        
+                        //update the LocalUser's matches info
+                        LocalUser.matches.append(match)
+                        LocalUser.user.matches[match.id!] = "Matched"
+                        LocalUser.user.nuMatches = LocalUser.user.nuMatches + 1
+                        
+                        //update the LocalUser on the server
+                        let update = ["matches": LocalUser.user.matches, "nuMatches": LocalUser.user.nuMatches]
+                        UserManager.globalManager.updateUserById(LocalUser.user.id, update: update as! [String : AnyObject]) { error in
+                            guard error == nil else {
+                                print("Error updating the local user's matches: \(error)")
+                                return
+                            }
+                            
+                            print("LocalUser matches succesfully updated.")
+                        }
+                        
+                    }
                 }
-                
+
             }
         }
     }

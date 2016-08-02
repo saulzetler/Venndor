@@ -123,7 +123,6 @@ class SplashViewController: UIViewController {
             
             if let posts = posts {
                 LocalUser.posts = posts
-                let posts = LocalUser.posts
                 print("Succesfully set the LocalUser's posts.")
             }
         }

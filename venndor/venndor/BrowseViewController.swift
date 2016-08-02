@@ -24,6 +24,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 
     //variables for miniMatches
     var tappedItem: Item!
+    var miniAlertController: UIAlertController!
     
     //declare the current category so we know what cards we need to filter
     var currentCategory: String!
@@ -148,10 +149,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         LocalUser.user.mostRecentAction = "Browsed MiniMatches."
         //create the controller for the bottom menu
-        let alertController = UIAlertController(title: "\n\n\n\n", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
+        self.miniAlertController = UIAlertController(title: "\n\n\n\n", message: nil, preferredStyle: UIAlertControllerStyle.ActionSheet)
         
         // create the custom view for the bottom menu
-        let rect = CGRectMake(-10, 0, alertController.view.bounds.size.width, 165.0)
+        let rect = CGRectMake(-10, 0, self.miniAlertController.view.bounds.size.width, 165.0)
         let customView = UIView(frame: rect)
         let contentScroll = UIScrollView(frame: CGRect(x: 0, y: 0, width: customView.frame.width, height: customView.frame.height))
         setupMiniContentScroll(contentScroll)
@@ -159,35 +160,36 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         customView.addSubview(contentScroll)
         
         
-        let customViewTwo = UIView(frame: CGRect(x: -10, y: 125, width: alertController.view.bounds.size.width+10, height: 75))
+        let customViewTwo = UIView(frame: CGRect(x: -10, y: 125, width: self.miniAlertController.view.bounds.size.width+10, height: 75))
         customViewTwo.backgroundColor = UIColorFromHex(0x2c3e50, alpha: 1)
 
         //create the custom cancel view for the user to quit the menu
         //note this function also cancels when a user presses outside the frame
-        let arrowView = UIView(frame: CGRect(x: (alertController.view.bounds.size.width)/2-23, y: 145, width: 30, height: 30))
+        let arrowView = UIView(frame: CGRect(x: (self.miniAlertController.view.bounds.size.width)/2-23, y: 145, width: 30, height: 30))
         arrowView.backgroundColor = UIColor(patternImage: UIImage(named: "ic_keyboard_arrow_down_white.png")!)
 
         customView.backgroundColor = UIColorFromHex(0xe6e6e6)
         //round the corners to look more appealing
         customView.layer.cornerRadius = 15
 
-        alertController.view.addSubview(customView)
-        alertController.view.addSubview(customViewTwo)
-        alertController.view.addSubview(arrowView)
+        self.miniAlertController.view.addSubview(customView)
+        self.miniAlertController.view.addSubview(customViewTwo)
+        self.miniAlertController.view.addSubview(arrowView)
         
         //declare the type of alert controller
         let cancelAction = UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: {(alert: UIAlertAction!) in print("cancel")})
-        alertController.addAction(cancelAction)
+        self.miniAlertController.addAction(cancelAction)
         
-        self.presentViewController(alertController, animated: true, completion:{})
+        self.presentViewController(self.miniAlertController, animated: true, completion:{})
         
     }
     
     //function to create contentScrollView for MiniMyatches
     func setupMiniContentScroll(contentScroll: UIScrollView) {
-        let scalar:Double = 4/19
+        let scalar:Double = 6/19
         let contentViewDimension = contentScroll.frame.width * CGFloat(scalar)
         let contentScrollWidth = CGFloat(LocalUser.matches.count) * (contentViewDimension + CGFloat(12)) - CGFloat(12)
+        contentScroll.backgroundColor = UIColorFromHex(0x34495e)
         
         for index in 0..<LocalUser.matches.count {
             let match = LocalUser.matches[index]
@@ -198,19 +200,16 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                     //create the mini matches views
                     let xOrigin = index == 0 ? 12 : CGFloat(index) * contentViewDimension + (CGFloat(12) * CGFloat(index) + CGFloat(12))
                     let contentFrame = CGRectMake(xOrigin, 10, contentViewDimension, contentViewDimension)
-                    let contentView = self.makeMiniContentView(contentFrame, image: img, matchedPrice: match.matchedPrice)
-                    contentView.match = match
                     
                     //update the contentScrollView
                     dispatch_async(dispatch_get_main_queue()) {
+                        let contentView = self.makeMiniContentView(contentFrame, image: img, matchedPrice: match.matchedPrice)
+                        contentView.match = match
+            
+                        let tap = UITapGestureRecognizer(target: self, action: #selector(BrowseViewController.toggleItemInfo(_:)))
+                        contentView.addGestureRecognizer(tap)
                         
-                        let contentLabelFrame = CGRect(x: xOrigin, y: contentFrame.height + 15, width: contentFrame.width, height: 20)
-                        let contentLabel = self.makeMiniContentLabel(contentLabelFrame, itemName: match.itemName)
-                        let priceLabel = self.makeMiniPriceLabel(contentFrame, matchedPrice: match.matchedPrice)
-
                         contentScroll.addSubview(contentView)
-                        contentScroll.addSubview(contentLabel)
-                        contentScroll.addSubview(priceLabel)
                         contentScroll.contentSize = CGSizeMake(contentScrollWidth + CGFloat(16), contentScroll.frame.height)
                     }
                 }
@@ -218,6 +217,49 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             }
         }
     }
+    
+    
+    //functions to create labels and imgViews for MiniMyMatches
+    
+    func makeMiniContentView(frame: CGRect, image: UIImage, matchedPrice: Int) -> ItemContainer {
+        
+        let containerView = ItemContainer(frame: frame)
+        
+        //create the item image
+        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: containerView.frame.width, height: containerView.frame.height))
+        imgView.image = image
+        imgView.layer.cornerRadius = 5
+        imgView.layer.masksToBounds = true
+        imgView.userInteractionEnabled = true
+        
+        //create the price label
+        let priceLabel = self.makeMiniPriceLabel(containerView, matchedPrice: matchedPrice)
+        containerView.addSubview(imgView)
+        containerView.addSubview(priceLabel)
+        return containerView
+    }
+    
+    func makeMiniPriceLabel(containerView: ItemContainer, matchedPrice: Int) -> UIView {
+        //price label var
+        
+        let priceLabelFrame = CGRectMake(containerView.frame.size.width - 35, -7, containerView.frame.size.width * 0.50, containerView.frame.size.height * 0.35)
+        
+        //create the price container
+        let priceContainer = UIImageView(frame: priceLabelFrame)
+        priceContainer.image = UIImage(named: "venn.png")
+        
+        //create the price label
+        let priceLabel = UILabel(frame: CGRect(x: priceContainer.frame.size.width * 0.2, y:0, width: priceContainer.frame.width, height: priceContainer.frame.height))
+
+        priceLabel.text = "$\(matchedPrice)"
+        priceLabel.numberOfLines = 1
+        priceLabel.textColor = UIColor.whiteColor()
+        priceLabel.font = priceLabel.font.fontWithSize(15)
+        priceContainer.addSubview(priceLabel)
+        return priceContainer
+    }
+    
+   //segue & transition functions
     
     func toggleItemInfo(sender: UITapGestureRecognizer) {
         let container = sender.view  as! ItemContainer
@@ -229,10 +271,12 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 print("Error pulling item from server in miniMatches: \(error)")
                 return
             }
-                
+            
             if let item = item {
                 let infoViewController = ItemInfoViewController()
                 infoViewController.item = item
+                
+                self.miniAlertController.dismissViewControllerAnimated(true, completion: nil)
                 self.presentViewController(infoViewController, animated: true, completion: nil)
             }
         }
@@ -241,59 +285,11 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     func backToSplash() {
         self.performSegueWithIdentifier("backToSplash", sender: self)
     }
-    
-    
-    func makeMiniPriceLabel(contentLabelFrame: CGRect, matchedPrice: Int) -> UIView {
-        let priceLabelHeight = contentLabelFrame.height * 0.25
-        let priceLabelWidth = contentLabelFrame.width * 0.55
-        let priceLabelFrame = CGRect(x: contentLabelFrame.origin.x + contentLabelFrame.width - CGFloat(30), y: contentLabelFrame.origin.y - 7, width: priceLabelWidth, height: priceLabelHeight)
-        
-        //create the price container
-        let priceContainer = UIView(frame: priceLabelFrame)
-        priceContainer.backgroundColor = UIColorFromHex(0x2ecc71)
-        
-        //create the price label
-        let priceLabel = UILabel(frame: CGRect(x: 3, y:0, width: priceContainer.frame.width, height: priceContainer.frame.height))
-        priceLabel.text = "$\(matchedPrice)"
-        priceLabel.numberOfLines = 1
-        //priceLabel.adjustsFontSizeToFitWidth = true
-        priceLabel.font = priceLabel.font.fontWithSize(8)
-        
-        priceContainer.addSubview(priceLabel)
-        createBorder(priceContainer)
-        return priceContainer
-
-    }
-    
-    //functions to create labels and imgViews for MiniMyMatches
-    
-    func makeMiniContentView(frame: CGRect, image: UIImage, matchedPrice: Int) -> ItemContainer {
-        
-        let containerView = ItemContainer(frame: frame)
-        let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: containerView.frame.width, height: containerView.frame.height))
-        imgView.image = image
-        imgView.userInteractionEnabled = true
-        
-        let tap = UITapGestureRecognizer(target: self, action: #selector(BrowseViewController.toggleItemInfo(_:)))
-        imgView.addGestureRecognizer(tap)
-
-        containerView.addSubview(imgView)
-        return containerView
-    }
-    
-    func makeMiniContentLabel(frame: CGRect, itemName: String) -> UILabel {
-        let contentLabel = UILabel(frame: frame)
-        contentLabel.text = itemName
-        contentLabel.numberOfLines = 2
-        contentLabel.font = UIFont(name:"HelveticaNeue-Bold", size: 16.0)
-        contentLabel.adjustsFontSizeToFitWidth = true
-        contentLabel.textAlignment = .Center
-        return contentLabel
-
-    }
+   
     
     //functions to create dragable views
     
+   
     func createDraggableViewFromItem(item: Item) -> DraggableView {
         let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: item, myLocation: LocalUser.myLocation)
         draggableView.layer.cornerRadius = 20
@@ -313,7 +309,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         return draggableView
     }
     
+   
+    
     //Dragable view delegate functions
+   
     
     func cardSwipedLeft(card: UIView) -> Void {
         loadedCards.removeAtIndex(0)

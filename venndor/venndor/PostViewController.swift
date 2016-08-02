@@ -25,6 +25,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var itemDescription: UITextView!
     var itemName: UITextField!
     var priceField: UITextField!
+   
+    //imgViews
     var imageView1: UIImageView!
     var imageView2: UIImageView!
     var imageView3: UIImageView!
@@ -34,6 +36,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var imageViewArray: [UIImageView]!
     var filledImagesArray: [Int]!
     var currentImgView: UIImageView!
+    
     var postButton: UIButton!
     var condition: Int!
     let categoryPickerData = ["Furniture", "Kitchen", "Household", "Electronics", "Clothing", "Books", "Other"]
@@ -59,7 +62,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     override func viewDidLoad() {
         super.viewDidLoad()
         sessionStart = NSDate()
-        print("PostViewController start: \(sessionStart)")
 
         setupCategoryPickerView()
         setupYearsPickerView()
@@ -653,6 +655,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             //get the category of the item from the picker controller
             let row = categoryPicker.selectedRowInComponent(0)
             let category = categoryPickerData[row]
+            let age = yearsPickerData[yearsPicker.selectedRowInComponent(0)]
             let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
             
             /******************************************************************/
@@ -670,15 +673,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let longitude = Double(coordinate.longitude)
             let minPrice = Int(priceField.text!)
             
-            let question1 = ""
-            let question2 = ""
-            
             var conversion = LocationConverter()
             let geoHash = conversion.coordToGeo(latitude, longitudeInput: longitude)
             print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
             
             //create an item object to past to the manager to create the item
-            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, latitude: latitude, longitude: longitude, geoHash: geoHash, photos: images, question1: question1, question2: question2, minPrice: minPrice!)
+            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, latitude: latitude, longitude: longitude, geoHash: geoHash, photos: images, itemAge: age, minPrice: minPrice!)
             
             //create the item object on the server
             ItemManager.globalManager.createItem(item) { error in
@@ -687,8 +687,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     return
                 }
                 
+
+                
+                let thumbnailString = ParserManager.globalManager.getStringFromPhoto(self.imageView1.image!)
                 //create the post object on the server
-                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, itemLongitude: item.longitude, itemLatitude: item.latitude)
+                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, thumbnailString: thumbnailString, itemLongitude: item.longitude, itemLatitude: item.latitude)
                 
                 PostManager.globalManager.createPost(post) { post, error in
                     LocalUser.user.posts[post!.id] = item.id

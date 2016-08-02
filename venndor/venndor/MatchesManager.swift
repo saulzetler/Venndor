@@ -13,7 +13,7 @@ class MatchesManager: NSObject {
     static let globalManager = MatchesManager()
     
     func createMatch(match: Match, completionHandler: (Match?, ErrorType?) -> () ) {
-        let params = ["itemID": match.itemID, "itemName": match.itemName, "itemDescription": match.itemDescription, "userID": match.sellerID, "sellerID": match.sellerID, "sellerName": match.sellerName, "matchedPrice":match.matchedPrice, "itemLongitude": match.itemLongitude, "itemLatitude": match.itemLatitude, "bought": match.bought, "dateMatched": TimeManager.formatter.stringFromDate(match.dateMatched)]
+        let params = ["itemID": match.itemID, "itemName": match.itemName, "itemDescription": match.itemDescription, "userID": match.sellerID, "sellerID": match.sellerID, "sellerName": match.sellerName, "matchedPrice":match.matchedPrice, "thumbnailString": match.thumbnailString, "itemLongitude": match.itemLongitude, "itemLatitude": match.itemLatitude, "bought": match.bought, "dateMatched": TimeManager.formatter.stringFromDate(match.dateMatched)]
         
         RESTEngine.sharedEngine.createMatchOnServer(params as! [String : AnyObject],
             success: { response in
@@ -98,6 +98,6 @@ class MatchesManager: NSObject {
             index += 1
         }
         
-        return filterString
+       return filterString
     }
 }

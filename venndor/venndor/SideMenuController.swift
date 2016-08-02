@@ -22,12 +22,10 @@ class SideMenuController: UIViewController {
         self.view.backgroundColor = (UIColorFromHex(0x2c3e50))
         //create and load the users profile picture
         let profilePic: UIImageView! = UIImageView(frame: CGRectMake(screenSize.width*0.16, screenSize.height*0.06, screenSize.width*0.27, screenSize.width*0.27))
-        
-        /*NEEDS REFACTORING*/
         let link = NSURL(string: LocalUser.profilePictureURL)
         let pictureData = NSData(contentsOfURL: link!)
-        profilePic.image = UIImage(data: pictureData!)
         
+        profilePic.image = UIImage(data: pictureData!)
         profilePic.layer.masksToBounds = false
         profilePic.layer.cornerRadius = (profilePic.frame.size.width)/2
         profilePic.clipsToBounds = true
