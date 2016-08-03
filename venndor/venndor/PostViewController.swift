@@ -78,6 +78,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setupLabels()
         setupPriceInput()
         sideMenuGestureSetup()
+        revealViewController().rightViewController = nil
         setupImageViews()
         setupScrollView()
         setupDivide()

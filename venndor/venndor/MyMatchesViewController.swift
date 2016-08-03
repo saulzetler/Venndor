@@ -85,23 +85,13 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
                     matchContainer.addGestureRecognizer(tap)
                     
-                    //retrieve the match thumbnail
-                    MatchesManager.globalManager.retrieveMatchThumbnail(match) { img, error in
-                        guard error == nil else {
-                            print("Error retrieving match images: \(error)")
-                            return
-                        }
-                        if let img = img {
-                            match.thumbnail = img
-                            matchContainer.match = match
-                            //self.addContainerContent(matchContainer, img: img, match: match)
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.addContainerContent(matchContainer, img: img, match: match)
-                                self.distSet = false
-                            }
-                        }
-                    }
                     
+                        matchContainer.match = match
+                    //self.addContainerContent(matchContainer, img: img, match: match)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.addContainerContent(matchContainer, img: match.thumbnail, match: match)
+                        self.distSet = false
+                    }
                     matchContainerView.addSubview(matchContainer)
                     index += 1
                 }
@@ -125,21 +115,9 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
                     matchContainer.addGestureRecognizer(tap)
                     
-                    //retrieve the match thumbnail
-                    MatchesManager.globalManager.retrieveMatchThumbnail(match) { img, error in
-                        guard error == nil else {
-                            print("Error retrieving match images: \(error)")
-                            return
-                        }
-                        if let img = img {
-                            match.thumbnail = img
-                            matchContainer.match = match
-                            //self.addContainerContent(matchContainer, img: img, match: match)
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.addContainerContent(matchContainer, img: img, match: match)
-                                self.distSet = false
-                            }
-                        }
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.addContainerContent(matchContainer, img: match.thumbnail, match: match)
+                        self.distSet = false
                     }
                     
                     matchContainerView.addSubview(matchContainer)
@@ -175,6 +153,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         addHeaderItems("Your Matches")
         sideMenuGestureSetup()
+        revealViewController().rightViewController = nil
 //        addGestureRecognizer()
 //        setupButtons()
         
