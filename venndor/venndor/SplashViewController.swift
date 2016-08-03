@@ -104,32 +104,37 @@ class SplashViewController: UIViewController {
         
         updateSeenPosts()
         
+        //pull user's matches
         MatchesManager.globalManager.retrieveUserMatches(LocalUser.user) { matches, error in
             guard error == nil else {
                 print("Error retrieving user matches from server: \(error)")
                 return
             }
+            
             if let matches = matches {
+                
                 LocalUser.matches = matches
                 print("Succesfully set the LocalUser's matches")
+                
+                //pull user's posts
+                PostManager.globalManager.retrieveUserPosts(LocalUser.user) { posts, error in
+                    guard error == nil else {
+                        print("Error retrieving user posts from the server: \(error)")
+                        return
+                    }
+                    
+                    if let posts = posts {
+                        LocalUser.posts = posts
+                        print("Succesfully set the LocalUser's posts.")
+                        
+                        dispatch_async(dispatch_get_main_queue()) {
+                            self.performSegueWithIdentifier("showBrowse", sender: self)
+                        }
+                    }
+                }
             }
         }
         
-        PostManager.globalManager.retrieveUserPosts(LocalUser.user) { posts, error in
-            guard error == nil else {
-                print("Error retrieving user posts from the server: \(error)")
-                return
-            }
-            
-            if let posts = posts {
-                LocalUser.posts = posts
-                print("Succesfully set the LocalUser's posts.")
-            }
-        }
-            
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("showBrowse", sender: self)
-        }
     }
     
     func updateSeenPosts() {
