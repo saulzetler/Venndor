@@ -60,8 +60,10 @@ class ItemInfoViewController: UIViewController {
     }
     
     func setupHeaderLogo() {
-        let logoView = UIView(frame: CGRectMake(screenSize.width*0.25, 24, screenSize.width*0.5, 30))
-        logoView.backgroundColor = UIColor.redColor()
+        let logoView = UIImageView(frame: CGRectMake(screenSize.width*0.25, 24, screenSize.width*0.5, 30))
+        logoView.image = UIImage(named: "title.png")
+        logoView.contentMode = .ScaleAspectFill
+        logoView.backgroundColor = UIColor.clearColor()
         self.header.addSubview(logoView)
     }
     
