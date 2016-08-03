@@ -82,6 +82,7 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         itemCondition = UIView(frame: CGRect(x: itemInfo.frame.width*0.27, y: itemInfo.frame.height * 1.2, width: itemInfo.frame.width*0.30, height: itemInfo.frame.height*0.45))
         itemCondition.userInteractionEnabled = false
         itemInfo.addSubview(itemCondition)
+        //self.setupItemCondition()
         
         itemConditionLabel = UILabel(frame:CGRect(x: itemInfo.frame.width*0.03, y: itemInfo.frame.height * 1.2, width: itemInfo.frame.width*0.22, height: itemInfo.frame.height*0.37))
         itemConditionLabel.text = "Condition"
@@ -133,10 +134,7 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
                 }
             }
         }
-        
-        
-
-        
+    
         setupDistance(item, myLocation: myLocation)
         
         
@@ -144,6 +142,17 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         self.bringSubviewToFront(itemInfo)
     }
     
+    func setupItemCondition() {
+        let size = 10
+        var ratingFrame = CGRect(x: 0, y: 0, width: size, height: size)
+        let condition = currentItem.condition
+        for rating in 0...currentItem.condition {
+            let star = UIImageView(frame: ratingFrame)
+
+            ratingFrame.origin.x = CGFloat(rating) * CGFloat(size)
+            self.itemCondition.addSubview(star)
+        }
+    }
     
     func setupSellerNameLabel(name: String) -> UILabel {
         let sellerNameLabel = UILabel(frame: CGRect(x: self.itemInfo.frame.width*0.65, y: self.itemInfo.frame.height * 6.7, width: self.screenSize.width*0.3, height: self.screenSize.width*0.45))
@@ -271,6 +280,7 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
                         let temp2 = UIImageView(frame: CGRectMake(0, scrollViewHeight*CGFloat(x),scrollViewWidth, scrollViewHeight))
                         temp2.image = phonto
                         temp2.contentMode = .ScaleAspectFill
+                        temp2.clipsToBounds = true
                         self.containerView.addSubview(temp2)
                     }
                 }

@@ -74,7 +74,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         self.revealViewController().delegate = self
         
-        
         let filter = ItemManager.globalManager.constructFeedFilter()
         ItemManager.globalManager.retrieveMultipleItems(5, offset: nil, filter: filter, fields: nil) { items, error in
             guard error == nil else {
