@@ -43,6 +43,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var previewYears: UIButton!
     var previewCondition: UIButton!
     var previewDescription: UIButton!
+    var previewLocation: UIButton!
+    var previewPrice: UIButton!
     var ratingPreviewContainer: UIView!
     var descriptionContainer: UIView!
 
@@ -94,6 +96,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setYearsPreview()
         setDescriptionPreview()
         setInitialCondition()
+        setLocationPreview()
+        setPricePreview()
         hideKeyboardWhenTappedAround()
         self.revealViewController().delegate = self
         filledImagesArray = []
@@ -332,7 +336,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         pin.appearAnimation = kGMSMarkerAnimationPop
         pin.map = mapView
         useMyLocation = true
-        
+        updateLocationPreview(true)
     }
     
     func searchClicked(sender: UIButton) {
@@ -386,6 +390,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let pin = GMSMarker(position: place.coordinate)
         pin.appearAnimation = kGMSMarkerAnimationPop
         pin.map = mapView
+        updateLocationPreview(false)
     }
     
     func viewController(viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: NSError) {
@@ -453,13 +458,14 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         border.borderColor = UIColorFromHex(0x34495e).CGColor
         priceField.layer.addSublayer(border)
         priceField.layer.masksToBounds = true
-        
+        priceField.tag = 30
         priceField.textColor = UIColorFromHex(0x34495e)
         priceField.textAlignment = .Center
         priceField.clearsOnBeginEditing = true
         priceField.font = UIFont(name: "Avenir", size: 50)
         priceField.returnKeyType = .Done
         priceField.keyboardType = .NumberPad
+        priceField.delegate = self
         
         //Add done button to numeric pad keyboard
         let toolbarDone = UIToolbar.init()
@@ -572,10 +578,16 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        if textField.text == "" {
-            textField.text = "Item Name"
+        print("ended")
+        if textField.tag == 30 {
+            previewPrice.setTitle("Minimmum price is: $\(String(textField.text!))", forState: .Normal)
         }
-        updatePreviewName()
+        else {
+            if textField.text == "" {
+                textField.text = "Item Name"
+            }
+            updatePreviewName()
+        }
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
@@ -655,7 +667,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setInitialCondition() {
-        let initialConditionFrame = CGRect(x: screenSize.width*0.2, y: screenSize.height*7.5, width: screenSize.width*0.6, height: screenSize.height*0.07)
+        let initialConditionFrame = CGRect(x: screenSize.width*0.2, y: screenSize.height*7.5, width: screenSize.width*0.6, height: screenSize.height*0.05)
         let label = makeTextButton("Zero stars filled", frame: initialConditionFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
         label.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         label.tag = 25
@@ -699,28 +711,47 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func setDescriptionPreview() {
         
         ratingPreviewContainer = UIView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*7.5, screenSize.width*0.07*5, screenSize.width*0.07))
-        let descriptionPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height, screenSize.width*0.7, screenSize.height*0.3)
+        let descriptionPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height, screenSize.width*0.7, screenSize.height*0.15)
         descriptionContainer = UIView(frame: descriptionPreviewFrame)
+//        descriptionContainer.backgroundColor = U IColor.whiteColor()
         let labelFrame = CGRect(x: 0, y: 0, width: descriptionPreviewFrame.width, height: descriptionPreviewFrame.height)
         
         previewDescription = makeTextButton("Description", frame: labelFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
-        previewDescription.tag = 4
-        previewDescription.backgroundColor = UIColorFromHex(0xecf0f1)
+//        previewDescription.backgroundColor = UIColor.whiteColor()
+        previewDescription.tag = 3
         previewDescription.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewDescription.contentVerticalAlignment = UIControlContentVerticalAlignment.Top
         previewDescription.titleLabel?.lineBreakMode = .ByWordWrapping
-        previewDescription.titleLabel?.numberOfLines = 4
+        previewDescription.titleLabel?.numberOfLines = 3
         previewDescription.sizeThatFits(descriptionContainer.frame.size)
         descriptionContainer.addSubview(previewDescription)
         containerView.addSubview(descriptionContainer)
     }
     
     func setLocationPreview() {
-        let locationPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.45, screenSize.width*0.6, screenSize.height*0.05)
-        previewYears = makeTextButton("0 years old", frame: locationPreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
-        previewYears.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
-        previewYears.tag = 3
-        containerView.addSubview(previewYears)
+        let locationPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height, screenSize.width*0.6, screenSize.height*0.05)
+        previewLocation = makeTextButton("Using current location", frame: locationPreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewLocation.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        previewLocation.tag = 5
+        containerView.addSubview(previewLocation)
+    }
+    
+    func updateLocationPreview(useLocation: Bool) {
+        if useLocation {
+            previewLocation.setTitle("Using current location", forState: .Normal)
+        }
+        else {
+            let placeName: String = currentPlace.name
+            previewLocation.setTitle(placeName, forState: .Normal)
+        }
+    }
+    
+    func setPricePreview() {
+        let pricePreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height+previewLocation.frame.height, screenSize.width*0.6, screenSize.height*0.05)
+        previewPrice = makeTextButton("No minimum price set", frame: pricePreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewPrice.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        previewPrice.tag = 6
+        containerView.addSubview(previewPrice)
     }
     
     //IMAGE SELECTION METHODS
