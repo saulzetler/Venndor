@@ -42,7 +42,9 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var previewCategory: UIButton!
     var previewYears: UIButton!
     var previewCondition: UIButton!
-    var previewDescription: UILabel!
+    var previewDescription: UIButton!
+    var ratingPreviewContainer: UIView!
+    var descriptionContainer: UIView!
 
     
     var postButton: UIButton!
@@ -91,6 +93,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setCategoryPreview()
         setYearsPreview()
         setDescriptionPreview()
+        setInitialCondition()
         hideKeyboardWhenTappedAround()
         self.revealViewController().delegate = self
         filledImagesArray = []
@@ -208,6 +211,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     //create the text field required for the user to input a basic description of the item
     func setupItemDescription() {
         itemDescription = UITextView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*4.3, self.screenSize.width*0.7, screenSize.height*0.25))
+        itemDescription.tag = 105
         itemDescription.text = "Additional Info"
         itemDescription.font = UIFont(name: "Avenir", size: 15)
         itemDescription.textColor = UIColorFromHex(0x34495e)
@@ -590,17 +594,18 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func textViewDidEndEditing(textView: UITextView) {
         textView.resignFirstResponder()
-        if textView.text == "" {
-            textView.text = "Additional Info"
-            previewDescription.text = "Description"
-            previewDescription.sizeToFit()
-
+        if textView.tag == 105 {
+            if textView.text == "" {
+                textView.text = "Additional Info"
+                previewDescription.setTitle("Description", forState: .Normal)
+                previewDescription.sizeThatFits(descriptionContainer.frame.size)
+                
+            }
+            else {
+                previewDescription.setTitle(textView.text, forState: .Normal)
+                previewDescription.sizeThatFits(descriptionContainer.frame.size)
+            }
         }
-        else {
-            previewDescription.text = textView.text
-            previewDescription.sizeToFit()
-        }
-        
     }
     
     func textFieldShouldReturn(textField: UITextField) -> Bool {
@@ -649,18 +654,35 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         previewYears.setTitle("\(years) years old", forState: .Normal)
     }
     
+    func setInitialCondition() {
+        let initialConditionFrame = CGRect(x: screenSize.width*0.2, y: screenSize.height*7.5, width: screenSize.width*0.6, height: screenSize.height*0.07)
+        let label = makeTextButton("Zero stars filled", frame: initialConditionFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        label.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        label.tag = 25
+        containerView.addSubview(label)
+    }
+    
     func setConditionPreview() {
         
-        let size = screenSize.width*0.1
-        let container = UIView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*7.5, size*5, size))
-        container.tag = 20
-        containerView.addSubview(container)
+        for view in containerView.subviews {
+            if view.tag == 25 {
+                view.removeFromSuperview()
+            }
+        }
+        if ratingControl.rating == 0 {
+            setInitialCondition()
+        }
+        
+        let size = screenSize.width*0.07
+        
+        ratingPreviewContainer.tag = 20
+        containerView.addSubview(ratingPreviewContainer)
         var ratingFrame = CGRectMake(0, 0, size, size)
         for rating in 0...ratingControl.rating {
             let star = makeImageButton("Star_Filled.png", frame: ratingFrame, target: #selector(PostViewController.changePage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
             star.tag = 3
             ratingFrame.origin.x = CGFloat(rating) * size
-            container.addSubview(star)
+            ratingPreviewContainer.addSubview(star)
         }
     }
     
@@ -675,15 +697,30 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setDescriptionPreview() {
-        let descriptionPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.55, screenSize.width*0.8, screenSize.height*0.1)
-        let descriptionContainer = UIView(frame: descriptionPreviewFrame)
         
-        previewDescription = customLabel(descriptionPreviewFrame, text: "Description", color: UIColorFromHex(0x34495e), fontSize: 12)
+        ratingPreviewContainer = UIView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*7.5, screenSize.width*0.07*5, screenSize.width*0.07))
+        let descriptionPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height, screenSize.width*0.7, screenSize.height*0.3)
+        descriptionContainer = UIView(frame: descriptionPreviewFrame)
+        let labelFrame = CGRect(x: 0, y: 0, width: descriptionPreviewFrame.width, height: descriptionPreviewFrame.height)
+        
+        previewDescription = makeTextButton("Description", frame: labelFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewDescription.tag = 4
-        previewDescription.numberOfLines = 3
-        previewDescription.sizeToFit()
+        previewDescription.backgroundColor = UIColorFromHex(0xecf0f1)
+        previewDescription.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        previewDescription.contentVerticalAlignment = UIControlContentVerticalAlignment.Top
+        previewDescription.titleLabel?.lineBreakMode = .ByWordWrapping
+        previewDescription.titleLabel?.numberOfLines = 4
+        previewDescription.sizeThatFits(descriptionContainer.frame.size)
         descriptionContainer.addSubview(previewDescription)
         containerView.addSubview(descriptionContainer)
+    }
+    
+    func setLocationPreview() {
+        let locationPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.45, screenSize.width*0.6, screenSize.height*0.05)
+        previewYears = makeTextButton("0 years old", frame: locationPreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewYears.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        previewYears.tag = 3
+        containerView.addSubview(previewYears)
     }
     
     //IMAGE SELECTION METHODS
@@ -758,7 +795,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     /* TO BE FIXED */
     
     func changePage(sender: AnyObject) -> () {
-        pageNum = sender.tag
+        if sender.tag == 25 {
+            pageNum = 3
+        }else {
+           pageNum = sender.tag
+        }
         let y = CGFloat(pageNum) * scrollView.frame.size.height
         scrollView.setContentOffset(CGPointMake(0, y), animated: true)
         updateIndicators()
