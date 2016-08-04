@@ -86,21 +86,9 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
                     let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.toggleItemInfo(_:)))
                     postContainer.addGestureRecognizer(tap)
                     
-                    //retrieve the match thumbnail
-                    manager.retrievePostThumbnail(post) { img, error in
-                        guard error == nil else {
-                            print("Error retrieving match images: \(error)")
-                            return
-                        }
-                        if let img = img {
-                            post.thumbnail = img
-                            postContainer.post = post
-                            //self.addContainerContent(postContainer, img: img, match: match)
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.addContainerContent(postContainer, post: post)
-                                self.distSet = false
-                            }
-                        }
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.addContainerContent(postContainer, post: post)
+                        self.distSet = false
                     }
                     
                     postContainerView.addSubview(postContainer)
@@ -126,21 +114,9 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
                     let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
                     postContainer.addGestureRecognizer(tap)
                     
-                    //retrieve the match thumbnail
-                    manager.retrievePostThumbnail(post) { img, error in
-                        guard error == nil else {
-                            print("Error retrieving match images: \(error)")
-                            return
-                        }
-                        if let img = img {
-                            post.thumbnail = img
-                            postContainer.post = post
-                            //self.addContainerContent(postContainer, img: img, match: match)
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.addContainerContent(postContainer, post: post)
-                                self.distSet = false
-                            }
-                        }
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.addContainerContent(postContainer, post: post)
+                        self.distSet = false
                     }
                     
                     postContainerView.addSubview(postContainer)
@@ -179,6 +155,8 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         
         addHeaderItems("Your Posts")
         sideMenuGestureSetup()
+        revealViewController().rightViewController = nil
+        
         //        addGestureRecognizer()
         //        setupButtons()
         
@@ -187,10 +165,10 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
+    
     func toggleItemInfo(sender: UITapGestureRecognizer) {
         let containerView = sender.view as! ItemContainer
-        let manager = ItemManager()
-        manager.retrieveItemById(containerView.match.itemID) { item, error in
+        ItemManager.globalManager.retrieveItemById(containerView.post.itemID) { item, error in
             guard error == nil else {
                 print("error pulling item data from tapped match: \(error)")
                 return
