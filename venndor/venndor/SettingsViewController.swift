@@ -41,7 +41,7 @@ class SettingsViewController: UIViewController {
         //add the generic views of each page ie. header and side menu
         addHeaderOther("Settings")
         sideMenuGestureSetup()
-        
+        revealViewController().rightViewController = nil
         self.revealViewController().delegate = self
         
     }
