@@ -72,6 +72,7 @@
 		E43070E21D22F39D0035BCF4 /* OfferView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43070E11D22F39D0035BCF4 /* OfferView.swift */; };
 		E43070E41D22FDC80035BCF4 /* Back_Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E43070E31D22FDC80035BCF4 /* Back_Arrow.png */; };
 		E43070E61D2312B00035BCF4 /* OfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43070E51D2312B00035BCF4 /* OfferViewController.swift */; };
+		E43722A81D538C2100C09F56 /* ProfileViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43722A71D538C2100C09F56 /* ProfileViewController.swift */; };
 		E43893D11D47A95400431E79 /* MessageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43893D01D47A95400431E79 /* MessageViewController.swift */; };
 		E43893D51D47AB7E00431E79 /* SlackTextViewController.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E43893D41D47AB7E00431E79 /* SlackTextViewController.framework */; };
 		E43C92B51D189C67003E9CF5 /* ItemNameTextField.swift in Sources */ = {isa = PBXBuildFile; fileRef = E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */; };
@@ -213,6 +214,7 @@
 		E43070E11D22F39D0035BCF4 /* OfferView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferView.swift; sourceTree = "<group>"; };
 		E43070E31D22FDC80035BCF4 /* Back_Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Back_Arrow.png; sourceTree = "<group>"; };
 		E43070E51D2312B00035BCF4 /* OfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferViewController.swift; sourceTree = "<group>"; };
+		E43722A71D538C2100C09F56 /* ProfileViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ProfileViewController.swift; sourceTree = "<group>"; };
 		E43893D01D47A95400431E79 /* MessageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MessageViewController.swift; sourceTree = "<group>"; };
 		E43893D41D47AB7E00431E79 /* SlackTextViewController.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SlackTextViewController.framework; path = "../../../Library/Developer/Xcode/DerivedData/venndor-cjexyuheznflryetuxeryodhnzpo/Build/Products/Debug-iphoneos/SlackTextViewController/SlackTextViewController.framework"; sourceTree = "<group>"; };
 		E43C92B41D189C67003E9CF5 /* ItemNameTextField.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemNameTextField.swift; sourceTree = "<group>"; };
@@ -315,6 +317,7 @@
 				109D93531D3E9BEB00A14616 /* Splash2ViewController.swift */,
 				10FC75E41D3FC48D002A7F63 /* LoginPageViewController.swift */,
 				E43893D01D47A95400431E79 /* MessageViewController.swift */,
+				E43722A71D538C2100C09F56 /* ProfileViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -898,6 +901,7 @@
 				103D114A1D3831CD004CE297 /* MyItemHeaderView.swift in Sources */,
 				6319462A1D22F19800715643 /* SeenPostsManager.swift in Sources */,
 				10ADC9A81D0749700028A999 /* AppDelegate.swift in Sources */,
+				E43722A81D538C2100C09F56 /* ProfileViewController.swift in Sources */,
 				E43070E21D22F39D0035BCF4 /* OfferView.swift in Sources */,
 				10F6B3391D2D5F78008B83A8 /* MatchController.swift in Sources */,
 				101F43CE1D107A55007E0ADE /* HeaderView.swift in Sources */,

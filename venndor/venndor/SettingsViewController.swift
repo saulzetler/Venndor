@@ -9,15 +9,16 @@
 import Foundation
 import UIKit
 
-class SettingsViewController: UIViewController {
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
     
     var containerView: UIView!
     let screenSize = UIScreen.mainScreen().bounds
+    var tableViewItems = ["About Venndor", "Delete Account", "Log Out"]
     
     var sessionStart: NSDate!
 
     //logout button for when the user wants to log out
-    @IBAction func logOut(sender: UIButton) {
+    func logOut(sender: UIButton) {
         //logs the user out of facebook along with out app
         let loginManager = FBSDKLoginManager()
         loginManager.logOut()
@@ -31,13 +32,6 @@ class SettingsViewController: UIViewController {
         LocalUser.user.mostRecentAction = "Went to Settings"
         sessionStart = NSDate()
         
-        //add lable for the title, NEEDS REFACTORING
-        let label = UILabel(frame: CGRectMake(0, 0, 200, 21))
-        label.center = CGPointMake(160, 284)
-        label.textAlignment = NSTextAlignment.Center
-        label.text = "Settings"
-        containerView.addSubview(label)
-        
         //add the generic views of each page ie. header and side menu
         addHeaderOther("Settings")
         sideMenuGestureSetup()
@@ -45,6 +39,34 @@ class SettingsViewController: UIViewController {
         self.revealViewController().delegate = self
         
     }
+    
+    func setUpTableView() {
+        let tableView = UITableView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height*0.3))
+        tableView.delegate = self
+        tableView.dataSource = self
+        tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        containerView.addSubview(tableView)
+        
+    }
+    
+    func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
+        return self.tableViewItems.count
+    }
+    
+    func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
+        
+        var cell:UITableViewCell = tableView.dequeueReusableCellWithIdentifier("cell")! as UITableViewCell
+        
+        cell.textLabel?.text = self.tableViewItems[indexPath.row]
+        
+        return cell
+        
+    }
+    
+    func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print("You selected cell #\(indexPath.row)!")
+    }
+    
     
     func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
         if((position == FrontViewPosition.Left)) {
