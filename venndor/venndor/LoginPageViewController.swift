@@ -28,8 +28,8 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
         slogan2.text = "Save time and hassle."
         slogan.textColor = UIColor.whiteColor()
         slogan2.textColor = UIColor.whiteColor()
-        slogan.font = UIFont(name: "Avenir", size: 30)
-        slogan2.font = UIFont(name: "Avenir", size: 28)
+        slogan.font = UIFont(name: "Avenir", size: 28)
+        slogan2.font = UIFont(name: "Avenir", size: 26)
         
         self.view.addSubview(slogan)
         self.view.addSubview(slogan2)
@@ -87,7 +87,7 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
                 
                 
                 //transition when great success
-                self.performSegueWithIdentifier("showSplash", sender: self)
+                self.performSegueWithIdentifier("toSplash", sender: self)
             }
         }
     }

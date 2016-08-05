@@ -924,7 +924,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             //create the item object on the server
             ItemManager.globalManager.createItem(item) { error in
                 guard error == nil else {
-                    print("GOOD FUCKING JOB BUDDY YOU BROKE EVERYTHING i fucking hate u")
+                    print("GOOD FUCKING JOB BUDDY YOU BROKE EVERYTHING. I fucking hate u")
                     return
                 }
             
@@ -939,11 +939,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     let update : [String:AnyObject] = ["posts": LocalUser.user.posts, "nuPosts": LocalUser.user.nuPosts]
                     UserManager.globalManager.updateUserById(LocalUser.user.id, update: update) { error in
                         guard error == nil else {
-                            print("Error updating the LocalUser's posts from post screen: \(error)")
+                            print("Error updating the User's posts from post screen: \(error)")
                             return
                         }
                         
-                        print("Succesfully updated LocalUser's ads from post screen.")
+                        print("Succesfully updated User's ads from post screen.")
                         self.performSegueWithIdentifier("backToBrowse", sender: self)
                     }
                 

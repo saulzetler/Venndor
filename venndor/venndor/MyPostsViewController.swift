@@ -42,8 +42,6 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         
         self.revealViewController().delegate = self
         
-        let manager = PostManager()
-        
         //set up prelimenary variables to make for-loop more readable
         var index:CGFloat = 0.0
         let yOrigin = screenSize.height * 0.1
@@ -113,7 +111,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
                     //create the match container view
                     let postContainer = ItemContainer(frame: CGRect(x: 0, y: screenSize.height * 0.11 + (index * containerHeight) + postTitle + soldTitle-screenSize.height*0.018, width: screenSize.width, height: containerHeight))
                     
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.toggleItemInfo(_:)))
                     postContainer.addGestureRecognizer(tap)
                     
                     dispatch_async(dispatch_get_main_queue()) {
@@ -167,7 +165,6 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-    
     func toggleItemInfo(sender: UITapGestureRecognizer) {
         let containerView = sender.view as! ItemContainer
         let post = containerView.post
@@ -193,7 +190,6 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             ivc.item = tappedItem
         }
     }
-
     
     func addContainerContent(postContainer: ItemContainer, post: Post) {
         postContainer.post = post
@@ -268,43 +264,6 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             deactivate()
         }
     }
-    
-    
-    
-    
-    
-    //
-    //    //function to control the switching between the 2 possible views given a passed boolean.
-    //    func toggleView(toMatches: Bool) {
-    //        if toMatches {
-    //            //check if the user is on the bought page
-    //            if onMatches == false {
-    //                matchesButton.selected = true
-    //                boughtButton.selected = false
-    //                boughtBar.backgroundColor = UIColor.whiteColor()
-    //                matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
-    //                //add the correct subview and remove the previous
-    //                //MAY NEED TO BE CHANGED TO HIDDEN INSTEAD OF REMOVE maybe not TO BE DETERMIENRIDESD
-    //                boughtContainerView.removeFromSuperview()
-    //                scrollView.addSubview(postContainerView)
-    //                onMatches = true
-    //            }
-    //        }
-    //        else {
-    //            //check if the user is on the match page
-    //            if onMatches == true {
-    //                boughtButton.selected = true
-    //                matchesButton.selected = false
-    //                matchesBar.backgroundColor = UIColor.whiteColor()
-    //                boughtBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
-    //                //add the correct subview and remove the previous
-    //                //MAY NEED TO BE CHANGED TO HIDDEN INSTEAD OF REMOVE maybe not TO BE DETERMIENRIDESD
-    //                postContainerView.removeFromSuperview()
-    //                scrollView.addSubview(boughtContainerView)
-    //                onMatches = false
-    //            }
-    //        }
-    //    }
     
     func none(sender: UIButton) {
         

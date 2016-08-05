@@ -162,7 +162,7 @@ class SplashViewController: UIViewController {
     
     func triggerSegueTutorial(){
         dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("goTutorial", sender: self)
+            self.performSegueWithIdentifier("toNumber", sender: self)
         }
     }
     
