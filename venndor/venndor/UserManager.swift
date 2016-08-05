@@ -31,6 +31,7 @@ struct UserManager {
                         "gender": gender,
                         "ageRange": ageRange,
                         "profilePictureURL": LocalUser.profilePictureURL,
+                        "facebookID": LocalUser.facebookID,
                         "university": "",
                         "howTheyFoundVenndor": "",
                         "rating": 0.0,

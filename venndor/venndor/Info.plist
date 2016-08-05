@@ -35,6 +35,9 @@
 	<string>Venndor</string>
 	<key>LSApplicationQueriesSchemes</key>
 	<array>
+        <string>fb</string>
+        <string>fbshareextension</string>
+        <string>fb-messenger-api</string>
 		<string>fbapi</string>
 		<string>fbapi20130214</string>
 		<string>fbapi20130410</string>

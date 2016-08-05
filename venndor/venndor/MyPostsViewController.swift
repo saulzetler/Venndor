@@ -86,10 +86,13 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
                     let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.toggleItemInfo(_:)))
                     postContainer.addGestureRecognizer(tap)
                     
+
                     dispatch_async(dispatch_get_main_queue()) {
                         self.addContainerContent(postContainer, post: post)
                         self.distSet = false
                     }
+                        
+                    
                     
                     postContainerView.addSubview(postContainer)
                     index += 1

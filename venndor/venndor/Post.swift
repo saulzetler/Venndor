@@ -25,13 +25,14 @@ class Post: NSObject {
     var sold: Int!
     var dateSold: NSDate! //to be set when item is sold
     
-    init(itemID: String, itemName: String, itemDescription: String, userID: String, minPrice: Int, thumbnailString: String, itemLongitude: Double!, itemLatitude: Double!) {
+    init(itemID: String, itemName: String, itemDescription: String, userID: String, minPrice: Int, thumbnail: UIImage, thumbnailString: String, itemLongitude: Double!, itemLatitude: Double!) {
         self.itemID = itemID
         self.itemName = itemName
         self.itemDescription = itemDescription
         self.userID = userID
         self.minPrice = minPrice
         self.thumbnailString = thumbnailString
+        self.thumbnail = thumbnail
         self.itemLongitude = itemLongitude
         self.itemLatitude = itemLatitude
         self.sold = 0

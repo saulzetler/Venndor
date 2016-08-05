@@ -11,10 +11,12 @@ import UIKit
 class ItemInfoViewController: UIViewController {
     
     var item: Item!
+    var match: Match! 
     var sessionStart: NSDate!
     
     //view attributes
     var header: UIView!
+    var headerTitle: String! 
     var backButton: UIButton!
     var buyButton: UIButton!
     
@@ -30,10 +32,12 @@ class ItemInfoViewController: UIViewController {
         let itemInfoView = createItemInfoView(item)
         self.view.addSubview(itemInfoView)
         
-        setupHeaderFrame()
-        setupHeaderLogo()
-        setupBackButton()
-        setupBuyButton()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.setupHeaderFrame()
+            self.setupHeaderTitle()
+            self.setupBackButton()
+            self.setupBuyButton()
+        }
         
         self.view.backgroundColor = UIColorFromHex(0xecf0f1)
         sessionStart = NSDate()
@@ -59,11 +63,12 @@ class ItemInfoViewController: UIViewController {
         self.view.addSubview(header)
     }
     
-    func setupHeaderLogo() {
-        let logoView = UIImageView(frame: CGRectMake(screenSize.width*0.25, 24, screenSize.width*0.5, 30))
-        logoView.image = UIImage(named: "title.png")
-        logoView.contentMode = .ScaleAspectFill
-        logoView.backgroundColor = UIColor.clearColor()
+    func setupHeaderTitle() {
+        let logoView = UILabel(frame: CGRectMake(screenSize.width*0.11, 26, screenSize.width*0.8, 30))
+        logoView.text = self.headerTitle
+        logoView.textAlignment = .Center
+        logoView.font = logoView.font.fontWithSize(20)
+        logoView.textColor = UIColor.whiteColor()
         self.header.addSubview(logoView)
     }
     
@@ -72,7 +77,7 @@ class ItemInfoViewController: UIViewController {
         let backImage = UIImage(named: "Back-50.png")
 
         backButton = UIButton(type: UIButtonType.Custom) as UIButton
-        backButton.frame = CGRectMake(17, 27, screenSize.width*0.15, 25)
+        backButton.frame = CGRectMake(17, 24, screenSize.width*0.15, 25)
         backButton.setImage(backImage, forState: .Normal)
         backButton.imageView?.contentMode = UIViewContentMode.Center
         backButton.addTarget(self, action: #selector(ItemInfoViewController.dismissController(_:)), forControlEvents: UIControlEvents.TouchUpInside)
@@ -87,9 +92,34 @@ class ItemInfoViewController: UIViewController {
         buyButton.backgroundColor = UIColorFromHex(0x34495e)
         buyButton.setTitle("BUY", forState: UIControlState.Normal)
         buyButton.titleLabel?.textColor = UIColor.whiteColor()
+        buyButton.addTarget(self, action: #selector(ItemInfoViewController.toggleBuy), forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(buyButton)
     }
     
+    func toggleBuy() {
+        print("Buy tapped!")
+        self.definesPresentationContext = true
+        UserManager.globalManager.retrieveUserById(item.owner) { user, error in
+            guard error == nil else {
+                print("Error retrieving seller in Buy screen: \(error)")
+                return
+            }
+            
+            if let user = user {
+                let bvc = BuyViewController()
+                bvc.match = self.match
+                bvc.seller = user
+                bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+                bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+                self.presentViewController(bvc, animated: true, completion: nil)
+            }
+            else {
+                print("Error with parsing user in buy screen. Returning now.")
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+        
+    }
     
     func dismissController(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
