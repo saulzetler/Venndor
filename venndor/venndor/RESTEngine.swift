@@ -233,6 +233,7 @@ final class RESTEngine {
             "gender": gender,
             "ageRange": ageRange,
             "profilePictureURL": LocalUser.profilePictureURL,
+            "facebookID": LocalUser.facebookID,
             "howTheyFoundVenndor": "", //NI
             "university": "",  //NI
             "rating": 0.0,  //NI
@@ -244,8 +245,8 @@ final class RESTEngine {
             "nuSwipesTotal": 0,
             "nuPosts": 0,
             "nuVisits": 1,
-            "mostRecentAction": "Created Account.", //NI
-            "timeOnAppPerSession": [String:Double](), //NI
+            "mostRecentAction": "Created Account.",
+            "timeOnAppPerSession": [String:Double](), 
             "timePerController": ["LoginViewController": 0.0, "BrowseViewController": 0.0, "ProfilePageViewController": 0.0, "PostViewController": 0.0, "SettingsViewController": 0.0, "MyPostsViewController": 0.0, "MyMatchesViewController": 0.0, "OfferViewController": 0.0, "DeleteViewController": 0.0, "PopUpViewController": 0.0, "ItemInfoViewController":0.0],
             "moneySaved": 0.0, //NI
             "soldItems": [String:AnyObject](), //NI

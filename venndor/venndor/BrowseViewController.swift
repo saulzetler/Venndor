@@ -261,6 +261,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         let priceLabel = UILabel(frame: CGRect(x: priceContainer.frame.size.width * 0.2, y:0, width: priceContainer.frame.width, height: priceContainer.frame.height))
 
         priceLabel.text = "$\(matchedPrice)"
+        priceLabel.textAlignment = .Center
         priceLabel.numberOfLines = 1
         priceLabel.textColor = UIColor.whiteColor()
         priceLabel.font = priceLabel.font.fontWithSize(15)
@@ -282,11 +283,12 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             }
             
             if let item = item {
-                let infoViewController = ItemInfoViewController()
-                infoViewController.item = item
-                
+                let itemInfoViewController = ItemInfoViewController()
+                itemInfoViewController.item = item
+                itemInfoViewController.match = match 
+                itemInfoViewController.headerTitle = "Your Matches"
                 self.miniAlertController.dismissViewControllerAnimated(true, completion: nil)
-                self.presentViewController(infoViewController, animated: true, completion: nil)
+                self.presentViewController(itemInfoViewController, animated: true, completion: nil)
             }
         }
     }

@@ -60,6 +60,9 @@
 		63220ED01D47C77B006D02C9 /* PostManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63220ECF1D47C77B006D02C9 /* PostManager.swift */; };
 		632236AF1D36C06900C321D3 /* ItemContainer.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632236AE1D36C06900C321D3 /* ItemContainer.swift */; };
 		632236B11D36C2CD00C321D3 /* ItemInfoViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 632236B01D36C2CD00C321D3 /* ItemInfoViewController.swift */; };
+		6354154A1D5289280012BD2B /* BuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 635415491D5289280012BD2B /* BuyViewController.swift */; };
+		6354154E1D53A4A10012BD2B /* Cancel-48.png in Resources */ = {isa = PBXBuildFile; fileRef = 6354154D1D53A4A10012BD2B /* Cancel-48.png */; };
+		635415501D53A8EA0012BD2B /* fbIcon.png in Resources */ = {isa = PBXBuildFile; fileRef = 6354154F1D53A8EA0012BD2B /* fbIcon.png */; };
 		63859A131D13347C004F4968 /* NIKApiInvoker.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A101D13347C004F4968 /* NIKApiInvoker.swift */; };
 		63859A141D13347C004F4968 /* NIKFile.swift in Sources */ = {isa = PBXBuildFile; fileRef = 63859A111D13347C004F4968 /* NIKFile.swift */; };
 		638DF3E81D2C3C7C00319FD8 /* MatchesManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 638DF3E71D2C3C7C00319FD8 /* MatchesManager.swift */; };
@@ -196,6 +199,9 @@
 		63220ECF1D47C77B006D02C9 /* PostManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostManager.swift; sourceTree = "<group>"; };
 		632236AE1D36C06900C321D3 /* ItemContainer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemContainer.swift; sourceTree = "<group>"; };
 		632236B01D36C2CD00C321D3 /* ItemInfoViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ItemInfoViewController.swift; sourceTree = "<group>"; };
+		635415491D5289280012BD2B /* BuyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BuyViewController.swift; sourceTree = "<group>"; };
+		6354154D1D53A4A10012BD2B /* Cancel-48.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Cancel-48.png"; sourceTree = "<group>"; };
+		6354154F1D53A8EA0012BD2B /* fbIcon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = fbIcon.png; sourceTree = "<group>"; };
 		63859A101D13347C004F4968 /* NIKApiInvoker.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKApiInvoker.swift; sourceTree = "<group>"; };
 		63859A111D13347C004F4968 /* NIKFile.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NIKFile.swift; sourceTree = "<group>"; };
 		638DF3E71D2C3C7C00319FD8 /* MatchesManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchesManager.swift; sourceTree = "<group>"; };
@@ -311,10 +317,11 @@
 				E43070E51D2312B00035BCF4 /* OfferViewController.swift */,
 				E478AB131D2D5DDB00F00D60 /* PopUpViewControllerSwift.swift */,
 				E48002071D2FFAF7009C90E2 /* PopoverViewController.swift */,
-				632236B01D36C2CD00C321D3 /* ItemInfoViewController.swift */,
 				109D93531D3E9BEB00A14616 /* Splash2ViewController.swift */,
 				10FC75E41D3FC48D002A7F63 /* LoginPageViewController.swift */,
 				E43893D01D47A95400431E79 /* MessageViewController.swift */,
+				632236B01D36C2CD00C321D3 /* ItemInfoViewController.swift */,
+				635415491D5289280012BD2B /* BuyViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -475,6 +482,7 @@
 				E495BB2F1D4940D500CC1EEC /* sell_currentlocation_button.png */,
 				E495BB2D1D49400200CC1EEC /* Search Filled-100.png */,
 				109452BC1D47E6FF00931DA8 /* Clothes Filled.png */,
+				6354154F1D53A8EA0012BD2B /* fbIcon.png */,
 				109452BD1D47E6FF00931DA8 /* Computer Filled.png */,
 				109452BE1D47E6FF00931DA8 /* Generic Book File Type Filled.png */,
 				109452BF1D47E6FF00931DA8 /* Home.png */,
@@ -483,6 +491,7 @@
 				109452C21D47E6FF00931DA8 /* More Filled.png */,
 				109452C31D47E6FF00931DA8 /* Sofa.png */,
 				E495BB291D4903E700CC1EEC /* Star_Filled.png */,
+				6354154D1D53A4A10012BD2B /* Cancel-48.png */,
 				E495BB2A1D4903E700CC1EEC /* Star.png */,
 				E495BB251D47CBE600CC1EEC /* Collapse Arrow Blue.png */,
 				E495BB261D47CBE600CC1EEC /* Expand Arrow Blue.png */,
@@ -673,6 +682,7 @@
 				E43070E41D22FDC80035BCF4 /* Back_Arrow.png in Resources */,
 				E495BB2B1D4903E700CC1EEC /* Star_Filled.png in Resources */,
 				E495BB2C1D4903E700CC1EEC /* Star.png in Resources */,
+				6354154E1D53A4A10012BD2B /* Cancel-48.png in Resources */,
 				E4992DFF1D2C38D200032221 /* go.png in Resources */,
 				E44C153C1D11E0430006EBAD /* Kitchen-50.png in Resources */,
 				109452C71D47E6FF00931DA8 /* Home.png in Resources */,
@@ -702,6 +712,7 @@
 				E44C15371D11E0430006EBAD /* More-50.png in Resources */,
 				E44C15181D11B5D00006EBAD /* Shopping Cart Loaded-50.png in Resources */,
 				E495BB271D47CBE600CC1EEC /* Collapse Arrow Blue.png in Resources */,
+				635415501D53A8EA0012BD2B /* fbIcon.png in Resources */,
 				106E96231D3582C600DBBED0 /* background.jpg in Resources */,
 				E44C153A1D11E0430006EBAD /* Clothes-50.png in Resources */,
 				10ADC9AD1D0749700028A999 /* Main.storyboard in Resources */,
@@ -885,6 +896,7 @@
 				E44C15231D11C3910006EBAD /* SettingsViewController.swift in Sources */,
 				63088BA71D187CA900F67931 /* UserManager.swift in Sources */,
 				E49051A91D09B0250045D5C0 /* BrowseViewController.swift in Sources */,
+				6354154A1D5289280012BD2B /* BuyViewController.swift in Sources */,
 				631069271D1B27B8004A3ADD /* ParserManager.swift in Sources */,
 				631F4F571D2AB5F4005EEFE2 /* ProfilePageViewController.swift in Sources */,
 				E49051B01D09C0C90045D5C0 /* SWRevealViewController.m in Sources */,

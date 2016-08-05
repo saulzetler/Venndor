@@ -195,6 +195,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                 dispatch_async(dispatch_get_main_queue()) {
                     let itemInfoController = ItemInfoViewController()
                     itemInfoController.item = item
+                    itemInfoController.headerTitle = "Your Matches"
                     self.presentViewController(itemInfoController, animated: true, completion: nil)
                 }
             }

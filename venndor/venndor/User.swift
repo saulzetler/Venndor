@@ -32,6 +32,7 @@ class User: NSObject {
     var gender: String!
     var ageRange: String!
     var profilePictureURL: String!
+    var facebookID: String!
     
     var university: String!  //NI
     var howTheyFoundVenndor: String!  //NI
@@ -73,6 +74,7 @@ class User: NSObject {
         gender = json["gender"] as! String
         ageRange = json["ageRange"] as! String
         profilePictureURL = json["profilePictureURL"] as! String
+        facebookID = json["facebookID"] as! String
         university = json["university"] as! String
         howTheyFoundVenndor = json["howTheyFoundVenndor"] as! String
         rating = json["rating"] as! Double

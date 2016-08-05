@@ -87,21 +87,16 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
                     postContainer.addGestureRecognizer(tap)
                     
                     //retrieve the match thumbnail
-                    manager.retrievePostThumbnail(post) { img, error in
-                        guard error == nil else {
-                            print("Error retrieving match images: \(error)")
-                            return
-                        }
-                        if let img = img {
-                            post.thumbnail = img
-                            postContainer.post = post
-                            //self.addContainerContent(postContainer, img: img, match: match)
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.addContainerContent(postContainer, post: post)
-                                self.distSet = false
-                            }
-                        }
+  
+
+                    postContainer.post = post
+                    //self.addContainerContent(postContainer, img: img, match: match)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.addContainerContent(postContainer, post: post)
+                        self.distSet = false
                     }
+                        
+                    
                     
                     postContainerView.addSubview(postContainer)
                     index += 1

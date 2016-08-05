@@ -189,6 +189,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
         }
     }
     
+    
 //    //calculate your distance away from the item
 //    func calculateDistance(item: Item, myLocation: CLLocation) -> String {
 //        
@@ -343,6 +344,20 @@ extension UIViewController: SWRevealViewControllerDelegate {
 //        return distText
 //    }
 //    
+}
+extension UIButton {
+    func roundCorners(corners:UIRectCorner, radius: CGFloat) {
+        let borderLayer = CAShapeLayer()
+        borderLayer.frame = self.layer.bounds
+        borderLayer.strokeColor = UIColorFromHex(0x1abc9c, alpha: (1.0-0.3)).CGColor
+        borderLayer.fillColor = UIColor.clearColor().CGColor
+        borderLayer.lineWidth = 1.0
+        let path = UIBezierPath(roundedRect: self.bounds,
+                                byRoundingCorners: corners,
+                                cornerRadii: CGSize(width: radius, height: radius))
+        borderLayer.path = path.CGPath
+        self.layer.addSublayer(borderLayer);
+    }
 }
 class ViewController: UIViewController {
     
