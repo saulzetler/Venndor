@@ -121,6 +121,8 @@
 		E4992E041D2C4DB300032221 /* match background.png in Resources */ = {isa = PBXBuildFile; fileRef = E4992E031D2C4DB300032221 /* match background.png */; };
 		E4A550D51D3D52BB001EAAB3 /* Marker Filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = E4A550D41D3D52BB001EAAB3 /* Marker Filled-100.png */; };
 		E4AB1FF21D30437F00CC7400 /* ImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4AB1FF11D30437F00CC7400 /* ImagePicker.framework */; };
+		E4B6D3871D5514080016775C /* TextMessageComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B6D3861D5514080016775C /* TextMessageComposer.swift */; };
+		E4B6D3891D551A5C0016775C /* Speech Bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = E4B6D3881D551A5C0016775C /* Speech Bubble.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -268,6 +270,8 @@
 		E4992E031D2C4DB300032221 /* match background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "match background.png"; sourceTree = "<group>"; };
 		E4A550D41D3D52BB001EAAB3 /* Marker Filled-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Marker Filled-100.png"; sourceTree = "<group>"; };
 		E4AB1FF11D30437F00CC7400 /* ImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImagePicker.framework; path = "../../../Library/Developer/Xcode/DerivedData/venndor-cjexyuheznflryetuxeryodhnzpo/Build/Products/Debug-iphonesimulator/ImagePicker/ImagePicker.framework"; sourceTree = "<group>"; };
+		E4B6D3861D5514080016775C /* TextMessageComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageComposer.swift; sourceTree = "<group>"; };
+		E4B6D3881D551A5C0016775C /* Speech Bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speech Bubble.png"; sourceTree = "<group>"; };
 		FFD7DAC17D30907788729F4A /* Pods-venndorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-venndorTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-venndorTests/Pods-venndorTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -432,6 +436,7 @@
 				10F2CB3F1D3D1D38007C6477 /* SearchControl.swift */,
 				10F2CB411D3D4428007C6477 /* LocationConverter.swift */,
 				103CBEFE1D50EBE000EF89C7 /* BoughtController.swift */,
+				E4B6D3861D5514080016775C /* TextMessageComposer.swift */,
 			);
 			name = Controllers;
 			sourceTree = "<group>";
@@ -485,6 +490,7 @@
 		E44C153E1D11E04F0006EBAD /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				E4B6D3881D551A5C0016775C /* Speech Bubble.png */,
 				E495BB2F1D4940D500CC1EEC /* sell_currentlocation_button.png */,
 				E495BB2D1D49400200CC1EEC /* Search Filled-100.png */,
 				109452BC1D47E6FF00931DA8 /* Clothes Filled.png */,
@@ -679,6 +685,7 @@
 				109452CB1D47E6FF00931DA8 /* Sofa.png in Resources */,
 				E44C15391D11E0430006EBAD /* Generic Book File Type-50.png in Resources */,
 				E44C15211D11B9F90006EBAD /* Home-50.png in Resources */,
+				E4B6D3891D551A5C0016775C /* Speech Bubble.png in Resources */,
 				109452B91D41661A00931DA8 /* venn.png in Resources */,
 				109452C51D47E6FF00931DA8 /* Computer Filled.png in Resources */,
 				E44C151C1D11B9650006EBAD /* Settings-50.png in Resources */,
@@ -887,6 +894,7 @@
 				103D11481D382EB5004CE297 /* OtherHeaderView.swift in Sources */,
 				E43893D11D47A95400431E79 /* MessageViewController.swift in Sources */,
 				E44C15291D11C8680006EBAD /* MyPostsViewController.swift in Sources */,
+				E4B6D3871D5514080016775C /* TextMessageComposer.swift in Sources */,
 				E44C152D1D11CC300006EBAD /* MyMatchesViewController.swift in Sources */,
 				63C8F7331D189E3D00FFC1E2 /* SplashViewController.swift in Sources */,
 				E43C92B51D189C67003E9CF5 /* ItemNameTextField.swift in Sources */,

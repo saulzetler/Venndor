@@ -65,6 +65,7 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: screenSize.height*0.2, height: screenSize.height*0.2))
         imageView.image = backgroundImage
         imageView.contentMode = .ScaleAspectFill
+        imageView.clipsToBounds = true
         let promptText = UILabel(frame: CGRect(x: screenSize.width*0.47, y: 0, width: screenSize.width*0.4, height: screenSize.height*0.2))
         promptText.textAlignment = .Center
         promptText.text = "How much would you pay?"
