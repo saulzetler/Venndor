@@ -902,10 +902,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let category = categoryPickerData[row]
             let age = yearsPickerData[yearsPicker.selectedRowInComponent(0)]
             let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
-            
-            /******************************************************************/
-            /******************************************************************/
-            /*NEEDS TO BE SET FROM THE DATA GATHERED BY POSTVIEWCONTROLLER*/
           
             let condition = ratingControl.rating
             if useMyLocation == true {
@@ -931,15 +927,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     print("GOOD FUCKING JOB BUDDY YOU BROKE EVERYTHING. I fucking hate u")
                     return
                 }
-                
-
-                
-                let thumbnailString = ParserManager.globalManager.getStringFromPhoto(self.imageView1.image!)
+            
                 //create the post object on the server
-                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, thumbnail: self.imageView1.image!, thumbnailString: thumbnailString, itemLongitude: item.longitude, itemLatitude: item.latitude)
+                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, thumbnail: self.imageView1.image!, itemLongitude: item.longitude, itemLatitude: item.latitude)
                 
                 PostManager.globalManager.createPost(post) { post, error in
-                    LocalUser.user.posts[post!.id] = item.id
+                    LocalUser.user.posts[post!.id] = "Posted."
                     LocalUser.user.nuPosts! += 1
                     LocalUser.posts.append(post!)
 

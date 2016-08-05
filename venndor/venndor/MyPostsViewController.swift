@@ -66,6 +66,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             if tempPost == false {
                 postTitle = 0
             }
+            
             let soldLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.08, width: screenSize.width, height: soldTitle))
             soldLabel.text = "Sold Items"
             soldLabel.backgroundColor = UIColorFromHex(0x2c3e50)
@@ -89,8 +90,6 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
                         self.addContainerContent(postContainer, post: post)
                         self.distSet = false
                     }
-                        
-                    
                     
                     postContainerView.addSubview(postContainer)
                     index += 1
@@ -168,15 +167,18 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     
     func toggleItemInfo(sender: UITapGestureRecognizer) {
         let containerView = sender.view as! ItemContainer
+        let post = containerView.post
         ItemManager.globalManager.retrieveItemById(containerView.post.itemID) { item, error in
             guard error == nil else {
                 print("error pulling item data from tapped match: \(error)")
                 return
             }
             if let item = item {
-                self.tappedItem = item
                 dispatch_async(dispatch_get_main_queue()) {
-                    self.performSegueWithIdentifier("showItemInfo", sender: self)
+                    let itemInfoController = ItemInfoViewController()
+                    itemInfoController.item = item
+                    itemInfoController.headerTitle = "Your Posts"
+                    self.presentViewController(itemInfoController, animated: true, completion: nil)
                 }
             }
         }
@@ -189,18 +191,16 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
-    
-    func addContainerContent(postContainer: UIView, post: Post) {
+    func addContainerContent(postContainer: ItemContainer, post: Post) {
+        postContainer.post = post
+        
         //create the match photo
         let imgHeight = screenSize.width*0.4
         let imgWidth = screenSize.width*0.4
         let imgView = createImgView(CGRect(x: postContainer.frame.width - imgWidth + 5, y: 0, width: screenSize.width*0.4, height: screenSize.width*0.4), action: #selector(MyMatchesViewController.none(_:)), superView: postContainer)
         imgView.image = post.thumbnail
         
-        
-        
         let descriptionLabel = UILabel(frame: CGRect(x: 10, y: 5+imgHeight * 0.20, width: postContainer.frame.width - imgWidth - 5, height: imgHeight * 0.30))
-        print("Succesfully set the LocalUser's matches")
         descriptionLabel.text = post.itemDescription
         descriptionLabel.font = UIFont(name: "Avenir", size: 14)
         descriptionLabel.textColor = self.UIColorFromHex(0x808080)

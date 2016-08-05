@@ -28,10 +28,10 @@ struct UserManager {
                         "last_name": "\(last)",
                         "_id": id as! String,
                         "email": email,
+                        "phoneNumber": LocalUser.phoneNumber,
                         "gender": gender,
                         "ageRange": ageRange,
                         "profilePictureURL": LocalUser.profilePictureURL,
-                        "facebookID": LocalUser.facebookID,
                         "university": "",
                         "howTheyFoundVenndor": "",
                         "rating": 0.0,
@@ -118,7 +118,7 @@ struct UserManager {
     }
     
     func updateLocalUserMetrics() {
-        let update: [String:AnyObject] = ["nuItemsSold": LocalUser.user.nuItemsSold, "nuItemsBought": LocalUser.user.nuItemsBought, "nuSwipesLeft": LocalUser.user.nuSwipesLeft, "nuSwipesRight": LocalUser.user.nuSwipesRight, "nuSwipesTotal": LocalUser.user.nuSwipesTotal, "nuPosts": LocalUser.user.nuPosts, "nuVisits": LocalUser.user.nuVisits, "mostRecentAction": LocalUser.user.mostRecentAction, "tiemOnAppPerSession": LocalUser.user.timeOnAppPerSession, "timePerController": LocalUser.user.timePerController, "soldItems": LocalUser.user.soldItems, "boughtItems": LocalUser.user.boughtItems]
+        let update: [String:AnyObject] = ["nuItemsSold": LocalUser.user.nuItemsSold, "nuItemsBought": LocalUser.user.nuItemsBought, "nuSwipesLeft": LocalUser.user.nuSwipesLeft, "nuSwipesRight": LocalUser.user.nuSwipesRight, "nuSwipesTotal": LocalUser.user.nuSwipesTotal, "nuPosts": LocalUser.user.nuPosts, "nuVisits": LocalUser.user.nuVisits, "mostRecentAction": LocalUser.user.mostRecentAction, "timeOnAppPerSession": LocalUser.user.timeOnAppPerSession, "timePerController": LocalUser.user.timePerController, "soldItems": LocalUser.user.soldItems, "boughtItems": LocalUser.user.boughtItems]
         
         updateUserById(LocalUser.user.id, update: update) { error in
             guard error == nil else {

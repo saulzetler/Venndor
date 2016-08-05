@@ -55,11 +55,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-//        let loadGif = UIImage.gifWithName("logo")
-//        let loadView = UIImageView(image: loadGif)
-//        loadView.frame = CGRect(x: screenSize.width*0.3, y: screenSize.height*0.5, width: screenSize.width*0.4, height: screenSize.width*0.4)
-//        self.view.addSubview(loadView)
-        
         LocalUser.user.mostRecentAction = "Browsed Item Feed."
         sessionStart = NSDate()
         
