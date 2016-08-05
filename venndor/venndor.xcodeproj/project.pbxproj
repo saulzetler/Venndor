@@ -16,6 +16,7 @@
 		103CBEFF1D50EBE000EF89C7 /* BoughtController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103CBEFE1D50EBE000EF89C7 /* BoughtController.swift */; };
 		103D11481D382EB5004CE297 /* OtherHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D11471D382EB5004CE297 /* OtherHeaderView.swift */; };
 		103D114A1D3831CD004CE297 /* MyItemHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D11491D3831CD004CE297 /* MyItemHeaderView.swift */; };
+		10613BD21D551B5F00E355A3 /* phoneViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10613BD11D551B5F00E355A3 /* phoneViewController.swift */; };
 		106E96231D3582C600DBBED0 /* background.jpg in Resources */ = {isa = PBXBuildFile; fileRef = 106E96221D3582C600DBBED0 /* background.jpg */; };
 		106E96251D35896700DBBED0 /* iphone-icon.png in Resources */ = {isa = PBXBuildFile; fileRef = 106E96241D35896700DBBED0 /* iphone-icon.png */; };
 		109452B91D41661A00931DA8 /* venn.png in Resources */ = {isa = PBXBuildFile; fileRef = 109452B81D41661A00931DA8 /* venn.png */; };
@@ -149,6 +150,7 @@
 		103CBEFE1D50EBE000EF89C7 /* BoughtController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoughtController.swift; sourceTree = "<group>"; };
 		103D11471D382EB5004CE297 /* OtherHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherHeaderView.swift; sourceTree = "<group>"; };
 		103D11491D3831CD004CE297 /* MyItemHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MyItemHeaderView.swift; sourceTree = "<group>"; };
+		10613BD11D551B5F00E355A3 /* phoneViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = phoneViewController.swift; sourceTree = "<group>"; };
 		106E96221D3582C600DBBED0 /* background.jpg */ = {isa = PBXFileReference; lastKnownFileType = image.jpeg; path = background.jpg; sourceTree = "<group>"; };
 		106E96241D35896700DBBED0 /* iphone-icon.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "iphone-icon.png"; sourceTree = "<group>"; };
 		109452B81D41661A00931DA8 /* venn.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = venn.png; sourceTree = "<group>"; };
@@ -321,6 +323,7 @@
 				E43722A71D538C2100C09F56 /* ProfileViewController.swift */,
 				E44C15221D11C3910006EBAD /* SettingsViewController.swift */,
 				E43722A91D53A06400C09F56 /* AboutViewController.swift */,
+				10613BD11D551B5F00E355A3 /* phoneViewController.swift */,
 			);
 			name = ViewControllers;
 			sourceTree = "<group>";
@@ -887,6 +890,7 @@
 				101F43D01D11A203007E0ADE /* TutorialViewController.swift in Sources */,
 				10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */,
 				63220ECE1D47BCB0006D02C9 /* Post.swift in Sources */,
+				10613BD21D551B5F00E355A3 /* phoneViewController.swift in Sources */,
 				E478AB141D2D5DDB00F00D60 /* PopUpViewControllerSwift.swift in Sources */,
 				632236B11D36C2CD00C321D3 /* ItemInfoViewController.swift in Sources */,
 				E44C15231D11C3910006EBAD /* SettingsViewController.swift in Sources */,
