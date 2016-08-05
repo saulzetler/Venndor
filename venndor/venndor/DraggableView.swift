@@ -210,6 +210,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
                         let temp2 = UIImageView(frame: CGRectMake(0, scrollViewHeight*CGFloat(x),scrollViewWidth, scrollViewHeight))
                         temp2.image = phonto
                         temp2.contentMode = .ScaleAspectFill
+                        temp2.clipsToBounds = true
                         self.containerView.addSubview(temp2)
                     }
                 }
