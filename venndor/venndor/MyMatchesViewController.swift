@@ -82,7 +82,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     //create the match container view
                     let matchContainer = ItemContainer(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight) + boughtTitle, width: screenSize.width, height: containerHeight))
                     
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfoFromContainer(_:)))
                     matchContainer.addGestureRecognizer(tap)
                     
                     
@@ -112,7 +112,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     //create the match container view
                     let matchContainer = ItemContainer(frame: CGRect(x: 0, y: screenSize.height * 0.11 + (index * containerHeight) + matchTitle + boughtTitle-screenSize.height*0.018, width: screenSize.width, height: containerHeight))
                     
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfoFromContainer(_:)))
                     matchContainer.addGestureRecognizer(tap)
                     
                     dispatch_async(dispatch_get_main_queue()) {
@@ -162,8 +162,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-    func toggleItemInfo(sender: UITapGestureRecognizer) {
-        let containerView = sender.view as! ItemContainer
+    func goToItemInfo(containerView: ItemContainer){
         ItemManager.globalManager.retrieveItemById(containerView.match.itemID) { item, error in
             guard error == nil else {
                 print("error pulling item data from tapped match: \(error)")
@@ -174,6 +173,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                 dispatch_async(dispatch_get_main_queue()) {
                     let itemInfoController = ItemInfoViewController()
                     itemInfoController.item = item
+                    itemInfoController.match = containerView.match
                     itemInfoController.headerTitle = "Your Matches"
                     self.presentViewController(itemInfoController, animated: true, completion: nil)
                 }
@@ -181,12 +181,28 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    func toggleItemInfoFromContainer(sender: UITapGestureRecognizer) {
+        let containerView = sender.view as! ItemContainer
+        
+        goToItemInfo(containerView)
+    }
+    
+    func toggleItemInfoFromImage(sender: UITapGestureRecognizer) {
+        let containerView = sender.view?.superview as! ItemContainer
+        
+        goToItemInfo(containerView)
+    }
+    
 
-    func addContainerContent(matchContainer: UIView, img: UIImage, match: Match) {
+    func addContainerContent(matchContainer: ItemContainer, img: UIImage, match: Match) {
         
         //create the match photo
         let imgView = createImgView(CGRect(x: 0, y: 0, width: screenSize.width*0.4, height: screenSize.width*0.4), action: #selector(MyMatchesViewController.none(_:)), superView: matchContainer)
         imgView.image = img
+        let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfoFromImage(_:)))
+        imgView.addGestureRecognizer(tap)
+        
+        matchContainer.match = match 
         
         let imgHeight = imgView.frame.height
         let imgWidth = imgView.frame.width
@@ -224,7 +240,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         matchContainer.addSubview(descriptionLabel)
         
         //CHANGE TARGET
-        let buyButton = makeTextButton("Buy", frame: CGRect(x: imgWidth+42, y: 20+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.none(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
+        let buyButton = makeTextButton("Buy", frame: CGRect(x: imgWidth+42, y: 20+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.toggleBuy(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
 //        buyButton.backgroundColor = UIColorFromHex(0x404040)
 //        buyButton.titleLabel?.textColor = UIColor.whiteColor()
         buyButton.layer.cornerRadius = 5
@@ -281,6 +297,35 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             matchContainerView.userInteractionEnabled = false
             deactivate()
         }
+    }
+    
+    func toggleBuy(sender: UIButton) {
+        print("Buy tapped!")
+        let matchContainer = sender.superview as! ItemContainer
+        
+        let match = matchContainer.match
+        
+        self.definesPresentationContext = true
+        UserManager.globalManager.retrieveUserById(match.sellerID) { user, error in
+            guard error == nil else {
+                print("Error retrieving seller in Buy screen: \(error)")
+                return
+            }
+            
+            if let user = user {
+                let bvc = BuyViewController()
+                bvc.match = match
+                bvc.seller = user
+                bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+                bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+                self.presentViewController(bvc, animated: true, completion: nil)
+            }
+            else {
+                print("Error with parsing user in buy screen. Returning now.")
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+        
     }
     
     

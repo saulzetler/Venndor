@@ -114,7 +114,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
                     //create the match container view
                     let postContainer = ItemContainer(frame: CGRect(x: 0, y: screenSize.height * 0.11 + (index * containerHeight) + postTitle + soldTitle-screenSize.height*0.018, width: screenSize.width, height: containerHeight))
                     
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.toggleItemInfo(_:)))
                     postContainer.addGestureRecognizer(tap)
                     
                     dispatch_async(dispatch_get_main_queue()) {
@@ -167,7 +167,6 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     func DropdownAction() {
         
     }
-    
     
     func toggleItemInfo(sender: UITapGestureRecognizer) {
         let containerView = sender.view as! ItemContainer

@@ -19,6 +19,8 @@ class BuyViewController: UIViewController {
     var itemLabel: UILabel!
     var sellerPhotoView: UIImageView!
     
+    let messageComposer = TextMessageComposer()
+    
     override func viewDidLoad() {
     
         print("Buy Presented!")
@@ -68,21 +70,22 @@ class BuyViewController: UIViewController {
         
         messageButton = UIButton(frame: buttonFrame)
         messageButton.backgroundColor = UIColorFromHex(0x1abc9c)
-        messageButton.setTitle("Message Seller", forState: .Normal)
+        messageButton.setTitle("  Message Seller", forState: .Normal)
         messageButton.titleLabel?.textColor = UIColor.whiteColor()
         messageButton.titleEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 40)
         
         //create the rounded button image
         
         //set the rounded button image and its insets
-        messageButton.setImage(UIImage(named: "fbIcon.png"), forState: .Normal)
+        
+        messageButton.setImage(UIImage(named: "Speech Bubble.png"), forState: .Normal)
         messageButton.imageView?.clipsToBounds = true
         messageButton.imageView?.layer.masksToBounds = false
         messageButton.imageView?.layer.cornerRadius = messageButton.imageView!.frame.height / 2
         
         messageButton.imageEdgeInsets = UIEdgeInsets(top: 15, left: 70, bottom: 5, right: 180)
 
-        messageButton.addTarget(self, action: #selector(BuyViewController.connectToFacebook), forControlEvents: .TouchUpInside)
+        messageButton.addTarget(self, action: #selector(BuyViewController.messageSeller), forControlEvents: .TouchUpInside)
         
         //round the bottom 2 corners 
         
@@ -134,25 +137,23 @@ class BuyViewController: UIViewController {
     
     func dismissController() {
         self.dismissViewControllerAnimated(true, completion: nil)
-        
     }
     
-    func connectToFacebook() {
+    func messageSeller() {
         print("Message tapped!")
-        print(seller.facebookID)
         
-        let fbURLWeb: NSURL = NSURL(string: "https://www.facebook.com/\(seller.facebookID)")!
-        let fbURLID: NSURL = NSURL(string: "fb://profile/\(seller.facebookID)")!
-        
-        if(UIApplication.sharedApplication().canOpenURL(fbURLID)){
-            // FB installed
-            UIApplication.sharedApplication().openURL(fbURLID)
+        if (messageComposer.canSendText()) {
+            // Obtain a configured MFMessageComposeViewController
+            let messageComposeVC = messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) \(LocalUser.lastName) wants to buy your item \(match.itemName) for $\(match.matchedPrice)")
+            
+            // Present the configured MFMessageComposeViewController instance
+            // Note that the dismissal of the VC will be handled by the messageComposer instance,
+            // since it implements the appropriate delegate call-back
+            presentViewController(messageComposeVC, animated: true, completion: nil)
         } else {
-            // FB is not installed, open in safari
-            UIApplication.sharedApplication().openURL(fbURLWeb)
+            // Let the user know if his/her device isn't able to send text messages
+            let errorAlert = UIAlertView(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", delegate: self, cancelButtonTitle: "OK")
+            errorAlert.show()
         }
     }
-    
-    
-    
 }

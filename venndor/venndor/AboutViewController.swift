@@ -7,8 +7,9 @@
 //
 
 import Foundation
+import MessageUI
 
-class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate {
+class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextViewDelegate, MFMailComposeViewControllerDelegate {
     
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var backButton: UIButton!
@@ -40,7 +41,7 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func setupButton() {
         let buttonFrame = CGRect(x: screenSize.width*0.15, y: screenSize.height*0.6, width: screenSize.width*0.7, height: screenSize.height*0.1)
-        let button = makeTextButton("SUBMIT FEEDBACK", frame: buttonFrame, target: #selector(AboutViewController.submit(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x1abc9c), textSize: 16)
+        let button = makeTextButton("SHARE FEEDBACK", frame: buttonFrame, target: #selector(AboutViewController.submit(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x1abc9c), textSize: 16)
         button.titleLabel?.font = UIFont.boldSystemFontOfSize(16)
         button.layer.cornerRadius = 10
         button.layer.masksToBounds = true
@@ -147,8 +148,37 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     
     func submit(sender: UIButton) {
         print("submit pressed")
+        let mailComposeViewController = configuredMailComposeViewController()
+        if MFMailComposeViewController.canSendMail() {
+            self.presentViewController(mailComposeViewController, animated: true, completion: nil)
+        } else {
+            self.showSendMailErrorAlert()
+        }
     }
     
+    func configuredMailComposeViewController() -> MFMailComposeViewController {
+        let mailComposerVC = MFMailComposeViewController()
+        mailComposerVC.mailComposeDelegate = self // Extremely important to set the --mailComposeDelegate-- property, NOT the --delegate-- property
+        
+        mailComposerVC.setToRecipients(["tfl@getvenndor.com"])
+        mailComposerVC.setSubject("Feedback for Venndor")
+        mailComposerVC.setMessageBody(feedback.text, isHTML: false)
+        
+        return mailComposerVC
+    }
+    
+    func showSendMailErrorAlert() {
+        
+        let sendMailErrorAlert = UIAlertView(title: "Could Not Send Email", message: "Your device could not send e-mail.  Please check e-mail configuration and try again.", delegate: self, cancelButtonTitle: "OK")
+        sendMailErrorAlert.show()
+    }
+    
+    // MARK: MFMailComposeViewControllerDelegate
+    
+    func mailComposeController(controller: MFMailComposeViewController, didFinishWithResult result: MFMailComposeResult, error: NSError?) {
+        controller.dismissViewControllerAnimated(true, completion: nil)
+        
+    }
     
     func dismissController(sender: AnyObject) {
         self.dismissViewControllerAnimated(true, completion: nil)
