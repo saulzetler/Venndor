@@ -89,7 +89,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                         matchContainer.match = match
                     //self.addContainerContent(matchContainer, img: img, match: match)
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.addContainerContent(matchContainer, img: match.thumbnail, match: match)
+                        self.addContainerContent(matchContainer, match: match)
                         self.distSet = false
                     }
                     matchContainerView.addSubview(matchContainer)
@@ -116,7 +116,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     matchContainer.addGestureRecognizer(tap)
                     
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.addContainerContent(matchContainer, img: match.thumbnail, match: match)
+                        self.addContainerContent(matchContainer, match: match)
                         self.distSet = false
                     }
                     
@@ -125,6 +125,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                 }
             }
         }
+            
         else {
             let emptyView = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height-screenSize.height*0.1))
             let emptyLogo = UIImageView(frame: CGRect(x: screenSize.width*0.35, y: screenSize.height*0.15, width: screenSize.width*0.3, height: screenSize.width*0.3))
@@ -174,6 +175,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                 dispatch_async(dispatch_get_main_queue()) {
                     let itemInfoController = ItemInfoViewController()
                     itemInfoController.item = item
+                    itemInfoController.match = containerView.match
                     itemInfoController.headerTitle = "Your Matches"
                     self.presentViewController(itemInfoController, animated: true, completion: nil)
                 }
@@ -182,11 +184,12 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     }
     
 
-    func addContainerContent(matchContainer: UIView, img: UIImage, match: Match) {
+    func addContainerContent(matchContainer: ItemContainer, match: Match) {
         
+        matchContainer.match = match
         //create the match photo
         let imgView = createImgView(CGRect(x: 0, y: 0, width: screenSize.width*0.4, height: screenSize.width*0.4), action: #selector(MyMatchesViewController.none(_:)), superView: matchContainer)
-        imgView.image = img
+        imgView.image = match.thumbnail
         
         let imgHeight = imgView.frame.height
         let imgWidth = imgView.frame.width

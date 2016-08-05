@@ -58,6 +58,7 @@ struct ParserManager {
         }
     }
     
+    
     func getStringFromPhoto(photo: UIImage) -> String {
         let data = UIImageJPEGRepresentation(photo, 0.5)
         let string = data!.base64EncodedStringWithOptions(.Encoding64CharacterLineLength)

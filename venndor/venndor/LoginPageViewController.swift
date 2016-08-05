@@ -84,7 +84,6 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
                 LocalUser.gender = gender
                 LocalUser.ageRange = "\(ageRange["min"])-\(ageRange["max"])"
                 LocalUser.profilePictureURL = "https://graph.facebook.com/\(userID)/picture?type=large"
-                LocalUser.facebookID = userID as String
                 
                 
                 //transition when great success

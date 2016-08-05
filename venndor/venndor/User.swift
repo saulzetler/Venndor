@@ -13,6 +13,7 @@ struct LocalUser {
     static var firstName: String!
     static var lastName: String!
     static var email: String!
+    static var phoneNumber: String!
     static var gender: String! 
     static var education: String!
     static var ageRange: String!
@@ -20,19 +21,18 @@ struct LocalUser {
     static var matches: [Match]!
     static var posts: [Post]! 
     static var profilePictureURL: String!
-    static var facebookID: String!
     static var myLocation: CLLocation!
 }
 
 class User: NSObject {
     var id: String!
     var email: String!
+    var phoneNumber: String!
     var firstName: String!
     var lastName: String!
     var gender: String!
     var ageRange: String!
     var profilePictureURL: String!
-    var facebookID: String!
     
     var university: String!  //NI
     var howTheyFoundVenndor: String!  //NI
@@ -69,12 +69,12 @@ class User: NSObject {
     init(json:JSON) {
         id = json["_id"] as! String
         email = json["email"] as! String
+        phoneNumber = json["phoneNumber"] as! String
         firstName = json["first_name"] as! String
         lastName = json["last_name"] as! String
         gender = json["gender"] as! String
         ageRange = json["ageRange"] as! String
         profilePictureURL = json["profilePictureURL"] as! String
-        facebookID = json["facebookID"] as! String
         university = json["university"] as! String
         howTheyFoundVenndor = json["howTheyFoundVenndor"] as! String
         rating = json["rating"] as! Double

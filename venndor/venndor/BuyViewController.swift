@@ -139,18 +139,7 @@ class BuyViewController: UIViewController {
     
     func connectToFacebook() {
         print("Message tapped!")
-        print(seller.facebookID)
-        
-        let fbURLWeb: NSURL = NSURL(string: "https://www.facebook.com/\(seller.facebookID)")!
-        let fbURLID: NSURL = NSURL(string: "fb://profile/\(seller.facebookID)")!
-        
-        if(UIApplication.sharedApplication().canOpenURL(fbURLID)){
-            // FB installed
-            UIApplication.sharedApplication().openURL(fbURLID)
-        } else {
-            // FB is not installed, open in safari
-            UIApplication.sharedApplication().openURL(fbURLWeb)
-        }
+
     }
     
     

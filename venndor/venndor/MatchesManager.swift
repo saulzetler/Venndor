@@ -13,7 +13,7 @@ class MatchesManager: NSObject {
     static let globalManager = MatchesManager()
     
     func createMatch(match: Match, completionHandler: (Match?, ErrorType?) -> () ) {
-        let params = ["itemID": match.itemID, "itemName": match.itemName, "itemDescription": match.itemDescription, "userID": match.sellerID, "sellerID": match.sellerID, "sellerName": match.sellerName, "matchedPrice":match.matchedPrice, "thumbnailString": match.thumbnailString, "itemLongitude": match.itemLongitude, "itemLatitude": match.itemLatitude, "bought": match.bought, "dateMatched": TimeManager.formatter.stringFromDate(match.dateMatched)]
+        let params = ["itemID": match.itemID, "itemName": match.itemName, "itemDescription": match.itemDescription, "userID": match.sellerID, "sellerID": match.sellerID, "sellerName": match.sellerName, "matchedPrice":match.matchedPrice, "itemLongitude": match.itemLongitude, "itemLatitude": match.itemLatitude, "bought": match.bought, "dateMatched": TimeManager.formatter.stringFromDate(match.dateMatched)]
         
         RESTEngine.sharedEngine.createMatchOnServer(params as! [String : AnyObject],
             success: { response in
@@ -31,7 +31,18 @@ class MatchesManager: NSObject {
             success: { response in
                 if let response = response {
                     let match = Match(json: response)
-                    completionHandler(match, nil)
+                    self.retrieveMatchThumbnail(match) { img, error in
+                        guard error == nil else {
+                            print("Error retrieving match thumbnail: \(error)")
+                            return
+                        }
+                        
+                        if let img = img {
+                            match.thumbnail = img
+                        }
+                        completionHandler(match, nil)
+                    }
+                    //completionHandler(match, nil)
                 }
             }, failure: { error in
                 completionHandler(nil, error)
@@ -54,11 +65,23 @@ class MatchesManager: NSObject {
                     for data in matchesData {
                         let data = data as! JSON
                         let match = Match(json: data)
+                        
+                        //instantly pull the thumbnail too
+                        self.retrieveMatchThumbnail(match) { img, error in
+                            guard error == nil else {
+                                print("Error retrieving match thumbnail: \(error)")
+                                return
+                            }
+                            if let img = img {
+                                match.thumbnail = img
+                            }
+                        }
+                        
                         matchesArray.append(match)
                     }
-                    
                     completionHandler(matchesArray, nil)
                 }
+                
             }, failure: {error in
                 completionHandler(nil, error)
         })
