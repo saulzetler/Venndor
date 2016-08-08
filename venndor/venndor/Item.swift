@@ -30,7 +30,8 @@ class Item: NSObject {
     var longitude: Double
     var itemAge: String
     var minPrice: Int
-    var matchedUsers: [String]!
+    
+    var matches: [String:AnyObject]! //key: match object id, value: user who owns match object
     
     //metrics
     var timeMatched: NSDate?
@@ -65,7 +66,7 @@ class Item: NSObject {
         longitude = json["longitude"] as! Double
         itemAge = json["itemAge"] as! String
         minPrice = json["minPrice"] as! Int
-        matchedUsers = ParserManager.globalManager.getStringArray(json["matchedUsers"]!)
+        matches = json["matches"] as! [String:AnyObject]
         timeMatched = json["timeMatched"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeMatched"] as! String)
         timeBought = json["timeBought"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeBought"]! as! String)
         nuSwipesLeft = json["nuSwipesLeft"] as! Int
@@ -90,7 +91,7 @@ class Item: NSObject {
         self.longitude = longitude
         self.itemAge = itemAge
         self.minPrice = minPrice
-        self.matchedUsers = [String]()
+        self.matches = [String:AnyObject]()
         self.timeMatched = nil
         self.timeBought = nil
         self.nuSwipesLeft = 0

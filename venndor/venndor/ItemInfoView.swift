@@ -145,7 +145,6 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
     func setupItemCondition() {
         let size = 10
         var ratingFrame = CGRect(x: 0, y: 0, width: size, height: size)
-        let condition = currentItem.condition
         for rating in 0...currentItem.condition {
             let star = UIImageView(frame: ratingFrame)
 
