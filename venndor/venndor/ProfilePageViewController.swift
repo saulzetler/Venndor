@@ -14,18 +14,19 @@ class ProfilePageViewController: UIViewController {
     
 //    let user = LocalUser.user
 
-    @IBOutlet weak var profilePicView: UIImageView!
-    @IBOutlet weak var nameLabel: UILabel!
-    @IBOutlet weak var rating: UILabel!
-    @IBOutlet weak var numMatches: UILabel!
-    @IBOutlet weak var numBought: UILabel!
-    @IBOutlet weak var numSold: UILabel!
-    @IBOutlet weak var amtSaved: UILabel!
-    @IBOutlet weak var contentScroll: UIScrollView!
-    @IBOutlet weak var matchesStack: UIStackView!
-    @IBOutlet weak var boughtStack: UIStackView!
-    @IBOutlet weak var soldStack: UIStackView!
-    @IBOutlet weak var savedStack: UIStackView!
+    var profilePicView: UIImageView!
+    var nameLabel: UILabel!
+    var rating: UILabel!
+    var numMatches: UILabel!
+    var numBought: UILabel!
+    var numSold: UILabel!
+    var amtSaved: UILabel!
+    var contentScroll: UIScrollView!
+    var matchesButton: UIView!
+    var boughtButton: UIStackView!
+    var soldButton: UIStackView!
+    
+
     
     var sessionStart: NSDate!
     var headerView: HeaderView!
@@ -47,6 +48,7 @@ class ProfilePageViewController: UIViewController {
         profilePicView.image = UIImage(data: pictureData!)
         profilePicView.layer.cornerRadius = profilePicView.frame.size.width/2
         profilePicView.clipsToBounds = true
+        
         //set up the side menu
         setSideMenu()
         
@@ -62,22 +64,6 @@ class ProfilePageViewController: UIViewController {
         })
     }
     
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(animated)
-        
-        //assign a tap gesture recognizer to each stackview
-        setTapsForStackViews()
-        
-
-    }
-    
-    func setTapsForStackViews() {
-        let stackViews = [matchesStack, boughtStack, soldStack]
-        for stack in stackViews {
-            let tap = UITapGestureRecognizer(target: self, action: #selector(ProfilePageViewController.toggleContent(_:)))
-            stack.addGestureRecognizer(tap)
-        }
-    }
     
     func setSideMenu() {
         let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -94,16 +80,15 @@ class ProfilePageViewController: UIViewController {
         numSold.text = "\(user.soldItems.count)"
     }
     
-    func toggleContent(sender: UITapGestureRecognizer) {
+    func toggleContent(sender: UIButton) {
         var content: [String:AnyObject]!
         
-        _ = user
-        switch sender.view! {
-        case matchesStack:
+        switch sender {
+        case matchesButton:
             content = user.matches
-        case boughtStack:
+        case boughtButton:
             content = user.boughtItems
-        case soldStack:
+        case soldButton:
             content = user.soldItems
         default:
             print("Idk why the fuck you're getting this here error, bruh, but lets set a default...")

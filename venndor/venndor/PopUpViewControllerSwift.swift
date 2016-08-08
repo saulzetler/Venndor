@@ -28,14 +28,6 @@ class PopUpViewControllerSwift : UIViewController {
         super.viewDidLoad()
         setupBackground()
         
-    
-        
-        /* 
-        ***********************************************************
-                NEED TO UPDATE THE ITEM OWNER'S PROPERTIES
-        ***********************************************************
-        */
-        
         LocalUser.user.mostRecentAction = "Matched on an item."
         sessionStart = NSDate()
 
@@ -52,7 +44,6 @@ class PopUpViewControllerSwift : UIViewController {
                 
                 let item = self.matchedItem
                 match.thumbnail = self.matchedItem.photos![0]
-                //update the LocalUser's matches info
                 LocalUser.matches.append(match)
                 LocalUser.user.matches[match.id!] = item.id
                 LocalUser.user.nuMatches = LocalUser.user.nuMatches + 1
@@ -68,12 +59,12 @@ class PopUpViewControllerSwift : UIViewController {
                     print("LocalUser matches succesfully updated.")
                 }
                 
-                //update item metrics
                 
                 item.timeMatched = NSDate()
                 item.nuMatches! += 1
                 item.matches[match.id!] = LocalUser.user.id
                 
+                //update item metrics
                 let itemUpdate  = ["nuMatches": item.nuMatches, "matches":item.matches, "timeMatched": TimeManager.formatter.stringFromDate(item.timeMatched!)]
                 ItemManager.globalManager.updateItemById(item.id, update: itemUpdate as! [String : AnyObject]) { error in
                     guard error == nil else {
