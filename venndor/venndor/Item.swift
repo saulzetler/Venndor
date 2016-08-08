@@ -66,7 +66,7 @@ class Item: NSObject {
         longitude = json["longitude"] as! Double
         itemAge = json["itemAge"] as! String
         minPrice = json["minPrice"] as! Int
-        matches = json["matches"] as! [String:AnyObject]
+        matches = ParserManager.globalManager.getDict(json["matches"]!)
         timeMatched = json["timeMatched"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeMatched"] as! String)
         timeBought = json["timeBought"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeBought"]! as! String)
         nuSwipesLeft = json["nuSwipesLeft"] as! Int
