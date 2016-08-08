@@ -92,7 +92,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     }
     
     func deleteAccount() {
-        //to be filled out by dave
+        let loginManager = FBSDKLoginManager()
+        loginManager.logOut()
+        self.performSegueWithIdentifier("toDelete", sender: self)
+        
     }
     
     func toAbout() {
