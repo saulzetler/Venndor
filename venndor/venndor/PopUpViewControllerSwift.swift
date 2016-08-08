@@ -72,10 +72,9 @@ class PopUpViewControllerSwift : UIViewController {
                 
                 item.timeMatched = NSDate()
                 item.nuMatches! += 1
-                item.matchedUsers.append(LocalUser.user.id)
-                item.matches.append(match.id!)
+                item.matches[match.id!] = LocalUser.user.id
                 
-                let itemUpdate  = ["nuMatches": item.nuMatches, "matchedUsers":item.matchedUsers, "timeMatched": TimeManager.formatter.stringFromDate(item.timeMatched!)]
+                let itemUpdate  = ["nuMatches": item.nuMatches, "matches":item.matches, "timeMatched": TimeManager.formatter.stringFromDate(item.timeMatched!)]
                 ItemManager.globalManager.updateItemById(item.id, update: itemUpdate as! [String : AnyObject]) { error in
                     guard error == nil else {
                         print("Error updating item metrics in match screen: \(error)")

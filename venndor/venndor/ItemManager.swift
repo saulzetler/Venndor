@@ -14,7 +14,7 @@ struct ItemManager {
     
     func createItem(item: Item, completionHandler: (ErrorType?) -> () ) {
 
-        let params = ["name": item.name, "details": item.details, "photoCount": item.photoCount, "owner": item.owner, "ownerName": item.ownerName, "category": item.category,  "condition": item.condition, "latitude": item.latitude, "longitude": item.longitude, "itemAge": item.itemAge, "minPrice": item.minPrice, "matchedUsers":item.matchedUsers, "matches": item.matches, "nuSwipesLeft": item.nuSwipesLeft, "nuSwipesRight": item.nuSwipesRight, "nuMatches": item.nuMatches, "offersMade": item.offersMade, "avgOffer": item.avgOffer, "geoHash": item.geoHash] as JSON
+        let params = ["name": item.name, "details": item.details, "photoCount": item.photoCount, "owner": item.owner, "ownerName": item.ownerName, "category": item.category,  "condition": item.condition, "latitude": item.latitude, "longitude": item.longitude, "itemAge": item.itemAge, "minPrice": item.minPrice, "matches": item.matches, "nuSwipesLeft": item.nuSwipesLeft, "nuSwipesRight": item.nuSwipesRight, "nuMatches": item.nuMatches, "offersMade": item.offersMade, "avgOffer": item.avgOffer, "geoHash": item.geoHash] as JSON
     
         RESTEngine.sharedEngine.addItemToServerWithDetails(params,
             success: { response in
