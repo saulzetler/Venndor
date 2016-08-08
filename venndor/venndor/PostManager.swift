@@ -62,6 +62,7 @@ class PostManager: NSObject {
                     for data in postsData {
                         let data = data as! JSON
                         let post = Post(json: data)
+                        
                         self.retrievePostThumbnail(post) { img, error in
                             guard error == nil else {
                                 print("Error retrieivng post thumbnail: \(error)")

@@ -46,12 +46,7 @@ class SplashViewController: UIViewController {
                 LocalUser.user.nuVisits! += 1
                 LocalUser.user.mostRecentAction = "Logged in through Facebook."
                 
-                /**************************************************************************/
-                //to be taken out later when the users profile picture is addded to database.
-                
-                //LocalUser.user.profilePictureURL = LocalUser.profilePictureURL
-                
-                /**************************************************************************/
+
                 seenPostsMade = true
             }
             else {
