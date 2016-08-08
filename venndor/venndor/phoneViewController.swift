@@ -54,6 +54,7 @@ class phoneViewController: UIViewController, UITextFieldDelegate {
         phoneField.returnKeyType = .Done
         phoneField.keyboardType = .NumberPad
         phoneField.delegate = self
+        phoneField.adjustsFontSizeToFitWidth = true
         
         //Add done button to numeric pad keyboard
         let toolbarDone = UIToolbar.init()
@@ -125,7 +126,8 @@ class phoneViewController: UIViewController, UITextFieldDelegate {
             popup.showInView(self.view, message: "Please enter a valid phone number!")
             return
         } else {
-            self.performSegueWithIdentifier("toTutorial", sender: self)
+            LocalUser.phoneNumber = userNumber
+            self.performSegueWithIdentifier("toSplash", sender: self)
         }
     }
     
