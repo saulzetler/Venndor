@@ -323,6 +323,7 @@
 				631F4F581D2AEFCD005EEFE2 /* DeleteViewController.swift */,
 				E49051B11D09E5E80045D5C0 /* SideMenuController.swift */,
 				E49051B51D0B245C0045D5C0 /* PostViewController.swift */,
+				E470ADC01D59038C00F980CB /* EditViewController.swift */,
 				101F43CF1D11A203007E0ADE /* TutorialViewController.swift */,
 				E44C15281D11C8680006EBAD /* MyPostsViewController.swift */,
 				E44C152C1D11CC300006EBAD /* MyMatchesViewController.swift */,
@@ -338,7 +339,6 @@
 				E43722A71D538C2100C09F56 /* ProfileViewController.swift */,
 				E44C15221D11C3910006EBAD /* SettingsViewController.swift */,
 				E43722A91D53A06400C09F56 /* AboutViewController.swift */,
-				E470ADC01D59038C00F980CB /* EditViewController.swift */,
 				10613BD11D551B5F00E355A3 /* phoneViewController.swift */,
 			);
 			name = ViewControllers;

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CLLocationManagerDelegate {
+class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CLLocationManagerDelegate, RatingControlDelegate {
     
     //declare the needed variables for the page to work.
     
@@ -88,6 +88,9 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
         setInitialCondition()
         setLocationPreview()
         setPricePreview()
+        filledImagesArray = []
+        previewImageViewArray = []
+        self.ratingControl.delegate = self
         
     }
     

@@ -8,7 +8,7 @@
 
 import Foundation
 
-class EditViewController: UIViewController {
+class EditViewController: UIViewController, GMSAutocompleteViewControllerDelegate {
     
     var postView: PostView!
     
@@ -17,6 +17,9 @@ class EditViewController: UIViewController {
         
         postView = PostView(frame: self.view.frame)
         
+        
+        hideKeyboardWhenTappedAround()
+        self.revealViewController().delegate = self
         
     }
     
