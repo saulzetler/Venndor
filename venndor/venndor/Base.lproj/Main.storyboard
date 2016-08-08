@@ -560,6 +560,7 @@
                     </view>
                     <connections>
                         <segue destination="Ccl-eH-Ycs" kind="show" identifier="showLogin" id="OzI-1T-yzU"/>
+                        <segue destination="dIZ-Ca-Emp" kind="presentation" identifier="toDelete" id="3P0-wg-K4w"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7zY-uR-K97" userLabel="First Responder" sceneMemberID="firstResponder"/>
