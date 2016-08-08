@@ -932,7 +932,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, thumbnail: self.imageView1.image!, itemLongitude: item.longitude, itemLatitude: item.latitude)
                 
                 PostManager.globalManager.createPost(post) { post, error in
-                    LocalUser.user.posts[post!.id] = "Posted."
+                    LocalUser.user.posts[post!.id] = item.id
                     LocalUser.user.nuPosts! += 1
                     LocalUser.posts.append(post!)
 

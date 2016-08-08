@@ -167,7 +167,6 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     
     func toggleItemInfo(sender: UITapGestureRecognizer) {
         let containerView = sender.view as! ItemContainer
-        let post = containerView.post
         ItemManager.globalManager.retrieveItemById(containerView.post.itemID) { item, error in
             guard error == nil else {
                 print("error pulling item data from tapped match: \(error)")

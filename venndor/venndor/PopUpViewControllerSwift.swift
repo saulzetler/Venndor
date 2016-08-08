@@ -28,18 +28,7 @@ class PopUpViewControllerSwift : UIViewController {
         super.viewDidLoad()
         setupBackground()
         
-        //update item metrics
-        let item = matchedItem
-        item.timeMatched = NSDate()
-        item.nuMatches! += 1
-        item.matchedUsers.append(LocalUser.user.id)
-        let itemUpdate  = ["nuMatches": item.nuMatches, "matchedUsers":item.matchedUsers, "timeMatched": TimeManager.formatter.stringFromDate(item.timeMatched!)]
-        ItemManager.globalManager.updateItemById(item.id, update: itemUpdate as! [String : AnyObject]) { error in
-            guard error == nil else {
-                print("Error updating item metrics in match screen: \(error)")
-                return
-            }
-        }
+    
         
         /* 
         ***********************************************************
@@ -61,10 +50,11 @@ class PopUpViewControllerSwift : UIViewController {
                     
             if let match = match {
                 
+                let item = self.matchedItem
                 match.thumbnail = self.matchedItem.photos![0]
                 //update the LocalUser's matches info
                 LocalUser.matches.append(match)
-                LocalUser.user.matches[match.id!] = "Matched"
+                LocalUser.user.matches[match.id!] = item.id
                 LocalUser.user.nuMatches = LocalUser.user.nuMatches + 1
                         
                 //update the LocalUser on the server
@@ -76,6 +66,21 @@ class PopUpViewControllerSwift : UIViewController {
                     }
                             
                     print("LocalUser matches succesfully updated.")
+                }
+                
+                //update item metrics
+                
+                item.timeMatched = NSDate()
+                item.nuMatches! += 1
+                item.matchedUsers.append(LocalUser.user.id)
+                item.matches.append(match.id!)
+                
+                let itemUpdate  = ["nuMatches": item.nuMatches, "matchedUsers":item.matchedUsers, "timeMatched": TimeManager.formatter.stringFromDate(item.timeMatched!)]
+                ItemManager.globalManager.updateItemById(item.id, update: itemUpdate as! [String : AnyObject]) { error in
+                    guard error == nil else {
+                        print("Error updating item metrics in match screen: \(error)")
+                        return
+                    }
                 }
             }
         }

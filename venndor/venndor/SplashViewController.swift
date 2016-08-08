@@ -33,7 +33,7 @@ class SplashViewController: UIViewController {
         /////////////////////////////////////// IF NOT GUEST //////////////////////////////////////
         
         //first pull the user/check he/she exist
-        userManager.retrieveUserByEmail(LocalUser.email) { user, error in
+        UserManager.globalManager.retrieveUserByEmail(LocalUser.email) { user, error in
             guard error == nil else {
                 print("Error retrieving user from database: \(error)")
                 return
@@ -56,15 +56,17 @@ class SplashViewController: UIViewController {
             }
             else {
                 
+                self.triggerSegueTutorial()
+                
                 //create the user on the server
-                userManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email, gender: LocalUser.gender, ageRange: LocalUser.ageRange) { user, error in
+                UserManager.globalManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email, gender: LocalUser.gender, ageRange: LocalUser.ageRange) { user, error in
                     LocalUser.user = user
                     LocalUser.seenPosts = [String:AnyObject]()
                     LocalUser.user.mostRecentAction = "Logged in through Facebook."
                     LocalUser.seenPosts["_id"] = LocalUser.user.id
              
                     //create the seenPosts object on the server
-                    seenPostsManager.createSeenPostsById(LocalUser.user.id, completionHandler: { error in
+                    SeenPostsManager.globalManager.createSeenPostsById(LocalUser.user.id, completionHandler: { error in
                         guard error == nil else {
                             print("Error creating user's seen posts: \(error)")
                             return
@@ -85,7 +87,7 @@ class SplashViewController: UIViewController {
         }
         
         //get all the posts the user has seen
-        seenPostsManager.getSeenPostsById(LocalUser.user.id) { seenPosts, error in
+        SeenPostsManager.globalManager.getSeenPostsById(LocalUser.user.id) { seenPosts, error in
             
             guard error == nil else {
                 print("Error pulling seen posts by id: \(error)")
