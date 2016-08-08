@@ -904,10 +904,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let category = categoryPickerData[row]
             let age = yearsPickerData[yearsPicker.selectedRowInComponent(0)]
             let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
-            
-            /******************************************************************/
-            /******************************************************************/
-            /*NEEDS TO BE SET FROM THE DATA GATHERED BY POSTVIEWCONTROLLER*/
           
             let condition = ratingControl.rating
             if useMyLocation == true {
@@ -930,29 +926,26 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             //create the item object on the server
             ItemManager.globalManager.createItem(item) { error in
                 guard error == nil else {
-                    print("GOOD FUCKING JOB BUDDY YOU BROKE EVERYTHING i fucking hate u")
+                    print("GOOD FUCKING JOB BUDDY YOU BROKE EVERYTHING. I fucking hate u")
                     return
                 }
-                
-
-                
-                let thumbnailString = ParserManager.globalManager.getStringFromPhoto(self.imageView1.image!)
+            
                 //create the post object on the server
-                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, thumbnail: self.imageView1.image!, thumbnailString: thumbnailString, itemLongitude: item.longitude, itemLatitude: item.latitude)
+                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, thumbnail: self.imageView1.image!, itemLongitude: item.longitude, itemLatitude: item.latitude)
                 
                 PostManager.globalManager.createPost(post) { post, error in
-                    LocalUser.user.posts[post!.id] = item.id
+                    LocalUser.user.posts[post!.id] = "Posted."
                     LocalUser.user.nuPosts! += 1
                     LocalUser.posts.append(post!)
 
                     let update : [String:AnyObject] = ["posts": LocalUser.user.posts, "nuPosts": LocalUser.user.nuPosts]
                     UserManager.globalManager.updateUserById(LocalUser.user.id, update: update) { error in
                         guard error == nil else {
-                            print("Error updating the LocalUser's posts from post screen: \(error)")
+                            print("Error updating the User's posts from post screen: \(error)")
                             return
                         }
                         
-                        print("Succesfully updated LocalUser's ads from post screen.")
+                        print("Succesfully updated User's ads from post screen.")
                         self.performSegueWithIdentifier("backToBrowse", sender: self)
                     }
                 

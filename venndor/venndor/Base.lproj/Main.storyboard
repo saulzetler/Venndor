@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ccl-eH-Ycs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ccl-eH-Ycs">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -20,12 +20,34 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="gEg-Gc-bT8" kind="presentation" identifier="showSplash" id="QCg-3S-kB0"/>
+                        <segue destination="gEg-Gc-bT8" kind="presentation" identifier="toSplash" id="uT9-ID-WRv"/>
+                        <segue destination="48N-ic-zjV" kind="presentation" identifier="toNumber" id="Dvc-Yh-Nzt"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="K6J-py-m29" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="-968" y="273"/>
+        </scene>
+        <!--Phone View Controller-->
+        <scene sceneID="K0A-AQ-ycv">
+            <objects>
+                <viewController id="48N-ic-zjV" customClass="phoneViewController" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="heL-mT-ZAK"/>
+                        <viewControllerLayoutGuide type="bottom" id="8ax-Gf-Wiw"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="cI3-Ji-eGW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="gEg-Gc-bT8" kind="presentation" identifier="toSplash" id="6NT-sV-Fv5"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="Crg-ft-LPc" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="-540" y="-484"/>
         </scene>
         <!--Splash View Controller-->
         <scene sceneID="nnJ-hU-Qtr">
@@ -41,7 +63,7 @@
                     </view>
                     <connections>
                         <segue destination="5Q4-WU-6Zg" kind="presentation" identifier="showBrowse" id="XwR-UP-4A2"/>
-                        <segue destination="DO8-qQ-SBg" kind="presentation" identifier="goTutorial" id="ww2-Jc-2vI"/>
+                        <segue destination="DO8-qQ-SBg" kind="presentation" identifier="toTutorial" id="zsL-0u-b4f"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="qux-n2-rnO" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -669,10 +691,11 @@
     </resources>
     <inferredMetricsTieBreakers>
         <segue reference="rJe-8o-Yiu"/>
-        <segue reference="pMb-c4-TUY"/>
+        <segue reference="XwR-UP-4A2"/>
+        <segue reference="6NT-sV-Fv5"/>
+        <segue reference="OzI-1T-yzU"/>
         <segue reference="iGi-df-zpV"/>
         <segue reference="mUc-z2-b8r"/>
         <segue reference="YQC-W7-xKJ"/>
-        <segue reference="OzI-1T-yzU"/>
     </inferredMetricsTieBreakers>
 </document>

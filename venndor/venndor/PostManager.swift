@@ -13,7 +13,7 @@ class PostManager: NSObject {
    static let globalManager = PostManager()
     
     func createPost(post: Post, completionHandler: (Post?, ErrorType?) -> () ) {
-        let params = ["itemID": post.itemID, "itemName": post.itemName, "itemDescription": post.itemDescription, "userID": post.userID, "minPrice": post.minPrice, "thumbnailString": post.thumbnailString, "itemLongitude": post.itemLongitude, "itemLatitude": post.itemLatitude, "sold": post.sold]
+        let params = ["itemID": post.itemID, "itemName": post.itemName, "itemDescription": post.itemDescription, "userID": post.userID, "minPrice": post.minPrice, "itemLongitude": post.itemLongitude, "itemLatitude": post.itemLatitude, "sold": post.sold]
         RESTEngine.sharedEngine.createPostOnServer(params as! [String : AnyObject],
             success: { response in
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
@@ -30,7 +30,19 @@ class PostManager: NSObject {
             success: { response in
                 if let response = response {
                     let post = Post(json: response)
-                    completionHandler(post, nil)
+                    self.retrievePostThumbnail(post) { img, error in
+                        guard error == nil else {
+                            print("Error retrieivng post thumbnail: \(post)")
+                            return
+                        }
+                        
+                        if let img = img {
+                            post.thumbnail = img
+                            
+                        }
+                        
+                        completionHandler(post, nil)
+                    }
                 }
             }, failure: { error in
                 completionHandler(nil, error)
@@ -50,6 +62,16 @@ class PostManager: NSObject {
                     for data in postsData {
                         let data = data as! JSON
                         let post = Post(json: data)
+                        self.retrievePostThumbnail(post) { img, error in
+                            guard error == nil else {
+                                print("Error retrieivng post thumbnail: \(error)")
+                                return
+                            }
+                            
+                            if let img = img {
+                                post.thumbnail = img
+                            }
+                        }
                         postsArray.append(post)
                     }
                     

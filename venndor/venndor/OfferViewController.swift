@@ -115,7 +115,9 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     
     //segue to return to browsing
     func goBack(sender: UIButton) {
-        self.performSegueWithIdentifier("offerToBrowse", sender: self)
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.performSegueWithIdentifier("offerToBrowse", sender: self)
+        }
     }
     
 //    func browseAfterMatch() {
@@ -128,17 +130,23 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     
     func goBackToBrowse(sender: UIButton) {
         LocalUser.seenPosts[offeredItem.id] = NSDate()
-        self.performSegueWithIdentifier("offerToBrowse", sender: self)
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.performSegueWithIdentifier("offerToBrowse", sender: self)
+        }
+        
     }
     
     func toMatches(sender: UIButton) {
-        self.performSegueWithIdentifier("offerToMatches", sender: self)
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.performSegueWithIdentifier("offerToMatches", sender: self)
+    
+        }
     }
     
     func toBuy(sender: UIButton) {
         
     }
-    
+
     //function to set up the wheel slider and control.
     func setupWheelSlider() {
         let wheelFrame = CGRectMake(screenSize.width*0.2, screenSize.height*0.6, screenSize.width*0.6, screenSize.width*0.6)

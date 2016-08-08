@@ -196,7 +196,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         let scrollViewHeight:CGFloat = self.scrollView.frame.height
         let temp = ItemManager()
         for x in 0..<item.photoCount {
-            temp.retrieveItemImageById(item.id, imageIndex: x) { img, error in
+            temp.retrieveItemImage(item, imageIndex: x) { img, error in
                 guard error == nil else {
                     print("Error getting the image from the server: \(error)")
                     return

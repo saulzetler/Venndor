@@ -228,12 +228,12 @@ final class RESTEngine {
         
         let params: [String: AnyObject] =
         ["email": email,
+         "phoneNumber": LocalUser.phoneNumber,
             "first_name": firstName,
             "last_name": lastName,
             "gender": gender,
             "ageRange": ageRange,
             "profilePictureURL": LocalUser.profilePictureURL,
-            "facebookID": LocalUser.facebookID,
             "howTheyFoundVenndor": "", //NI
             "university": "",  //NI
             "rating": 0.0,  //NI
@@ -383,8 +383,6 @@ final class RESTEngine {
     
     
     
-    
-    
     //MARK: - Image methods
     
     /**
@@ -399,17 +397,9 @@ final class RESTEngine {
             }, failure: failure)
     }
     
-    /*
-    func addItemImagesById(id: String, images: [UIImage], success: SuccessClosure, failure: ErrorClosure) {
-        
-        //first create the folder
-        
-        self.putImagesToFolderWithPath(id, images: images, success: success , failure: failure)
-    }
-    */
     
     //alternative, dumb way of doing it. Make a separate API call for every image to upload
-    func altAddItemImagesById(id: String, images: [UIImage], success: SuccessClosure, failure: ErrorClosure) {
+    func addItemImagesById(id: String, images: [UIImage], success: SuccessClosure, failure: ErrorClosure) {
         //first create the folder
         callApiWithPath(Routing.ResourceFolder(folderPath: "\(id)").path, method: "POST", queryParams: nil, body: nil, headerParams: headerParams, success: { _ in
             
@@ -431,15 +421,6 @@ final class RESTEngine {
         callApiWithPath(Routing.ResourceFile(folderPath: folderPath, fileName: fileName).path, method: "POST", queryParams: nil, body: file, headerParams: headerParams, success: success, failure: failure)
     }
     
-    func getImageListFromServerById(id: String, success: SuccessClosure, failure: ErrorClosure) {
-        
-        // only want to get files, not any sub folders
-        let queryParams: [String: AnyObject] = ["include_folders": "0",
-            "include_files": "1"]
-        
-        callApiWithPath(Routing.ResourceFolder(folderPath: "\(id)").path, method: "GET", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
-    }
-    
     func getImageFromServerById(id: String, fileName: String, success: SuccessClosure, failure: ErrorClosure) {
         
         // request a download from the file
@@ -450,7 +431,11 @@ final class RESTEngine {
         callApiWithPath(Routing.ResourceFile(folderPath: "/\(id)", fileName: fileName).path, method: "GET", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
     
-    private func removeImageFolderById(id: String, success: SuccessClosure, failure: ErrorClosure) {
+    func removeImageFromServerById(id: String, fileName: String, success: SuccessClosure, failure: ErrorClosure) {
+        callApiWithPath(Routing.ResourceFile(folderPath: "\(id)", fileName: fileName).path, method: "DELETE", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    func removeImageFolderById(id: String, success: SuccessClosure, failure: ErrorClosure) {
         
         // delete all files and folders in the target folder
         let queryParams: [String: AnyObject] = ["force": "1"]
