@@ -1022,6 +1022,8 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
             
             
             
+            
+            
             //create the item object on the server
             ItemManager.globalManager.createItem(item) { error in
                 guard error == nil else {
