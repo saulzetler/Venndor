@@ -19,6 +19,9 @@ class ItemInfoViewController: UIViewController {
     var headerTitle: String! 
     var backButton: UIButton!
     var buyButton: UIButton!
+    var editButton: UIButton!
+    
+    var isPost: Bool!
     
     let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.77
     let CARD_WIDTH: CGFloat = UIScreen.mainScreen().bounds.width*0.9
@@ -36,7 +39,14 @@ class ItemInfoViewController: UIViewController {
             self.setupHeaderFrame()
             self.setupHeaderTitle()
             self.setupBackButton()
-            self.setupBuyButton()
+            
+            if self.isPost == true {
+                self.setupEditButton()
+            }
+            else {
+               self.setupBuyButton()
+            }
+            
         }
         
         self.view.backgroundColor = UIColorFromHex(0xecf0f1)
@@ -95,6 +105,36 @@ class ItemInfoViewController: UIViewController {
         buyButton.addTarget(self, action: #selector(ItemInfoViewController.toggleBuy), forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(buyButton)
     }
+    
+    func setupEditButton() {
+        let buttonY = self.view.frame.size.height - self.header.frame.size.height
+        let frame = CGRectMake(0, buttonY, self.header.frame.size.width, self.header.frame.size.height)
+        editButton = UIButton(frame: frame)
+        editButton.backgroundColor = UIColorFromHex(0x34495e)
+        editButton.setTitle("EDIT", forState: UIControlState.Normal)
+        editButton.titleLabel?.textColor = UIColor.whiteColor()
+        editButton.addTarget(self, action: #selector(ItemInfoViewController.editTapped), forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(editButton)
+    }
+    
+    func editTapped() {
+        print("Edit Tapped")
+        let editViewController = EditViewControllerTest()
+        editViewController.item = self.item
+        editViewController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        editViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        self.presentViewController(editViewController, animated: true, completion: nil)
+        
+//        self.performSegueWithIdentifier("ToEditPage", sender: self)
+    }
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+//        if (segue.identifier == "ToEditPage") {
+//            // pass data to next view
+//            let evc = segue.destinationViewController as! EditViewController
+//            evc.itemToBeEdited = self.item
+//        }
+//    }
     
     func toggleBuy() {
         print("Buy tapped!")

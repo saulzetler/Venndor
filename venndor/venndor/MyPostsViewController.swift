@@ -176,6 +176,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
                 dispatch_async(dispatch_get_main_queue()) {
                     let itemInfoController = ItemInfoViewController()
                     itemInfoController.item = item
+                    itemInfoController.isPost = true
                     itemInfoController.headerTitle = "Your Posts"
                     self.presentViewController(itemInfoController, animated: true, completion: nil)
                 }
@@ -186,6 +187,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         if segue.identifier == "showItemInfo" {
             let ivc = segue.destinationViewController as! ItemInfoViewController
+            ivc.isPost = true
             ivc.item = tappedItem
         }
     }
