@@ -8,9 +8,13 @@
 
 import Foundation
 
+/*
+
 class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, CLLocationManagerDelegate, RatingControlDelegate {
     
     //declare the needed variables for the page to work.
+    
+    let evc = EditViewController()
     
     //all the scrollview variables required
     var numberOfPages: CGFloat = 8
@@ -56,7 +60,6 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
     var yearsPicker: UIPickerView!
     
     var ratingControl: RatingControl!
-    var imagePickerController: ImagePickerController!
     var mapView: GMSMapView!
     var currentPlace: GMSPlace!
     var useMyLocation: Bool!
@@ -127,13 +130,13 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
             }
             if page != 7 {
                 downArrowFrame.origin.y = downArrowOrigin + CGFloat(page)*screenSize.height
-                let downArrow = makeImageButton("Expand Arrow Blue.png", frame: downArrowFrame, target: #selector(PostViewController.nextPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+                let downArrow = makeImageButton("Expand Arrow Blue.png", frame: downArrowFrame, action: #selector(EditViewController.nextPage(_:)), target: evc, tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
                 containerView.addSubview(downArrow)
             }
             
             if page != 0 {
                 upArrowFrame.origin.y = upArrowOrigin + CGFloat(page)*screenSize.height
-                let upArrow = makeImageButton("Collapse Arrow Blue.png", frame: upArrowFrame, target: #selector(PostViewController.prevPage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+                let upArrow = makeImageButton("Collapse Arrow Blue.png", frame: upArrowFrame, action: #selector(EditViewController.prevPage(_:)), target: evc, tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
                 containerView.addSubview(upArrow)
             }
             
@@ -148,12 +151,12 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
         var button: UIButton!
         if page != 0 {
             upButtonFrame.origin.y = upButtonOrigin + CGFloat(page)*screenSize.height
-            button = makeTextButton(upTitle, frame: upButtonFrame, target: #selector(PostViewController.prevPage(_:)), textColor: UIColorFromHex(0x34495e))
+            button = makeTextButton(upTitle, frame: upButtonFrame, action: #selector(EditViewController.prevPage(_:)), target: evc, textColor: UIColorFromHex(0x34495e))
             containerView.addSubview(button)
         }
         if page != 7 {
             downButtonFrame.origin.y = downButtonOrigin + CGFloat(page)*screenSize.height
-            button = makeTextButton(downTitle, frame: downButtonFrame, target: #selector(PostViewController.nextPage(_:)), textColor: UIColorFromHex(0x34495e))
+            button = makeTextButton(downTitle, frame: downButtonFrame, action: #selector(EditViewController.nextPage(_:)), target: evc, textColor: UIColorFromHex(0x34495e))
             containerView.addSubview(button)
         }
     }
@@ -220,17 +223,17 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
         let originX = screenSize.width*0.2
         let originY = screenSize.height*0.3
         
-        imageView1 = createImgView(CGRectMake(originX, originY, largeImgWidth, largeImgWidth), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
+        imageView1 = createImgView(CGRectMake(originX, originY, largeImgWidth, largeImgWidth), action: #selector(EditViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
         imageView1.tag = 0
-        imageView2 = createImgView(CGRectMake(originX+padding+largeImgWidth, originY, smallImgWidth, smallImgWidth), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
+        imageView2 = createImgView(CGRectMake(originX+padding+largeImgWidth, originY, smallImgWidth, smallImgWidth), action: #selector(EditViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
         imageView2.tag = 1
-        imageView3 = createImgView(CGRectMake(originX+padding+largeImgWidth, originY+smallImgWidth+padding, smallImgWidth, smallImgWidth), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
+        imageView3 = createImgView(CGRectMake(originX+padding+largeImgWidth, originY+smallImgWidth+padding, smallImgWidth, smallImgWidth), action: #selector(EditViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
         imageView3.tag = 2
-        imageView4 = createImgView(CGRectMake(originX+padding+largeImgWidth, originY+largeImgWidth+padding, smallImgWidth, smallImgWidth), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
+        imageView4 = createImgView(CGRectMake(originX+padding+largeImgWidth, originY+largeImgWidth+padding, smallImgWidth, smallImgWidth), action: #selector(EditViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
         imageView4.tag = 3
-        imageView5 = createImgView(CGRectMake(originX+smallImgWidth+padding, originY+largeImgWidth+padding, smallImgWidth, smallImgWidth), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
+        imageView5 = createImgView(CGRectMake(originX+smallImgWidth+padding, originY+largeImgWidth+padding, smallImgWidth, smallImgWidth), action: #selector(EditViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
         imageView5.tag = 4
-        imageView6 = createImgView(CGRectMake(originX, originY+largeImgWidth+padding, smallImgWidth, smallImgWidth), action: #selector(PostViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
+        imageView6 = createImgView(CGRectMake(originX, originY+largeImgWidth+padding, smallImgWidth, smallImgWidth), action: #selector(EditViewController.imageTapped(_:)), superView: containerView, boarderColor: UIColor.whiteColor(), boardered: false)
         imageView6.tag = 5
         
         
@@ -290,7 +293,7 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
     //function to create the final post button which is called when the user completes the process.
     func setupPostButton() {
         let buttonFrame = CGRectMake(0, screenSize.height*7.9, screenSize.width, screenSize.height*0.1)
-        postButton = makeTextButton("Post!", frame: buttonFrame, target: #selector(PostViewController.postItem(_:)))
+        postButton = makeTextButton("Post!", frame: buttonFrame, action: #selector(EditViewController.postItem(_:)), target: evc)
         postButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         postButton.titleLabel!.font = UIFont(name: "Avenir", size: 35)
         postButton.backgroundColor = UIColorFromHex(0x34495e)
@@ -303,7 +306,7 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
         let pageIndOrigin = pageIndicatorFrame.origin.y
         for pageNum in 0...7 {
             pageIndicatorFrame.origin.y = pageIndOrigin + CGFloat(pageNum*25)
-            let pageInd = makeIndicatorButton(pageIndicatorFrame, color: UIColorFromHex(0x34495e), target: #selector(PostViewController.indicatorTouched(_:)))
+            let pageInd = makeIndicatorButton(pageIndicatorFrame, color: UIColorFromHex(0x34495e), target: #selector(EditViewController.indicatorTouched(_:)))
             pageInd.tag = pageNum
             if pageNum == 0 {
                 pageInd.backgroundColor = UIColorFromHex(0x34495e)
@@ -336,7 +339,7 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
         toolbarDone.sizeToFit()
         let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
         let barBtnDone = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.Done,
-                                              target: self, action: #selector(PostViewController.doneButtonClicked(_:)))
+                                              target: self, action: #selector(EditViewController.doneButtonClicked(_:)))
         
         toolbarDone.items = [flexSpace, barBtnDone] // You can even add cancel button too
         priceField.inputAccessoryView = toolbarDone
@@ -368,7 +371,7 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
         //        let locationLabel = customLabel(CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), text: "Location", color: UIColorFromHex(0x34495e), fontSize: 30)
         //        containerView.addSubview(locationLabel)
         
-        let locationButton = makeTextButton("Location", frame: CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), target: #selector(PostViewController.searchClicked(_:)), textColor: UIColorFromHex(0x34495e), textSize: 30)
+        let locationButton = makeTextButton("Location", frame: CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), action: #selector(EditViewController.searchClicked(_:)), target: evc, textColor: UIColorFromHex(0x34495e), textSize: 30)
         containerView.addSubview(locationButton)
         
         let priceLabelFrame = CGRectMake(screenSize.width*0.15, screenSize.height*6.3, self.screenSize.width*0.7, screenSize.height*0.1)
@@ -389,7 +392,7 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
     
     func setPreviewItemName() {
         let previewNameFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.35, screenSize.width*0.6, screenSize.height*0.05)
-        previewName = makeTextButton(itemName.text!, frame: previewNameFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewName = makeTextButton(itemName.text!, frame: previewNameFrame, action: #selector(EditViewController.changePage(_:)), target: evc, textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewName.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewName.tag = 1
         containerView.addSubview(previewName)
@@ -401,7 +404,7 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
     
     func setCategoryPreview() {
         let previewCategoryFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.4, screenSize.width*0.6, screenSize.height*0.05)
-        previewCategory = makeTextButton("Furniture", frame: previewCategoryFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewCategory = makeTextButton("Furniture", frame: previewCategoryFrame, action: #selector(EditViewController.changePage(_:)), target: evc, textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewCategory.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewCategory.tag = 2
         containerView.addSubview(previewCategory)
@@ -413,7 +416,7 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
     
     func setYearsPreview() {
         let yearsCategoryFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.45, screenSize.width*0.6, screenSize.height*0.05)
-        previewYears = makeTextButton("0 years old", frame: yearsCategoryFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewYears = makeTextButton("0 years old", frame: yearsCategoryFrame, action: #selector(EditViewController.changePage(_:)), target: evc, textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewYears.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewYears.tag = 3
         containerView.addSubview(previewYears)
@@ -425,7 +428,7 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
     
     func setInitialCondition() {
         let initialConditionFrame = CGRect(x: screenSize.width*0.2, y: screenSize.height*7.5, width: screenSize.width*0.6, height: screenSize.height*0.05)
-        let label = makeTextButton("Zero stars filled", frame: initialConditionFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        let label = makeTextButton("Zero stars filled", frame: initialConditionFrame, action: #selector(EditViewController.changePage(_:)), target: evc, textColor: UIColorFromHex(0x34495e), textSize: 18)
         label.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         label.tag = 25
         containerView.addSubview(label)
@@ -448,7 +451,7 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
         containerView.addSubview(ratingPreviewContainer)
         var ratingFrame = CGRectMake(0, 0, size, size)
         for rating in 0...ratingControl.rating {
-            let star = makeImageButton("Star_Filled.png", frame: ratingFrame, target: #selector(PostViewController.changePage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+            let star = makeImageButton("Star_Filled.png", frame: ratingFrame, action: #selector(EditViewController.changePage(_:)), target: evc, tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
             star.tag = 3
             ratingFrame.origin.x = CGFloat(rating) * size
             ratingPreviewContainer.addSubview(star)
@@ -473,7 +476,7 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
         //        descriptionContainer.backgroundColor = U IColor.whiteColor()
         let labelFrame = CGRect(x: 0, y: 0, width: descriptionPreviewFrame.width, height: descriptionPreviewFrame.height)
         
-        previewDescription = makeTextButton("Description", frame: labelFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewDescription = makeTextButton("Description", frame: labelFrame, action: #selector(EditViewController.changePage(_:)), target: evc, textColor: UIColorFromHex(0x34495e), textSize: 18)
         //        previewDescription.backgroundColor = UIColor.whiteColor()
         previewDescription.tag = 3
         previewDescription.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
@@ -487,7 +490,7 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
     
     func setLocationPreview() {
         let locationPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height, screenSize.width*0.6, screenSize.height*0.05)
-        previewLocation = makeTextButton("Using current location", frame: locationPreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewLocation = makeTextButton("Using current location", frame: locationPreviewFrame, action: #selector(EditViewController.changePage(_:)), target: evc, textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewLocation.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewLocation.tag = 5
         containerView.addSubview(previewLocation)
@@ -505,7 +508,7 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
     
     func setPricePreview() {
         let pricePreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height+previewLocation.frame.height, screenSize.width*0.6, screenSize.height*0.05)
-        previewPrice = makeTextButton("No minimum price set", frame: pricePreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewPrice = makeTextButton("No minimum price set", frame: pricePreviewFrame, action: #selector(EditViewController.changePage(_:)), target: evc, textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewPrice.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewPrice.tag = 6
         containerView.addSubview(previewPrice)
@@ -557,11 +560,11 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
         mapView.backgroundColor = UIColorFromHex(0xecf0f1)
         containerView.addSubview(mapView)
         
-        let currentLocationButton = makeImageButton("sell_currentlocation_button.png", frame: CGRectMake(screenSize.width*0.25, screenSize.height*5.65, screenSize.width*0.5, screenSize.height*0.1), target: #selector(PostViewController.curLocationClicked(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0.0)
+        let currentLocationButton = makeImageButton("sell_currentlocation_button.png", frame: CGRectMake(screenSize.width*0.25, screenSize.height*5.65, screenSize.width*0.5, screenSize.height*0.1), action: #selector(EditViewController.curLocationClicked(_:)), target: evc, tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0.0)
         
         containerView.addSubview(currentLocationButton)
         
-        let searchImageButton = makeImageButton("Search Filled-100.png", frame: CGRectMake(screenSize.width*0.27, screenSize.height*5.28, screenSize.width*0.13, screenSize.width*0.13), target: #selector(PostViewController.searchClicked(_:)), tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.0)
+        let searchImageButton = makeImageButton("Search Filled-100.png", frame: CGRectMake(screenSize.width*0.27, screenSize.height*5.28, screenSize.width*0.13, screenSize.width*0.13), action: #selector(EditViewController.searchClicked(_:)), target: evc, tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.0)
         
         containerView.addSubview(searchImageButton)
         
@@ -591,4 +594,4 @@ class PostView: UIView, UIScrollViewDelegate, UITextFieldDelegate, UITextViewDel
     
     
 }
-
+*/

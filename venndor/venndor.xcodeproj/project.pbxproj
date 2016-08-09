@@ -102,6 +102,7 @@
 		E453F0A91D2EC991002637AB /* STRatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453F0A81D2EC991002637AB /* STRatingControl.swift */; };
 		E470ADBF1D58D68C00F980CB /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E470ADBE1D58D68C00F980CB /* PostView.swift */; };
 		E470ADC11D59038C00F980CB /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E470ADC01D59038C00F980CB /* EditViewController.swift */; };
+		E470ADC31D5A2D1A00F980CB /* EditViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E470ADC21D5A2D1A00F980CB /* EditViewControllerTest.swift */; };
 		E478AB141D2D5DDB00F00D60 /* PopUpViewControllerSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E478AB131D2D5DDB00F00D60 /* PopUpViewControllerSwift.swift */; };
 		E48002061D2FEEEE009C90E2 /* Expand Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E48002051D2FEEEE009C90E2 /* Expand Arrow.png */; };
 		E48002081D2FFAF7009C90E2 /* PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48002071D2FFAF7009C90E2 /* PopoverViewController.swift */; };
@@ -253,6 +254,7 @@
 		E453F0A81D2EC991002637AB /* STRatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRatingControl.swift; sourceTree = "<group>"; };
 		E470ADBE1D58D68C00F980CB /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
 		E470ADC01D59038C00F980CB /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		E470ADC21D5A2D1A00F980CB /* EditViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewControllerTest.swift; sourceTree = "<group>"; };
 		E478AB131D2D5DDB00F00D60 /* PopUpViewControllerSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpViewControllerSwift.swift; sourceTree = "<group>"; };
 		E48002051D2FEEEE009C90E2 /* Expand Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Expand Arrow.png"; sourceTree = "<group>"; };
 		E48002071D2FFAF7009C90E2 /* PopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverViewController.swift; sourceTree = "<group>"; };
@@ -324,6 +326,7 @@
 				E49051B11D09E5E80045D5C0 /* SideMenuController.swift */,
 				E49051B51D0B245C0045D5C0 /* PostViewController.swift */,
 				E470ADC01D59038C00F980CB /* EditViewController.swift */,
+				E470ADC21D5A2D1A00F980CB /* EditViewControllerTest.swift */,
 				101F43CF1D11A203007E0ADE /* TutorialViewController.swift */,
 				E44C15281D11C8680006EBAD /* MyPostsViewController.swift */,
 				E44C152C1D11CC300006EBAD /* MyMatchesViewController.swift */,
@@ -913,6 +916,7 @@
 				63A7A6D41D490F9400A33DC2 /* ItemInfoView.swift in Sources */,
 				103B17081D35686C005AEFDD /* jonasBoettcherController.swift in Sources */,
 				101F43D01D11A203007E0ADE /* TutorialViewController.swift in Sources */,
+				E470ADC31D5A2D1A00F980CB /* EditViewControllerTest.swift in Sources */,
 				10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */,
 				63220ECE1D47BCB0006D02C9 /* Post.swift in Sources */,
 				10613BD21D551B5F00E355A3 /* phoneViewController.swift in Sources */,

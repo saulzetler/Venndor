@@ -19,9 +19,9 @@ extension UIView {
         }
         return nil
     }
-    func makeImageButton(imageName: String, frame: CGRect, target: Selector, tinted: Bool, circle: Bool, backgroundColor: UInt32, backgroundAlpha: Double) -> UIButton {
+    func makeImageButton(imageName: String, frame: CGRect, action: Selector, tinted: Bool, circle: Bool, backgroundColor: UInt32, backgroundAlpha: Double) -> UIButton {
         let button = UIButton(frame: frame)
-        button.addTarget(self, action: target, forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: action, forControlEvents: UIControlEvents.TouchUpInside)
         if imageName != "" {
             let buttonImage = UIImage(named: imageName)
             button.setImage(buttonImage, forState: .Normal)
@@ -47,9 +47,9 @@ extension UIView {
         return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
     }
     
-    func makeTextButton(text: String, frame: CGRect, target: Selector, circle: Bool = false, textColor: UIColor = UIColor.blackColor(), tinted: Bool = true, backgroundColor: UIColor = UIColor.clearColor(), textSize: CGFloat = 12) -> UIButton {
+    func makeTextButton(text: String, frame: CGRect, action: Selector, circle: Bool = false, textColor: UIColor = UIColor.blackColor(), tinted: Bool = true, backgroundColor: UIColor = UIColor.clearColor(), textSize: CGFloat = 12) -> UIButton {
         let button = UIButton(frame: frame)
-        button.addTarget(self, action: target, forControlEvents: .TouchUpInside)
+        button.addTarget(self, action: action, forControlEvents: .TouchUpInside)
         button.setTitle(text, forState: .Normal)
         button.titleLabel?.font = UIFont(name: "Avenir", size: textSize)
         button.setTitleColor(textColor, forState: UIControlState.Normal)

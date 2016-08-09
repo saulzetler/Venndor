@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ccl-eH-Ycs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ccl-eH-Ycs">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -680,22 +680,43 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="Qhy-od-Sr2" kind="show" identifier="ToEditPAge" id="k61-71-5nG"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rur-gZ-i6y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="1192" y="3004"/>
+        </scene>
+        <!--Edit View Controller Test-->
+        <scene sceneID="ybV-Xs-0CG">
+            <objects>
+                <viewController id="Qhy-od-Sr2" customClass="EditViewControllerTest" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="t6P-mT-tcm"/>
+                        <viewControllerLayoutGuide type="bottom" id="XKx-GS-jME"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="oMY-Mo-bOf">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="G2l-xO-pNj" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2016" y="3004"/>
         </scene>
     </scenes>
     <resources>
         <image name="icon" width="182" height="204"/>
     </resources>
     <inferredMetricsTieBreakers>
-        <segue reference="rJe-8o-Yiu"/>
-        <segue reference="XwR-UP-4A2"/>
-        <segue reference="6NT-sV-Fv5"/>
+        <segue reference="uT9-ID-WRv"/>
         <segue reference="OzI-1T-yzU"/>
-        <segue reference="iGi-df-zpV"/>
-        <segue reference="mUc-z2-b8r"/>
+        <segue reference="rJe-8o-Yiu"/>
+        <segue reference="lxm-w2-NCA"/>
+        <segue reference="S9k-gu-7hk"/>
         <segue reference="YQC-W7-xKJ"/>
+        <segue reference="gbD-Lm-gkJ"/>
     </inferredMetricsTieBreakers>
 </document>
