@@ -25,9 +25,6 @@ class SplashViewController: UIViewController {
         
         
         //declare managers to pull data of each object
-        let userManager = UserManager()
-
-        let seenPostsManager = SeenPostsManager()
         var seenPostsMade = false
         
         /////////////////////////////////////// IF NOT GUEST //////////////////////////////////////

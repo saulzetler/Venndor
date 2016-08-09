@@ -17,7 +17,7 @@ class Post: NSObject {
     var buyerID: String!   //to be set when item is sold
     var buyerName: String! //to be set when item is sold
     var minPrice: Int!
-    var soldPrice: Double! //to be set when item is sold
+    var soldPrice: Int! //to be set when item is sold
     var thumbnail: UIImage!
     var itemLongitude: Double!
     var itemLatitude: Double!
@@ -45,7 +45,7 @@ class Post: NSObject {
         self.buyerID = json["buyerID"] == nil ? nil : json["buyerID"] as! String
         self.buyerName = json["buyerName"] == nil ? nil : json["buyerName"] as! String
         self.minPrice = json["minPrice"] as! Int
-        self.soldPrice = json["soldPrice"] == nil ? nil : json["soldPrice"] as! Double
+        self.soldPrice = json["soldPrice"] == nil ? nil : json["soldPrice"] as! Int
         self.itemLongitude = json["itemLongitude"] as! Double
         self.itemLatitude = json["itemLatitude"] as! Double
         self.sold = json["sold"] as! Int
