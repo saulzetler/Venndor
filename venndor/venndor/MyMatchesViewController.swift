@@ -82,14 +82,15 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     //create the match container view
                     let matchContainer = ItemContainer(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight) + boughtTitle, width: screenSize.width, height: containerHeight))
                     
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfoFromContainer(_:)))
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleMatchItemInfo(_:)))
                     matchContainer.addGestureRecognizer(tap)
                     
                     
                         matchContainer.match = match
                     //self.addContainerContent(matchContainer, img: img, match: match)
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.addContainerContent(matchContainer, match: match)
+                        matchContainer.match = match
+                        self.addContainerContent(matchContainer)
                         self.distSet = false
                     }
                     matchContainerView.addSubview(matchContainer)
@@ -112,11 +113,12 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     //create the match container view
                     let matchContainer = ItemContainer(frame: CGRect(x: 0, y: screenSize.height * 0.11 + (index * containerHeight) + matchTitle + boughtTitle-screenSize.height*0.018, width: screenSize.width, height: containerHeight))
                     
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfoFromContainer(_:)))
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleMatchItemInfo(_:)))
                     matchContainer.addGestureRecognizer(tap)
                     
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.addContainerContent(matchContainer, match: match)
+                        matchContainer.match = match
+                        self.addContainerContent(matchContainer)
                         self.distSet = false
                     }
                     
@@ -163,47 +165,17 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-    func goToItemInfo(containerView: ItemContainer){
-        ItemManager.globalManager.retrieveItemById(containerView.match.itemID) { item, error in
-            guard error == nil else {
-                print("error pulling item data from tapped match: \(error)")
-                return
-            }
-            if let item = item {
-                self.tappedItem = item
-                dispatch_async(dispatch_get_main_queue()) {
-                    let itemInfoController = ItemInfoViewController()
-                    itemInfoController.item = item
-                    itemInfoController.match = containerView.match
-                    itemInfoController.headerTitle = "Your Matches"
-                    self.presentViewController(itemInfoController, animated: true, completion: nil)
-                }
-            }
-        }
-    }
-    
-    func toggleItemInfoFromContainer(sender: UITapGestureRecognizer) {
-        let containerView = sender.view as! ItemContainer
-        
-        goToItemInfo(containerView)
-    }
-    
-    func toggleItemInfoFromImage(sender: UITapGestureRecognizer) {
-        let containerView = sender.view?.superview as! ItemContainer
-        
-        goToItemInfo(containerView)
-    }
-    
-    func addContainerContent(matchContainer: ItemContainer, match: Match) {
+    func addContainerContent(matchContainer: ItemContainer) {
 
         
-        matchContainer.match = match
+        let match = matchContainer.match
+        
         //create the match photo
         let imgView = createImgView(CGRect(x: 0, y: 0, width: screenSize.width*0.4, height: screenSize.width*0.4), action: #selector(MyMatchesViewController.none(_:)), superView: matchContainer)
 
         imgView.image = match.thumbnail
 
-        let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfoFromImage(_:)))
+        let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleMatchItemInfo(_:)))
         imgView.addGestureRecognizer(tap)
         
         let imgHeight = imgView.frame.height
@@ -225,26 +197,22 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         nameLabel.text = match.itemName
         nameLabel.textColor = UIColor.blackColor()
         nameLabel.font = UIFont(name: "Avenir", size: 16)
-//        nameLabel.textAlignment = .Center
         matchContainer.addSubview(nameLabel)
         
         let distanceLabel = UILabel(frame: CGRect(x: matchContainer.frame.width - 45, y: 5, width:45, height: imgHeight * 0.15))
         calculateDistanceFromLocation(match.itemLatitude, longitude: match.itemLongitude, myLocation: LocalUser.myLocation)
+        
         while(distSet == false){
         }
+        
         distanceLabel.text = "\(self.distText)"
         distanceLabel.font = UIFont(name: "Avenir", size: 10)
-//        distanceLabel.textAlignment = .Center
         matchContainer.addSubview(distanceLabel)
         
-        
-//        descriptionLabel.textAlignment = .Center
         matchContainer.addSubview(descriptionLabel)
         
         //CHANGE TARGET
         let buyButton = makeTextButton("Buy", frame: CGRect(x: imgWidth+42, y: 20+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.toggleBuy(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
-//        buyButton.backgroundColor = UIColorFromHex(0x404040)
-//        buyButton.titleLabel?.textColor = UIColor.whiteColor()
         buyButton.layer.cornerRadius = 5
         matchContainer.addSubview(buyButton)
         

@@ -26,7 +26,6 @@ class Match: NSObject {
     var dateBought: NSDate!
     var matchTimeRemaining: String!
     
-    
     init(itemID: String, itemName: String, itemDescription: String, userID: String, sellerID: String, sellerName: String, matchedPrice: Int,  itemLongitude: Double, itemLatitude: Double, dateMatched: NSDate!) {
         self.itemID = itemID
         self.itemName = itemName

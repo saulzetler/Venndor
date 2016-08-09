@@ -188,6 +188,58 @@ extension UIViewController: SWRevealViewControllerDelegate {
             }
         }
     }
+    
+    func toggleMatchItemInfo(sender: UITapGestureRecognizer){
+        let containerView: ItemContainer!
+        if let imgView = sender.view as? UIImageView {
+            containerView = imgView.superview as! ItemContainer
+        }
+        else {
+            containerView = sender.view as! ItemContainer
+        }
+        
+        ItemManager.globalManager.retrieveItemById(containerView.match.itemID) { item, error in
+            guard error == nil else {
+                print("error pulling item data from tapped match: \(error)")
+                return
+            }
+            if let item = item {
+                dispatch_async(dispatch_get_main_queue()) {
+                    let itemInfoController = ItemInfoViewController()
+                    itemInfoController.item = item
+                    itemInfoController.match = containerView.match
+                    itemInfoController.headerTitle = "Your Matches"
+                    self.presentViewController(itemInfoController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    func togglePostItemInfo(sender: UITapGestureRecognizer) {
+        let containerView: ItemContainer!
+        
+        if let imgView = sender.view as? UIImageView {
+            containerView = imgView.superview as! ItemContainer
+        }
+        else {
+            containerView = sender.view as! ItemContainer
+        }
+        
+        ItemManager.globalManager.retrieveItemById(containerView.post.itemID) { item, error in
+            guard error == nil else {
+                print("error pulling item data from tapped match: \(error)")
+                return
+            }
+            if let item = item {
+                dispatch_async(dispatch_get_main_queue()) {
+                    let itemInfoController = ItemInfoViewController()
+                    itemInfoController.item = item
+                    itemInfoController.headerTitle = "Your Posts"
+                    self.presentViewController(itemInfoController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
 }
 extension UIButton {
     func roundCorners(corners:UIRectCorner, radius: CGFloat) {

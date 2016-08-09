@@ -226,7 +226,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     func makeMiniContentView(frame: CGRect, image: UIImage, matchedPrice: Int) -> ItemContainer {
         
         let containerView = ItemContainer(frame: frame)
-        
+
         //create the item image
         let imgView = UIImageView(frame: CGRect(x: 0, y: 0, width: containerView.frame.width, height: containerView.frame.height))
         imgView.image = image
@@ -236,39 +236,18 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         imgView.userInteractionEnabled = true
         
         //create the price label
-        let priceLabel = self.makeMiniPriceLabel(containerView, matchedPrice: matchedPrice)
+        let priceLabel = VennPriceLabel(containerView: containerView, price: matchedPrice, adjustment: nil)
         containerView.addSubview(imgView)
         containerView.addSubview(priceLabel)
         return containerView
     }
     
-    func makeMiniPriceLabel(containerView: ItemContainer, matchedPrice: Int) -> UIView {
-        //price label var
-        
-        let priceLabelFrame = CGRectMake(containerView.frame.size.width - 35, -7, containerView.frame.size.width * 0.50, containerView.frame.size.height * 0.35)
-        
-        //create the price container
-        let priceContainer = UIImageView(frame: priceLabelFrame)
-        priceContainer.image = UIImage(named: "venn.png")
-        
-        //create the price label
-        let priceLabel = UILabel(frame: CGRect(x: priceContainer.frame.size.width * 0.2, y:0, width: priceContainer.frame.width, height: priceContainer.frame.height))
-
-        priceLabel.text = "$\(matchedPrice)"
-        priceLabel.textAlignment = .Center
-        priceLabel.numberOfLines = 1
-        priceLabel.textColor = UIColor.whiteColor()
-        priceLabel.font = priceLabel.font.fontWithSize(15)
-        priceContainer.addSubview(priceLabel)
-        return priceContainer
-    }
     
    //segue & transition functions
     
     func toggleItemInfo(sender: UITapGestureRecognizer) {
         let container = sender.view  as! ItemContainer
-        print("MiniMatch Tapped!")
-        
+
         let match = container.match
         ItemManager.globalManager.retrieveItemById(match.itemID) { item, error in
             guard error == nil else {
