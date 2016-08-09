@@ -101,6 +101,9 @@
 		E44C153C1D11E0430006EBAD /* Kitchen-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15351D11E0430006EBAD /* Kitchen-50.png */; };
 		E44C153D1D11E0430006EBAD /* Lamp-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E44C15361D11E0430006EBAD /* Lamp-50.png */; };
 		E453F0A91D2EC991002637AB /* STRatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = E453F0A81D2EC991002637AB /* STRatingControl.swift */; };
+		E470ADBF1D58D68C00F980CB /* PostView.swift in Sources */ = {isa = PBXBuildFile; fileRef = E470ADBE1D58D68C00F980CB /* PostView.swift */; };
+		E470ADC11D59038C00F980CB /* EditViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E470ADC01D59038C00F980CB /* EditViewController.swift */; };
+		E470ADC31D5A2D1A00F980CB /* EditViewControllerTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = E470ADC21D5A2D1A00F980CB /* EditViewControllerTest.swift */; };
 		E478AB141D2D5DDB00F00D60 /* PopUpViewControllerSwift.swift in Sources */ = {isa = PBXBuildFile; fileRef = E478AB131D2D5DDB00F00D60 /* PopUpViewControllerSwift.swift */; };
 		E48002061D2FEEEE009C90E2 /* Expand Arrow.png in Resources */ = {isa = PBXBuildFile; fileRef = E48002051D2FEEEE009C90E2 /* Expand Arrow.png */; };
 		E48002081D2FFAF7009C90E2 /* PopoverViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E48002071D2FFAF7009C90E2 /* PopoverViewController.swift */; };
@@ -251,6 +254,9 @@
 		E44C15351D11E0430006EBAD /* Kitchen-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Kitchen-50.png"; sourceTree = "<group>"; };
 		E44C15361D11E0430006EBAD /* Lamp-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Lamp-50.png"; sourceTree = "<group>"; };
 		E453F0A81D2EC991002637AB /* STRatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = STRatingControl.swift; sourceTree = "<group>"; };
+		E470ADBE1D58D68C00F980CB /* PostView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PostView.swift; sourceTree = "<group>"; };
+		E470ADC01D59038C00F980CB /* EditViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewController.swift; sourceTree = "<group>"; };
+		E470ADC21D5A2D1A00F980CB /* EditViewControllerTest.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = EditViewControllerTest.swift; sourceTree = "<group>"; };
 		E478AB131D2D5DDB00F00D60 /* PopUpViewControllerSwift.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopUpViewControllerSwift.swift; sourceTree = "<group>"; };
 		E48002051D2FEEEE009C90E2 /* Expand Arrow.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Expand Arrow.png"; sourceTree = "<group>"; };
 		E48002071D2FFAF7009C90E2 /* PopoverViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = PopoverViewController.swift; sourceTree = "<group>"; };
@@ -321,6 +327,8 @@
 				631F4F581D2AEFCD005EEFE2 /* DeleteViewController.swift */,
 				E49051B11D09E5E80045D5C0 /* SideMenuController.swift */,
 				E49051B51D0B245C0045D5C0 /* PostViewController.swift */,
+				E470ADC01D59038C00F980CB /* EditViewController.swift */,
+				E470ADC21D5A2D1A00F980CB /* EditViewControllerTest.swift */,
 				101F43CF1D11A203007E0ADE /* TutorialViewController.swift */,
 				E44C15281D11C8680006EBAD /* MyPostsViewController.swift */,
 				E44C152C1D11CC300006EBAD /* MyMatchesViewController.swift */,
@@ -557,6 +565,8 @@
 				103D11471D382EB5004CE297 /* OtherHeaderView.swift */,
 				103D11491D3831CD004CE297 /* MyItemHeaderView.swift */,
 				63B5F6CF1D5A6869006DDAE8 /* VennPriceLabel.swift */,
+				E470ADBE1D58D68C00F980CB /* PostView.swift */,
+
 			);
 			name = Views;
 			sourceTree = "<group>";
@@ -910,6 +920,7 @@
 				63A7A6D41D490F9400A33DC2 /* ItemInfoView.swift in Sources */,
 				103B17081D35686C005AEFDD /* jonasBoettcherController.swift in Sources */,
 				101F43D01D11A203007E0ADE /* TutorialViewController.swift in Sources */,
+				E470ADC31D5A2D1A00F980CB /* EditViewControllerTest.swift in Sources */,
 				10ADC9B01D0749700028A999 /* venndor.xcdatamodeld in Sources */,
 				63220ECE1D47BCB0006D02C9 /* Post.swift in Sources */,
 				10613BD21D551B5F00E355A3 /* phoneViewController.swift in Sources */,
@@ -920,6 +931,7 @@
 				E49051A91D09B0250045D5C0 /* BrowseViewController.swift in Sources */,
 				6354154A1D5289280012BD2B /* BuyViewController.swift in Sources */,
 				631069271D1B27B8004A3ADD /* ParserManager.swift in Sources */,
+				E470ADC11D59038C00F980CB /* EditViewController.swift in Sources */,
 				631F4F571D2AB5F4005EEFE2 /* ProfilePageViewController.swift in Sources */,
 				E49051B01D09C0C90045D5C0 /* SWRevealViewController.m in Sources */,
 				638DF3E81D2C3C7C00319FD8 /* MatchesManager.swift in Sources */,
@@ -942,6 +954,7 @@
 				631F4F551D2829FC005EEFE2 /* ItemManager.swift in Sources */,
 				63088BAD1D187CBA00F67931 /* Item.swift in Sources */,
 				103CBEFF1D50EBE000EF89C7 /* BoughtController.swift in Sources */,
+				E470ADBF1D58D68C00F980CB /* PostView.swift in Sources */,
 				631F4F591D2AEFCD005EEFE2 /* DeleteViewController.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;

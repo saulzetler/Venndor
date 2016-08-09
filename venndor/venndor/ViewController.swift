@@ -206,6 +206,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
             if let item = item {
                 dispatch_async(dispatch_get_main_queue()) {
                     let itemInfoController = ItemInfoViewController()
+                    itemInfoController.isPost = false
                     itemInfoController.item = item
                     itemInfoController.match = containerView.match
                     itemInfoController.headerTitle = "Your Matches"
@@ -233,6 +234,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
             if let item = item {
                 dispatch_async(dispatch_get_main_queue()) {
                     let itemInfoController = ItemInfoViewController()
+                    itemInfoController.isPost = true
                     itemInfoController.item = item
                     itemInfoController.headerTitle = "Your Posts"
                     self.presentViewController(itemInfoController, animated: true, completion: nil)

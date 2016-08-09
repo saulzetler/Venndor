@@ -166,10 +166,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func addContainerContent(matchContainer: ItemContainer) {
-
-        
         let match = matchContainer.match
-        
         //create the match photo
         let imgView = createImgView(CGRect(x: 0, y: 0, width: screenSize.width*0.4, height: screenSize.width*0.4), action: #selector(MyMatchesViewController.none(_:)), superView: matchContainer)
 
@@ -297,8 +294,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         }
         
     }
-    
-    
     
     
     

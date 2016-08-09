@@ -18,6 +18,7 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
     var containerView = UIView()
     var pageControl: UIPageControl! = UIPageControl()
     var picNum: Int!
+    var prevPicNum: Int!
     var numberOfPics: Int!
     
     //save current item
@@ -292,8 +293,10 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
     
     internal func scrollViewDidEndDecelerating(scrollView: UIScrollView){
         adjustPage()
+        if picNum == numberOfPics-1 && prevPicNum == picNum {
+            openInfo()
+        }
     }
-    
     
     internal func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {
         adjustPage()
@@ -305,6 +308,7 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
         let currentPage:CGFloat = floor((scrollView.contentOffset.y-pageHeight/2)/pageHeight)+1
         // Change the indicator
+        prevPicNum = picNum
         picNum = Int(currentPage)
         self.pageControl.currentPage = picNum
         
