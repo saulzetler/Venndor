@@ -122,6 +122,7 @@ class SplashViewController: UIViewController {
                         print("Succesfully set the LocalUser's posts.")
                         
                         dispatch_async(dispatch_get_main_queue()) {
+//                            self.triggerSegueTutorial()
                             self.performSegueWithIdentifier("showBrowse", sender: self)
                         }
                     }
