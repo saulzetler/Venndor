@@ -144,13 +144,24 @@ class BuyViewController: UIViewController {
         print("Message tapped!")
         
         if (messageComposer.canSendText()) {
-            // Obtain a configured MFMessageComposeViewController
-            let messageComposeVC = messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) \(LocalUser.lastName) wants to buy your item \(match.itemName) for $\(match.matchedPrice)")
-            
-            // Present the configured MFMessageComposeViewController instance
-            // Note that the dismissal of the VC will be handled by the messageComposer instance,
-            // since it implements the appropriate delegate call-back
-            presentViewController(messageComposeVC, animated: true, completion: nil)
+            UserManager.globalManager.retrieveUserById(match.sellerID) { user, error in
+                guard error == nil else {
+                    print("Error retrieving seller in Buy screen: \(error)")
+                    return
+                }
+                
+                if let user = user {
+                   self.messageComposer.setRecipients([user.phoneNumber])
+                    
+                    // Obtain a configured MFMessageComposeViewController
+                    let messageComposeVC = self.messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) wants to buy your item \(self.match.itemName) for $\(self.match.matchedPrice)")
+                    
+                    // Present the configured MFMessageComposeViewController instance
+                    // Note that the dismissal of the VC will be handled by the messageComposer instance,
+                    // since it implements the appropriate delegate call-back
+                    self.presentViewController(messageComposeVC, animated: true, completion: nil)
+                }
+            }
         } else {
             // Let the user know if his/her device isn't able to send text messages
             let errorAlert = UIAlertView(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", delegate: self, cancelButtonTitle: "OK")
