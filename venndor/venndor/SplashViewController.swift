@@ -48,8 +48,6 @@ class SplashViewController: UIViewController {
             }
             else {
                 
-                self.triggerSegueTutorial()
-                
                 //create the user on the server
                 UserManager.globalManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email, gender: LocalUser.gender, ageRange: LocalUser.ageRange) { user, error in
                     LocalUser.user = user

@@ -32,7 +32,7 @@ class PopUpViewControllerSwift : UIViewController {
         sessionStart = NSDate()
 
         //create the match on the server
-        let newMatch = Match(itemID: self.matchedItem.id, itemName: self.matchedItem.name, itemDescription: self.matchedItem.details, userID: LocalUser.user.id, sellerID: self.matchedItem.owner, sellerName: self.matchedItem.ownerName, matchedPrice: self.matchedPrice, itemLongitude: self.matchedItem.longitude, itemLatitude: self.matchedItem.latitude, dateMatched: NSDate())
+        let newMatch = Match(itemID: self.matchedItem.id, itemName: self.matchedItem.name, itemDescription: self.matchedItem.details, userID: LocalUser.user.id, sellerID: self.matchedItem.owner, sellerName: self.matchedItem.ownerName, matchedPrice: self.matchedPrice, thumbnail: matchedItem.photos![0], itemLongitude: self.matchedItem.longitude, itemLatitude: self.matchedItem.latitude, dateMatched: NSDate())
                 
         MatchesManager.globalManager.createMatch(newMatch) { match, error in
             guard error == nil else {
@@ -43,7 +43,6 @@ class PopUpViewControllerSwift : UIViewController {
             if let match = match {
                 
                 let item = self.matchedItem
-                match.thumbnail = self.matchedItem.photos![0]
                 LocalUser.matches.append(match)
                 LocalUser.user.matches[match.id!] = item.id
                 LocalUser.user.nuMatches = LocalUser.user.nuMatches + 1
