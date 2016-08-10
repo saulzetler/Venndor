@@ -9,6 +9,9 @@
 import Foundation
 
 struct BoughtController {
+    func sendSellerNotification() {
+        OneSignal.postNotification(["contents": ["en": "Test Message"], "include_player_ids": ["3009e210-3166-11e5-bc1b-db44eb02b120"]])
+    }
     func updateSeller(item: Item) {
         //function should update the sellers item, move the item from posted to sold
         

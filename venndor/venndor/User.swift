@@ -22,6 +22,7 @@ struct LocalUser {
     static var posts: [Post]! 
     static var profilePictureURL: String!
     static var myLocation: CLLocation!
+    static var pushID: String!
 }
 
 class User: NSObject {
