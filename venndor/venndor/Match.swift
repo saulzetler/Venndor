@@ -26,8 +26,7 @@ class Match: NSObject {
     var dateBought: NSDate!
     var matchTimeRemaining: String!
     
-    
-    init(itemID: String, itemName: String, itemDescription: String, userID: String, sellerID: String, sellerName: String, matchedPrice: Int,  itemLongitude: Double, itemLatitude: Double, dateMatched: NSDate!) {
+    init(itemID: String, itemName: String, itemDescription: String, userID: String, sellerID: String, sellerName: String, matchedPrice: Int, thumbnail: UIImage, itemLongitude: Double, itemLatitude: Double, dateMatched: NSDate!) {
         self.itemID = itemID
         self.itemName = itemName
         self.itemDescription = itemDescription
@@ -35,6 +34,7 @@ class Match: NSObject {
         self.sellerID = sellerID
         self.sellerName = sellerName
         self.matchedPrice = matchedPrice
+        self.thumbnail = thumbnail
         self.itemLongitude = itemLongitude
         self.itemLatitude = itemLatitude
         self.bought = 0

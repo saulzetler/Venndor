@@ -82,12 +82,13 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
                     //create the match container view
                     let postContainer = ItemContainer(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight) + soldTitle, width: screenSize.width, height: containerHeight))
                     
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.toggleItemInfo(_:)))
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.togglePostItemInfo(_:)))
                     postContainer.addGestureRecognizer(tap)
                     
 
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.addContainerContent(postContainer, post: post)
+                        postContainer.post = post
+                        self.addContainerContent(postContainer)
                         self.distSet = false
                     }
                     
@@ -111,11 +112,12 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
                     //create the match container view
                     let postContainer = ItemContainer(frame: CGRect(x: 0, y: screenSize.height * 0.11 + (index * containerHeight) + postTitle + soldTitle-screenSize.height*0.018, width: screenSize.width, height: containerHeight))
                     
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.toggleItemInfo(_:)))
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.togglePostItemInfo(_:)))
                     postContainer.addGestureRecognizer(tap)
                     
                     dispatch_async(dispatch_get_main_queue()) {
-                        self.addContainerContent(postContainer, post: post)
+                        postContainer.post = post
+                        self.addContainerContent(postContainer)
                         self.distSet = false
                     }
                     
@@ -150,9 +152,6 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             self.view.addSubview(emptyView)
         }
         
-        
-        
-        
         addHeaderItems("Your Posts")
         sideMenuGestureSetup()
         revealViewController().rightViewController = nil
@@ -165,39 +164,18 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-    func toggleItemInfo(sender: UITapGestureRecognizer) {
-        let containerView = sender.view as! ItemContainer
-        ItemManager.globalManager.retrieveItemById(containerView.post.itemID) { item, error in
-            guard error == nil else {
-                print("error pulling item data from tapped match: \(error)")
-                return
-            }
-            if let item = item {
-                dispatch_async(dispatch_get_main_queue()) {
-                    let itemInfoController = ItemInfoViewController()
-                    itemInfoController.item = item
-                    itemInfoController.headerTitle = "Your Posts"
-                    self.presentViewController(itemInfoController, animated: true, completion: nil)
-                }
-            }
-        }
-    }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showItemInfo" {
-            let ivc = segue.destinationViewController as! ItemInfoViewController
-            ivc.item = tappedItem
-        }
-    }
-    
-    func addContainerContent(postContainer: ItemContainer, post: Post) {
-        postContainer.post = post
+    func addContainerContent(postContainer: ItemContainer) {
+        let post = postContainer.post
         
         //create the match photo
         let imgHeight = screenSize.width*0.4
         let imgWidth = screenSize.width*0.4
         let imgView = createImgView(CGRect(x: postContainer.frame.width - imgWidth + 5, y: 0, width: screenSize.width*0.4, height: screenSize.width*0.4), action: #selector(MyMatchesViewController.none(_:)), superView: postContainer)
         imgView.image = post.thumbnail
+        imgView.userInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.togglePostItemInfo(_:)))
+        imgView.addGestureRecognizer(tap)
         
         let descriptionLabel = UILabel(frame: CGRect(x: 10, y: 5+imgHeight * 0.20, width: postContainer.frame.width - imgWidth - 5, height: imgHeight * 0.30))
         descriptionLabel.text = post.itemDescription

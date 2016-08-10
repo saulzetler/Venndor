@@ -33,9 +33,6 @@ class SplashViewController: UIViewController {
         
         
         //declare managers to pull data of each object
-        let userManager = UserManager()
-
-        let seenPostsManager = SeenPostsManager()
         var seenPostsMade = false
         
         /////////////////////////////////////// IF NOT GUEST //////////////////////////////////////
@@ -58,8 +55,6 @@ class SplashViewController: UIViewController {
                 seenPostsMade = true
             }
             else {
-                
-//                self.triggerSegueTutorial()
                 
                 //create the user on the server
                 UserManager.globalManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email, gender: LocalUser.gender, ageRange: LocalUser.ageRange) { user, error in

@@ -13,11 +13,23 @@ class PostManager: NSObject {
    static let globalManager = PostManager()
     
     func createPost(post: Post, completionHandler: (Post?, ErrorType?) -> () ) {
+        
+        //parameters to be posted
         let params = ["itemID": post.itemID, "itemName": post.itemName, "itemDescription": post.itemDescription, "userID": post.userID, "minPrice": post.minPrice, "itemLongitude": post.itemLongitude, "itemLatitude": post.itemLatitude, "sold": post.sold]
+        
+        //post the data to the server
         RESTEngine.sharedEngine.createPostOnServer(params as! [String : AnyObject],
             success: { response in
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
                     post.id = id as! String
+                    
+                    //post the thumbnail to the server
+                    RESTEngine.sharedEngine.addImageById(post.id!, image: post.thumbnail, imageName: "image0",
+                        success: { response in
+                        }, failure: { error in
+                            print("Error posting Post thumbnail to server: \(error)")
+                    })
+                    
                     completionHandler(post, nil)
                 }
             }, failure: { error in
@@ -85,7 +97,7 @@ class PostManager: NSObject {
     }
     
     func retrievePostThumbnail(post: Post, completionHandler: (UIImage?, ErrorType?) -> () ) {
-        RESTEngine.sharedEngine.getImageFromServerById(post.itemID, fileName: "image0",
+        RESTEngine.sharedEngine.getImageFromServerById(post.id, fileName: "image0",
             success: { response in
                 if let content = response!["content"] as? NSString {
                     let fileData = NSData(base64EncodedString: content as String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
@@ -100,6 +112,15 @@ class PostManager: NSObject {
                 }
             }, failure: { error in
                 completionHandler(nil, error)
+        })
+    }
+    
+    func updatePostById(id: String, update: JSON, completionHandler: (ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.updatePostById(id, postDetails: update,
+            success: { response in
+                completionHandler(nil)
+            }, failure: { error in
+                completionHandler(error)
         })
     }
     

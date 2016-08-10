@@ -22,6 +22,8 @@ protocol DraggableViewDelegate {
 }
 
 public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate {
+    var screenSize = UIScreen.mainScreen().bounds
+    
     var delegate: DraggableViewDelegate!
     var panGestureRecognizer: UIPanGestureRecognizer!
     var originPoint: CGPoint!
@@ -35,6 +37,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     var containerView = UIView()
     var pageControl: UIPageControl! = UIPageControl()
     var picNum: Int!
+    var prevPicNum: Int!
     var numberOfPics: Int!
     
     //save current item
@@ -50,6 +53,11 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     var mapView: GMSMapView!
     var distText: String!
     var distanceSet: Bool!
+    
+    //for seller
+    var sellerPic: UIImageView!
+    var sellerNameLabel: UILabel!
+    var sellerRatingLabel: UILabel!
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
@@ -106,9 +114,65 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         itemInfo.addSubview(mapView)
         setupDistance(item, myLocation: myLocation)
         
+        UserManager.globalManager.retrieveUserById(item.owner) { user, error in
+            guard error == nil else {
+                print("Error retrieving item owner for item info: \(error)")
+                return
+            }
+            
+            if let user = user {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.sellerPic = self.setupSellerPic(user.profilePictureURL)
+                    self.itemInfo.addSubview(self.sellerPic)
+                    
+                    
+                    let lastInitial = user.lastName.substringToIndex(user.lastName.startIndex.advancedBy(1))
+                    let sellerName = "\(user.firstName) \(lastInitial)"
+                    let label = self.setupSellerNameLabel(sellerName)
+                    self.sellerNameLabel = label
+                    self.itemInfo.addSubview(self.sellerNameLabel)
+                    
+                    self.sellerRatingLabel = self.setupSellerRatingLabel(user.rating)
+                    self.itemInfo.addSubview(self.sellerRatingLabel)
+                    
+                    let star = UIImageView(frame: CGRect(x: self.itemInfo.frame.width*0.77, y: self.itemInfo.frame.height * 8.76, width: self.screenSize.width*0.05, height: self.screenSize.width*0.05))
+                    star.image = UIImage(named: "Star_Filled.png")
+                    // star.contentMode = .ScaleToFill
+                    self.itemInfo.addSubview(star)
+                    
+                }
+            }
+        }
         
         self.addSubview(itemInfo)
         self.bringSubviewToFront(itemInfo)
+    }
+    
+    func setupSellerNameLabel(name: String) -> UILabel {
+        let sellerNameLabel = UILabel(frame: CGRect(x: self.itemInfo.frame.width*0.65, y: self.itemInfo.frame.height * 6.7, width: self.screenSize.width*0.3, height: self.screenSize.width*0.45))
+        sellerNameLabel.text = name
+        sellerNameLabel.font = UIFont.boldSystemFontOfSize(20)
+        return sellerNameLabel
+    }
+    
+    func setupSellerRatingLabel(rating: Double) -> UILabel {
+        let sellerRatingLabel = UILabel(frame: CGRect(x: self.itemInfo.frame.width*0.71, y: self.itemInfo.frame.height * 7.3, width: self.screenSize.width*0.20, height: self.screenSize.width*0.45))
+        sellerRatingLabel.text = "\(Int(rating))"
+        sellerRatingLabel.adjustsFontSizeToFitWidth = true
+        return sellerRatingLabel
+    }
+    
+    func setupSellerPic(url: String) -> UIImageView {
+        let sellerPicView = UIImageView(frame: CGRect(x: self.itemInfo.frame.width*0.22, y: self.itemInfo.frame.height * 7.53, width: self.screenSize.width*0.30, height: self.screenSize.width*0.30))
+        let link = NSURL(string: url)
+        let pictureData = NSData(contentsOfURL: link!)
+        sellerPicView.image = UIImage(data: pictureData!)
+        sellerPicView.layer.masksToBounds = false
+        sellerPicView.layer.cornerRadius = (sellerPicView.frame.size.width)/2
+        sellerPicView.clipsToBounds = true
+        sellerPicView.contentMode = .ScaleAspectFill
+        return sellerPicView
+        
     }
     
     func calculateDistance(item: Item, myLocation: CLLocation) {
@@ -223,6 +287,9 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView){
         adjustPage()
+        if picNum == numberOfPics-1 && prevPicNum == picNum {
+            openInfo()
+        }
     }
 
     
@@ -236,6 +303,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
         let currentPage:CGFloat = floor((scrollView.contentOffset.y-pageHeight/2)/pageHeight)+1
         // Change the indicator
+        prevPicNum = picNum
         picNum = Int(currentPage)
         self.pageControl.currentPage = picNum
         
@@ -245,8 +313,6 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
                 self.scrollView.setContentOffset(yOffset, animated: true)
             }
         }
-        
-        
     }
 
     func setupView() -> Void {
@@ -355,11 +421,14 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     func upAction() -> Void {
         //use this function to go to next picture
-        adjustPage()
-        resetView()
+        print("picNum: \(picNum)")
+        print("numberOfPics: \(numberOfPics)")
+        
         if picNum == numberOfPics-1 {
             openInfo()
         }
+        adjustPage()
+        resetView()
     }
     
     func downAction() -> Void {

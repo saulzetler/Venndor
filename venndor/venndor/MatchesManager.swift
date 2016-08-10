@@ -13,12 +13,21 @@ class MatchesManager: NSObject {
     static let globalManager = MatchesManager()
     
     func createMatch(match: Match, completionHandler: (Match?, ErrorType?) -> () ) {
+        
         let params = ["itemID": match.itemID, "itemName": match.itemName, "itemDescription": match.itemDescription, "userID": match.userID, "sellerID": match.sellerID, "sellerName": match.sellerName, "matchedPrice":match.matchedPrice, "itemLongitude": match.itemLongitude, "itemLatitude": match.itemLatitude, "bought": match.bought, "dateMatched": TimeManager.formatter.stringFromDate(match.dateMatched)]
         
         RESTEngine.sharedEngine.createMatchOnServer(params as! [String : AnyObject],
             success: { response in
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
                     match.id = id as? String
+                    
+                    //post the thumbnail to the server
+                    RESTEngine.sharedEngine.addImageById(match.id!, image:  match.thumbnail, imageName: "image0",
+                        success: { response in
+                        }, failure: { error in
+                            print("Error creating match thumbnail: \(error)")
+                    })
+                    
                     completionHandler(match, nil)
                 }
             }, failure: { error in
@@ -57,6 +66,7 @@ class MatchesManager: NSObject {
             completionHandler([Match](), nil)
             return
         }
+        
         RESTEngine.sharedEngine.getMatchesFromServer(nil, filter: filterString, offset: nil, fields: nil,
             success: { response in
                 if let response = response, matchesData = response["resource"] as? NSArray {
@@ -89,7 +99,7 @@ class MatchesManager: NSObject {
     }
     
     func retrieveMatchThumbnail(match: Match, completionHandler: (UIImage?, ErrorType?) -> () ) {
-        RESTEngine.sharedEngine.getImageFromServerById(match.itemID, fileName: "image0",
+        RESTEngine.sharedEngine.getImageFromServerById(match.id!, fileName: "image0",
             success: { response in
                 if let content = response!["content"] as? NSString {
                     let fileData = NSData(base64EncodedString: content as String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)

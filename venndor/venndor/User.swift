@@ -33,6 +33,7 @@ class User: NSObject {
     var gender: String!
     var ageRange: String!
     var profilePictureURL: String!
+    var pushID: String!
     
     var university: String!  //NI
     var howTheyFoundVenndor: String!  //NI
@@ -57,8 +58,10 @@ class User: NSObject {
     //key: Controller name, Value: Time Spent
     var timePerController: [String:Double]!
     
-    //key: itemID, Value: Maybe matched/sold price?
+    //key: PostObject ID, Value: Maybe matched/sold price?
     var soldItems : [String:AnyObject]!    //NI
+    
+    //key: Match Object ID
     var boughtItems: [String:AnyObject]!   //NI
     var posts: [String:AnyObject]!
     
@@ -75,6 +78,7 @@ class User: NSObject {
         gender = json["gender"] as! String
         ageRange = json["ageRange"] as! String
         profilePictureURL = json["profilePictureURL"] as! String
+        pushID = json["pushID"] as! String 
         university = json["university"] as! String
         howTheyFoundVenndor = json["howTheyFoundVenndor"] as! String
         rating = json["rating"] as! Double

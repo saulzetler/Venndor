@@ -36,7 +36,7 @@ class RatingControl: UIView {
         
         for rating in 0...4 {
             buttonFrame = CGRect(x: CGFloat(rating)*frame.width*0.2, y: 0, width: frame.width*0.19, height: frame.height)
-            let button = makeImageButton("Star.png", frame: buttonFrame, target: #selector(RatingControl.handleTap(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+            let button = makeImageButton("Star.png", frame: buttonFrame, action: #selector(RatingControl.handleTap(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
             let filledStarImage = UIImage(named: "Star_Filled.png")
             button.setImage(filledStarImage, forState: .Selected)
             button.tag = rating + 1
@@ -44,6 +44,20 @@ class RatingControl: UIView {
             self.addSubview(button)
         }
         
+        
+    }
+    
+    func presetUpTo(initRating: Int) {
+        for button in buttonArray {
+            if button.tag <= initRating {
+                button.selected = true
+            }
+            else {
+                button.selected = false
+            }
+        }
+        
+        self.rating = initRating
     }
     
     func handleTap(sender: UIButton) {
