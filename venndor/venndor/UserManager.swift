@@ -18,42 +18,46 @@ struct UserManager {
     
     static let globalManager = UserManager() 
 
-    func createUser(first: String, last: String, email: String, gender: String, ageRange: String,  completionHandler: (User?, ErrorType?) -> ()) {
-        RESTEngine.sharedEngine.registerUser(email, firstName: first, lastName: last, gender: gender, ageRange: ageRange,
+    func createUser(first: String, last: String, email: String, gender: String, ageRange: String, pushID: String, completionHandler: (User?, ErrorType?) -> ()) {
+        
+        var params: JSON =
+            ["first_name": "\(first)",
+             "last_name": "\(last)",
+             "email": email,
+             "phoneNumber": LocalUser.phoneNumber,
+             "gender": gender,
+             "ageRange": ageRange,
+             "profilePictureURL": LocalUser.profilePictureURL,
+             "pushID": pushID,
+             "university": "",
+             "howTheyFoundVenndor": "",
+             "rating": 0.0,
+             "nuMatches": 0,
+             "nuItemsSold": 0,
+             "nuItemsBought": 0,
+             "nuSwipesLeft": 0,
+             "nuSwipesRight": 0,
+             "nuSwipesTotal": 0,
+             "nuPosts": 0,
+             "nuVisits": 1,
+             "moneySaved": 0,
+             "mostRecentAction": "Created Account.",
+             "timeOnAppPerSession": [String:AnyObject](),
+             "timePerController": ["LoginViewController": 0.0, "BrowseViewController": 0.0, "ProfilePageViewController": 0.0, "PostViewController": 0.0, "SettingsViewController": 0.0, "MyPostsViewController": 0.0, "MyMatchesViewController": 0.0, "OfferViewController": 0.0, "DeleteViewController": 0.0, "PopUpViewController": 0.0, "ItemInfoViewController":0.0],
+             "posts": [String:AnyObject](),
+             "soldItems": [String:AnyObject](),
+             "matches": [String:AnyObject](),
+             "boughtItems": [String:AnyObject]()]
+        
+        RESTEngine.sharedEngine.registerUser(params,
             success: { response in
                 
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
-                    let params: JSON =
-                    ["first_name": "\(first)",
-                        "last_name": "\(last)",
-                        "_id": id as! String,
-                        "email": email,
-                        "phoneNumber": LocalUser.phoneNumber,
-                        "gender": gender,
-                        "ageRange": ageRange,
-                        "profilePictureURL": LocalUser.profilePictureURL,
-                        "university": "",
-                        "howTheyFoundVenndor": "",
-                        "rating": 0.0,
-                        "nuMatches": 0,
-                        "nuItemsSold": 0,
-                        "nuItemsBought": 0,
-                        "nuSwipesLeft": 0,
-                        "nuSwipesRight": 0,
-                        "nuSwipesTotal": 0,
-                        "nuPosts": 0,
-                        "nuVisits": 1, 
-                        "moneySaved": 0,
-                        "mostRecentAction": "Created Account.",
-                        "timeOnAppPerSession": [String:AnyObject](),
-                        "timePerController": ["LoginViewController": 0.0, "BrowseViewController": 0.0, "ProfilePageViewController": 0.0, "PostViewController": 0.0, "SettingsViewController": 0.0, "MyPostsViewController": 0.0, "MyMatchesViewController": 0.0, "OfferViewController": 0.0, "DeleteViewController": 0.0, "PopUpViewController": 0.0, "ItemInfoViewController":0.0],
-                        "posts": [String:AnyObject](),
-                        "soldItems": [String:AnyObject](),
-                        "matches": [String:AnyObject](),
-                        "boughtItems": [String:AnyObject]()]
+                    params["_id"] = id
                     let user = User(json: params)
                     completionHandler(user, nil)
                 }
+                
             }, failure: { error in
                 completionHandler(nil, error)
         })
