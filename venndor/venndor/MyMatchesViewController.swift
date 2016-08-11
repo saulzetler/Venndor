@@ -309,42 +309,11 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-//    
-//    //function to control the switching between the 2 possible views given a passed boolean.
-//    func toggleView(toMatches: Bool) {
-//        if toMatches {
-//            //check if the user is on the bought page
-//            if onMatches == false {
-//                matchesButton.selected = true
-//                boughtButton.selected = false
-//                boughtBar.backgroundColor = UIColor.whiteColor()
-//                matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
-//                //add the correct subview and remove the previous
-//                //MAY NEED TO BE CHANGED TO HIDDEN INSTEAD OF REMOVE maybe not TO BE DETERMIENRIDESD
-//                boughtContainerView.removeFromSuperview()
-//                scrollView.addSubview(matchContainerView)
-//                onMatches = true
-//            }
-//        }
-//        else {
-//            //check if the user is on the match page
-//            if onMatches == true {
-//                boughtButton.selected = true
-//                matchesButton.selected = false
-//                matchesBar.backgroundColor = UIColor.whiteColor()
-//                boughtBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
-//                //add the correct subview and remove the previous
-//                //MAY NEED TO BE CHANGED TO HIDDEN INSTEAD OF REMOVE maybe not TO BE DETERMIENRIDESD
-//                matchContainerView.removeFromSuperview()
-//                scrollView.addSubview(boughtContainerView)
-//                onMatches = false
-//            }
-//        }
-//    }
     
     func none(sender: UIButton) {
         
     }
+    
     func messageSeller(sender: UIButton) {
         print("Message tapped!")
         let container = sender.superview as! ItemContainer
@@ -410,23 +379,5 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         }
         task.resume()
     }
-
-//    //control for the gesture to allow swipingleft and right for the menu
-//    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-//        
-//        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-//            switch swipeGesture.direction {
-//            //switch case to distinguish the direction of swiping
-//            case UISwipeGestureRecognizerDirection.Right:
-//                print("Swiped right")
-//                toggleView(true)
-//            case UISwipeGestureRecognizerDirection.Left:
-//                print("Swiped left")
-//                toggleView(false)
-//            default:
-//                break
-//            }
-//        }
-//    }
     
 }

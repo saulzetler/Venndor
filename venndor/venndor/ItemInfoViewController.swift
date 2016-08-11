@@ -42,6 +42,7 @@ class ItemInfoViewController: UIViewController {
             self.setupHeaderFrame()
             self.setupHeaderTitle()
             self.setupBackButton()
+            let booThing = self.isPost
             
             if self.isPost == true {
                 self.setupEditButton()

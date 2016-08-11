@@ -111,6 +111,7 @@ struct BoughtController {
     
     func updatePostOnPurchase(post: Post) {
         let update = ["buyerID": post.buyerID, "buyerName":post.buyerName, "soldPrice": post.soldPrice, "dateSold":TimeManager.formatter.stringFromDate(post.dateSold), "sold": post.sold]
+        
         PostManager.globalManager.updatePostById(post.id, update: update as! JSON) { error in
             guard error == nil else {
                 print("Error updating post object in Buy Controller: \(error)")
@@ -138,6 +139,7 @@ struct BoughtController {
     func updateUsers(users: [String], match: Match) {
         var filterString = ""
         var index = 0
+        
         for user in users {
             filterString = index == 0 ? "(_id = \(user))" : "\(filterString) or (_id = \(user))"
             index += 1
@@ -153,6 +155,8 @@ struct BoughtController {
             
             if let users = users {
                 for user in users {
+                    print(user.firstName)
+                    print(user.matches)
                     user.matches.removeValueForKey(match.id!)
                 }
                 
@@ -176,6 +180,7 @@ struct BoughtController {
             let temp = ["_id":user.id, "matches":user.matches]
             updateDict.append(temp as! [String : AnyObject])
         }
+        print(updateDict)
         return updateDict
     }
     
@@ -200,7 +205,7 @@ struct BoughtController {
     
     func removeMatches(item: Item, match: Match) {
         let idArray = self.getArrayForUpdate(item.matches, keyOrValue: "key", exception: match.id!)
-        
+        print(idArray)
         var resourceDicts = [[String:AnyObject]]()
         for id in idArray {
             let temp = ["_id":id]
