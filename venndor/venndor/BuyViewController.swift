@@ -26,6 +26,7 @@ class BuyViewController: UIViewController {
         print("Buy Presented!")
         
         dispatch_async(dispatch_get_main_queue()) {
+            
             self.view.backgroundColor = UIColor.clearColor()
             self.view.alpha = 0.5
             let view = UIView(frame: self.view.frame)

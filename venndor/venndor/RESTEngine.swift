@@ -131,6 +131,15 @@ final class RESTEngine {
         
         callApiWithPath(Routing.Service(tableName: "posts").path, method: "GET", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
+    
+    func updatePostById(id: String, postDetails: JSON, success: SuccessClosure, failure: ErrorClosure) {
+        
+        // set the id of the contact we are looking at
+        let requestBody: [String: AnyObject] = postDetails
+        let path = "\(Routing.Service(tableName: "posts").path)/\(id)"
+        
+        callApiWithPath(path, method: "PATCH", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
+    }
 
     func deletePostFromServerById(id: String, success: SuccessClosure, failure: ErrorClosure) {
         let path = "\(Routing.Service(tableName: "posts").path)/\(id)"
@@ -224,36 +233,8 @@ final class RESTEngine {
     
     //MARK: - User methods
     
-    func registerUser(email: String, firstName: String, lastName: String, gender: String, ageRange: String, success: SuccessClosure, failure: ErrorClosure) {
+    func registerUser(params: JSON, success: SuccessClosure, failure: ErrorClosure) {
         
-        let params: [String: AnyObject] =
-        ["email": email,
-         "phoneNumber": LocalUser.phoneNumber,
-            "first_name": firstName,
-            "last_name": lastName,
-            "gender": gender,
-            "ageRange": ageRange,
-            "profilePictureURL": LocalUser.profilePictureURL,
-            "howTheyFoundVenndor": "", //NI
-            "university": "",  //NI
-            "rating": 0.0,  //NI
-            "nuMatches": 0,
-            "nuItemsSold": 0,   //NI
-            "nuItemsBought": 0, //NI
-            "nuSwipesLeft": 0,
-            "nuSwipesRight": 0,
-            "nuSwipesTotal": 0,
-            "nuPosts": 0,
-            "nuVisits": 1,
-            "mostRecentAction": "Created Account.",
-            "timeOnAppPerSession": [String:Double](), 
-            "timePerController": ["LoginViewController": 0.0, "BrowseViewController": 0.0, "ProfilePageViewController": 0.0, "PostViewController": 0.0, "SettingsViewController": 0.0, "MyPostsViewController": 0.0, "MyMatchesViewController": 0.0, "OfferViewController": 0.0, "DeleteViewController": 0.0, "PopUpViewController": 0.0, "ItemInfoViewController":0.0],
-            "moneySaved": 0.0, //NI
-            "soldItems": [String:AnyObject](), //NI
-            "boughtItems": [String:AnyObject](), //NI
-            "posts": [String:AnyObject](),
-            "matches": [String:AnyObject]()]
-       
         let requestBody: [String: AnyObject] = ["resource": params]
         
         callApiWithPath(Routing.Service(tableName: "users").path, method: "POST", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
@@ -372,6 +353,7 @@ final class RESTEngine {
         callApiWithPath(path, method: "PATCH", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
     }
     
+    
     /**
      Update multiple items at once
     */
@@ -388,7 +370,7 @@ final class RESTEngine {
     /**
     Create item image on server
     */
-    func addItemImageById(id: String, image: UIImage, imageName: String, success: SuccessClosure, failure: ErrorClosure) {
+    func addImageById(id: String, image: UIImage, imageName: String, success: SuccessClosure, failure: ErrorClosure) {
         
         // first we need to create folder, then image
         callApiWithPath(Routing.ResourceFolder(folderPath: "\(id)").path, method: "POST", queryParams: nil, body: nil, headerParams: headerParams, success: { _ in
@@ -398,7 +380,6 @@ final class RESTEngine {
     }
     
     
-    //alternative, dumb way of doing it. Make a separate API call for every image to upload
     func addItemImagesById(id: String, images: [UIImage], success: SuccessClosure, failure: ErrorClosure) {
         //first create the folder
         callApiWithPath(Routing.ResourceFolder(folderPath: "\(id)").path, method: "POST", queryParams: nil, body: nil, headerParams: headerParams, success: { _ in
@@ -412,7 +393,7 @@ final class RESTEngine {
             }, failure: failure)
     }
     
-    
+    //function that actually posts the image to the appropriate folder
     func putImageToFolderWithPath(folderPath: String, image: UIImage, fileName: String, success: SuccessClosure, failure: ErrorClosure) {
         
         let imageData = UIImageJPEGRepresentation(image, 0.1)

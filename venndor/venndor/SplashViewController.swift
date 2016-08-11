@@ -15,6 +15,8 @@ class SplashViewController: UIViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+
+        
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let background = UIImage(named: "background.jpg")
         let backgroundView = UIImageView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
@@ -47,11 +49,15 @@ class SplashViewController: UIViewController {
                 seenPostsMade = true
             }
             else {
-                
-                self.triggerSegueTutorial()
-                
+                OneSignal.IdsAvailable({ (userId, pushToken) in
+                NSLog("UserId:%@", userId)
+                    if (pushToken != nil) {
+                        NSLog("pushToken:%@", pushToken)
+                        LocalUser.pushID = userId
+                    }
+                })
                 //create the user on the server
-                UserManager.globalManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email, gender: LocalUser.gender, ageRange: LocalUser.ageRange) { user, error in
+                UserManager.globalManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email, gender: LocalUser.gender, ageRange: LocalUser.ageRange, pushID: LocalUser.pushID) { user, error in
                     LocalUser.user = user
                     LocalUser.seenPosts = [String:AnyObject]()
                     LocalUser.user.mostRecentAction = "Logged in through Facebook."

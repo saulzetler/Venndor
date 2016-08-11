@@ -19,7 +19,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     var window: UIWindow?
     var sessionStart: NSDate!
     let googleMapsApiKey = "AIzaSyBjXhMq0kw6x7TpwbLLbR3HrDyT7-25ePA"
-    
+
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         
         GMSServices.provideAPIKey(googleMapsApiKey)
@@ -27,6 +27,11 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Override point for customization after application launch.
         
         sessionStart = NSDate()
+
+        //Add this line. Replace '5eb5a37e-b458-11e3-ac11-000c2940e62c' with your OneSignal App ID.
+//        OneSignal.initWithLaunchOptions(launchOptions, appId: "88ada2f3-c371-481a-b507-df774d8bc0b5")
+        OneSignal.initWithLaunchOptions(launchOptions, appId: "88ada2f3-c371-481a-b507-df774d8bc0b5")
+
         return FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
     }
     
@@ -171,6 +176,5 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             }
         }
     }
-
 }
 

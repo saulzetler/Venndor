@@ -10,6 +10,7 @@
 #define venndor_Bridging_Header_h
 
 #import <GoogleMaps/GoogleMaps.h>
+#import <OneSignal/OneSignal.h>
 #import <SlackTextViewController/SlackTextViewController-umbrella.h>
 #import <ImagePicker/ImagePicker-Swift.h>
 #import <FBSDKCoreKit/FBSDKCorekit.h>

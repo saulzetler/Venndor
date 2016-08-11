@@ -12,6 +12,8 @@
 		101F43D01D11A203007E0ADE /* TutorialViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 101F43CF1D11A203007E0ADE /* TutorialViewController.swift */; };
 		102331941D13267B002C6B3C /* MiniMatchTransitionManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */; };
 		102806D71D22F11D0019C7FF /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102806D61D22F11D0019C7FF /* RatingControl.swift */; };
+		10395AAF1D5B7C5C00E6C132 /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10395AAE1D5B7C5C00E6C132 /* OneSignal.framework */; };
+		10395AB11D5B7CA900E6C132 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10395AB01D5B7CA900E6C132 /* SystemConfiguration.framework */; };
 		103B17081D35686C005AEFDD /* jonasBoettcherController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103B17071D35686C005AEFDD /* jonasBoettcherController.swift */; };
 		103CBEFF1D50EBE000EF89C7 /* BoughtController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103CBEFE1D50EBE000EF89C7 /* BoughtController.swift */; };
 		103D11481D382EB5004CE297 /* OtherHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D11471D382EB5004CE297 /* OtherHeaderView.swift */; };
@@ -39,6 +41,7 @@
 		10ADC9DF1D074CA40028A999 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DC1D074CA40028A999 /* FBSDKCoreKit.framework */; };
 		10ADC9E01D074CA40028A999 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
 		10ADC9E11D074CA40028A999 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */; };
+		10C7D12B1D5A444B00522F0E /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C7D12A1D5A444B00522F0E /* OneSignal.framework */; };
 		10CAD5DC1D3955B800147F66 /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = 10CAD5DB1D3955B800147F66 /* title.png */; };
 		10F2CB401D3D1D38007C6477 /* SearchControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F2CB3F1D3D1D38007C6477 /* SearchControl.swift */; };
 		10F2CB421D3D4428007C6477 /* LocationConverter.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F2CB411D3D4428007C6477 /* LocationConverter.swift */; };
@@ -160,6 +163,8 @@
 		101F43CF1D11A203007E0ADE /* TutorialViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TutorialViewController.swift; sourceTree = "<group>"; };
 		102331931D13267B002C6B3C /* MiniMatchTransitionManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MiniMatchTransitionManager.swift; sourceTree = "<group>"; };
 		102806D61D22F11D0019C7FF /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
+		10395AAE1D5B7C5C00E6C132 /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OneSignal.framework; sourceTree = "<group>"; };
+		10395AB01D5B7CA900E6C132 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
 		103B17071D35686C005AEFDD /* jonasBoettcherController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = jonasBoettcherController.swift; sourceTree = "<group>"; };
 		103CBEFE1D50EBE000EF89C7 /* BoughtController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoughtController.swift; sourceTree = "<group>"; };
 		103D11471D382EB5004CE297 /* OtherHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherHeaderView.swift; sourceTree = "<group>"; };
@@ -194,6 +199,7 @@
 		10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
 		10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		10ADC9E51D0750CA0028A999 /* venndor-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "venndor-Bridging-Header.h"; sourceTree = "<group>"; };
+		10C7D12A1D5A444B00522F0E /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OneSignal.framework; path = Pods/OneSignal/iOS_SDK/Framework/OneSignal.framework; sourceTree = "<group>"; };
 		10CAD5DB1D3955B800147F66 /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
 		10F2CB3F1D3D1D38007C6477 /* SearchControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = SearchControl.swift; sourceTree = "<group>"; };
 		10F2CB411D3D4428007C6477 /* LocationConverter.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LocationConverter.swift; sourceTree = "<group>"; };
@@ -300,12 +306,15 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				10395AB11D5B7CA900E6C132 /* SystemConfiguration.framework in Frameworks */,
+				10C7D12B1D5A444B00522F0E /* OneSignal.framework in Frameworks */,
 				E43893D51D47AB7E00431E79 /* SlackTextViewController.framework in Frameworks */,
 				E4AB1FF21D30437F00CC7400 /* ImagePicker.framework in Frameworks */,
 				10ADC9E01D074CA40028A999 /* FBSDKLoginKit.framework in Frameworks */,
 				10ADC9DF1D074CA40028A999 /* FBSDKCoreKit.framework in Frameworks */,
 				10ADC9E11D074CA40028A999 /* FBSDKShareKit.framework in Frameworks */,
 				62EE9C5B3FFF485FC1FC9F96 /* Pods_venndor.framework in Frameworks */,
+				10395AAF1D5B7C5C00E6C132 /* OneSignal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -362,6 +371,7 @@
 		10ADC99B1D0749700028A999 = {
 			isa = PBXGroup;
 			children = (
+				10395AAE1D5B7C5C00E6C132 /* OneSignal.framework */,
 				10ADC9E51D0750CA0028A999 /* venndor-Bridging-Header.h */,
 				10ADC9DB1D074C6F0028A999 /* Framework */,
 				10ADC9A61D0749700028A999 /* venndor */,
@@ -501,6 +511,8 @@
 		A89B2DE20CB1A18B3D7B1D64 /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
+				10395AB01D5B7CA900E6C132 /* SystemConfiguration.framework */,
+				10C7D12A1D5A444B00522F0E /* OneSignal.framework */,
 				E43893D41D47AB7E00431E79 /* SlackTextViewController.framework */,
 				E4AB1FF11D30437F00CC7400 /* ImagePicker.framework */,
 				051888506CA69C118E1520AC /* Pods_venndor.framework */,
@@ -672,6 +684,9 @@
 						CreatedOnToolsVersion = 7.2.1;
 						DevelopmentTeam = DEGVV5LLK6;
 						SystemCapabilities = {
+							com.apple.BackgroundModes = {
+								enabled = 1;
+							};
 							com.apple.Push = {
 								enabled = 1;
 							};
@@ -1128,6 +1143,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/SlackTextViewController",
+					"$(PROJECT_DIR)/Pods/OneSignal/iOS_SDK/Framework",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1141,6 +1157,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Debug;
 		};
@@ -1155,6 +1172,7 @@
 					"$(inherited)",
 					"$(PROJECT_DIR)",
 					"$(PROJECT_DIR)/build/Debug-iphoneos/SlackTextViewController",
+					"$(PROJECT_DIR)/Pods/OneSignal/iOS_SDK/Framework",
 				);
 				HEADER_SEARCH_PATHS = (
 					"$(inherited)",
@@ -1168,6 +1186,7 @@
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				PROVISIONING_PROFILE = "";
 				SWIFT_OBJC_BRIDGING_HEADER = "venndor-Bridging-Header.h";
+				TARGETED_DEVICE_FAMILY = 1;
 			};
 			name = Release;
 		};
