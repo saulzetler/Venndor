@@ -258,8 +258,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             if let item = item {
                 let itemInfoViewController = ItemInfoViewController()
                 itemInfoViewController.item = item
-                itemInfoViewController.match = match 
+                itemInfoViewController.match = match
                 itemInfoViewController.headerTitle = "Your Matches"
+                itemInfoViewController.isPost = false
                 self.miniAlertController.dismissViewControllerAnimated(true, completion: nil)
                 self.presentViewController(itemInfoViewController, animated: true, completion: nil)
             }

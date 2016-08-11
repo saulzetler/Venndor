@@ -340,7 +340,7 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
     }
     
     func openInfo() {
-        UIView.animateWithDuration(1, animations: { () -> Void in
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.itemInfo.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
             self.itemInfo.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.95)
         }) { (finished: Bool) -> Void in
@@ -349,7 +349,7 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
     }
     
     func closeInfo() {
-        UIView.animateWithDuration(1, animations: { () -> Void in
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.itemInfo.frame = CGRect(x: 0, y: self.frame.height*0.9, width: self.frame.width, height: self.frame.height*0.1)
             self.itemInfo.backgroundColor = UIColor.whiteColor()
         }) { (finished: Bool) -> Void in

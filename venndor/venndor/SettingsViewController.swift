@@ -9,12 +9,17 @@
 import Foundation
 import UIKit
 
-class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
+class SettingsViewController: UIViewController, UITableViewDelegate, UITableViewDataSource, UITextFieldDelegate {
     
     var containerView: UIView!
     let screenSize = UIScreen.mainScreen().bounds
     var tableViewItems = ["About Venndor", "Delete Account", "Log Out"]
     var tableView: UITableView!
+    
+    var phoneNumber: UITextField!
+    
+    var tableCellHieght = UIScreen.mainScreen().bounds.height*0.07
+    var numberOfCells = 3
     
     var sessionStart: NSDate!
     
@@ -28,6 +33,9 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         sessionStart = NSDate()
         
         setUpTableView()
+        setupPhoneNumInput()
+        hideKeyboardWhenTappedAround()
+        setupPhonePrompt()
         
         //add the generic views of each page ie. header and side menu
         addHeaderOther("Settings")
@@ -37,17 +45,80 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    func setupPhonePrompt() {
+        let labelFrame = CGRect(x: screenSize.width*0.2, y: screenSize.height*0.06, width: screenSize.width*0.8, height: screenSize.height*0.06)
+        let label = customLabel(labelFrame, text: "Edit", color: UIColorFromHex(0x34495e), fontSize: 15)
+        label.textAlignment = .Left
+        containerView.addSubview(label)
+    }
+    
+    
+    
+    func setupPhoneNumInput() {
+        phoneNumber = ItemNameTextField(frame: CGRectMake(screenSize.width*0.2, screenSize.height*0.12, screenSize.width*0.6, screenSize.height*0.06))
+        phoneNumber.text = LocalUser.user.phoneNumber
+        phoneNumber.textColor = UIColorFromHex(0x34495e)
+        phoneNumber.font = UIFont(name: "Avenir", size: 32)
+        phoneNumber.delegate = self
+        phoneNumber.clearsOnBeginEditing = false
+        phoneNumber.textAlignment = .Center
+        containerView.addSubview(phoneNumber)
+        
+        let border = CALayer()
+        let width = CGFloat(1.0)
+        border.borderColor = UIColorFromHex(0x34495e).CGColor
+        border.frame = CGRect(x: 0, y: phoneNumber.frame.size.height - width, width:  phoneNumber.frame.size.width, height: phoneNumber.frame.size.height)
+        border.borderWidth = width
+        phoneNumber.layer.addSublayer(border)
+        phoneNumber.layer.masksToBounds = true
+        phoneNumber.keyboardType = .NumberPad
+        phoneNumber.returnKeyType = .Done
+        
+        phoneNumber.adjustsFontSizeToFitWidth = true
+        
+        
+        //Add done button to numeric pad keyboard
+        let toolbarDone = UIToolbar.init()
+        toolbarDone.sizeToFit()
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let barBtnDone = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.Done,
+                                              target: self, action: #selector(SettingsViewController.doneButtonClicked(_:)))
+        
+        toolbarDone.items = [flexSpace, barBtnDone] // You can even add cancel button too
+        phoneNumber.inputAccessoryView = toolbarDone
+    }
+    
+    func doneButtonClicked(sender: AnyObject) {
+        phoneNumber.resignFirstResponder()
+    }
+    
+    func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
+        
+        let currentCharacterCount = textField.text?.characters.count ?? 0
+        if (range.length + range.location > currentCharacterCount){
+            return false
+        }
+        let newLength = currentCharacterCount + string.characters.count - range.length
+        return newLength <= 9
+    }
+    
     func setUpTableView() {
-        tableView = UITableView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height*0.23), style: .Plain)
+        tableView = UITableView(frame: CGRect(x: 0, y: screenSize.height*0.24, width: screenSize.width, height: tableCellHieght*CGFloat(numberOfCells)), style: .Plain)
         tableView.delegate = self
         tableView.dataSource = self
         tableView.registerClass(UITableViewCell.self, forCellReuseIdentifier: "cell")
+        tableView.alwaysBounceVertical = false
         containerView.addSubview(tableView)
         
     }
     
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return self.tableViewItems.count
+    }
+    
+    func tableView(tableView: UITableView, heightForRowAtIndexPath indexPath: NSIndexPath) -> CGFloat
+    {
+        return tableCellHieght
     }
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
@@ -58,7 +129,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         cell.selectionStyle = UITableViewCellSelectionStyle.None
         
         cell.textLabel!.text = tableViewItems[indexPath.row]
-        cell.textLabel!.font = UIFont(name: "Avenir", size: 14)
+        cell.textLabel!.font = UIFont(name: "Avenir", size: 16)
         
         return cell
         
