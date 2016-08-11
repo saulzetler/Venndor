@@ -9,14 +9,16 @@
 import Foundation
 
 struct BoughtController {
+
     
     static var globalController = BoughtController()
     
-    func sendSellerNotification() {
-        OneSignal.postNotification(["contents": ["en": "Test Message"], "include_player_ids": ["3009e210-3166-11e5-bc1b-db44eb02b120"]])
+    func sendSellerNotification(seller: User, match: Match) {
+        OneSignal.postNotification(["contents": ["en": "\(LocalUser.firstName) wants to buy your \(match.itemName) for $\(match.matchedPrice)!"], "include_player_ids": ["\(seller.pushID)"]])
     }
     
     func updateSeller(item: Item, seller: User, soldPrice: Int) {
+
         //function should update the sellers item, move the item from posted to sold
         
         let filter = "itemID = \(item.id)"
@@ -42,8 +44,10 @@ struct BoughtController {
         }
         
     }
+
     
     func updateBuyer(item: Item, buyer: User) {
+
         //function should update the buyer, move the item from matched to bought
         
         let filter = "itemID = \(item.id)"
@@ -67,6 +71,7 @@ struct BoughtController {
     }
     
     func updateMarket(item: Item, match: Match) {
+
         //function should update the market for all users and remove the item from the potential pool of items.
         
         //remove all other match objects
@@ -80,7 +85,7 @@ struct BoughtController {
         
     }
     
-    internal func updateMatchOnPurchase(match: Match) {
+    func updateMatchOnPurchase(match: Match) {
         let update = ["bought": match.bought, "dateBought": TimeManager.formatter.stringFromDate(match.dateBought)]
         MatchesManager.globalManager.updateMatchById(match.id!, update: update as! JSON) { error in
             guard error == nil else {
@@ -92,7 +97,7 @@ struct BoughtController {
         }
     }
     
-    internal func updateBuyerOnPurchase(buyer: User) {
+    func updateBuyerOnPurchase(buyer: User) {
         let update = ["boughtItems": buyer.boughtItems, "nuItemsBought": buyer.nuItemsBought]
         UserManager.globalManager.updateUserById(buyer.id, update: update as! JSON) { error in
             guard error == nil else {
@@ -104,7 +109,7 @@ struct BoughtController {
         }
     }
     
-    internal func updatePostOnPurchase(post: Post) {
+    func updatePostOnPurchase(post: Post) {
         let update = ["buyerID": post.buyerID, "buyerName":post.buyerName, "soldPrice": post.soldPrice, "dateSold":TimeManager.formatter.stringFromDate(post.dateSold), "sold": post.sold]
         PostManager.globalManager.updatePostById(post.id, update: update as! JSON) { error in
             guard error == nil else {
@@ -117,7 +122,7 @@ struct BoughtController {
         
     }
     
-    internal func updateSellerOnPurchase(seller: User) {
+    func updateSellerOnPurchase(seller: User) {
         let update = ["soldItems": seller.soldItems, "nuItemsSold": seller.nuItemsSold]
         UserManager.globalManager.updateUserById(seller.id, update: update as! JSON) { error in
             guard error == nil else {
@@ -130,7 +135,7 @@ struct BoughtController {
     }
 
     
-    internal func updateUsers(users: [String], match: Match) {
+    func updateUsers(users: [String], match: Match) {
         var filterString = ""
         var index = 0
         for user in users {
@@ -165,7 +170,7 @@ struct BoughtController {
         }
     }
     
-    internal func buildUserUpdates(users: [User]) -> [[String:AnyObject]] {
+    func buildUserUpdates(users: [User]) -> [[String:AnyObject]] {
         var updateDict = [[String:AnyObject]]()
         for user in users {
             let temp = ["_id":user.id, "matches":user.matches]
@@ -174,7 +179,7 @@ struct BoughtController {
         return updateDict
     }
     
-    internal func getArrayForUpdate(dict: [String:AnyObject], keyOrValue: String, exception: String) -> [String] {
+    func getArrayForUpdate(dict: [String:AnyObject], keyOrValue: String, exception: String) -> [String] {
         var array = [String]()
         
         for (key, value) in dict {
@@ -187,13 +192,13 @@ struct BoughtController {
         return array
     }
     
-    internal func removeMatchThumbnails(deleteArray: [String]) {
+    func removeMatchThumbnails(deleteArray: [String]) {
         for matchID in deleteArray {
             RESTEngine.sharedEngine.removeImageFolderById(matchID, success: { response in }, failure: { error in print("Error deleting match thumbnail: \(error) for ID: \(matchID)") })
         }
     }
     
-    internal func removeMatches(item: Item, match: Match) {
+    func removeMatches(item: Item, match: Match) {
         let idArray = self.getArrayForUpdate(item.matches, keyOrValue: "key", exception: match.id!)
         
         var resourceDicts = [[String:AnyObject]]()
