@@ -184,7 +184,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
         for view in self.view.subviews {
             if (view.tag == tag) {
                 view.removeFromSuperview()
-                print("view removed")
+//                print("view removed")
             }
         }
     }

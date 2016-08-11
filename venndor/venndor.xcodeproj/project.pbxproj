@@ -132,6 +132,11 @@
 		E4AB1FF21D30437F00CC7400 /* ImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4AB1FF11D30437F00CC7400 /* ImagePicker.framework */; };
 		E4B6D3871D5514080016775C /* TextMessageComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B6D3861D5514080016775C /* TextMessageComposer.swift */; };
 		E4B6D3891D551A5C0016775C /* Speech Bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = E4B6D3881D551A5C0016775C /* Speech Bubble.png */; };
+		E4C148511D5BCB52006A7F13 /* Right-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C148501D5BCB52006A7F13 /* Right-50.png */; };
+		E4CD3A2B1D5B904300834ADD /* Step1.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CD3A271D5B904300834ADD /* Step1.png */; };
+		E4CD3A2C1D5B904300834ADD /* Step2.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CD3A281D5B904300834ADD /* Step2.png */; };
+		E4CD3A2D1D5B904300834ADD /* Step3.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CD3A291D5B904300834ADD /* Step3.png */; };
+		E4CD3A2E1D5B904300834ADD /* Step4.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CD3A2A1D5B904300834ADD /* Step4.png */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -290,6 +295,11 @@
 		E4AB1FF11D30437F00CC7400 /* ImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImagePicker.framework; path = "../../../Library/Developer/Xcode/DerivedData/venndor-cjexyuheznflryetuxeryodhnzpo/Build/Products/Debug-iphonesimulator/ImagePicker/ImagePicker.framework"; sourceTree = "<group>"; };
 		E4B6D3861D5514080016775C /* TextMessageComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageComposer.swift; sourceTree = "<group>"; };
 		E4B6D3881D551A5C0016775C /* Speech Bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speech Bubble.png"; sourceTree = "<group>"; };
+		E4C148501D5BCB52006A7F13 /* Right-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Right-50.png"; sourceTree = "<group>"; };
+		E4CD3A271D5B904300834ADD /* Step1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step1.png; sourceTree = "<group>"; };
+		E4CD3A281D5B904300834ADD /* Step2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step2.png; sourceTree = "<group>"; };
+		E4CD3A291D5B904300834ADD /* Step3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step3.png; sourceTree = "<group>"; };
+		E4CD3A2A1D5B904300834ADD /* Step4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step4.png; sourceTree = "<group>"; };
 		FFD7DAC17D30907788729F4A /* Pods-venndorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-venndorTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-venndorTests/Pods-venndorTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -518,6 +528,7 @@
 			isa = PBXGroup;
 			children = (
 				10395AB21D5BA6E900E6C132 /* ic_done_white.png */,
+				E4C148501D5BCB52006A7F13 /* Right-50.png */,
 				E4B6D3881D551A5C0016775C /* Speech Bubble.png */,
 				E495BB2F1D4940D500CC1EEC /* sell_currentlocation_button.png */,
 				E495BB2D1D49400200CC1EEC /* Search Filled-100.png */,
@@ -588,6 +599,10 @@
 		E4992E021D2C4DA200032221 /* Backgrounds */ = {
 			isa = PBXGroup;
 			children = (
+				E4CD3A271D5B904300834ADD /* Step1.png */,
+				E4CD3A281D5B904300834ADD /* Step2.png */,
+				E4CD3A291D5B904300834ADD /* Step3.png */,
+				E4CD3A2A1D5B904300834ADD /* Step4.png */,
 				106E96221D3582C600DBBED0 /* background.jpg */,
 				E4992E031D2C4DB300032221 /* match background.png */,
 			);
@@ -752,13 +767,18 @@
 				E44B38911D396B9C00733D96 /* Checked-100.png in Resources */,
 				10ADC9B51D0749700028A999 /* LaunchScreen.storyboard in Resources */,
 				E44C153D1D11E0430006EBAD /* Lamp-50.png in Resources */,
+				E4CD3A2C1D5B904300834ADD /* Step2.png in Resources */,
 				E44B38921D396B9C00733D96 /* Xbox X-100.png in Resources */,
+				E4CD3A2E1D5B904300834ADD /* Step4.png in Resources */,
 				E495BB301D4940D500CC1EEC /* sell_currentlocation_button.png in Resources */,
+				E4CD3A2D1D5B904300834ADD /* Step3.png in Resources */,
 				109452C91D47E6FF00931DA8 /* Lamp Filled.png in Resources */,
 				E44C153B1D11E0430006EBAD /* Multiple Devices-50.png in Resources */,
 				E44C15371D11E0430006EBAD /* More-50.png in Resources */,
+				E4CD3A2B1D5B904300834ADD /* Step1.png in Resources */,
 				E44C15181D11B5D00006EBAD /* Shopping Cart Loaded-50.png in Resources */,
 				E495BB271D47CBE600CC1EEC /* Collapse Arrow Blue.png in Resources */,
+				E4C148511D5BCB52006A7F13 /* Right-50.png in Resources */,
 				635415501D53A8EA0012BD2B /* fbIcon.png in Resources */,
 				106E96231D3582C600DBBED0 /* background.jpg in Resources */,
 				E44C153A1D11E0430006EBAD /* Clothes-50.png in Resources */,
