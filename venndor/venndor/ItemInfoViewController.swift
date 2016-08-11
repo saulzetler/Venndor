@@ -19,6 +19,7 @@ class ItemInfoViewController: UIViewController {
     var headerTitle: String! 
     var backButton: UIButton!
     var buyButton: UIButton!
+    var messageButton: UIButton!
     var editButton: UIButton!
     
     var isPost: Bool!
@@ -26,6 +27,8 @@ class ItemInfoViewController: UIViewController {
     let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.77
     let CARD_WIDTH: CGFloat = UIScreen.mainScreen().bounds.width*0.9
     let screenSize: CGRect = UIScreen.mainScreen().bounds
+    
+    let messageComposer = TextMessageComposer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,7 +47,11 @@ class ItemInfoViewController: UIViewController {
                 self.setupEditButton()
             }
             else {
-               self.setupBuyButton()
+                if self.match.bought == 1 {
+                    self.setupMessageButton()
+                } else {
+                    self.setupBuyButton()
+                }
             }
             
         }
@@ -105,6 +112,16 @@ class ItemInfoViewController: UIViewController {
         buyButton.addTarget(self, action: #selector(ItemInfoViewController.toggleBuy), forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(buyButton)
     }
+    func setupMessageButton() {
+        let buttonY = self.view.frame.size.height - self.header.frame.size.height
+        let frame = CGRectMake(0, buttonY, self.header.frame.size.width, self.header.frame.size.height)
+        messageButton = UIButton(frame: frame)
+        messageButton.backgroundColor = UIColorFromHex(0x34495e)
+        messageButton.setTitle("MESSAGE SELLER", forState: UIControlState.Normal)
+        messageButton.titleLabel?.textColor = UIColor.whiteColor()
+        messageButton.addTarget(self, action: #selector(ItemInfoViewController.messageSeller), forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(messageButton)
+    }
     
     func setupEditButton() {
         let buttonY = self.view.frame.size.height - self.header.frame.size.height
@@ -137,8 +154,9 @@ class ItemInfoViewController: UIViewController {
 //    }
     
     func toggleBuy() {
-        print("Buy tapped!")
+
         self.definesPresentationContext = true
+        
         UserManager.globalManager.retrieveUserById(item.owner) { user, error in
             guard error == nil else {
                 print("Error retrieving seller in Buy screen: \(error)")
@@ -149,6 +167,8 @@ class ItemInfoViewController: UIViewController {
                 let bvc = BuyViewController()
                 bvc.match = self.match
                 bvc.seller = user
+                bvc.item = self.item
+                bvc.fromInfo = true
                 bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                 bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
                 self.presentViewController(bvc, animated: true, completion: nil)
@@ -159,6 +179,20 @@ class ItemInfoViewController: UIViewController {
             }
         }
         
+    }
+    func messageSeller() {
+        print("Message tapped!")
+        
+        if (messageComposer.canSendText()) {
+            // Obtain a configured MFMessageComposeViewController
+            let messageComposeVC = messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) \(LocalUser.lastName) wants to buy your item \(match.itemName) for $\(match.matchedPrice)")
+            
+            presentViewController(messageComposeVC, animated: true, completion: nil)
+        } else {
+            // Let the user know if his/her device isn't able to send text messages
+            let errorAlert = UIAlertView(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", delegate: self, cancelButtonTitle: "OK")
+            errorAlert.show()
+        }
     }
     
     func dismissController(sender: AnyObject) {

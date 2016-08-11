@@ -56,7 +56,30 @@ class MatchesManager: NSObject {
             }, failure: { error in
                 completionHandler(nil, error)
         })
-        
+    }
+    
+    func retrieveMatchByFilter(filter: String, completionHandler:(Match?, ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.getMatchesFromServer(nil, filter: filter, offset: nil, fields: nil,
+            success: { response in
+                if let response = response, matchArray = response["resource"] as? NSArray, matchData = matchArray[0] as? JSON {
+                    let match = Match(json: matchData)
+                    
+                    //instantly pull the thumbnail too
+                    self.retrieveMatchThumbnail(match) { img, error in
+                        guard error == nil else {
+                            print("Error retrieving match thumbnail: \(error)")
+                            return
+                        }
+                        if let img = img {
+                            match.thumbnail = img
+                            
+                        }
+                    }
+                    completionHandler(match, nil)
+                }
+            }, failure: { error in
+                completionHandler(nil, error)
+        })
     }
     
     func retrieveUserMatches(user: User, completionHandler: ([Match]?, ErrorType?) -> () ){
@@ -98,6 +121,11 @@ class MatchesManager: NSObject {
         
     }
     
+    func updateMatchById(id: String, update: JSON, completionHandler: (ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.updateMatchById(id, matchDetails: update,
+            success: { response in completionHandler(nil)}, failure: { error in completionHandler(error)})
+    }
+    
     func retrieveMatchThumbnail(match: Match, completionHandler: (UIImage?, ErrorType?) -> () ) {
         RESTEngine.sharedEngine.getImageFromServerById(match.id!, fileName: "image0",
             success: { response in
@@ -121,6 +149,11 @@ class MatchesManager: NSObject {
         RESTEngine.sharedEngine.deleteMatchFromServerById(id,
             success: { _ in completionHandler(nil) },
             failure: { error in completionHandler(error)})
+    }
+    
+    func deleteMultipleMatchesById(ids:[[String:AnyObject]], completionHandler: (ErrorType?) -> ()) {
+        RESTEngine.sharedEngine.deleteMultipleMatchesFromServer(ids,
+            success: { _ in completionHandler(nil) }, failure: { error in completionHandler(error)})
     }
     
     func createFilterString(matches: [String:AnyObject]) -> String {

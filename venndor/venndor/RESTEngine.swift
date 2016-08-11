@@ -142,11 +142,22 @@ final class RESTEngine {
     }
 
     func deletePostFromServerById(id: String, success: SuccessClosure, failure: ErrorClosure) {
-        let path = "\(Routing.Service(tableName: "posts").path)/\(id)"
         
-        callApiWithPath(path, method: "DELETE", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
+        //first remove the post image folder, then the post object
+        removeImageFolderById(id,
+            success: { _ in
+                let path = "\(Routing.Service(tableName: "posts").path)/\(id)"
+                
+                self.callApiWithPath(path, method: "DELETE", queryParams: nil, body: nil, headerParams: self.headerParams, success: success, failure: failure)
+                
+            }, failure: { _ in })
     }
 
+    func deleteMultiplePostsFromServer(ids: [[String:AnyObject]], success: SuccessClosure, failure: ErrorClosure) {
+        
+        let requestBody = ["resource": ids]
+        callApiWithPath(Routing.Service(tableName: "posts").path, method: "DELETE", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
+    }
     
     
     
@@ -186,13 +197,32 @@ final class RESTEngine {
         callApiWithPath(Routing.Service(tableName: "matches").path, method: "GET", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
     
-    func deleteMatchFromServerById(id: String, success: SuccessClosure, failure: ErrorClosure) {
+    func updateMatchById(id: String, matchDetails: JSON, success: SuccessClosure, failure: ErrorClosure) {
+        
+        // set the id of the contact we are looking at
+        let requestBody: [String: AnyObject] = matchDetails
         let path = "\(Routing.Service(tableName: "matches").path)/\(id)"
         
-        callApiWithPath(path, method: "DELETE", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
+        callApiWithPath(path, method: "PATCH", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
     }
     
+    func deleteMatchFromServerById(id: String, success: SuccessClosure, failure: ErrorClosure) {
+        
+        //remove the image folder first, then the match object
+        removeImageFolderById(id,
+            success: { _ in
+                let path = "\(Routing.Service(tableName: "matches").path)/\(id)"
+                
+                self.callApiWithPath(path, method: "DELETE", queryParams: nil, body: nil, headerParams: self.headerParams, success: success, failure: failure)
+
+            }, failure: { _ in })
+    }
     
+    func deleteMultipleMatchesFromServer(ids: [[String:AnyObject]], success: SuccessClosure, failure: ErrorClosure) {
+        let requestBody = ["resource":ids]
+        callApiWithPath(Routing.Service(tableName: "matches").path, method: "DELETE", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
+        
+    }
     
     
     //MARK: - Seen Posts methods
@@ -231,6 +261,9 @@ final class RESTEngine {
     
     
     
+    
+    
+    
     //MARK: - User methods
     
     func registerUser(params: JSON, success: SuccessClosure, failure: ErrorClosure) {
@@ -243,6 +276,7 @@ final class RESTEngine {
     /**
      Get a single user from the server
      */
+    
     func getUserByEmail(email: String, success: SuccessClosure, failure: ErrorClosure) {
         
         // create filter to get info only for this contact
@@ -253,6 +287,15 @@ final class RESTEngine {
     func getUserById(id: String, success: SuccessClosure, failure: ErrorClosure) {
         let path = "\(Routing.Service(tableName: "users").path)/\(id)"
         callApiWithPath(path, method: "GET", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    /**
+    Get multiple users from server
+    */
+    
+    func getUsersByIds(ids: String, success: SuccessClosure, failure: ErrorClosure) {
+        let queryParams = ["filter":ids]
+        callApiWithPath(Routing.Service(tableName: "users").path, method: "GET", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
 
     /**
@@ -278,6 +321,11 @@ final class RESTEngine {
         
         callApiWithPath(path, method: "PATCH", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
     }
+    
+    func updateUsers(update: [JSON], success: SuccessClosure, failure: ErrorClosure) {
+        let requestBody = ["resource":update]
+        callApiWithPath(Routing.Service(tableName: "users").path, method: "PATCH", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
+    }
 
     
     
@@ -302,11 +350,19 @@ final class RESTEngine {
      Remove item from the server
     */
     
-    func removeItemFromServerById(id: String, success: SuccessClosure, failure: ErrorClosure) {
-
-        let path = "\(Routing.Service(tableName: "items").path)/\(id)"
+    func deleteItemFromServerById(id: String, success: SuccessClosure, failure: ErrorClosure) {
         
-        callApiWithPath(path, method: "DELETE", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)
+        //first remove the folder and all images associated with it, then wipe the item
+        removeImageFolderById(id, success: { _ in
+            let path = "\(Routing.Service(tableName: "items").path)/\(id)"
+            
+            self.callApiWithPath(path, method: "DELETE", queryParams: nil, body: nil, headerParams: self.headerParams, success: success, failure: failure)
+            
+            }, failure: { error in
+                print("Error deleting image folder from server: \(error)")
+        })
+
+        
     }
     
     /**

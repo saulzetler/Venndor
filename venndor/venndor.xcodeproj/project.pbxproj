@@ -14,6 +14,7 @@
 		102806D71D22F11D0019C7FF /* RatingControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 102806D61D22F11D0019C7FF /* RatingControl.swift */; };
 		10395AAF1D5B7C5C00E6C132 /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10395AAE1D5B7C5C00E6C132 /* OneSignal.framework */; };
 		10395AB11D5B7CA900E6C132 /* SystemConfiguration.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10395AB01D5B7CA900E6C132 /* SystemConfiguration.framework */; };
+		10395AB31D5BA6E900E6C132 /* ic_done_white.png in Resources */ = {isa = PBXBuildFile; fileRef = 10395AB21D5BA6E900E6C132 /* ic_done_white.png */; };
 		103B17081D35686C005AEFDD /* jonasBoettcherController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103B17071D35686C005AEFDD /* jonasBoettcherController.swift */; };
 		103CBEFF1D50EBE000EF89C7 /* BoughtController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103CBEFE1D50EBE000EF89C7 /* BoughtController.swift */; };
 		103D11481D382EB5004CE297 /* OtherHeaderView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 103D11471D382EB5004CE297 /* OtherHeaderView.swift */; };
@@ -165,6 +166,7 @@
 		102806D61D22F11D0019C7FF /* RatingControl.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RatingControl.swift; sourceTree = "<group>"; };
 		10395AAE1D5B7C5C00E6C132 /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = OneSignal.framework; sourceTree = "<group>"; };
 		10395AB01D5B7CA900E6C132 /* SystemConfiguration.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = SystemConfiguration.framework; path = System/Library/Frameworks/SystemConfiguration.framework; sourceTree = SDKROOT; };
+		10395AB21D5BA6E900E6C132 /* ic_done_white.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = ic_done_white.png; sourceTree = "<group>"; };
 		103B17071D35686C005AEFDD /* jonasBoettcherController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = jonasBoettcherController.swift; sourceTree = "<group>"; };
 		103CBEFE1D50EBE000EF89C7 /* BoughtController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = BoughtController.swift; sourceTree = "<group>"; };
 		103D11471D382EB5004CE297 /* OtherHeaderView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OtherHeaderView.swift; sourceTree = "<group>"; };
@@ -525,6 +527,7 @@
 		E44C153E1D11E04F0006EBAD /* Icons */ = {
 			isa = PBXGroup;
 			children = (
+				10395AB21D5BA6E900E6C132 /* ic_done_white.png */,
 				E4C148501D5BCB52006A7F13 /* Right-50.png */,
 				E4B6D3881D551A5C0016775C /* Speech Bubble.png */,
 				E495BB2F1D4940D500CC1EEC /* sell_currentlocation_button.png */,
@@ -732,6 +735,7 @@
 				E44C15211D11B9F90006EBAD /* Home-50.png in Resources */,
 				E4B6D3891D551A5C0016775C /* Speech Bubble.png in Resources */,
 				109452B91D41661A00931DA8 /* venn.png in Resources */,
+				10395AB31D5BA6E900E6C132 /* ic_done_white.png in Resources */,
 				109452C51D47E6FF00931DA8 /* Computer Filled.png in Resources */,
 				E44C151C1D11B9650006EBAD /* Settings-50.png in Resources */,
 				E495BB241D47BFCA00CC1EEC /* add_main_photo.png in Resources */,

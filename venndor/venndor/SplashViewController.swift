@@ -51,28 +51,30 @@ class SplashViewController: UIViewController {
             else {
                 OneSignal.IdsAvailable({ (userId, pushToken) in
                 NSLog("UserId:%@", userId)
+                    
                     if (pushToken != nil) {
                         NSLog("pushToken:%@", pushToken)
                         LocalUser.pushID = userId
+                       
+                        //create the user on the server
+                        UserManager.globalManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email, gender: LocalUser.gender, ageRange: LocalUser.ageRange, pushID: LocalUser.pushID) { user, error in
+                            LocalUser.user = user
+                            LocalUser.seenPosts = [String:AnyObject]()
+                            LocalUser.user.mostRecentAction = "Logged in through Facebook."
+                            LocalUser.seenPosts["_id"] = LocalUser.user.id
+                            
+                            //create the seenPosts object on the server
+                            SeenPostsManager.globalManager.createSeenPostsById(LocalUser.user.id, completionHandler: { error in
+                                guard error == nil else {
+                                    print("Error creating user's seen posts: \(error)")
+                                    return
+                                }
+                                seenPostsMade = true
+                                self.triggerSegueTutorial()
+                            })
+                        }
                     }
                 })
-                //create the user on the server
-                UserManager.globalManager.createUser(LocalUser.firstName, last: LocalUser.lastName, email: LocalUser.email, gender: LocalUser.gender, ageRange: LocalUser.ageRange, pushID: LocalUser.pushID) { user, error in
-                    LocalUser.user = user
-                    LocalUser.seenPosts = [String:AnyObject]()
-                    LocalUser.user.mostRecentAction = "Logged in through Facebook."
-                    LocalUser.seenPosts["_id"] = LocalUser.user.id
-             
-                    //create the seenPosts object on the server
-                    SeenPostsManager.globalManager.createSeenPostsById(LocalUser.user.id, completionHandler: { error in
-                        guard error == nil else {
-                            print("Error creating user's seen posts: \(error)")
-                            return
-                        }
-                        seenPostsMade = true
-                        self.triggerSegueTutorial()
-                    })
-                }
             }
         }
         

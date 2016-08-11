@@ -60,21 +60,6 @@ struct ItemManager {
         })
     }
     
-    func retrieveItemIds(count: Int, offset: Int, filter: String?, completionHandler: ([String]?, ErrorType?) -> () ) {
-        RESTEngine.sharedEngine.getItemsFromServer(count, offset: offset, filter: filter, fields: ["_id"],
-            success: { response in
-                if let ids = response!["resource"] as? Array<Dictionary<String, String>> {
-                    var arr = [String]()
-                    for data in ids {
-                        arr.append(data["_id"]!)
-                    }
-                    
-                    completionHandler(arr, nil)
-                }
-            }, failure: { error in
-                    completionHandler(nil, error)
-        })
-    }
     
     func retrieveItemImage(item: Item, imageIndex: Int, completionHandler: (UIImage?, ErrorType?) -> () ) {
         RESTEngine.sharedEngine.getImageFromServerById(item.id, fileName: "image\(imageIndex)",
