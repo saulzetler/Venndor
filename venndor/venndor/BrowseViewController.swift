@@ -258,7 +258,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             if let item = item {
                 let itemInfoViewController = ItemInfoViewController()
                 itemInfoViewController.item = item
-                itemInfoViewController.match = match 
+                itemInfoViewController.match = match
+                itemInfoViewController.isPost = false
                 itemInfoViewController.headerTitle = "Your Matches"
                 self.miniAlertController.dismissViewControllerAnimated(true, completion: nil)
                 self.presentViewController(itemInfoViewController, animated: true, completion: nil)
@@ -283,9 +284,11 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
+
         while locationAuthorized == false {
+        
         }
-//        LocalUser.myLocation = CLLocation(latitude: 10, longitude: 10)
+
         let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index], myLocation: LocalUser.myLocation)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true

@@ -154,8 +154,9 @@ class ItemInfoViewController: UIViewController {
 //    }
     
     func toggleBuy() {
-        print("Buy tapped!")
+
         self.definesPresentationContext = true
+        
         UserManager.globalManager.retrieveUserById(item.owner) { user, error in
             guard error == nil else {
                 print("Error retrieving seller in Buy screen: \(error)")
@@ -166,6 +167,7 @@ class ItemInfoViewController: UIViewController {
                 let bvc = BuyViewController()
                 bvc.match = self.match
                 bvc.seller = user
+                bvc.item = self.item
                 bvc.fromInfo = true
                 bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                 bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext

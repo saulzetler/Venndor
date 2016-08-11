@@ -102,6 +102,25 @@ struct UserManager {
         })
     }
     
+    func retrieveMultipleUsers(filter: String, completionHandler: ([User]?, ErrorType?) -> ()) {
+        RESTEngine.sharedEngine.getUsersByIds(filter,
+            success: { response in
+                if let response = response, result = response["resource"] {
+                    var usersArray = [User]()
+                    let arr = result as! NSArray
+                    for data in arr {
+                        let data = data as! JSON
+                        let user = User(json: data)
+                        usersArray.append(user)
+                    }
+                    completionHandler(usersArray, nil)
+                }
+
+            }, failure: { error in
+                completionHandler(nil, error)
+        })
+    }
+    
     func deleteUserById(id: String, completionHandler: (ErrorType?) -> () ) {
         RESTEngine.sharedEngine.removeUserById(id,
             success: { response in
@@ -121,6 +140,15 @@ struct UserManager {
         })
     }
     
+    func updateMultipleUsers(update: [JSON], completionHandler:(ErrorType?) -> ()) {
+        RESTEngine.sharedEngine.updateUsers(update,
+            success: { response in
+                completionHandler(nil)
+            }, failure: { error in
+                completionHandler(error)
+        })
+    }
+    
     func updateLocalUserMetrics() {
         let update: [String:AnyObject] = ["nuItemsSold": LocalUser.user.nuItemsSold, "nuItemsBought": LocalUser.user.nuItemsBought, "nuSwipesLeft": LocalUser.user.nuSwipesLeft, "nuSwipesRight": LocalUser.user.nuSwipesRight, "nuSwipesTotal": LocalUser.user.nuSwipesTotal, "nuPosts": LocalUser.user.nuPosts, "nuVisits": LocalUser.user.nuVisits, "mostRecentAction": LocalUser.user.mostRecentAction, "timeOnAppPerSession": LocalUser.user.timeOnAppPerSession, "timePerController": LocalUser.user.timePerController, "soldItems": LocalUser.user.soldItems, "boughtItems": LocalUser.user.boughtItems]
         
@@ -134,44 +162,6 @@ struct UserManager {
     }
 }
 
-    /*
-
-    func updateUser(user: User, type: UpdateType?, completionHandler: (String?, ErrorType?) -> () ) {
-        
-        var userInfo: JSON!
-        
-        if let type = type {
-            switch type {
-            case .Ads :
-                userInfo = ["ads": user.ads]
-            case .Rating :
-                userInfo = ["rating": user.rating]
-                
-            case .Matches :
-                userInfo = ["matches": user.matches]
-            }
-        }
-            
-        else {
-            userInfo = ["first_name": user.firstName,
-            "id": user.id,
-            "email": user.email,
-            "rating": user.rating,
-            "nuMatches": user.nuMatches,
-            "nuItemsSold": user.nuItemsSold,
-            "nuItemsBought": user.nuItemsBought,
-            "ads": user.ads,
-            "soldItems": user.soldItems,
-            "matches": user.matches]
-        }
-        
-        RESTEngine.sharedEngine.updateUserById(user.id, info: userInfo,
-            success: { response in
-            }, failure: { error in
-                completionHandler(nil, error)
-        })
-    }
-*/
 
 
 

@@ -11,6 +11,9 @@ import Foundation
 class BuyViewController: UIViewController {
     var seller: User!
     var match: Match!
+
+    var item: Item! 
+
     var fromInfo: Bool!
     var cancel: Bool!
     
@@ -21,7 +24,7 @@ class BuyViewController: UIViewController {
     var itemLabel: UILabel!
     var sellerPhotoView: UIImageView!
     
-//    let messageComposer = TextMessageComposer()
+    let messageComposer = TextMessageComposer()
     
     override func viewDidLoad() {
     
@@ -73,7 +76,7 @@ class BuyViewController: UIViewController {
         
         confirmButton = UIButton(frame: buttonFrame)
         confirmButton.backgroundColor = UIColorFromHex(0x1abc9c)
-        confirmButton.setTitle("        Confirm Purchase", forState: .Normal)
+        confirmButton.setTitle("Confirm Purchase", forState: .Normal)
         confirmButton.titleLabel?.textColor = UIColor.whiteColor()
 //        confirmButton.titleLabel?.textAlignment = .Center
         confirmButton.titleEdgeInsets = UIEdgeInsets(top: 5, left: 20, bottom: -5, right: 60)
@@ -141,52 +144,58 @@ class BuyViewController: UIViewController {
     
     func dismissController() {
         self.dismissViewControllerAnimated(true, completion: nil)
-        if self.cancel == false {
-            if fromInfo == true {
-                
-                self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-//                let temp = self.presentingViewController
-//                temp?.presentingViewController?.viewDidLoad()
-                
-            } else {
-                self.presentingViewController?.viewDidLoad()
-            }
-        }
-
     }
     
     func itemBought() {
         print("Confirm tapped!")
-        let buy = BoughtController()
-        buy.sendSellerNotification(seller, match: match)
-        buy.updateBuyer(match)
-        buy.updateMarket(match)
-        buy.updateSeller(match)
+        BoughtController.globalController.sendSellerNotification(seller, match: match)
+        BoughtController.globalController.updateBuyer(self.item, buyer: LocalUser.user)
+        BoughtController.globalController.updateMarket(self.item, match: self.match)
+        BoughtController.globalController.updateSeller(self.item, seller: seller, soldPrice: self.match.matchedPrice)
+        
+        
         self.cancel = false
+        if self.cancel == false {
+            if self.fromInfo == true {
+                
+                self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+            
+        else {
+            self.presentingViewController?.viewDidLoad()
+        }
+        
         dismissController()
-//        if (messageComposer.canSendText()) {
-//            UserManager.globalManager.retrieveUserById(match.sellerID) { user, error in
-//                guard error == nil else {
-//                    print("Error retrieving seller in Buy screen: \(error)")
-//                    return
-//                }
-//                
-//                if let user = user {
-//                   self.messageComposer.setRecipients([user.phoneNumber])
-//                    
-//                    // Obtain a configured MFMessageComposeViewController
-//                    let messageComposeVC = self.messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) wants to buy your item \(self.match.itemName) for $\(self.match.matchedPrice)")
-//                    
-//                    // Present the configured MFMessageComposeViewController instance
-//                    // Note that the dismissal of the VC will be handled by the messageComposer instance,
-//                    // since it implements the appropriate delegate call-back
-//                    self.presentViewController(messageComposeVC, animated: true, completion: nil)
-//                }
-//            }
-//        } else {
-//            // Let the user know if his/her device isn't able to send text messages
-//            let errorAlert = UIAlertView(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", delegate: self, cancelButtonTitle: "OK")
-//            errorAlert.show()
-//        }
     }
+    
+    //        if (messageComposer.canSendText()) {
+    //
+    //            UserManager.globalManager.retrieveUserById(match.sellerID) { user, error in
+    //                guard error == nil else {
+    //                    print("Error retrieving seller in Buy screen: \(error)")
+    //                    return
+    //                }
+    //
+    //                if let user = user {
+    //                   self.messageComposer.setRecipients([user.phoneNumber])
+    //
+    //                    // Obtain a configured MFMessageComposeViewController
+    //                    let messageComposeVC = self.messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) wants to buy your item \(self.match.itemName) for $\(self.match.matchedPrice)")
+    //
+    //                    // Present the configured MFMessageComposeViewController instance
+    //                    // Note that the dismissal of the VC will be handled by the messageComposer instance,
+    //                    // since it implements the appropriate delegate call-back
+    //                    self.presentViewController(messageComposeVC, animated: true, completion: nil)
+    //                }
+    //
+    //            }
+    //
+    //        }
+    //
+    //        else {
+    //            // Let the user know if his/her device isn't able to send text messages
+    //            let errorAlert = UIAlertView(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", delegate: self, cancelButtonTitle: "OK")
+    //            errorAlert.show()
+    //        }
 }

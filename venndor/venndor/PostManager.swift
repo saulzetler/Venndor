@@ -61,6 +61,30 @@ class PostManager: NSObject {
         })
     }
     
+    func retrievePostByFilter(filter: String, completionHandler:(Post?, ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.getMatchesFromServer(nil, filter: filter, offset: nil, fields: nil,
+            success: { response in
+                if let response = response, postArray = response["resource"] as? NSArray, postData = postArray[0] as? JSON {
+                    let post = Post(json: postData)
+                                                            
+                    //instantly pull the thumbnail too
+                    self.retrievePostThumbnail(post) { img, error in
+                        guard error == nil else {
+                            print("Error retrieving match thumbnail: \(error)")
+                            return
+                        }
+                        if let img = img {
+                            post.thumbnail = img
+                                                                    
+                        }
+                    }
+                completionHandler(post, nil)
+                }
+            }, failure: { error in
+                completionHandler(nil, error)
+        })
+    }
+    
     func retrieveUserPosts(user: User, completionHandler: ([Post]?, ErrorType?) -> () ) {
         let filterString = createFilterString(user.posts)
         if filterString == "" {
@@ -126,6 +150,11 @@ class PostManager: NSObject {
     
     func deletePostById(id: String, completionHandler: (ErrorType?) -> () ) {
         RESTEngine.sharedEngine.deletePostFromServerById(id, success: { _ in completionHandler(nil)}, failure: { error in completionHandler(error)})
+    }
+    
+    func deleteMultiplePostsById(ids:[[String:AnyObject]], completionHandler: (ErrorType?) -> ()) {
+        RESTEngine.sharedEngine.deleteMultiplePostsFromServer(ids,
+            success: { _ in completionHandler(nil) }, failure: { error in completionHandler(error)})
     }
     
     func createFilterString(posts: [String:AnyObject]) -> String {
