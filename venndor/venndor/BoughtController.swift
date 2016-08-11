@@ -33,7 +33,7 @@ struct BoughtController {
                 post.dateSold = NSDate()
                 post.sold = 1
                 
-                seller.soldItems[item.id] = LocalUser.user.id
+                seller.soldItems[post.id] = item.id
                 seller.nuItemsSold! += 1
                 
                 self.updatePostOnPurchase(post)
@@ -80,7 +80,7 @@ struct BoughtController {
         
     }
     
-    func updateMatchOnPurchase(match: Match) {
+    internal func updateMatchOnPurchase(match: Match) {
         let update = ["bought": match.bought, "dateBought": TimeManager.formatter.stringFromDate(match.dateBought)]
         MatchesManager.globalManager.updateMatchById(match.id!, update: update as! JSON) { error in
             guard error == nil else {
@@ -92,7 +92,7 @@ struct BoughtController {
         }
     }
     
-    func updateBuyerOnPurchase(buyer: User) {
+    internal func updateBuyerOnPurchase(buyer: User) {
         let update = ["boughtItems": buyer.boughtItems, "nuItemsBought": buyer.nuItemsBought]
         UserManager.globalManager.updateUserById(buyer.id, update: update as! JSON) { error in
             guard error == nil else {
@@ -104,7 +104,7 @@ struct BoughtController {
         }
     }
     
-    func updatePostOnPurchase(post: Post) {
+    internal func updatePostOnPurchase(post: Post) {
         let update = ["buyerID": post.buyerID, "buyerName":post.buyerName, "soldPrice": post.soldPrice, "dateSold":TimeManager.formatter.stringFromDate(post.dateSold), "sold": post.sold]
         PostManager.globalManager.updatePostById(post.id, update: update as! JSON) { error in
             guard error == nil else {
@@ -117,7 +117,7 @@ struct BoughtController {
         
     }
     
-    func updateSellerOnPurchase(seller: User) {
+    internal func updateSellerOnPurchase(seller: User) {
         let update = ["soldItems": seller.soldItems, "nuItemsSold": seller.nuItemsSold]
         UserManager.globalManager.updateUserById(seller.id, update: update as! JSON) { error in
             guard error == nil else {
@@ -130,13 +130,15 @@ struct BoughtController {
     }
 
     
-    func updateUsers(users: [String], match: Match) {
+    internal func updateUsers(users: [String], match: Match) {
         var filterString = ""
         var index = 0
         for user in users {
             filterString = index == 0 ? "(_id = \(user))" : "\(filterString) or (_id = \(user))"
             index += 1
         }
+        
+        print("Filter string for user update: \(filterString)")
         
         UserManager.globalManager.retrieveMultipleUsers(filterString) { users, error in
             guard error == nil else {
@@ -163,7 +165,7 @@ struct BoughtController {
         }
     }
     
-    func buildUserUpdates(users: [User]) -> [[String:AnyObject]] {
+    internal func buildUserUpdates(users: [User]) -> [[String:AnyObject]] {
         var updateDict = [[String:AnyObject]]()
         for user in users {
             let temp = ["_id":user.id, "matches":user.matches]
@@ -172,7 +174,7 @@ struct BoughtController {
         return updateDict
     }
     
-    func getArrayForUpdate(dict: [String:AnyObject], keyOrValue: String, exception: String) -> [String] {
+    internal func getArrayForUpdate(dict: [String:AnyObject], keyOrValue: String, exception: String) -> [String] {
         var array = [String]()
         
         for (key, value) in dict {
@@ -185,13 +187,13 @@ struct BoughtController {
         return array
     }
     
-    func removeMatchThumbnails(deleteArray: [String]) {
+    internal func removeMatchThumbnails(deleteArray: [String]) {
         for matchID in deleteArray {
             RESTEngine.sharedEngine.removeImageFolderById(matchID, success: { response in }, failure: { error in print("Error deleting match thumbnail: \(error) for ID: \(matchID)") })
         }
     }
     
-    func removeMatches(item: Item, match: Match) {
+    internal func removeMatches(item: Item, match: Match) {
         let idArray = self.getArrayForUpdate(item.matches, keyOrValue: "key", exception: match.id!)
         
         var resourceDicts = [[String:AnyObject]]()
@@ -199,6 +201,7 @@ struct BoughtController {
             let temp = ["_id":id]
             resourceDicts.append(temp)
         }
+        print("resourceDicts for match removal: \(resourceDicts)")
         
         MatchesManager.globalManager.deleteMultipleMatchesById(resourceDicts) { error in
             guard error == nil else {
