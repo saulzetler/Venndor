@@ -287,7 +287,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
 
         while locationAuthorized == false {
-        
+            
         }
 
         let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index], myLocation: LocalUser.myLocation)
@@ -439,7 +439,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             locationAuthorized = true
             LocalUser.myLocation = location
             locationManager.stopUpdatingLocation()
-            
         }
     }
     
@@ -447,8 +446,11 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         // 3
         if status == .AuthorizedWhenInUse {            
             locationManager.startUpdatingLocation()
-            
         }
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("an error fucked this up: \(error)")
     }
     
     func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
