@@ -30,6 +30,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     var onMatches: Bool!
     var sessionStart: NSDate!
     
+    let messageComposer = TextMessageComposer()
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         TimeManager.globalManager.setSessionDuration(sessionStart, controller: "MyMatchesViewController")
@@ -37,6 +39,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        print("has been reloaded")
         
         LocalUser.user.mostRecentAction = "Browsed MyMatches"
         sessionStart = NSDate()
@@ -161,6 +165,10 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
 //        setupButtons()
         
     }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        self.viewDidLoad()
+    }
     func DropdownAction() {
         
     }
@@ -208,10 +216,15 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         matchContainer.addSubview(descriptionLabel)
         
-        //CHANGE TARGET
-        let buyButton = makeTextButton("Buy", frame: CGRect(x: imgWidth+42, y: 20+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.toggleBuy(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
-        buyButton.layer.cornerRadius = 5
-        matchContainer.addSubview(buyButton)
+        if match.bought == 0 {
+            let buyButton = makeTextButton("Buy", frame: CGRect(x: imgWidth+42, y: 20+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.toggleBuy(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
+            buyButton.layer.cornerRadius = 5
+            matchContainer.addSubview(buyButton)
+        } else {
+            let messageButton = makeTextButton("Message Seller", frame: CGRect(x: imgWidth+42, y: 20+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.messageSeller(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
+            messageButton.layer.cornerRadius = 5
+            matchContainer.addSubview(messageButton)
+        }
         
         
         
@@ -283,6 +296,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                 let bvc = BuyViewController()
                 bvc.match = match
                 bvc.seller = user
+                bvc.fromInfo = false
                 bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                 bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
                 self.presentViewController(bvc, animated: true, completion: nil)
@@ -294,8 +308,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         }
         
     }
-    
-    
     
 //    
 //    //function to control the switching between the 2 possible views given a passed boolean.
@@ -332,6 +344,21 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     
     func none(sender: UIButton) {
         
+    }
+    func messageSeller(sender: UIButton) {
+        print("Message tapped!")
+        let container = sender.superview as! ItemContainer
+        let match = container.match
+        if (messageComposer.canSendText()) {
+            // Obtain a configured MFMessageComposeViewController
+            let messageComposeVC = messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) \(LocalUser.lastName) wants to buy your item \(match.itemName) for $\(match.matchedPrice)")
+            
+            presentViewController(messageComposeVC, animated: true, completion: nil)
+        } else {
+            // Let the user know if his/her device isn't able to send text messages
+            let errorAlert = UIAlertView(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", delegate: self, cancelButtonTitle: "OK")
+            errorAlert.show()
+        }
     }
     func calculateDistanceFromLocation(latitude: Double, longitude: Double, myLocation: CLLocation){
         
