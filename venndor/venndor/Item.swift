@@ -31,7 +31,8 @@ class Item: NSObject {
     var itemAge: String
     var minPrice: Int
     
-    var matches: [String:AnyObject]! //key: match object id, value: user who owns match object
+    //key: match object id, value: user who owns match object
+    var matches: [String:AnyObject]!
     
     //metrics
     var timeMatched: NSDate?

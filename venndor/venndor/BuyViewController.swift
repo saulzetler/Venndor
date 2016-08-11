@@ -11,6 +11,7 @@ import Foundation
 class BuyViewController: UIViewController {
     var seller: User!
     var match: Match!
+    var item: Item! 
     
     var popupView: UIView!
     var messageButton: UIButton!
@@ -140,12 +141,31 @@ class BuyViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
     
+    
     func messageSeller() {
         print("Message tapped!")
         
         if (messageComposer.canSendText()) {
             // Obtain a configured MFMessageComposeViewController
             let messageComposeVC = messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) \(LocalUser.lastName) wants to buy your item \(match.itemName) for $\(match.matchedPrice)")
+            
+/*          key: match object id, value: user who owns match object
+            item.matches: [String:AnyObject]!
+             
+             
+             
+             
+             3. Update the Post Object
+             4. Update the Match Object
+             5. Update the Buyer 
+             6. Update the Seller
+ */
+            
+            //1. Batch delete all match objects that ARE NOT this one
+            
+            
+            //2. Remove the match object from every user associated with this item
+            
             
             // Present the configured MFMessageComposeViewController instance
             // Note that the dismissal of the VC will be handled by the messageComposer instance,

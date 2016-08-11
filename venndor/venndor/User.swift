@@ -59,16 +59,18 @@ class User: NSObject {
     //key: Controller name, Value: Time Spent
     var timePerController: [String:Double]!
     
-    //key: PostObject ID, Value: Maybe matched/sold price?
+    //key: PostObject ID, Value: buyerID
     var soldItems : [String:AnyObject]!    //NI
     
-    //key: Match Object ID
-    var boughtItems: [String:AnyObject]!   //NI
+    //key: Match Object ID, value: sellerID 
+    var boughtItems: [String:AnyObject]!   
+    
+    //key: Post Object ID, value: Item Object ID
     var posts: [String:AnyObject]!
     
-    //key: matchID, value: item in the match
+    //key: Match Object ID, value: Item object ID
     var matches: [String:AnyObject]!
-    let parseManager = ParserManager()
+    
     
     init(json:JSON) {
         id = json["_id"] as! String
@@ -93,11 +95,11 @@ class User: NSObject {
         nuVisits = json["nuVisits"] as! Int
         moneySaved = json["moneySaved"] as! Double
         mostRecentAction = json["mostRecentAction"] as! String
-        timeOnAppPerSession = parseManager.getDoubleDict(json["timeOnAppPerSession"]!)
-        timePerController = parseManager.getDoubleDict(json["timePerController"]!) 
-        soldItems = parseManager.getDict(json["soldItems"]!)
-        boughtItems = parseManager.getDict(json["boughtItems"]!)
-        posts = parseManager.getDict(json["posts"]!)
-        matches = parseManager.getDict(json["matches"]!) 
+        timeOnAppPerSession = ParserManager.globalManager.getDoubleDict(json["timeOnAppPerSession"]!)
+        timePerController = ParserManager.globalManager.getDoubleDict(json["timePerController"]!)
+        soldItems = ParserManager.globalManager.getDict(json["soldItems"]!)
+        boughtItems = ParserManager.globalManager.getDict(json["boughtItems"]!)
+        posts = ParserManager.globalManager.getDict(json["posts"]!)
+        matches = ParserManager.globalManager.getDict(json["matches"]!)
     }
 }
