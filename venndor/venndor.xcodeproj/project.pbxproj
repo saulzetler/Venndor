@@ -371,7 +371,6 @@
 		10ADC99B1D0749700028A999 = {
 			isa = PBXGroup;
 			children = (
-				10395AAE1D5B7C5C00E6C132 /* OneSignal.framework */,
 				10ADC9E51D0750CA0028A999 /* venndor-Bridging-Header.h */,
 				10ADC9DB1D074C6F0028A999 /* Framework */,
 				10ADC9A61D0749700028A999 /* venndor */,
@@ -434,6 +433,7 @@
 			children = (
 				E49051AE1D09C0C90045D5C0 /* SWRevealViewController.h */,
 				E49051AF1D09C0C90045D5C0 /* SWRevealViewController.m */,
+				10395AAE1D5B7C5C00E6C132 /* OneSignal.framework */,
 				10ADC9DC1D074CA40028A999 /* FBSDKCoreKit.framework */,
 				10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */,
 				10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */,

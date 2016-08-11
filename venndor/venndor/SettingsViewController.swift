@@ -90,6 +90,15 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func doneButtonClicked(sender: AnyObject) {
         phoneNumber.resignFirstResponder()
+        let update = ["phoneNumber" : phoneNumber.text!] as JSON
+        
+        UserManager.globalManager.updateUserById(LocalUser.user.id, update: update) { error in
+            guard error == nil else {
+                print("Error updating the local users phone number")
+                return
+            }
+            print("Local users phone number updated successfully")
+        }
     }
     
     func textField(textField: UITextField, shouldChangeCharactersInRange range: NSRange, replacementString string: String) -> Bool {
