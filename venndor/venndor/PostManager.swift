@@ -62,7 +62,7 @@ class PostManager: NSObject {
     }
     
     func retrievePostByFilter(filter: String, completionHandler:(Post?, ErrorType?) -> () ) {
-        RESTEngine.sharedEngine.getMatchesFromServer(nil, filter: filter, offset: nil, fields: nil,
+        RESTEngine.sharedEngine.getPostsFromServer(nil, filter: filter, offset: nil, fields: nil,
             success: { response in
                 if let response = response, postArray = response["resource"] as? NSArray, postData = postArray[0] as? JSON {
                     let post = Post(json: postData)

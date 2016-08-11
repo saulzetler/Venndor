@@ -63,7 +63,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         super.init(coder: aDecoder)
     }
     
-    init(frame: CGRect, item: Item, myLocation: CLLocation) {
+    init(frame: CGRect, item: Item, myLocation: CLLocation?) {
         
         super.init(frame: frame)
 
@@ -88,7 +88,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     }
     
-    func setupItemInfo(item: Item, myLocation: CLLocation) {
+    func setupItemInfo(item: Item, myLocation: CLLocation?) {
         
         itemInfo = UIView(frame: CGRect(x: 0, y: self.frame.height*0.9, width: self.frame.width, height: self.frame.height*0.1))
         itemInfo.backgroundColor = UIColor.whiteColor()
@@ -175,58 +175,68 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         
     }
     
-    func calculateDistance(item: Item, myLocation: CLLocation) {
+    func calculateDistance(item: Item, myLocation: CLLocation?) {
         
-        let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
-        let itemLatitude = CLLocationDegrees(item.latitude)
-        let itemLongitude = CLLocationDegrees(item.longitude)
-        let myLatitude = myLocation.coordinate.latitude
-        let myLongitude = myLocation.coordinate.longitude
-        
-        let origins = "origins=\(myLatitude),\(myLongitude)&"
-        let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
-        let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
-        let url = baseURL+origins+destinations+key
-        
-        let requestURL: NSURL = NSURL(string: url)!
-        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(urlRequest) {
-            (data, response, error) -> Void in
+        if let myLocation = myLocation  {
+            let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
+            let itemLatitude = CLLocationDegrees(item.latitude)
+            let itemLongitude = CLLocationDegrees(item.longitude)
+            let myLatitude = myLocation.coordinate.latitude
+            let myLongitude = myLocation.coordinate.longitude
             
-            let httpResponse = response as! NSHTTPURLResponse
-            let statusCode = httpResponse.statusCode
+            let origins = "origins=\(myLatitude),\(myLongitude)&"
+            let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
+            let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
+            let url = baseURL+origins+destinations+key
             
-            if (statusCode == 200) {
+            let requestURL: NSURL = NSURL(string: url)!
+            let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+            let session = NSURLSession.sharedSession()
+            let task = session.dataTaskWithRequest(urlRequest) {
+                (data, response, error) -> Void in
                 
-                do {
+                let httpResponse = response as! NSHTTPURLResponse
+                let statusCode = httpResponse.statusCode
+                
+                if (statusCode == 200) {
                     
-                    
-                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
-                    if let rows = json["rows"] as? [[String:AnyObject]] {
-                        let first = rows[0]
-                        let elements = first["elements"] as! Array<AnyObject>
-                        let firstElement = elements[0]
-                        if let distDict = firstElement["distance"] as? [String:AnyObject] {
-                            self.distText = String(distDict["text"]!)
-                            self.distanceSet = true
+                    do {
+                        
+                        
+                        let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                        if let rows = json["rows"] as? [[String:AnyObject]] {
+                            let first = rows[0]
+                            let elements = first["elements"] as! Array<AnyObject>
+                            let firstElement = elements[0]
+                            if let distDict = firstElement["distance"] as? [String:AnyObject] {
+                                self.distText = String(distDict["text"]!)
+                                self.distanceSet = true
+                            }
+                            else {
+                                self.distText = "none"
+                                self.distanceSet = true
+                            }
                         }
-                        else {
-                            self.distText = "none"
-                            self.distanceSet = true
-                        }
+                    } catch {
+                        print("Error with Json: \(error)")
                     }
-                } catch {
-                    print("Error with Json: \(error)")
+                    
                 }
-                
             }
+            task.resume()
         }
-        task.resume()
+            
+        else {
+            self.distText = "none"
+            self.distanceSet = true
+            return
+        }
+        
+        
     }
     
     // called from setup item info
-    func setupDistance(item: Item, myLocation: CLLocation) {
+    func setupDistance(item: Item, myLocation: CLLocation?) {
         distanceSet = false
         let distIcon = UIImage(named: "Marker Filled-100.png")
         let distIconView = UIImageView(frame: CGRect(x: itemInfo.frame.width*0.65, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.1, height: itemInfo.frame.height*0.6))
