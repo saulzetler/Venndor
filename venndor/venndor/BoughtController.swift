@@ -9,18 +9,18 @@
 import Foundation
 
 struct BoughtController {
-    func sendSellerNotification() {
-        OneSignal.postNotification(["contents": ["en": "Test Message"], "include_player_ids": ["3009e210-3166-11e5-bc1b-db44eb02b120"]])
+    func sendSellerNotification(seller: User, match: Match) {
+        OneSignal.postNotification(["contents": ["en": "\(LocalUser.firstName) wants to buy your \(match.itemName) for $\(match.matchedPrice)!"], "include_player_ids": ["\(seller.pushID)"]])
     }
-    func updateSeller(item: Item) {
+    func updateSeller(match: Match) {
         //function should update the sellers item, move the item from posted to sold
         
     }
-    func updateBuyer(item: Item) {
+    func updateBuyer(match: Match) {
         //function should update the buyer, move the item from matched to bought
         
     }
-    func updateMarket(item: Item) {
+    func updateMarket(match: Match) {
         //function should update the market for all users and remove the item from the potential pool of items.
     }
 }

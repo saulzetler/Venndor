@@ -11,15 +11,17 @@ import Foundation
 class BuyViewController: UIViewController {
     var seller: User!
     var match: Match!
+    var fromInfo: Bool!
+    var cancel: Bool!
     
     var popupView: UIView!
-    var messageButton: UIButton!
+    var confirmButton: UIButton!
     var closeButton: UIButton!
     var sellerNameLabel : UILabel!
     var itemLabel: UILabel!
     var sellerPhotoView: UIImageView!
     
-    let messageComposer = TextMessageComposer()
+//    let messageComposer = TextMessageComposer()
     
     override func viewDidLoad() {
     
@@ -32,11 +34,11 @@ class BuyViewController: UIViewController {
             let view = UIView(frame: self.view.frame)
             view.backgroundColor = UIColor.blackColor()
             view.alpha = 0.5
-            
+            self.cancel = true
             self.view.addSubview(view)
             self.setupPopupView()
             self.setupCloseButton()
-            self.setupMessageButton()
+            self.setupConfirmButton()
             self.setupItemLabel()
             self.setupSellerPhoto()
             self.setupSellerLabel()
@@ -57,7 +59,7 @@ class BuyViewController: UIViewController {
        self.view.addSubview(popupView)
     }
     
-    func setupMessageButton() {
+    func setupConfirmButton() {
         
         //setup the button
         let buttonFrame = CGRect(x: 0, y: popupView.frame.size.height * 0.75, width: popupView.frame.size.width, height: popupView.frame.size.height * 0.3)
@@ -69,28 +71,29 @@ class BuyViewController: UIViewController {
         roundView.layer.cornerRadius = 10
         popupView.addSubview(roundView)
         
-        messageButton = UIButton(frame: buttonFrame)
-        messageButton.backgroundColor = UIColorFromHex(0x1abc9c)
-        messageButton.setTitle("  Message Seller", forState: .Normal)
-        messageButton.titleLabel?.textColor = UIColor.whiteColor()
-        messageButton.titleEdgeInsets = UIEdgeInsets(top: 5, left: 0, bottom: -5, right: 40)
+        confirmButton = UIButton(frame: buttonFrame)
+        confirmButton.backgroundColor = UIColorFromHex(0x1abc9c)
+        confirmButton.setTitle("        Confirm Purchase", forState: .Normal)
+        confirmButton.titleLabel?.textColor = UIColor.whiteColor()
+//        confirmButton.titleLabel?.textAlignment = .Center
+        confirmButton.titleEdgeInsets = UIEdgeInsets(top: 5, left: 20, bottom: -5, right: 60)
         
         //create the rounded button image
         
         //set the rounded button image and its insets
         
-        messageButton.setImage(UIImage(named: "Speech Bubble.png"), forState: .Normal)
-        messageButton.imageView?.clipsToBounds = true
-        messageButton.imageView?.layer.masksToBounds = false
-        messageButton.imageView?.layer.cornerRadius = messageButton.imageView!.frame.height / 2
+        confirmButton.setImage(UIImage(named: "ic_done_white.png"), forState: .Normal)
+        confirmButton.imageView?.clipsToBounds = true
+        confirmButton.imageView?.layer.masksToBounds = false
+        confirmButton.imageView?.layer.cornerRadius = confirmButton.imageView!.frame.height / 2
         
-        messageButton.imageEdgeInsets = UIEdgeInsets(top: 15, left: 70, bottom: 5, right: 180)
+        confirmButton.imageEdgeInsets = UIEdgeInsets(top: 15, left: 45, bottom: 5, right: 200)
 
-        messageButton.addTarget(self, action: #selector(BuyViewController.messageSeller), forControlEvents: .TouchUpInside)
+        confirmButton.addTarget(self, action: #selector(BuyViewController.itemBought), forControlEvents: .TouchUpInside)
         
         //round the bottom 2 corners 
         
-        popupView.addSubview(messageButton)
+        popupView.addSubview(confirmButton)
     }
     
     func setupCloseButton() {
@@ -138,34 +141,52 @@ class BuyViewController: UIViewController {
     
     func dismissController() {
         self.dismissViewControllerAnimated(true, completion: nil)
+        if self.cancel == false {
+            if fromInfo == true {
+                
+                self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
+//                let temp = self.presentingViewController
+//                temp?.presentingViewController?.viewDidLoad()
+                
+            } else {
+                self.presentingViewController?.viewDidLoad()
+            }
+        }
+
     }
     
-    func messageSeller() {
-        print("Message tapped!")
-        
-        if (messageComposer.canSendText()) {
-            UserManager.globalManager.retrieveUserById(match.sellerID) { user, error in
-                guard error == nil else {
-                    print("Error retrieving seller in Buy screen: \(error)")
-                    return
-                }
-                
-                if let user = user {
-                   self.messageComposer.setRecipients([user.phoneNumber])
-                    
-                    // Obtain a configured MFMessageComposeViewController
-                    let messageComposeVC = self.messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) wants to buy your item \(self.match.itemName) for $\(self.match.matchedPrice)")
-                    
-                    // Present the configured MFMessageComposeViewController instance
-                    // Note that the dismissal of the VC will be handled by the messageComposer instance,
-                    // since it implements the appropriate delegate call-back
-                    self.presentViewController(messageComposeVC, animated: true, completion: nil)
-                }
-            }
-        } else {
-            // Let the user know if his/her device isn't able to send text messages
-            let errorAlert = UIAlertView(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", delegate: self, cancelButtonTitle: "OK")
-            errorAlert.show()
-        }
+    func itemBought() {
+        print("Confirm tapped!")
+        let buy = BoughtController()
+        buy.sendSellerNotification(seller, match: match)
+        buy.updateBuyer(match)
+        buy.updateMarket(match)
+        buy.updateSeller(match)
+        self.cancel = false
+        dismissController()
+//        if (messageComposer.canSendText()) {
+//            UserManager.globalManager.retrieveUserById(match.sellerID) { user, error in
+//                guard error == nil else {
+//                    print("Error retrieving seller in Buy screen: \(error)")
+//                    return
+//                }
+//                
+//                if let user = user {
+//                   self.messageComposer.setRecipients([user.phoneNumber])
+//                    
+//                    // Obtain a configured MFMessageComposeViewController
+//                    let messageComposeVC = self.messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) wants to buy your item \(self.match.itemName) for $\(self.match.matchedPrice)")
+//                    
+//                    // Present the configured MFMessageComposeViewController instance
+//                    // Note that the dismissal of the VC will be handled by the messageComposer instance,
+//                    // since it implements the appropriate delegate call-back
+//                    self.presentViewController(messageComposeVC, animated: true, completion: nil)
+//                }
+//            }
+//        } else {
+//            // Let the user know if his/her device isn't able to send text messages
+//            let errorAlert = UIAlertView(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", delegate: self, cancelButtonTitle: "OK")
+//            errorAlert.show()
+//        }
     }
 }
