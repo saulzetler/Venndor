@@ -64,17 +64,17 @@ class MatchesManager: NSObject {
                 if let response = response, matchArray = response["resource"] as? NSArray, matchData = matchArray[0] as? JSON {
                     let match = Match(json: matchData)
                     
-                    //instantly pull the thumbnail too
-                    self.retrieveMatchThumbnail(match) { img, error in
-                        guard error == nil else {
-                            print("Error retrieving match thumbnail: \(error)")
-                            return
-                        }
-                        if let img = img {
-                            match.thumbnail = img
-                            
-                        }
-                    }
+//                    //instantly pull the thumbnail too
+//                    self.retrieveMatchThumbnail(match) { img, error in
+//                        guard error == nil else {
+//                            print("Error retrieving match thumbnail: \(error)")
+//                            return
+//                        }
+//                        if let img = img {
+//                            match.thumbnail = img
+//                            
+//                        }
+//                    }
                     completionHandler(match, nil)
                 }
             }, failure: { error in

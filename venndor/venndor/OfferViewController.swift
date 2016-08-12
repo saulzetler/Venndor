@@ -32,6 +32,8 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         setupBackButton()
         setupWheelSlider()
         setupBackground()
+        setupHint()
+        
         
         let promptFrame = CGRect(x: 0, y: screenSize.height*0.2, width: screenSize.width, height: screenSize.height*0.2)
         setupPrompt("How much would you pay?", item: offeredItem, screenSize: screenSize, frame: promptFrame)
@@ -76,6 +78,13 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         self.view.addSubview(promptView)
     }
     
+    func setupHint() {
+        let labelFrame = CGRect(x: 0, y: screenSize.height*0.45, width: screenSize.width, height: screenSize.height*0.07)
+        let hint = customLabel(labelFrame, text: "Making an offer does not force you to buy!", color: UIColor.whiteColor(), fontSize: 16)
+        hint.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.6)
+        self.view.addSubview(hint)
+    }
+    
     func offer(sender: UIButton) {
         var tempOffer = 0
         if offer != nil {
@@ -101,6 +110,7 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         
         if temp[0] != 0.00 {
             let matchControllerView = PopUpViewControllerSwift()
+            matchControllerView.ovc = self
             matchControllerView.matchedItem = offeredItem
             matchControllerView.matchedPrice = Int(temp[0] + temp[1])
             matchControllerView.showInView(self.view, price: Int(temp[0] + temp[1]), item: offeredItem)
@@ -119,7 +129,9 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         }
     }
     
-    func goBackToBrowse(sender: UIButton) {
+    
+    func goBackToBrowse() {
+
         LocalUser.seenPosts[offeredItem.id] = NSDate()
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.performSegueWithIdentifier("offerToBrowse", sender: self)
@@ -127,14 +139,14 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         
     }
     
-    func toMatches(sender: UIButton) {
+    func toMatches() {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.performSegueWithIdentifier("offerToMatches", sender: self)
     
         }
     }
     
-    func toBuy(sender: UIButton) {
+    func toBuy() {
         
     }
 

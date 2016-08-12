@@ -68,6 +68,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var photoChoiceDisplayed = false
     var sessionStart: NSDate!
     
+    var postingPopup = PopoverViewController()
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         print("PostViewController end: \(NSDate())")
@@ -84,7 +86,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setupLabels()
         setupPriceInput()
         sideMenuGestureSetup()
-        revealViewController().rightViewController = nil
         setupImageViews()
         setupScrollView()
         setupDivide()
@@ -102,10 +103,19 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setLocationPreview()
         setPricePreview()
         hideKeyboardWhenTappedAround()
-        self.revealViewController().delegate = self
+        
         filledImagesArray = []
         previewImageViewArray = []
         self.ratingControl.delegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if revealViewController() != nil {
+            revealViewController().rightViewController = nil
+            self.revealViewController().delegate = self
+        }
     }
     
     //setup functions
@@ -203,6 +213,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemName.delegate = self
         itemName.clearsOnBeginEditing = true
         itemName.textAlignment = .Center
+        itemName.adjustsFontSizeToFitWidth = true
         containerView.addSubview(itemName)
         
         let border = CALayer()
@@ -750,7 +761,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setPricePreview() {
-        let pricePreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height+previewLocation.frame.height, screenSize.width*0.6, screenSize.height*0.05)
+        let pricePreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height+previewLocation.frame.height, screenSize.width*0.75, screenSize.height*0.05)
         previewPrice = makeTextButton("No minimum price set", frame: pricePreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewPrice.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewPrice.tag = 6
@@ -885,7 +896,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             return
         }
         
-        
+        postingPopup = PopoverViewController()
+        postingPopup.showInView(self.view, message: "Posting...")
         
         LocalUser.user.mostRecentAction = "Posted an Item"
         //add the iamges from the image view to an array to be passed to the backend function to post an item to server
@@ -946,6 +958,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                         }
                         
                         print("Succesfully updated User's ads from post screen.")
+                        self.postingPopup.updateText("Posted!")
                         self.performSegueWithIdentifier("backToBrowse", sender: self)
                     }
                 

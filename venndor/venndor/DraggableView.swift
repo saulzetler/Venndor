@@ -103,7 +103,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
         itemDescription.text = item.details
         itemDescription.font = itemDescription.font.fontWithSize(10)
-        itemDescription.sizeToFit()
+//        itemDescription.sizeToFit()
         itemDescription.numberOfLines = 0
         itemInfo.addSubview(itemDescription)
         mapView = GMSMapView(frame: CGRect(x: 0, y: itemInfo.frame.height*3, width: itemInfo.frame.width, height: itemInfo.frame.height*3.5))
@@ -343,7 +343,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     }
     
     func openInfo() {
-        UIView.animateWithDuration(1, animations: { () -> Void in
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.itemInfo.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
             self.itemInfo.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.95)
         }) { (finished: Bool) -> Void in
@@ -352,7 +352,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     }
     
     func closeInfo() {
-        UIView.animateWithDuration(1, animations: { () -> Void in
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.itemInfo.frame = CGRect(x: 0, y: self.frame.height*0.9, width: self.frame.width, height: self.frame.height*0.1)
             self.itemInfo.backgroundColor = UIColor.whiteColor()
         }) { (finished: Bool) -> Void in
@@ -454,7 +454,9 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
 //        let offerViewController = OfferViewController()
 //        offerViewController.setupBackground(firstPhoto)
         
-        self.parentViewController!.performSegueWithIdentifier("toOfferScreen", sender: self.parentViewController!)
+        let bvc = self.parentViewController as! BrowseViewController
+        
+        bvc.performSegueWithIdentifier("toOfferScreen", sender: self.parentViewController!)
         
         let finishPoint: CGPoint = CGPointMake(500, 2 * CGFloat(yFromCenter) + self.originPoint.y)
         UIView.animateWithDuration(0.3,

@@ -66,10 +66,6 @@ class phoneViewController: UIViewController, UITextFieldDelegate {
         toolbarDone.items = [flexSpace, barBtnDone] // You can even add cancel button too
         phoneField.inputAccessoryView = toolbarDone
         
-//        let dollarSignFrame = CGRectMake(0, 0, phoneField.frame.width*0.2, phoneField.frame.height)
-//        let dollarSign = customLabel(dollarSignFrame, text: "$", color: UIColorFromHex(0x34495e), fontSize: 50)
-//        phoneField.addSubview(dollarSign)
-        
         self.view.addSubview(phoneField)
     }
     override func didReceiveMemoryWarning() {
@@ -117,6 +113,7 @@ class phoneViewController: UIViewController, UITextFieldDelegate {
     func doneButtonClicked(sender: AnyObject) {
         phoneField.resignFirstResponder()
     }
+    
     //end of text field delegates
     
     func confirmNumber(sender: AnyObject) {

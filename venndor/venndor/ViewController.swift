@@ -54,6 +54,22 @@ extension UIViewController: SWRevealViewControllerDelegate {
         return button
     }
     
+    func makeTextButtonWithTarget(text: String, frame: CGRect, target: UIViewController, action: Selector, circle: Bool = false, textColor: UIColor = UIColor.blackColor(), tinted: Bool = true, backgroundColor: UIColor = UIColor.clearColor(), textSize: CGFloat = 12) -> UIButton {
+        let button = UIButton(frame: frame)
+        button.addTarget(target, action: action, forControlEvents: .TouchUpInside)
+        button.setTitle(text, forState: .Normal)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: textSize)
+        button.setTitleColor(textColor, forState: UIControlState.Normal)
+        if tinted == true {
+            button.setTitleColor(UIColorFromHex(0x3498db, alpha: 1), forState: UIControlState.Selected)
+        }
+        if circle == true {
+            button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        }
+        button.backgroundColor = backgroundColor
+        return button
+    }
+    
     func makeIndicatorButton(frame: CGRect, color: UIColor, target: Selector) -> UIButton {
         let button = UIButton (frame: frame)
         button.layer.cornerRadius = 0.5*button.bounds.size.width
@@ -142,10 +158,13 @@ extension UIViewController: SWRevealViewControllerDelegate {
         promptView.backgroundColor = UIColor.whiteColor()
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.height, height: frame.height))
         imageView.image = item.photos![0]
-        let promptText = UILabel(frame: CGRect(x: frame.width*0.47, y: frame.height*0.3, width: frame.width*0.4, height: frame.height*0.4))
+        imageView.contentMode = .ScaleAspectFill
+        imageView.clipsToBounds = true
+        let promptText = UILabel(frame: CGRect(x: frame.height, y: 0, width: frame.width - frame.height, height: frame.height))
         promptText.textAlignment = .Center
         promptText.text = text
         promptText.numberOfLines = 2
+        
         promptView.addSubview(promptText)
         promptView.addSubview(imageView)
         self.view.addSubview(promptView)
@@ -236,6 +255,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
                 dispatch_async(dispatch_get_main_queue()) {
                     let itemInfoController = ItemInfoViewController()
                     itemInfoController.isPost = true
+                    itemInfoController.post = containerView.post
                     itemInfoController.item = item
                     itemInfoController.headerTitle = "Your Posts"
                     self.presentViewController(itemInfoController, animated: true, completion: nil)

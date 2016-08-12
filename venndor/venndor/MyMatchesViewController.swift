@@ -90,7 +90,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     matchContainer.addGestureRecognizer(tap)
                     
                     
-                        matchContainer.match = match
+                    matchContainer.match = match
+                    
                     //self.addContainerContent(matchContainer, img: img, match: match)
                     dispatch_async(dispatch_get_main_queue()) {
                         matchContainer.match = match
@@ -129,6 +130,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                         if let item = item {
                             matchContainer.item = item
                         }
+
                     }
                     
                     dispatch_async(dispatch_get_main_queue()) {
@@ -217,8 +219,9 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         let distanceLabel = UILabel(frame: CGRect(x: matchContainer.frame.width - 45, y: 5, width:45, height: imgHeight * 0.15))
         calculateDistanceFromLocation(match.itemLatitude, longitude: match.itemLongitude, myLocation: LocalUser.myLocation)
-        
+        print("is trying to get distances")
         while(distSet == false){
+//            print("im stuck")
         }
         
         distanceLabel.text = "\(self.distText)"
@@ -295,6 +298,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         let matchContainer = sender.superview as! ItemContainer
         
         let match = matchContainer.match
+        let boughtItem = matchContainer.item
         
         self.definesPresentationContext = true
         UserManager.globalManager.retrieveUserById(match.sellerID) { user, error in
@@ -305,6 +309,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             
             if let user = user {
                 let bvc = BuyViewController()
+                bvc.item = boughtItem
                 bvc.match = match
                 bvc.seller = user
                 bvc.item = matchContainer.item
@@ -341,6 +346,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             errorAlert.show()
         }
     }
+    
     func calculateDistanceFromLocation(latitude: Double, longitude: Double, myLocation: CLLocation){
         
         let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
@@ -388,6 +394,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                 }
                 
             }
+            
         }
         task.resume()
     }

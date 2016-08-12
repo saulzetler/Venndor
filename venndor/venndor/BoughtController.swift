@@ -128,17 +128,17 @@ struct BoughtController {
 
         //function should update the market for all users and remove the item from the potential pool of items.
         
+        //update the users in the market
+        let userArray = self.getArrayForUpdate(item.matches, keyOrValue: "value")
+        print("User array passed to update users: \(userArray)")
+        updateUsers(userArray.filter({ $0 != LocalUser.user.id }), match: match)
+        
         //remove all other match objects
         removeMatches(match)
         
         //remove the match thumbnails
         let matchArray = self.getArrayForUpdate(item.matches, keyOrValue: "key")
         removeMatchThumbnails(matchArray.filter({ $0 != match.id }))
-        
-        //update the users in the market
-        let userArray = self.getArrayForUpdate(item.matches, keyOrValue: "value")
-        print("User array passed to update users: \(userArray)")
-        updateUsers(userArray.filter({ $0 != LocalUser.user.id }), match: match)
         
     }
 
@@ -212,6 +212,7 @@ struct BoughtController {
         }
     }
     
+
     func removeMatches(match: Match) {
         let filter = "(_id != \(match.id!)) and (itemName = \(match.itemName))"
         print("Delete matches filter: \(filter)")

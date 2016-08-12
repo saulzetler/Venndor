@@ -17,6 +17,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
     
     //this is the item that is getting edited
     var item: Item!
+    var post: Post!
     var itemLocationName: String!
     
     //header vars
@@ -78,6 +79,8 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
     var coordinate: CLLocationCoordinate2D!
     var photoChoiceDisplayed = false
     var sessionStart: NSDate!
+    
+    var updatingPopup = PopoverViewController()
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -250,6 +253,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         itemName.delegate = self
         itemName.clearsOnBeginEditing = true
         itemName.textAlignment = .Center
+        itemName.adjustsFontSizeToFitWidth = true
         containerView.addSubview(itemName)
         
         let border = CALayer()
@@ -976,7 +980,9 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
             return
         }
         
-        LocalUser.user.mostRecentAction = "Posted an Item"
+        updatingPopup.showInView(self.view, message: "Updating...")
+        
+        LocalUser.user.mostRecentAction = "Updated an Item"
         //add the iamges from the image view to an array to be passed to the backend function to post an item to server
         if let name = itemName.text, details = itemDescription.text {
             var images = [UIImage]()
@@ -992,7 +998,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
             let row = categoryPicker.selectedRowInComponent(0)
             let category = categoryPickerData[row]
             let age = yearsPickerData[yearsPicker.selectedRowInComponent(0)]
-            let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
+//            let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
             
             let condition = ratingControl.rating
             
@@ -1012,45 +1018,41 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
             let latitude = Double(coordinate.latitude)
             let longitude = Double(coordinate.longitude)
             let minPrice = Int(priceField.text!)
-            
             var conversion = LocationConverter()
             let geoHash = conversion.coordToGeo(latitude, longitudeInput: longitude)
             print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
             
-            //create an item object to past to the manager to create the item
-            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, latitude: latitude, longitude: longitude, geoHash: geoHash, photos: images, itemAge: age, minPrice: minPrice!)
             
+            let itemUpdate = ["name" : name, "details" : details, "photoCount" : filledImagesArray.count, "category" : category, "latitude" : latitude, "longitude" : longitude, "itemAge" : age, "minPrice" : minPrice!, "geoHash" : geoHash, "condition" : condition!] as JSON
             
-            
-            
-            
-            //create the item object on the server
-            ItemManager.globalManager.createItem(item) { error in
+            ItemManager.globalManager.updateItemById(item.id, update: itemUpdate) { error in
                 guard error == nil else {
-                    print("GOOD FUCKING JOB BUDDY YOU BROKE EVERYTHING. I fucking hate u")
+                    print("Error updating item: \(error)")
                     return
                 }
                 
-                //create the post object on the server
-                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, thumbnail: self.imageView1.image!, itemLongitude: item.longitude, itemLatitude: item.latitude)
+                print("Succesfully updated item")
                 
-                PostManager.globalManager.createPost(post) { post, error in
-                    LocalUser.user.posts[post!.id] = item.id
-                    LocalUser.user.nuPosts! += 1
-                    LocalUser.posts.append(post!)
-                    
-                    let update : [String:AnyObject] = ["posts": LocalUser.user.posts, "nuPosts": LocalUser.user.nuPosts]
-                    UserManager.globalManager.updateUserById(LocalUser.user.id, update: update) { error in
-                        guard error == nil else {
-                            print("Error updating the User's posts from post screen: \(error)")
-                            return
-                        }
-                        
-                        print("Succesfully updated User's ads from post screen.")
-                        self.performSegueWithIdentifier("backToBrowse", sender: self)
+                let postUpdate = ["itemName" : name, "itemDescription" : details, "minPrice" : minPrice!, "itemLongitude" : longitude, "itemLatitude" : latitude] as JSON
+                
+                PostManager.globalManager.updatePostById(self.post.id, update: postUpdate) { error in
+                    guard error == nil else {
+                        print("Error updating post: \(error)")
+                        return
                     }
-                    
+                    var newItems = LocalUser.posts.filter(({ $0.id != self.post.id }))
+                    self.post.itemName = name
+                    self.post.itemDescription = details
+                    self.post.minPrice = minPrice!
+                    self.post.itemLongitude = longitude
+                    self.post.itemLatitude = latitude
+                    newItems.append(self.post)
+                    LocalUser.posts = newItems
+                    self.updatingPopup.updateText("Updated!")
+                    print("Succesfully updated item and post.")
                 }
+//                self.presentingViewController?.view.setNeedsDisplay()
+                self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
     }
