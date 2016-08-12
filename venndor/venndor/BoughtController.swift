@@ -150,9 +150,6 @@ struct BoughtController {
             index += 1
         }
         
-        print("Filter string for user update: \(filterString)")
-        print(LocalUser.user.id)
-        
         UserManager.globalManager.retrieveMultipleUsers(filterString) { users, error in
             guard error == nil else {
                 print("Error getting match users in Buy controller: \(error)")
@@ -162,8 +159,6 @@ struct BoughtController {
             if let users = users {
                 
                 for user in users {
-                    print("User first name: \(user.firstName)")
-                    print("User matches: \(user.matches)")
                     user.matches.removeValueForKey(match.id!)
                 }
                 
@@ -209,8 +204,8 @@ struct BoughtController {
     }
     
     func removeMatches(match: Match) {
-        let filter = "(_id != \(match.id)) and (itemName = \(match.itemName))"
-        
+        let filter = "(_id != \(match.id!)) and (itemName = \(match.itemName))"
+        print("Delete matches filter: \(filter)")
         MatchesManager.globalManager.deleteMultipleMatchesById(nil, filter: filter) { error in
             guard error == nil else {
                 print("Error deleting matches from server in Buy: \(error)")
