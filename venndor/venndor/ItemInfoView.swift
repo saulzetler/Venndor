@@ -94,7 +94,7 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.04, y: itemInfo.frame.height * 1.8, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
         itemDescription.text = item.details
         itemDescription.font = itemDescription.font.fontWithSize(10)
-        itemDescription.sizeToFit()
+//        itemDescription.sizeToFit()
         itemDescription.numberOfLines = 0
         itemInfo.addSubview(itemDescription)
         

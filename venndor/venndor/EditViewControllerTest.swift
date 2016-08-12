@@ -80,6 +80,8 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
     var photoChoiceDisplayed = false
     var sessionStart: NSDate!
     
+    var updatingPopup = PopoverViewController()
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         print("PostViewController end: \(NSDate())")
@@ -978,6 +980,8 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
             return
         }
         
+        updatingPopup.showInView(self.view, message: "Updating...")
+        
         LocalUser.user.mostRecentAction = "Updated an Item"
         //add the iamges from the image view to an array to be passed to the backend function to post an item to server
         if let name = itemName.text, details = itemDescription.text {
@@ -994,7 +998,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
             let row = categoryPicker.selectedRowInComponent(0)
             let category = categoryPickerData[row]
             let age = yearsPickerData[yearsPicker.selectedRowInComponent(0)]
-            let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
+//            let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
             
             let condition = ratingControl.rating
             
@@ -1026,6 +1030,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
                     print("Error updating item: \(error)")
                     return
                 }
+                
                 print("Succesfully updated item")
                 
                 let postUpdate = ["itemName" : name, "itemDescription" : details, "minPrice" : minPrice!, "itemLongitude" : longitude, "itemLatitude" : latitude] as JSON
@@ -1035,8 +1040,18 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
                         print("Error updating post: \(error)")
                         return
                     }
+                    var newItems = LocalUser.posts.filter(({ $0.id != self.post.id }))
+                    self.post.itemName = name
+                    self.post.itemDescription = details
+                    self.post.minPrice = minPrice!
+                    self.post.itemLongitude = longitude
+                    self.post.itemLatitude = latitude
+                    newItems.append(self.post)
+                    LocalUser.posts = newItems
+                    self.updatingPopup.updateText("Updated!")
                     print("Succesfully updated item and post.")
                 }
+//                self.presentingViewController?.view.setNeedsDisplay()
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
         }

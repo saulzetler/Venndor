@@ -111,6 +111,7 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         
         if temp[0] != 0.00 {
             let matchControllerView = PopUpViewControllerSwift()
+            matchControllerView.ovc = self
             matchControllerView.matchedItem = offeredItem
             matchControllerView.matchedPrice = Int(temp[0] + temp[1])
             matchControllerView.showInView(self.view, price: Int(temp[0] + temp[1]), item: offeredItem)
@@ -137,7 +138,7 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
 //        self.performSegueWithIdentifier("offerToMatches", sender: self)
 //    }
     
-    func goBackToBrowse(sender: UIButton) {
+    func goBackToBrowse() {
         LocalUser.seenPosts[offeredItem.id] = NSDate()
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.performSegueWithIdentifier("offerToBrowse", sender: self)
@@ -145,14 +146,14 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         
     }
     
-    func toMatches(sender: UIButton) {
+    func toMatches() {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
             self.performSegueWithIdentifier("offerToMatches", sender: self)
     
         }
     }
     
-    func toBuy(sender: UIButton) {
+    func toBuy() {
         
     }
 

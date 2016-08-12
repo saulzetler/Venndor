@@ -61,6 +61,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         mainView = UIView(frame: CGRect(x: 0, y: 0, width: screenSize.width, height: screenSize.height))
         self.view.addSubview(mainView)
         
+        let loadingLabelFrame = CGRect(x: 0, y: screenSize.height*0.4, width: screenSize.width, height: screenSize.height*0.2)
+        let loadingLabel = customLabel(loadingLabelFrame, text: "Loading...", color: UIColorFromHex(0x34495e), fontSize: 35)
+        mainView.addSubview(loadingLabel)
+        
         loaded = false
         
         locationManager.delegate = self
@@ -156,8 +160,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func setupSellButton() {
-        let bottomBar = CGRect(x: 0, y: screenSize.height*0.9, width: screenSize.width, height: screenSize.height*0.1)
-        let bottomBarButton = makeTextButton("Sell", frame: bottomBar, target: #selector(BrowseViewController.toSellPage), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x2c3e50), textSize: 25)
+        let bottomBar = CGRect(x: screenSize.width*0.02, y: screenSize.height*0.89, width: screenSize.width*0.96, height: screenSize.height*0.09)
+        let bottomBarButton = makeTextButton("Sell", frame: bottomBar, target: #selector(BrowseViewController.toSellPage), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x1abc9c), textSize: 28)
+        bottomBarButton.layer.cornerRadius = 10
+        bottomBarButton.layer.masksToBounds = true
         mainView.addSubview(bottomBarButton)
     }
     

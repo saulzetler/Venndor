@@ -103,7 +103,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
         itemDescription.text = item.details
         itemDescription.font = itemDescription.font.fontWithSize(10)
-        itemDescription.sizeToFit()
+//        itemDescription.sizeToFit()
         itemDescription.numberOfLines = 0
         itemInfo.addSubview(itemDescription)
         mapView = GMSMapView(frame: CGRect(x: 0, y: itemInfo.frame.height*3, width: itemInfo.frame.width, height: itemInfo.frame.height*3.5))
@@ -454,7 +454,9 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
 //        let offerViewController = OfferViewController()
 //        offerViewController.setupBackground(firstPhoto)
         
-        self.parentViewController!.performSegueWithIdentifier("toOfferScreen", sender: self.parentViewController!)
+        let bvc = self.parentViewController as! BrowseViewController
+        
+        bvc.performSegueWithIdentifier("toOfferScreen", sender: self.parentViewController!)
         
         let finishPoint: CGPoint = CGPointMake(500, 2 * CGFloat(yFromCenter) + self.originPoint.y)
         UIView.animateWithDuration(0.3,

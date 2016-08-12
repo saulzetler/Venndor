@@ -68,6 +68,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var photoChoiceDisplayed = false
     var sessionStart: NSDate!
     
+    var postingPopup = PopoverViewController()
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         print("PostViewController end: \(NSDate())")
@@ -894,7 +896,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             return
         }
         
-        
+        postingPopup = PopoverViewController()
+        postingPopup.showInView(self.view, message: "Posting...")
         
         LocalUser.user.mostRecentAction = "Posted an Item"
         //add the iamges from the image view to an array to be passed to the backend function to post an item to server
@@ -955,6 +958,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                         }
                         
                         print("Succesfully updated User's ads from post screen.")
+                        self.postingPopup.updateText("Posted!")
                         self.performSegueWithIdentifier("backToBrowse", sender: self)
                     }
                 
