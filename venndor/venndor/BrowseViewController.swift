@@ -84,6 +84,10 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             }
         }
         
+        //uncomment this to bring back mini my matches
+        
+        /*
+        
         //MiniMyMatches button at bottom of browse.
         let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
         miniMatches = makeImageButton("ic_keyboard_arrow_up_white.png", frame: buttonSize, target: #selector(BrowseViewController.showAlert(_:)), tinted: false, circle: true, backgroundColor: 0x2c3e50, backgroundAlpha: 1)
@@ -99,6 +103,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         mainView.addSubview(bottomBarButton)
 
         mainView.addSubview(miniMatches)
+        
+        */
         
         //prepare the reveal view controller to allow swipping and side menus.
         if revealViewController() != nil {
@@ -145,6 +151,16 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         currentCardIndex = 0
         cardsLoadedIndex = 0
         loadCards(GlobalItems.items)
+    }
+    
+    func setupSellButton() {
+        let bottomBar = CGRect(x: 0, y: screenSize.height*0.87, width: screenSize.width, height: screenSize.height*0.13)
+        let bottomBarButton = makeTextButton("Sell", frame: bottomBar, target: #selector(BrowseViewController.toSellPage), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x2c3e50), textSize: 25)
+        mainView.addSubview(bottomBarButton)
+    }
+    
+    func toSellPage() {
+        self.performSegueWithIdentifier("browseToPost", sender: self)
     }
     
     //function to bring up mini matches bottom menu
