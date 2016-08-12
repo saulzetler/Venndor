@@ -301,11 +301,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
-
 //        while locationAuthorized == false {
 //            
 //        }
-
         let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index], myLocation: LocalUser.myLocation)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
