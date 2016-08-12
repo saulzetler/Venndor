@@ -90,7 +90,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     matchContainer.addGestureRecognizer(tap)
                     
                     
-                        matchContainer.match = match
+                    matchContainer.match = match
+                    
                     //self.addContainerContent(matchContainer, img: img, match: match)
                     dispatch_async(dispatch_get_main_queue()) {
                         matchContainer.match = match
@@ -119,6 +120,17 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     
                     let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleMatchItemInfo(_:)))
                     matchContainer.addGestureRecognizer(tap)
+                    
+                    ItemManager.globalManager.retrieveItemById(match.itemID) { item, error in
+                        guard error == nil else {
+                            print("Error retrieving item from match: \(error)")
+                            return
+                        }
+                        if let item = item {
+                            matchContainer.item = item
+                        }
+                        
+                    }
                     
                     dispatch_async(dispatch_get_main_queue()) {
                         matchContainer.match = match
@@ -284,6 +296,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         let matchContainer = sender.superview as! ItemContainer
         
         let match = matchContainer.match
+        let boughtItem = matchContainer.item
         
         self.definesPresentationContext = true
         UserManager.globalManager.retrieveUserById(match.sellerID) { user, error in
@@ -294,6 +307,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             
             if let user = user {
                 let bvc = BuyViewController()
+                bvc.item = boughtItem
                 bvc.match = match
                 bvc.seller = user
                 bvc.fromInfo = false

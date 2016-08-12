@@ -236,6 +236,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
                 dispatch_async(dispatch_get_main_queue()) {
                     let itemInfoController = ItemInfoViewController()
                     itemInfoController.isPost = true
+                    itemInfoController.post = containerView.post
                     itemInfoController.item = item
                     itemInfoController.headerTitle = "Your Posts"
                     self.presentViewController(itemInfoController, animated: true, completion: nil)

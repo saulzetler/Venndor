@@ -203,6 +203,7 @@ struct BoughtController {
         }
     }
     
+
     func removeMatches(match: Match) {
         let filter = "(_id != \(match.id!)) and (itemName = \(match.itemName))"
         print("Delete matches filter: \(filter)")

@@ -84,6 +84,12 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             }
         }
         
+        setupSellButton()
+        
+        //uncomment this to bring back mini my matches
+        
+        /*
+        
         //MiniMyMatches button at bottom of browse.
         let buttonSize = CGRect(x: screenSize.width*0.435, y: screenSize.height*0.91, width: screenSize.width*0.13, height: screenSize.width*0.13)
         miniMatches = makeImageButton("ic_keyboard_arrow_up_white.png", frame: buttonSize, target: #selector(BrowseViewController.showAlert(_:)), tinted: false, circle: true, backgroundColor: 0x2c3e50, backgroundAlpha: 1)
@@ -99,6 +105,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         mainView.addSubview(bottomBarButton)
 
         mainView.addSubview(miniMatches)
+        
+        */
         
         //prepare the reveal view controller to allow swipping and side menus.
         if revealViewController() != nil {
@@ -145,6 +153,16 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         currentCardIndex = 0
         cardsLoadedIndex = 0
         loadCards(GlobalItems.items)
+    }
+    
+    func setupSellButton() {
+        let bottomBar = CGRect(x: 0, y: screenSize.height*0.9, width: screenSize.width, height: screenSize.height*0.1)
+        let bottomBarButton = makeTextButton("Sell", frame: bottomBar, target: #selector(BrowseViewController.toSellPage), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x2c3e50), textSize: 25)
+        mainView.addSubview(bottomBarButton)
+    }
+    
+    func toSellPage() {
+        self.performSegueWithIdentifier("browseToPost", sender: self)
     }
     
     //function to bring up mini matches bottom menu
@@ -261,6 +279,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 itemInfoViewController.match = match
                 itemInfoViewController.isPost = false
                 itemInfoViewController.headerTitle = "Your Matches"
+                itemInfoViewController.isPost = false
                 self.miniAlertController.dismissViewControllerAnimated(true, completion: nil)
                 self.presentViewController(itemInfoViewController, animated: true, completion: nil)
             }
@@ -284,7 +303,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func createDraggableViewWithDataAtIndex(index: NSInteger) -> DraggableView {
-
+//        while locationAuthorized == false {
+//            
+//        }
         let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index], myLocation: LocalUser.myLocation)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
@@ -434,7 +455,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             locationAuthorized = true
             LocalUser.myLocation = location
             locationManager.stopUpdatingLocation()
-            
         }
     }
     
@@ -442,8 +462,11 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         // 3
         if status == .AuthorizedWhenInUse {            
             locationManager.startUpdatingLocation()
-            
         }
+    }
+    
+    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+        print("an error fucked this up: \(error)")
     }
     
     func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
