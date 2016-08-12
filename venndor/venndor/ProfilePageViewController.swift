@@ -116,7 +116,7 @@ class ProfilePageViewController: UIViewController {
             switch index {
             case 0:
                 matchesButton = button
-                matchesButton.setTitle("\(LocalUser.matches.count)", forState: .Normal)
+                matchesButton.setTitle("\(LocalUser.matches.count - LocalUser.user.nuItemsBought)", forState: .Normal)
                 matchesLabel = label
                 matchesLabel.text = "MATCHES"
                 

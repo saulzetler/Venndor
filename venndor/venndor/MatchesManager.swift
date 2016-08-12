@@ -151,8 +151,8 @@ class MatchesManager: NSObject {
             failure: { error in completionHandler(error)})
     }
     
-    func deleteMultipleMatchesById(ids:[[String:AnyObject]], completionHandler: (ErrorType?) -> ()) {
-        RESTEngine.sharedEngine.deleteMultipleMatchesFromServer(ids,
+    func deleteMultipleMatchesById(ids:[[String:AnyObject]]?, filter: String?, completionHandler: (ErrorType?) -> ()) {
+        RESTEngine.sharedEngine.deleteMultipleMatchesFromServer(ids, filter: filter,
             success: { _ in completionHandler(nil) }, failure: { error in completionHandler(error)})
     }
     
