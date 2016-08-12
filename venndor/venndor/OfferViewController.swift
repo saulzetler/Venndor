@@ -43,6 +43,7 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         imageViewBackground.image = backgroundImage
         imageViewBackground.contentMode = UIViewContentMode.ScaleAspectFill
         imageViewBackground.alpha = 0.7
+        
         let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Light)
         let blurEffectView = UIVisualEffectView(effect: blurEffect)
         blurEffectView.frame = imageViewBackground.bounds
@@ -93,8 +94,6 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         }
         
         let posted = Double(offeredItem.minPrice)
-//        let offered = 12.00
-//        let posted = 10.00
         let matchController = jonasBoettcherController()
         let temp = matchController.calculateMatchedPrice(offered, posted: posted, item: offeredItem)
         
@@ -119,14 +118,6 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
             self.performSegueWithIdentifier("offerToBrowse", sender: self)
         }
     }
-    
-//    func browseAfterMatch() {
-//        self.performSegueWithIdentifier("offerToBrowse", sender: self)
-//    }
-//    
-//    func viewMatchesAfterMatch() {
-//        self.performSegueWithIdentifier("offerToMatches", sender: self)
-//    }
     
     func goBackToBrowse(sender: UIButton) {
         LocalUser.seenPosts[offeredItem.id] = NSDate()

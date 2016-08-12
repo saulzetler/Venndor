@@ -75,8 +75,6 @@ class PopUpViewControllerSwift : UIViewController {
         }
 
     }
-
-
     
     func setupBackground() {
         self.view.frame = screenSize
@@ -111,15 +109,18 @@ class PopUpViewControllerSwift : UIViewController {
     
     func createButtons() {
         var buttonFrame = CGRect(x: screenSize.width*0.1, y: screenSize.height*0.8, width: screenSize.width*0.2, height: screenSize.width*0.2)
+        
         let matchesButton = makeTextButton("VIEW MY MATCHES", frame: buttonFrame, target: #selector(OfferViewController.toMatches(_:)), circle: true, textColor: UIColor.whiteColor(), tinted: false)
         createBorder(matchesButton, color: UIColor.whiteColor(), circle: true)
         titleSet(matchesButton)
         self.view.addSubview(matchesButton)
+       
         buttonFrame.origin.x = screenSize.width*0.4
         let buyButton = makeTextButton("BUY NOW", frame: buttonFrame, target: #selector(OfferViewController.toBuy(_:)), circle: true, textColor: UIColorFromHex(0x1abc9c), tinted: false, backgroundColor: UIColor.whiteColor())
         createBorder(buyButton, color: UIColor.whiteColor(), circle: true)
         titleSet(buyButton)
         self.view.addSubview(buyButton)
+        
         buttonFrame.origin.x = screenSize.width*0.7
         let browseButton = makeTextButton("KEEP BROWSING", frame: buttonFrame, target: #selector(OfferViewController.goBackToBrowse(_:)), circle: true, textColor: UIColor.whiteColor(), tinted: false)
         createBorder(browseButton, color: UIColor.whiteColor(), circle: true)

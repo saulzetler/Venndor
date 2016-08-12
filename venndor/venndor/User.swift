@@ -69,7 +69,11 @@ class User: NSObject {
     var posts: [String:AnyObject]!
     
     //key: Match Object ID, value: Item object ID
-    var matches: [String:AnyObject]!
+    var matches: [String:AnyObject]! {
+        willSet {
+            print("About to set matches to:  \(newValue), for user: \(self.firstName)")
+        }
+    }
     
     
     init(json:JSON) {

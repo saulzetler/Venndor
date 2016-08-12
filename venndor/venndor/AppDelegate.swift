@@ -114,6 +114,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         LocalUser.user.timeOnAppPerSession[dateString] = timeInterval
     }
 
+    
+    
     // MARK: - Core Data stack
 
     lazy var applicationDocumentsDirectory: NSURL = {
