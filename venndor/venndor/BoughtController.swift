@@ -84,11 +84,12 @@ struct BoughtController {
             
             if let match = match {
     
-                var dict = LocalUser.matches.filter(({ $0.id != match.id }))
+                var arr = LocalUser.matches.filter(({ $0.id != match.id }))
                 match.bought = 1
                 match.dateBought = NSDate()
-                dict.append(match)
-                LocalUser.matches = dict
+                arr.append(match)
+                LocalUser.matches = arr
+                
                 buyer.boughtItems[item.id] = item.owner
                 buyer.nuItemsBought! += 1
                 
@@ -112,7 +113,7 @@ struct BoughtController {
     }
     
     func updateBuyerOnPurchase(buyer: User) {
-        let update = ["boughtItems": buyer.boughtItems, "nuItemsBought": buyer.nuItemsBought]
+        let update = ["boughtItems": buyer.boughtItems, "nuItemsBought": buyer.nuItemsBought, "matches": buyer.matches]
         UserManager.globalManager.updateUserById(buyer.id, update: update as! JSON) { error in
             guard error == nil else {
                 print("Error updating user in Buy controller: \(error)")
@@ -127,6 +128,11 @@ struct BoughtController {
 
         //function should update the market for all users and remove the item from the potential pool of items.
         
+        //update the users in the market
+        let userArray = self.getArrayForUpdate(item.matches, keyOrValue: "value")
+        print("User array passed to update users: \(userArray)")
+        updateUsers(userArray.filter({ $0 != LocalUser.user.id }), match: match)
+        
         //remove all other match objects
         removeMatches(match)
         
@@ -134,21 +140,25 @@ struct BoughtController {
         let matchArray = self.getArrayForUpdate(item.matches, keyOrValue: "key")
         removeMatchThumbnails(matchArray.filter({ $0 != match.id }))
         
-        //update the users in the market
-        let userArray = self.getArrayForUpdate(item.matches, keyOrValue: "value")
-        updateUsers(userArray.filter({ $0 != LocalUser.user.id }), match: match)
-        
     }
 
     
     func updateUsers(users: [String], match: Match) {
+        print("User array recieved by updateUsers: \(users)")
         var filterString = ""
         var index = 0
+        
+        if users.count == 0 {
+            return
+        }
         
         for user in users {
             filterString = index == 0 ? "(_id = \(user))" : "\(filterString) or (_id = \(user))"
             index += 1
         }
+        
+        print("Filter for updateUsers: \(filterString)")
+        print("Your user ID: \(LocalUser.user.id)")
         
         UserManager.globalManager.retrieveMultipleUsers(filterString) { users, error in
             guard error == nil else {
@@ -182,7 +192,6 @@ struct BoughtController {
             let temp = ["_id":user.id, "matches":user.matches]
             updateDict.append(temp as! [String : AnyObject])
         }
-        print(updateDict)
         return updateDict
     }
     

@@ -123,13 +123,14 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     
                     ItemManager.globalManager.retrieveItemById(match.itemID) { item, error in
                         guard error == nil else {
-                            print("Error retrieving item from match: \(error)")
+                            print("Error retrieving item to assign to match container in MyMatches: \(error)")
                             return
                         }
+                        
                         if let item = item {
                             matchContainer.item = item
                         }
-                        
+
                     }
                     
                     dispatch_async(dispatch_get_main_queue()) {
@@ -311,6 +312,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                 bvc.item = boughtItem
                 bvc.match = match
                 bvc.seller = user
+                bvc.item = matchContainer.item
                 bvc.fromInfo = false
                 bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                 bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
