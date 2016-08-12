@@ -218,8 +218,9 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         let distanceLabel = UILabel(frame: CGRect(x: matchContainer.frame.width - 45, y: 5, width:45, height: imgHeight * 0.15))
         calculateDistanceFromLocation(match.itemLatitude, longitude: match.itemLongitude, myLocation: LocalUser.myLocation)
-        
+        print("is trying to get distances")
         while(distSet == false){
+//            print("im stuck")
         }
         
         distanceLabel.text = "\(self.distText)"
@@ -343,6 +344,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             errorAlert.show()
         }
     }
+    
     func calculateDistanceFromLocation(latitude: Double, longitude: Double, myLocation: CLLocation){
         
         let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
@@ -390,6 +392,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                 }
                 
             }
+            
         }
         task.resume()
     }
