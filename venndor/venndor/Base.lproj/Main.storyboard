@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15G31" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ccl-eH-Ycs">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="10117" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="Ccl-eH-Ycs">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="10085"/>
@@ -440,7 +440,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="RCV-Q8-VOi" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1531" y="2212"/>
+            <point key="canvasLocation" x="1467" y="2220"/>
         </scene>
         <!--My Matches View Controller-->
         <scene sceneID="FT3-WY-5kC">
@@ -497,6 +497,9 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <connections>
+                        <segue destination="5Q4-WU-6Zg" kind="show" identifier="updateToBrowse" id="QAe-PV-9Kk"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G2l-xO-pNj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
@@ -504,12 +507,12 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="OzI-1T-yzU"/>
-        <segue reference="rJe-8o-Yiu"/>
-        <segue reference="NQb-tI-6ve"/>
-        <segue reference="uT9-ID-WRv"/>
-        <segue reference="iGi-df-zpV"/>
+        <segue reference="t3W-cW-8Zf"/>
+        <segue reference="QAe-PV-9Kk"/>
         <segue reference="mUc-z2-b8r"/>
-        <segue reference="YQC-W7-xKJ"/>
+        <segue reference="iGi-df-zpV"/>
+        <segue reference="J63-VY-ZTI"/>
+        <segue reference="OzI-1T-yzU"/>
+        <segue reference="uT9-ID-WRv"/>
     </inferredMetricsTieBreakers>
 </document>

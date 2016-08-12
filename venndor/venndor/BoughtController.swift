@@ -207,10 +207,12 @@ struct BoughtController {
         let idArray = self.getArrayForUpdate(item.matches, keyOrValue: "key", exception: match.id!)
         print(idArray)
         var resourceDicts = [[String:AnyObject]]()
+       
         for id in idArray {
             let temp = ["_id":id]
             resourceDicts.append(temp)
         }
+        
         print("resourceDicts for match removal: \(resourceDicts)")
         
         MatchesManager.globalManager.deleteMultipleMatchesById(resourceDicts) { error in

@@ -203,6 +203,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemName.delegate = self
         itemName.clearsOnBeginEditing = true
         itemName.textAlignment = .Center
+        itemName.adjustsFontSizeToFitWidth = true
         containerView.addSubview(itemName)
         
         let border = CALayer()
@@ -750,7 +751,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func setPricePreview() {
-        let pricePreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height+previewLocation.frame.height, screenSize.width*0.6, screenSize.height*0.05)
+        let pricePreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height+previewLocation.frame.height, screenSize.width*0.75, screenSize.height*0.05)
         previewPrice = makeTextButton("No minimum price set", frame: pricePreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewPrice.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewPrice.tag = 6

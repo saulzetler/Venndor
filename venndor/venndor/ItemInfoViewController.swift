@@ -11,7 +11,8 @@ import UIKit
 class ItemInfoViewController: UIViewController {
     
     var item: Item!
-    var match: Match! 
+    var match: Match!
+    var post: Post!
     var sessionStart: NSDate!
     
     //view attributes
@@ -42,7 +43,7 @@ class ItemInfoViewController: UIViewController {
             self.setupHeaderFrame()
             self.setupHeaderTitle()
             self.setupBackButton()
-            let booThing = self.isPost
+//            let booThing = self.isPost
             
             if self.isPost == true {
                 self.setupEditButton()
@@ -139,6 +140,7 @@ class ItemInfoViewController: UIViewController {
         print("Edit Tapped")
         let editViewController = EditViewControllerTest()
         editViewController.item = self.item
+        editViewController.post = self.post
         editViewController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         editViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         self.presentViewController(editViewController, animated: true, completion: nil)

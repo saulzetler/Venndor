@@ -92,17 +92,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     
                     matchContainer.match = match
                     
-                    ItemManager.globalManager.retrieveItemById(match.itemID) { item, error in
-                        guard error == nil else {
-                            print("Error retrieving item from match: \(error)")
-                            return
-                        }
-                        if let item = item {
-                            matchContainer.item = item
-                        }
-                        
-                    }
-                    
                     //self.addContainerContent(matchContainer, img: img, match: match)
                     dispatch_async(dispatch_get_main_queue()) {
                         matchContainer.match = match
@@ -131,6 +120,17 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     
                     let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleMatchItemInfo(_:)))
                     matchContainer.addGestureRecognizer(tap)
+                    
+                    ItemManager.globalManager.retrieveItemById(match.itemID) { item, error in
+                        guard error == nil else {
+                            print("Error retrieving item from match: \(error)")
+                            return
+                        }
+                        if let item = item {
+                            matchContainer.item = item
+                        }
+                        
+                    }
                     
                     dispatch_async(dispatch_get_main_queue()) {
                         matchContainer.match = match
