@@ -130,7 +130,7 @@
                         <segue destination="kYg-o8-mtK" kind="presentation" identifier="toOfferScreen" id="QwB-WW-QHS"/>
                         <segue destination="fCk-qF-h28" kind="presentation" identifier="showItemInfo" id="mUc-z2-b8r"/>
                         <segue destination="PwZ-B2-mez" kind="show" identifier="backToSplash" id="iGi-df-zpV"/>
-                        <segue destination="RnH-ph-BVQ" kind="show" identifier="broweToPost" id="rhC-FE-wzr"/>
+                        <segue destination="RnH-ph-BVQ" kind="custom" identifier="browseToPost" customClass="SWRevealViewControllerSeguePushController" id="rhC-FE-wzr"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="l9j-p1-Ii5" userLabel="First Responder" sceneMemberID="firstResponder"/>

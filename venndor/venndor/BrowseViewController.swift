@@ -84,6 +84,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             }
         }
         
+        setupSellButton()
+        
         //uncomment this to bring back mini my matches
         
         /*
@@ -154,7 +156,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func setupSellButton() {
-        let bottomBar = CGRect(x: 0, y: screenSize.height*0.87, width: screenSize.width, height: screenSize.height*0.13)
+        let bottomBar = CGRect(x: 0, y: screenSize.height*0.9, width: screenSize.width, height: screenSize.height*0.1)
         let bottomBarButton = makeTextButton("Sell", frame: bottomBar, target: #selector(BrowseViewController.toSellPage), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x2c3e50), textSize: 25)
         mainView.addSubview(bottomBarButton)
     }

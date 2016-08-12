@@ -84,7 +84,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setupLabels()
         setupPriceInput()
         sideMenuGestureSetup()
-        revealViewController().rightViewController = nil
         setupImageViews()
         setupScrollView()
         setupDivide()
@@ -102,10 +101,19 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         setLocationPreview()
         setPricePreview()
         hideKeyboardWhenTappedAround()
-        self.revealViewController().delegate = self
+        
         filledImagesArray = []
         previewImageViewArray = []
         self.ratingControl.delegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if revealViewController() != nil {
+            revealViewController().rightViewController = nil
+            self.revealViewController().delegate = self
+        }
     }
     
     //setup functions
