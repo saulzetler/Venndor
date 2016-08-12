@@ -42,71 +42,6 @@ struct BoughtController {
                 self.updateSellerOnPurchase(seller)
             }
         }
-        
-    }
-
-    
-    func updateBuyer(item: Item, buyer: User) {
-
-        //function should update the buyer, move the item from matched to bought
-        
-        let filter = "itemID = \(item.id)"
-        MatchesManager.globalManager.retrieveMatchByFilter(filter) { match, error in
-            guard error == nil else {
-                print("Error retrieving match in Buy screen for update: \(error)")
-                return
-            }
-            
-            if let match = match {
-                match.bought = 1
-                match.dateBought = NSDate()
-                buyer.boughtItems[item.id] = item.owner
-                buyer.nuItemsBought! += 1
-                
-                self.updateMatchOnPurchase(match)
-                self.updateBuyerOnPurchase(buyer)
-            }
-        }
-        
-    }
-    
-    func updateMarket(item: Item, match: Match) {
-
-        //function should update the market for all users and remove the item from the potential pool of items.
-        
-        //remove all other match objects
-        removeMatches(item, match: match)
-        
-        //remove the match thumbnails
-        removeMatchThumbnails(self.getArrayForUpdate(item.matches, keyOrValue: "key", exception: match.id!))
-        
-        //update the users in the market
-        updateUsers(self.getArrayForUpdate(item.matches, keyOrValue: "value", exception: LocalUser.user.id), match: match)
-        
-    }
-    
-    func updateMatchOnPurchase(match: Match) {
-        let update = ["bought": match.bought, "dateBought": TimeManager.formatter.stringFromDate(match.dateBought)]
-        MatchesManager.globalManager.updateMatchById(match.id!, update: update as! JSON) { error in
-            guard error == nil else {
-                print("Error updating match in Buy controller: \(error)")
-                return
-            }
-            
-            print("Succesfully updated match object in Buy controller.")
-        }
-    }
-    
-    func updateBuyerOnPurchase(buyer: User) {
-        let update = ["boughtItems": buyer.boughtItems, "nuItemsBought": buyer.nuItemsBought]
-        UserManager.globalManager.updateUserById(buyer.id, update: update as! JSON) { error in
-            guard error == nil else {
-                print("Error updating user in Buy controller: \(error)")
-                return
-            }
-            
-            print("Succesfully updated the buyer in Buy controller.")
-        }
     }
     
     func updatePostOnPurchase(post: Post) {
@@ -136,6 +71,76 @@ struct BoughtController {
     }
 
     
+    func updateBuyer(item: Item, buyer: User) {
+
+        //function should update the buyer, move the item from matched to bought
+        
+        let filter = "itemID = \(item.id)"
+        MatchesManager.globalManager.retrieveMatchByFilter(filter) { match, error in
+            guard error == nil else {
+                print("Error retrieving match in Buy screen for update: \(error)")
+                return
+            }
+            
+            if let match = match {
+    
+                var dict = LocalUser.matches.filter(({ $0.id != match.id }))
+                match.bought = 1
+                match.dateBought = NSDate()
+                dict.append(match)
+                LocalUser.matches = dict
+                buyer.boughtItems[item.id] = item.owner
+                buyer.nuItemsBought! += 1
+                
+                self.updateMatchOnPurchase(match)
+                self.updateBuyerOnPurchase(buyer)
+            }
+        }
+        
+    }
+    
+    func updateMatchOnPurchase(match: Match) {
+        let update = ["bought": match.bought, "dateBought": TimeManager.formatter.stringFromDate(match.dateBought)]
+        MatchesManager.globalManager.updateMatchById(match.id!, update: update as! JSON) { error in
+            guard error == nil else {
+                print("Error updating match in Buy controller: \(error)")
+                return
+            }
+            
+            print("Succesfully updated match object in Buy controller.")
+        }
+    }
+    
+    func updateBuyerOnPurchase(buyer: User) {
+        let update = ["boughtItems": buyer.boughtItems, "nuItemsBought": buyer.nuItemsBought]
+        UserManager.globalManager.updateUserById(buyer.id, update: update as! JSON) { error in
+            guard error == nil else {
+                print("Error updating user in Buy controller: \(error)")
+                return
+            }
+            
+            print("Succesfully updated the buyer in Buy controller.")
+        }
+    }
+    
+    func updateMarket(item: Item, match: Match) {
+
+        //function should update the market for all users and remove the item from the potential pool of items.
+        
+        //remove all other match objects
+        removeMatches(match)
+        
+        //remove the match thumbnails
+        let matchArray = self.getArrayForUpdate(item.matches, keyOrValue: "key")
+        removeMatchThumbnails(matchArray.filter({ $0 != match.id }))
+        
+        //update the users in the market
+        let userArray = self.getArrayForUpdate(item.matches, keyOrValue: "value")
+        updateUsers(userArray.filter({ $0 != LocalUser.user.id }), match: match)
+        
+    }
+
+    
     func updateUsers(users: [String], match: Match) {
         var filterString = ""
         var index = 0
@@ -146,6 +151,7 @@ struct BoughtController {
         }
         
         print("Filter string for user update: \(filterString)")
+        print(LocalUser.user.id)
         
         UserManager.globalManager.retrieveMultipleUsers(filterString) { users, error in
             guard error == nil else {
@@ -154,9 +160,10 @@ struct BoughtController {
             }
             
             if let users = users {
+                
                 for user in users {
-                    print(user.firstName)
-                    print(user.matches)
+                    print("User first name: \(user.firstName)")
+                    print("User matches: \(user.matches)")
                     user.matches.removeValueForKey(match.id!)
                 }
                 
@@ -184,14 +191,12 @@ struct BoughtController {
         return updateDict
     }
     
-    func getArrayForUpdate(dict: [String:AnyObject], keyOrValue: String, exception: String) -> [String] {
+    func getArrayForUpdate(dict: [String:AnyObject], keyOrValue: String) -> [String] {
         var array = [String]()
         
         for (key, value) in dict {
             let addition = keyOrValue == "key" ? key : value as! String
-            if addition != exception {
-                array.append(addition)
-            }
+            array.append(addition)
         }
         
         return array
@@ -203,17 +208,10 @@ struct BoughtController {
         }
     }
     
-    func removeMatches(item: Item, match: Match) {
-        let idArray = self.getArrayForUpdate(item.matches, keyOrValue: "key", exception: match.id!)
-        print(idArray)
-        var resourceDicts = [[String:AnyObject]]()
-        for id in idArray {
-            let temp = ["_id":id]
-            resourceDicts.append(temp)
-        }
-        print("resourceDicts for match removal: \(resourceDicts)")
+    func removeMatches(match: Match) {
+        let filter = "(_id != \(match.id)) and (itemName = \(match.itemName))"
         
-        MatchesManager.globalManager.deleteMultipleMatchesById(resourceDicts) { error in
+        MatchesManager.globalManager.deleteMultipleMatchesById(nil, filter: filter) { error in
             guard error == nil else {
                 print("Error deleting matches from server in Buy: \(error)")
                 return

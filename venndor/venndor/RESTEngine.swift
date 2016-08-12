@@ -218,9 +218,23 @@ final class RESTEngine {
             }, failure: { _ in })
     }
     
-    func deleteMultipleMatchesFromServer(ids: [[String:AnyObject]], success: SuccessClosure, failure: ErrorClosure) {
-        let requestBody = ["resource":ids]
-        callApiWithPath(Routing.Service(tableName: "matches").path, method: "DELETE", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
+    func deleteMultipleMatchesFromServer(ids: [[String:AnyObject]]?, filter: String?, success: SuccessClosure, failure: ErrorClosure) {
+        let requestBody: [String: AnyObject]?
+        let queryParams: [String: AnyObject]?
+        if let ids = ids {
+            requestBody = ["resource":ids]
+        } else {
+            requestBody = nil
+        }
+        
+        if let filter = filter {
+            queryParams = ["filter":filter]
+        } else {
+            queryParams = nil
+        }
+        
+        
+        callApiWithPath(Routing.Service(tableName: "matches").path, method: "DELETE", queryParams: queryParams, body: requestBody, headerParams: headerParams, success: success, failure: failure)
         
     }
     
