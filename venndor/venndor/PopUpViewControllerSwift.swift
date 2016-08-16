@@ -17,7 +17,7 @@ class PopUpViewControllerSwift : UIViewController {
     var matchedPrice: Int!
     var sessionStart: NSDate!
 
-    let ovc = OfferViewController()
+    var ovc = OfferViewController()
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -28,51 +28,52 @@ class PopUpViewControllerSwift : UIViewController {
         super.viewDidLoad()
         setupBackground()
         
-        //update item metrics
-        let item = matchedItem
-        item.timeMatched = NSDate()
-        item.nuMatches! += 1
-        let itemUpdate  = ["nuMatches": item.nuMatches, "timeMatched": TimeManager.formatter.stringFromDate(item.timeMatched!)]
-        ItemManager.globalManager.updateItemById(item.id, update: itemUpdate as! [String : AnyObject]) { error in
-            guard error == nil else {
-                print("Error updating item metrics in match screen: \(error)")
-                return
-            }
-        }
-        
         LocalUser.user.mostRecentAction = "Matched on an item."
         sessionStart = NSDate()
-        
+
         //create the match on the server
-        let newMatch = Match(itemID: matchedItem.id, itemName: matchedItem.name, itemDescription: matchedItem.details, userID: LocalUser.user.id, sellerID: matchedItem.owner, sellerName: matchedItem.ownerName, matchedPrice: matchedPrice, itemLongitude: matchedItem.longitude, itemLatitude: matchedItem.latitude, dateMatched: NSDate())
-       
+        let newMatch = Match(itemID: self.matchedItem.id, itemName: self.matchedItem.name, itemDescription: self.matchedItem.details, userID: LocalUser.user.id, sellerID: self.matchedItem.owner, sellerName: self.matchedItem.ownerName, matchedPrice: self.matchedPrice, thumbnail: matchedItem.photos![0], itemLongitude: self.matchedItem.longitude, itemLatitude: self.matchedItem.latitude, dateMatched: NSDate())
+                
         MatchesManager.globalManager.createMatch(newMatch) { match, error in
             guard error == nil else {
                 print("Error creating match on server: \(error)")
                 return
             }
-            
+                    
             if let match = match {
                 
-                //update the LocalUser's matches info
+                let item = self.matchedItem
                 LocalUser.matches.append(match)
-                LocalUser.user.matches[match.id!] = "Matched"
+                LocalUser.user.matches[match.id!] = item.id
                 LocalUser.user.nuMatches = LocalUser.user.nuMatches + 1
-                let update = ["matches": LocalUser.user.matches, "nuMatches": LocalUser.user.nuMatches]
-
-                
+                        
                 //update the LocalUser on the server
+                let update = ["matches": LocalUser.user.matches, "nuMatches": LocalUser.user.nuMatches]
                 UserManager.globalManager.updateUserById(LocalUser.user.id, update: update as! [String : AnyObject]) { error in
                     guard error == nil else {
                         print("Error updating the local user's matches: \(error)")
                         return
                     }
-                    
+                            
                     print("LocalUser matches succesfully updated.")
                 }
                 
+                
+                item.timeMatched = NSDate()
+                item.nuMatches! += 1
+                item.matches[match.id!] = LocalUser.user.id
+                
+                //update item metrics
+                let itemUpdate  = ["nuMatches": item.nuMatches, "matches":item.matches, "timeMatched": TimeManager.formatter.stringFromDate(item.timeMatched!)]
+                ItemManager.globalManager.updateItemById(item.id, update: itemUpdate as! [String : AnyObject]) { error in
+                    guard error == nil else {
+                        print("Error updating item metrics in match screen: \(error)")
+                        return
+                    }
+                }
             }
         }
+
     }
     
     func setupBackground() {
@@ -108,17 +109,21 @@ class PopUpViewControllerSwift : UIViewController {
     
     func createButtons() {
         var buttonFrame = CGRect(x: screenSize.width*0.1, y: screenSize.height*0.8, width: screenSize.width*0.2, height: screenSize.width*0.2)
-        let matchesButton = makeTextButton("VIEW MY MATCHES", frame: buttonFrame, target: Selector("toMatches:"), circle: true, textColor: UIColor.whiteColor(), tinted: false)
+
+        let matchesButton = makeTextButtonWithTarget("VIEW MY MATCHES", frame: buttonFrame, target: ovc, action: #selector(OfferViewController.toMatches), circle: true, textColor: UIColor.whiteColor(), tinted: false)
+        
         createBorder(matchesButton, color: UIColor.whiteColor(), circle: true)
         titleSet(matchesButton)
         self.view.addSubview(matchesButton)
+       
         buttonFrame.origin.x = screenSize.width*0.4
-        let buyButton = makeTextButton("BUY NOW", frame: buttonFrame, target: Selector("toBuy:"), circle: true, textColor: UIColorFromHex(0x1abc9c), tinted: false, backgroundColor: UIColor.whiteColor())
+        let buyButton = makeTextButtonWithTarget("BUY NOW", frame: buttonFrame, target: ovc, action: #selector(OfferViewController.toBuy), circle: true, textColor: UIColorFromHex(0x1abc9c), tinted: false, backgroundColor: UIColor.whiteColor())
         createBorder(buyButton, color: UIColor.whiteColor(), circle: true)
         titleSet(buyButton)
         self.view.addSubview(buyButton)
+        
         buttonFrame.origin.x = screenSize.width*0.7
-        let browseButton = makeTextButton("KEEP BROWSING", frame: buttonFrame, target: Selector("goBackToBrowse:"), circle: true, textColor: UIColor.whiteColor(), tinted: false)
+        let browseButton = makeTextButtonWithTarget("KEEP BROWSING", frame: buttonFrame, target: ovc, action: #selector(OfferViewController.goBackToBrowse), circle: true, textColor: UIColor.whiteColor(), tinted: false)
         createBorder(browseButton, color: UIColor.whiteColor(), circle: true)
         titleSet(browseButton)
         self.view.addSubview(browseButton)

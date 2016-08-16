@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 //class to control the post/sell page in the application requires many delegates
-class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ImagePickerDelegate, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate {
+class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ImagePickerDelegate, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, RatingControlDelegate {
     
     //declare the needed variables for the page to work.
     
@@ -25,6 +25,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var itemDescription: UITextView!
     var itemName: UITextField!
     var priceField: UITextField!
+   
+    //imgViews
     var imageView1: UIImageView!
     var imageView2: UIImageView!
     var imageView3: UIImageView!
@@ -32,8 +34,21 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var imageView5: UIImageView!
     var imageView6: UIImageView!
     var imageViewArray: [UIImageView]!
+    var previewImageViewArray: [UIImageView]!
     var filledImagesArray: [Int]!
     var currentImgView: UIImageView!
+
+    var previewName: UIButton!
+    var previewCategory: UIButton!
+    var previewYears: UIButton!
+    var previewCondition: UIButton!
+    var previewDescription: UIButton!
+    var previewLocation: UIButton!
+    var previewPrice: UIButton!
+    var ratingPreviewContainer: UIView!
+    var descriptionContainer: UIView!
+
+    
     var postButton: UIButton!
     var condition: Int!
     let categoryPickerData = ["Furniture", "Kitchen", "Household", "Electronics", "Clothing", "Books", "Other"]
@@ -41,6 +56,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var pageNumArray = [UIButton]()
     var categoryPicker: UIPickerView!
     var yearsPicker: UIPickerView!
+    
+    
     var ratingControl: RatingControl!
     var imagePickerController: ImagePickerController!
     var mapView: GMSMapView!
@@ -51,14 +68,17 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var photoChoiceDisplayed = false
     var sessionStart: NSDate!
     
+    var postingPopup = PopoverViewController()
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
+        print("PostViewController end: \(NSDate())")
         TimeManager.globalManager.setSessionDuration(sessionStart, controller: "PostViewController")
     }
     override func viewDidLoad() {
         super.viewDidLoad()
         sessionStart = NSDate()
-        TimeManager.timeStamp = NSDate()
+
         setupCategoryPickerView()
         setupYearsPickerView()
         setupItemName()
@@ -75,9 +95,27 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         addHeaderOther("Sell")
         setupArrows()
         setupMap()
+        setPreviewItemName()
+        setCategoryPreview()
+        setYearsPreview()
+        setDescriptionPreview()
+        setInitialCondition()
+        setLocationPreview()
+        setPricePreview()
         hideKeyboardWhenTappedAround()
-        self.revealViewController().delegate = self
+        
         filledImagesArray = []
+        previewImageViewArray = []
+        self.ratingControl.delegate = self
+    }
+    
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(animated)
+        
+        if revealViewController() != nil {
+            revealViewController().rightViewController = nil
+            self.revealViewController().delegate = self
+        }
     }
     
     //setup functions
@@ -132,12 +170,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         var button: UIButton!
         if page != 0 {
             upButtonFrame.origin.y = upButtonOrigin + CGFloat(page)*screenSize.height
-            button = makeTextButton(upTitle, frame: upButtonFrame, target: #selector(PostViewController.prevPage(_:)))
+            button = makeTextButton(upTitle, frame: upButtonFrame, target: #selector(PostViewController.prevPage(_:)), textColor: UIColorFromHex(0x34495e))
             containerView.addSubview(button)
         }
         if page != 7 {
             downButtonFrame.origin.y = downButtonOrigin + CGFloat(page)*screenSize.height
-            button = makeTextButton(downTitle, frame: downButtonFrame, target: #selector(PostViewController.nextPage(_:)))
+            button = makeTextButton(downTitle, frame: downButtonFrame, target: #selector(PostViewController.nextPage(_:)), textColor: UIColorFromHex(0x34495e))
             containerView.addSubview(button)
         }
     }
@@ -175,6 +213,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemName.delegate = self
         itemName.clearsOnBeginEditing = true
         itemName.textAlignment = .Center
+        itemName.adjustsFontSizeToFitWidth = true
         containerView.addSubview(itemName)
         
         let border = CALayer()
@@ -190,6 +229,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     //create the text field required for the user to input a basic description of the item
     func setupItemDescription() {
         itemDescription = UITextView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*4.3, self.screenSize.width*0.7, screenSize.height*0.25))
+        itemDescription.tag = 105
         itemDescription.text = "Additional Info"
         itemDescription.font = UIFont(name: "Avenir", size: 15)
         itemDescription.textColor = UIColorFromHex(0x34495e)
@@ -310,7 +350,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         pin.appearAnimation = kGMSMarkerAnimationPop
         pin.map = mapView
         useMyLocation = true
-        
+        updateLocationPreview(true)
     }
     
     func searchClicked(sender: UIButton) {
@@ -364,6 +404,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         let pin = GMSMarker(position: place.coordinate)
         pin.appearAnimation = kGMSMarkerAnimationPop
         pin.map = mapView
+        updateLocationPreview(false)
     }
     
     func viewController(viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: NSError) {
@@ -389,7 +430,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //function to create the final post button which is called when the user completes the process.
     func setupPostButton() {
-        let buttonFrame = CGRectMake(0, screenSize.height*7.85, screenSize.width, screenSize.height*0.15)
+        let buttonFrame = CGRectMake(0, screenSize.height*7.9, screenSize.width, screenSize.height*0.1)
         postButton = makeTextButton("Post!", frame: buttonFrame, target: #selector(PostViewController.postItem(_:)))
         postButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         postButton.titleLabel!.font = UIFont(name: "Avenir", size: 35)
@@ -402,8 +443,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         var pageIndicatorFrame = CGRect(x: screenSize.width*0.08, y: screenSize.height*0.35, width: 15, height: 15)
         let pageIndOrigin = pageIndicatorFrame.origin.y
         for pageNum in 0...7 {
-            pageIndicatorFrame.origin.y = pageIndOrigin + CGFloat(pageNum*20)
-            let pageInd = makeIndicatorButton(pageIndicatorFrame, color: UIColorFromHex(0x34495e))
+            pageIndicatorFrame.origin.y = pageIndOrigin + CGFloat(pageNum*25)
+            let pageInd = makeIndicatorButton(pageIndicatorFrame, color: UIColorFromHex(0x34495e), target: #selector(PostViewController.indicatorTouched(_:)))
             pageInd.tag = pageNum
             if pageNum == 0 {
                 pageInd.backgroundColor = UIColorFromHex(0x34495e)
@@ -411,9 +452,14 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             self.view.addSubview(pageInd)
             pageNumArray.append(pageInd)
         }
-        
-
-        
+    }
+    
+    func indicatorTouched(sender: UIButton) {
+        let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
+        pageNum = sender.tag
+        let yOffset = CGPointMake(0, pageHeight*CGFloat(pageNum));
+        self.scrollView.setContentOffset(yOffset, animated: true)
+        updateIndicators()
         
     }
     
@@ -426,19 +472,34 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         border.borderColor = UIColorFromHex(0x34495e).CGColor
         priceField.layer.addSublayer(border)
         priceField.layer.masksToBounds = true
-        
+        priceField.tag = 30
         priceField.textColor = UIColorFromHex(0x34495e)
         priceField.textAlignment = .Center
         priceField.clearsOnBeginEditing = true
         priceField.font = UIFont(name: "Avenir", size: 50)
         priceField.returnKeyType = .Done
         priceField.keyboardType = .NumberPad
+        priceField.delegate = self
+        
+        //Add done button to numeric pad keyboard
+        let toolbarDone = UIToolbar.init()
+        toolbarDone.sizeToFit()
+        let flexSpace = UIBarButtonItem(barButtonSystemItem: UIBarButtonSystemItem.FlexibleSpace, target: nil, action: nil)
+        let barBtnDone = UIBarButtonItem.init(barButtonSystemItem: UIBarButtonSystemItem.Done,
+                                              target: self, action: #selector(PostViewController.doneButtonClicked(_:)))
+        
+        toolbarDone.items = [flexSpace, barBtnDone] // You can even add cancel button too
+        priceField.inputAccessoryView = toolbarDone
         
         let dollarSignFrame = CGRectMake(0, 0, priceField.frame.width*0.2, priceField.frame.height)
         let dollarSign = customLabel(dollarSignFrame, text: "$", color: UIColorFromHex(0x34495e), fontSize: 50)
         priceField.addSubview(dollarSign)
         
         containerView.addSubview(priceField)
+    }
+    
+    func doneButtonClicked(sender: AnyObject) {
+        priceField.resignFirstResponder()
     }
     
     //function to setup the various labels/titles needed for each page to help direct the user.
@@ -454,8 +515,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         containerView.addSubview(itemIs)
         let yearsOld = customLabel(CGRectMake(screenSize.width*0.6, screenSize.height*3.357, self.screenSize.width*0.3, screenSize.height*0.08), text: "years old", color: UIColorFromHex(0x34495e), fontSize: 20)
         containerView.addSubview(yearsOld)
-        let locationLabel = customLabel(CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), text: "Location", color: UIColorFromHex(0x34495e), fontSize: 30)
-        containerView.addSubview(locationLabel)
+//        let locationLabel = customLabel(CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), text: "Location", color: UIColorFromHex(0x34495e), fontSize: 30)
+//        containerView.addSubview(locationLabel)
+        
+        let locationButton = makeTextButton("Location", frame: CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), target: #selector(PostViewController.searchClicked(_:)), textColor: UIColorFromHex(0x34495e), textSize: 30)
+        containerView.addSubview(locationButton)
         
         let priceLabelFrame = CGRectMake(screenSize.width*0.15, screenSize.height*6.3, self.screenSize.width*0.7, screenSize.height*0.1)
         let priceLabel = customLabel(priceLabelFrame, text: "I want to sell this for", color: UIColorFromHex(0x34495e), fontSize: 25)
@@ -528,8 +592,15 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        if textField.text == "" {
-            textField.text = "Item Name"
+        print("ended")
+        if textField.tag == 30 {
+            previewPrice.setTitle("Minimmum price is: $\(String(textField.text!))", forState: .Normal)
+        }
+        else {
+            if textField.text == "" {
+                textField.text = "Item Name"
+            }
+            updatePreviewName()
         }
     }
     
@@ -549,8 +620,17 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func textViewDidEndEditing(textView: UITextView) {
         textView.resignFirstResponder()
-        if textView.text == "" {
-            textView.text = "Additional Info"
+        if textView.tag == 105 {
+            if textView.text == "" {
+                textView.text = "Additional Info"
+                previewDescription.setTitle("Description", forState: .Normal)
+                previewDescription.sizeThatFits(descriptionContainer.frame.size)
+                
+            }
+            else {
+                previewDescription.setTitle(textView.text, forState: .Normal)
+                previewDescription.sizeThatFits(descriptionContainer.frame.size)
+            }
         }
     }
     
@@ -562,12 +642,158 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //end of text field delegates
     
+    //updating preview page
+    
+    func setPreviewItemName() {
+        let previewNameFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.35, screenSize.width*0.6, screenSize.height*0.05)
+        previewName = makeTextButton(itemName.text!, frame: previewNameFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewName.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        previewName.tag = 1
+        containerView.addSubview(previewName)
+    }
+    
+    func updatePreviewName() {
+        previewName.setTitle(itemName.text, forState: .Normal)
+    }
+    
+    func setCategoryPreview() {
+        let previewCategoryFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.4, screenSize.width*0.6, screenSize.height*0.05)
+        previewCategory = makeTextButton("Furniture", frame: previewCategoryFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewCategory.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        previewCategory.tag = 2
+        containerView.addSubview(previewCategory)
+    }
+    
+    func updateCategoryPreview(text: String) {
+        previewCategory.setTitle(text, forState: .Normal)
+    }
+    
+    func setYearsPreview() {
+        let yearsCategoryFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.45, screenSize.width*0.6, screenSize.height*0.05)
+        previewYears = makeTextButton("0 years old", frame: yearsCategoryFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewYears.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        previewYears.tag = 3
+        containerView.addSubview(previewYears)
+    }
+    
+    func updateYearsPreview(years: String) {
+        previewYears.setTitle("\(years) years old", forState: .Normal)
+    }
+    
+    func setInitialCondition() {
+        let initialConditionFrame = CGRect(x: screenSize.width*0.2, y: screenSize.height*7.5, width: screenSize.width*0.6, height: screenSize.height*0.05)
+        let label = makeTextButton("Zero stars filled", frame: initialConditionFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        label.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        label.tag = 25
+        containerView.addSubview(label)
+    }
+    
+    func setConditionPreview() {
+        
+        for view in containerView.subviews {
+            if view.tag == 25 {
+                view.removeFromSuperview()
+            }
+        }
+        if ratingControl.rating == 0 {
+            setInitialCondition()
+        }
+        
+        let size = screenSize.width*0.07
+        
+        ratingPreviewContainer.tag = 20
+        containerView.addSubview(ratingPreviewContainer)
+        var ratingFrame = CGRectMake(0, 0, size, size)
+        for rating in 0...ratingControl.rating {
+            let star = makeImageButton("Star_Filled.png", frame: ratingFrame, target: #selector(PostViewController.changePage(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
+            star.tag = 3
+            ratingFrame.origin.x = CGFloat(rating) * size
+            ratingPreviewContainer.addSubview(star)
+        }
+    }
+    
+    func ratingSelected(control: RatingControl, rating: Int) {
+        for view in containerView.subviews {
+            if view.tag == 20 {
+                view.removeFromSuperview()
+            }
+        }
+        setConditionPreview()
+//        print("rating selected")
+    }
+    
+    func setDescriptionPreview() {
+        
+        ratingPreviewContainer = UIView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*7.5, screenSize.width*0.07*5, screenSize.width*0.07))
+        let descriptionPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height, screenSize.width*0.7, screenSize.height*0.15)
+        descriptionContainer = UIView(frame: descriptionPreviewFrame)
+//        descriptionContainer.backgroundColor = U IColor.whiteColor()
+        let labelFrame = CGRect(x: 0, y: 0, width: descriptionPreviewFrame.width, height: descriptionPreviewFrame.height)
+        
+        previewDescription = makeTextButton("Description", frame: labelFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+//        previewDescription.backgroundColor = UIColor.whiteColor()
+        previewDescription.tag = 3
+        previewDescription.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        previewDescription.contentVerticalAlignment = UIControlContentVerticalAlignment.Top
+        previewDescription.titleLabel?.lineBreakMode = .ByWordWrapping
+        previewDescription.titleLabel?.numberOfLines = 3
+        previewDescription.sizeThatFits(descriptionContainer.frame.size)
+        descriptionContainer.addSubview(previewDescription)
+        containerView.addSubview(descriptionContainer)
+    }
+    
+    func setLocationPreview() {
+        let locationPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height, screenSize.width*0.6, screenSize.height*0.05)
+        previewLocation = makeTextButton("Using current location", frame: locationPreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewLocation.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        previewLocation.tag = 5
+        containerView.addSubview(previewLocation)
+    }
+    
+    func updateLocationPreview(useLocation: Bool) {
+        if useLocation {
+            previewLocation.setTitle("Using current location", forState: .Normal)
+        }
+        else {
+            let placeName: String = currentPlace.name
+            previewLocation.setTitle(placeName, forState: .Normal)
+        }
+    }
+    
+    func setPricePreview() {
+        let pricePreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height+previewLocation.frame.height, screenSize.width*0.75, screenSize.height*0.05)
+        previewPrice = makeTextButton("No minimum price set", frame: pricePreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        previewPrice.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+        previewPrice.tag = 6
+        containerView.addSubview(previewPrice)
+    }
+    
     //IMAGE SELECTION METHODS
     
     //delegate image picker functions
     
     func wrapperDidPress(images: [UIImage]){
         print("cool")
+    }
+    
+    func updateImagePreviews() {
+        for imageView in previewImageViewArray {
+            imageView.removeFromSuperview()
+        }
+        let imageWidth = screenSize.width*0.15
+        var imageFrame = CGRectMake(screenSize.width*0.025, screenSize.height*7.25, imageWidth, imageWidth)
+        imageFrame.origin.x += imageWidth*CGFloat(6-filledImagesArray.count)/2
+        for imageView in imageViewArray {
+            if filledImagesArray.contains(imageView.tag) {
+                let smallImageView = UIImageView(frame: imageFrame)
+                smallImageView.image = imageView.image
+                smallImageView.contentMode = .ScaleAspectFill
+                createBorder(smallImageView, color: UIColorFromHex(0x34495e))
+                previewImageViewArray.append(smallImageView)
+                imageFrame.origin.x += (imageWidth + screenSize.width*0.01)
+                containerView.addSubview(smallImageView)
+            }
+        }
     }
     
     func doneButtonDidPress(images: [UIImage]){
@@ -587,9 +813,9 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 }
             }
         }
+        updateImagePreviews()
     }
     func cancelButtonDidPress(){
-        
     }
     
     var imageAssets: [UIImage] {
@@ -601,7 +827,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         currentImgView = sender.view as! UIImageView
         imagePickerController = ImagePickerController()
         imagePickerController.delegate = self
-        imagePickerController.imageLimit = 5 - currentImgView.tag
+        imagePickerController.imageLimit = 6 - currentImgView.tag
         presentViewController(imagePickerController, animated: true, completion: nil)
 
     }
@@ -614,9 +840,22 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     /* TO BE FIXED */
     
     func changePage(sender: AnyObject) -> () {
+        if sender.tag == 25 {
+            pageNum = 3
+        }else {
+           pageNum = sender.tag
+        }
         let y = CGFloat(pageNum) * scrollView.frame.size.height
         scrollView.setContentOffset(CGPointMake(0, y), animated: true)
+        updateIndicators()
         
+    }
+    
+    func goToPage(page: Int) {
+        pageNum = page
+        let y = CGFloat(pageNum) * scrollView.frame.size.height
+        scrollView.setContentOffset(CGPointMake(0, y), animated: true)
+        updateIndicators()
     }
     
     func nextPage(sender: UIButton) {
@@ -636,6 +875,30 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     //function to controll when the user is finished and decides to post
     func postItem(sender: UIButton) {
         
+        if filledImagesArray.count == 0 {
+            let popup = PopoverViewController()
+            popup.showInView(self.view, message: "Please select at least one image")
+            goToPage(0)
+            return
+        }
+        
+        if itemName.text == "Item Name" {
+            let popup = PopoverViewController()
+            popup.showInView(self.view, message: "Please enter a name for your item")
+            goToPage(1)
+            return
+        }
+        
+        if Int(priceField.text!) == nil {
+            let popup = PopoverViewController()
+            popup.showInView(self.view, message: "Please enter a minimum price for your item")
+            goToPage(6)
+            return
+        }
+        
+        postingPopup = PopoverViewController()
+        postingPopup.showInView(self.view, message: "Posting...")
+        
         LocalUser.user.mostRecentAction = "Posted an Item"
         //add the iamges from the image view to an array to be passed to the backend function to post an item to server
         if let name = itemName.text, details = itemDescription.text {
@@ -651,11 +914,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             //get the category of the item from the picker controller
             let row = categoryPicker.selectedRowInComponent(0)
             let category = categoryPickerData[row]
+            let age = yearsPickerData[yearsPicker.selectedRowInComponent(0)]
             let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
-            
-            /******************************************************************/
-            /******************************************************************/
-            /*NEEDS TO BE SET FROM THE DATA GATHERED BY POSTVIEWCONTROLLER*/
           
             let condition = ratingControl.rating
             if useMyLocation == true {
@@ -668,25 +928,22 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let longitude = Double(coordinate.longitude)
             let minPrice = Int(priceField.text!)
             
-            let question1 = ""
-            let question2 = ""
-            
             var conversion = LocationConverter()
             let geoHash = conversion.coordToGeo(latitude, longitudeInput: longitude)
             print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
             
             //create an item object to past to the manager to create the item
-            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, latitude: latitude, longitude: longitude, geoHash: geoHash, photos: images, question1: question1, question2: question2, minPrice: minPrice!)
+            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, latitude: latitude, longitude: longitude, geoHash: geoHash, photos: images, itemAge: age, minPrice: minPrice!)
             
             //create the item object on the server
             ItemManager.globalManager.createItem(item) { error in
                 guard error == nil else {
-                    print("GOOD FUCKING JOB BUDDY YOU BROKE EVERYTHING i fucking hate u")
+                    print("GOOD FUCKING JOB BUDDY YOU BROKE EVERYTHING. I fucking hate u")
                     return
                 }
-                
+            
                 //create the post object on the server
-                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, itemLongitude: item.longitude, itemLatitude: item.latitude)
+                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, thumbnail: self.imageView1.image!, itemLongitude: item.longitude, itemLatitude: item.latitude)
                 
                 PostManager.globalManager.createPost(post) { post, error in
                     LocalUser.user.posts[post!.id] = item.id
@@ -696,11 +953,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                     let update : [String:AnyObject] = ["posts": LocalUser.user.posts, "nuPosts": LocalUser.user.nuPosts]
                     UserManager.globalManager.updateUserById(LocalUser.user.id, update: update) { error in
                         guard error == nil else {
-                            print("Error updating the LocalUser's posts from post screen: \(error)")
+                            print("Error updating the User's posts from post screen: \(error)")
                             return
                         }
                         
-                        print("Succesfully updated LocalUser's ads from post screen.")
+                        print("Succesfully updated User's ads from post screen.")
+                        self.postingPopup.updateText("Posted!")
                         self.performSegueWithIdentifier("backToBrowse", sender: self)
                     }
                 
@@ -736,28 +994,13 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func pickerView(pickerView: UIPickerView, didSelectRow row: Int, inComponent component: Int) {
-        //        myLabel.text = pickerData[row]
+        if pickerView.tag == 1 {
+            updateCategoryPreview(categoryPickerData[row])
+        }
+        else {
+            updateYearsPreview(yearsPickerData[row])
+        }
     }
-    
-//    func pickerView(pickerView: UIPickerView, viewForRow row: Int, forComponent component: Int, reusingView view: UIView?) -> UIView {
-//        var pickerLabel = view as! UILabel!
-//        if view == nil {  //if no label there yet
-//            pickerLabel = UILabel()
-//        }
-//        let titleData: String
-//        if pickerView.tag == 1 {
-//            titleData = categoryPickerData[row]
-//        }
-//        else {
-//            titleData = yearsPickerData[row]
-//        }
-//        
-//        let myTitle = NSAttributedString(string: titleData, attributes: [NSFontAttributeName:UIFont(name: "Avenir", size: 2)!,NSForegroundColorAttributeName:UIColorFromHex(0x34495e)])
-//        pickerLabel!.attributedText = myTitle
-//        pickerLabel!.textAlignment = .Center
-//        return pickerLabel
-//        
-//    }
     
     
     //deactivation methods

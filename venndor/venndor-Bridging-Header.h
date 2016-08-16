@@ -10,6 +10,7 @@
 #define venndor_Bridging_Header_h
 
 #import <GoogleMaps/GoogleMaps.h>
+#import <OneSignal/OneSignal.h>
 #import <SlackTextViewController/SlackTextViewController-umbrella.h>
 #import <ImagePicker/ImagePicker-Swift.h>
 #import <FBSDKCoreKit/FBSDKCorekit.h>
@@ -17,37 +18,4 @@
 #import <FBSDKShareKit/FBSDKShareKit.h>
 #import "SWRevealViewController.h"
 
-#endif 
-
-
-
-/* venndor_Bridging_Header_h */
-
-/*#import "FBSDKAccessToken.h"
-#import "FBSDKAppEvents.h"
-#import "FBSDKApplicationDelegate.h"
-#import "FBSDKAppLinkResolver.h"
-#import "FBSDKAppLinkUtility.h"
-#import "FBSDKButton.h"
-#import "FBSDKConstants.h"
-#import "FBSDKCopying.h"
-#import "FBSDKCorekit.h"
-#import "FBSDKGraphErrorRecoveryProcessor.h"
-#import "FBSDKGraphRequest.h"
-#import "FBSDKGraphRequestDataAttachment.h"
-#import "FBSDKGraphRequestConnection.h"
-#import "FBSDKMacros.h"
-#import "FBSDKMutableCopying.h"
-#import "FBSDKProfile.h"
-#import "FBSDKProfilePictureView.h"
-#import "FBSDKSettings.h"
-#import "FBSDKFBSDKTestUsersManager.h"
-#import "FBSDKUtility.h"
-
-#import "FBSDKLoginButton.h"
-#import "FBSDKLoginConstants.h"
-#import "FBSDKLoginKit.h"
-#import "FBSDKLoginManager.h"
-#import "FBSDKLoginTooltopView.h"
-#import "FBSDKTooltopView.h"
-#import "FBSDKLoginManagerLoginResult.h"*/
+#endif

@@ -42,8 +42,6 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         
         self.revealViewController().delegate = self
         
-        let manager = PostManager()
-        
         //set up prelimenary variables to make for-loop more readable
         var index:CGFloat = 0.0
         let yOrigin = screenSize.height * 0.1
@@ -68,6 +66,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             if tempPost == false {
                 postTitle = 0
             }
+            
             let soldLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.08, width: screenSize.width, height: soldTitle))
             soldLabel.text = "Sold Items"
             soldLabel.backgroundColor = UIColorFromHex(0x2c3e50)
@@ -83,24 +82,14 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
                     //create the match container view
                     let postContainer = ItemContainer(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight) + soldTitle, width: screenSize.width, height: containerHeight))
                     
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.toggleItemInfo(_:)))
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.togglePostItemInfo(_:)))
                     postContainer.addGestureRecognizer(tap)
                     
-                    //retrieve the match thumbnail
-                    manager.retrievePostThumbnail(post) { img, error in
-                        guard error == nil else {
-                            print("Error retrieving match images: \(error)")
-                            return
-                        }
-                        if let img = img {
-                            post.thumbnail = img
-                            postContainer.post = post
-                            //self.addContainerContent(postContainer, img: img, match: match)
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.addContainerContent(postContainer, post: post)
-                                self.distSet = false
-                            }
-                        }
+
+                    dispatch_async(dispatch_get_main_queue()) {
+                        postContainer.post = post
+                        self.addContainerContent(postContainer)
+                        self.distSet = false
                     }
                     
                     postContainerView.addSubview(postContainer)
@@ -123,24 +112,13 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
                     //create the match container view
                     let postContainer = ItemContainer(frame: CGRect(x: 0, y: screenSize.height * 0.11 + (index * containerHeight) + postTitle + soldTitle-screenSize.height*0.018, width: screenSize.width, height: containerHeight))
                     
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.togglePostItemInfo(_:)))
                     postContainer.addGestureRecognizer(tap)
                     
-                    //retrieve the match thumbnail
-                    manager.retrievePostThumbnail(post) { img, error in
-                        guard error == nil else {
-                            print("Error retrieving match images: \(error)")
-                            return
-                        }
-                        if let img = img {
-                            post.thumbnail = img
-                            postContainer.post = post
-                            //self.addContainerContent(postContainer, img: img, match: match)
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.addContainerContent(postContainer, post: post)
-                                self.distSet = false
-                            }
-                        }
+                    dispatch_async(dispatch_get_main_queue()) {
+                        postContainer.post = post
+                        self.addContainerContent(postContainer)
+                        self.distSet = false
                     }
                     
                     postContainerView.addSubview(postContainer)
@@ -174,11 +152,10 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             self.view.addSubview(emptyView)
         }
         
-        
-        
-        
         addHeaderItems("Your Posts")
         sideMenuGestureSetup()
+        revealViewController().rightViewController = nil
+        
         //        addGestureRecognizer()
         //        setupButtons()
         
@@ -187,70 +164,20 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         
     }
     
-    func toggleItemInfo(sender: UITapGestureRecognizer) {
-        let containerView = sender.view as! ItemContainer
-        let manager = ItemManager()
-        manager.retrieveItemById(containerView.match.itemID) { item, error in
-            guard error == nil else {
-                print("error pulling item data from tapped match: \(error)")
-                return
-            }
-            if let item = item {
-                self.tappedItem = item
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.performSegueWithIdentifier("showItemInfo", sender: self)
-                }
-            }
-        }
-    }
     
-    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
-        if segue.identifier == "showItemInfo" {
-            let ivc = segue.destinationViewController as! ItemInfoViewController
-            ivc.item = tappedItem
-        }
-    }
-    
-    //    func setupButtons() {
-    //        //setting up the buttons needed to control the 2 pages within the controller, NEEDS REFACTORING WITH POST
-    //        let buttonBar = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: 35))
-    //        buttonBar.backgroundColor = UIColor.whiteColor()
-    //
-    //        matchesBar = UIView(frame: CGRect(x: 0, y: 32, width: screenSize.width/2, height: 3))
-    //        boughtBar = UIView(frame: CGRect(x: screenSize.width/2, y: 32, width: screenSize.width/2, height: 3))
-    //
-    //
-    //        //setup the buttons on the button bar
-    //        let boughtButtonFrame = CGRectMake(screenSize.width/2, 0, screenSize.width/2, 32)
-    //        boughtButton = makeTextButton("Bought", frame: boughtButtonFrame, target: #selector(MyMatchesViewController.boughtPressed(_:)))
-    //
-    //        let matchesButtonFrame = CGRectMake(0, 0, screenSize.width/2, 32)
-    //        matchesButton = makeTextButton("Matches", frame: matchesButtonFrame, target: #selector(MyMatchesViewController.matchesPressed(_:)))
-    //        matchesButton.selected = true
-    //        matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
-    //
-    //        //set up the subviews for the bar and add it to the master view hierarchy
-    //        buttonBar.addSubview(matchesBar)
-    //        buttonBar.addSubview(boughtBar)
-    //        buttonBar.addSubview(matchesButton)
-    //        buttonBar.addSubview(boughtButton)
-    //
-    //        self.view.addSubview(buttonBar)
-    //        self.view.bringSubviewToFront(buttonBar)
-    //    }
-    
-    
-    func addContainerContent(postContainer: UIView, post: Post) {
+    func addContainerContent(postContainer: ItemContainer) {
+        let post = postContainer.post
+        
         //create the match photo
         let imgHeight = screenSize.width*0.4
         let imgWidth = screenSize.width*0.4
         let imgView = createImgView(CGRect(x: postContainer.frame.width - imgWidth + 5, y: 0, width: screenSize.width*0.4, height: screenSize.width*0.4), action: #selector(MyMatchesViewController.none(_:)), superView: postContainer)
         imgView.image = post.thumbnail
-        
-        
+        imgView.userInteractionEnabled = true
+        let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.togglePostItemInfo(_:)))
+        imgView.addGestureRecognizer(tap)
         
         let descriptionLabel = UILabel(frame: CGRect(x: 10, y: 5+imgHeight * 0.20, width: postContainer.frame.width - imgWidth - 5, height: imgHeight * 0.30))
-        print("Succesfully set the LocalUser's matches")
         descriptionLabel.text = post.itemDescription
         descriptionLabel.font = UIFont(name: "Avenir", size: 14)
         descriptionLabel.textColor = self.UIColorFromHex(0x808080)
@@ -292,7 +219,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         //set up scroll view frame and create variables for the contentView frame
         scrollView.frame = CGRectMake(0, 0, screenSize.width, screenSize.height)
         let contentWidth: CGFloat = scrollView.frame.width
-        let contentHeight = CGFloat(LocalUser.user.matches.count) * containerHeight * CGFloat(1.2) + CGFloat(80)
+        let contentHeight = CGFloat(LocalUser.user.posts.count) * containerHeight * CGFloat(1.2) + CGFloat(80)
         
         
         scrollView.contentSize = CGSizeMake(contentWidth, contentHeight)
@@ -314,43 +241,6 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             deactivate()
         }
     }
-    
-    
-    
-    
-    
-    //
-    //    //function to control the switching between the 2 possible views given a passed boolean.
-    //    func toggleView(toMatches: Bool) {
-    //        if toMatches {
-    //            //check if the user is on the bought page
-    //            if onMatches == false {
-    //                matchesButton.selected = true
-    //                boughtButton.selected = false
-    //                boughtBar.backgroundColor = UIColor.whiteColor()
-    //                matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
-    //                //add the correct subview and remove the previous
-    //                //MAY NEED TO BE CHANGED TO HIDDEN INSTEAD OF REMOVE maybe not TO BE DETERMIENRIDESD
-    //                boughtContainerView.removeFromSuperview()
-    //                scrollView.addSubview(postContainerView)
-    //                onMatches = true
-    //            }
-    //        }
-    //        else {
-    //            //check if the user is on the match page
-    //            if onMatches == true {
-    //                boughtButton.selected = true
-    //                matchesButton.selected = false
-    //                matchesBar.backgroundColor = UIColor.whiteColor()
-    //                boughtBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
-    //                //add the correct subview and remove the previous
-    //                //MAY NEED TO BE CHANGED TO HIDDEN INSTEAD OF REMOVE maybe not TO BE DETERMIENRIDESD
-    //                postContainerView.removeFromSuperview()
-    //                scrollView.addSubview(boughtContainerView)
-    //                onMatches = false
-    //            }
-    //        }
-    //    }
     
     func none(sender: UIButton) {
         

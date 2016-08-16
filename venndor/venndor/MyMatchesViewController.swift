@@ -30,6 +30,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     var onMatches: Bool!
     var sessionStart: NSDate!
     
+    let messageComposer = TextMessageComposer()
+    
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         TimeManager.globalManager.setSessionDuration(sessionStart, controller: "MyMatchesViewController")
@@ -38,13 +40,12 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
+        print("has been reloaded")
+        
         LocalUser.user.mostRecentAction = "Browsed MyMatches"
         sessionStart = NSDate()
-        let matches = LocalUser.matches
         
         self.revealViewController().delegate = self
-        
-        let manager = MatchesManager()
         
         //set up prelimenary variables to make for-loop more readable
         var index:CGFloat = 0.0
@@ -85,26 +86,18 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     //create the match container view
                     let matchContainer = ItemContainer(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight) + boughtTitle, width: screenSize.width, height: containerHeight))
                     
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleMatchItemInfo(_:)))
                     matchContainer.addGestureRecognizer(tap)
                     
-                    //retrieve the match thumbnail
-                    manager.retrieveMatchThumbnail(match) { img, error in
-                        guard error == nil else {
-                            print("Error retrieving match images: \(error)")
-                            return
-                        }
-                        if let img = img {
-                            match.thumbnail = img
-                            matchContainer.match = match
-                            //self.addContainerContent(matchContainer, img: img, match: match)
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.addContainerContent(matchContainer, img: img, match: match)
-                                self.distSet = false
-                            }
-                        }
-                    }
                     
+                    matchContainer.match = match
+                    
+                    //self.addContainerContent(matchContainer, img: img, match: match)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        matchContainer.match = match
+                        self.addContainerContent(matchContainer)
+                        self.distSet = false
+                    }
                     matchContainerView.addSubview(matchContainer)
                     index += 1
                 }
@@ -125,24 +118,25 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                     //create the match container view
                     let matchContainer = ItemContainer(frame: CGRect(x: 0, y: screenSize.height * 0.11 + (index * containerHeight) + matchTitle + boughtTitle-screenSize.height*0.018, width: screenSize.width, height: containerHeight))
                     
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleItemInfo(_:)))
+                    let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleMatchItemInfo(_:)))
                     matchContainer.addGestureRecognizer(tap)
                     
-                    //retrieve the match thumbnail
-                    manager.retrieveMatchThumbnail(match) { img, error in
+                    ItemManager.globalManager.retrieveItemById(match.itemID) { item, error in
                         guard error == nil else {
-                            print("Error retrieving match images: \(error)")
+                            print("Error retrieving item to assign to match container in MyMatches: \(error)")
                             return
                         }
-                        if let img = img {
-                            match.thumbnail = img
-                            matchContainer.match = match
-                            //self.addContainerContent(matchContainer, img: img, match: match)
-                            dispatch_async(dispatch_get_main_queue()) {
-                                self.addContainerContent(matchContainer, img: img, match: match)
-                                self.distSet = false
-                            }
+                        
+                        if let item = item {
+                            matchContainer.item = item
                         }
+
+                    }
+                    
+                    dispatch_async(dispatch_get_main_queue()) {
+                        matchContainer.match = match
+                        self.addContainerContent(matchContainer)
+                        self.distSet = false
                     }
                     
                     matchContainerView.addSubview(matchContainer)
@@ -150,6 +144,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                 }
             }
         }
+            
         else {
             let emptyView = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height-screenSize.height*0.1))
             let emptyLogo = UIImageView(frame: CGRect(x: screenSize.width*0.35, y: screenSize.height*0.15, width: screenSize.width*0.3, height: screenSize.width*0.3))
@@ -178,38 +173,28 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         addHeaderItems("Your Matches")
         sideMenuGestureSetup()
+        revealViewController().rightViewController = nil
 //        addGestureRecognizer()
 //        setupButtons()
         
+    }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+        self.viewDidLoad()
     }
     func DropdownAction() {
         
     }
     
-    func toggleItemInfo(sender: UITapGestureRecognizer) {
-        let containerView = sender.view as! ItemContainer
-        ItemManager.globalManager.retrieveItemById(containerView.match.itemID) { item, error in
-            guard error == nil else {
-                print("error pulling item data from tapped match: \(error)")
-                return
-            }
-            if let item = item {
-                self.tappedItem = item
-                dispatch_async(dispatch_get_main_queue()) {
-                    let itemInfoController = ItemInfoViewController()
-                    itemInfoController.item = item
-                    self.presentViewController(itemInfoController, animated: true, completion: nil)
-                }
-            }
-        }
-    }
-    
-
-    func addContainerContent(matchContainer: UIView, img: UIImage, match: Match) {
-        
+    func addContainerContent(matchContainer: ItemContainer) {
+        let match = matchContainer.match
         //create the match photo
         let imgView = createImgView(CGRect(x: 0, y: 0, width: screenSize.width*0.4, height: screenSize.width*0.4), action: #selector(MyMatchesViewController.none(_:)), superView: matchContainer)
-        imgView.image = img
+
+        imgView.image = match.thumbnail
+
+        let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleMatchItemInfo(_:)))
+        imgView.addGestureRecognizer(tap)
         
         let imgHeight = imgView.frame.height
         let imgWidth = imgView.frame.width
@@ -230,28 +215,30 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         nameLabel.text = match.itemName
         nameLabel.textColor = UIColor.blackColor()
         nameLabel.font = UIFont(name: "Avenir", size: 16)
-//        nameLabel.textAlignment = .Center
         matchContainer.addSubview(nameLabel)
         
         let distanceLabel = UILabel(frame: CGRect(x: matchContainer.frame.width - 45, y: 5, width:45, height: imgHeight * 0.15))
         calculateDistanceFromLocation(match.itemLatitude, longitude: match.itemLongitude, myLocation: LocalUser.myLocation)
+        print("is trying to get distances")
         while(distSet == false){
+//            print("im stuck")
         }
+        
         distanceLabel.text = "\(self.distText)"
         distanceLabel.font = UIFont(name: "Avenir", size: 10)
-//        distanceLabel.textAlignment = .Center
         matchContainer.addSubview(distanceLabel)
         
-        
-//        descriptionLabel.textAlignment = .Center
         matchContainer.addSubview(descriptionLabel)
         
-        //CHANGE TARGET
-        let buyButton = makeTextButton("Buy", frame: CGRect(x: imgWidth+42, y: 20+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.none(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
-//        buyButton.backgroundColor = UIColorFromHex(0x404040)
-//        buyButton.titleLabel?.textColor = UIColor.whiteColor()
-        buyButton.layer.cornerRadius = 5
-        matchContainer.addSubview(buyButton)
+        if match.bought == 0 {
+            let buyButton = makeTextButton("Buy", frame: CGRect(x: imgWidth+42, y: 20+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.toggleBuy(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
+            buyButton.layer.cornerRadius = 5
+            matchContainer.addSubview(buyButton)
+        } else {
+            let messageButton = makeTextButton("Message Seller", frame: CGRect(x: imgWidth+42, y: 20+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.messageSeller(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
+            messageButton.layer.cornerRadius = 5
+            matchContainer.addSubview(messageButton)
+        }
         
         
         
@@ -306,46 +293,60 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         }
     }
     
+    func toggleBuy(sender: UIButton) {
+        print("Buy tapped!")
+        let matchContainer = sender.superview as! ItemContainer
+        
+        let match = matchContainer.match
+        let boughtItem = matchContainer.item
+        
+        self.definesPresentationContext = true
+        UserManager.globalManager.retrieveUserById(match.sellerID) { user, error in
+            guard error == nil else {
+                print("Error retrieving seller in Buy screen: \(error)")
+                return
+            }
+            
+            if let user = user {
+                let bvc = BuyViewController()
+                bvc.item = boughtItem
+                bvc.match = match
+                bvc.seller = user
+                bvc.item = matchContainer.item
+                bvc.fromInfo = false
+                bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+                bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+                self.presentViewController(bvc, animated: true, completion: nil)
+            }
+            else {
+                print("Error with parsing user in buy screen. Returning now.")
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+        
+    }
     
-    
-    
-    
-//    
-//    //function to control the switching between the 2 possible views given a passed boolean.
-//    func toggleView(toMatches: Bool) {
-//        if toMatches {
-//            //check if the user is on the bought page
-//            if onMatches == false {
-//                matchesButton.selected = true
-//                boughtButton.selected = false
-//                boughtBar.backgroundColor = UIColor.whiteColor()
-//                matchesBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
-//                //add the correct subview and remove the previous
-//                //MAY NEED TO BE CHANGED TO HIDDEN INSTEAD OF REMOVE maybe not TO BE DETERMIENRIDESD
-//                boughtContainerView.removeFromSuperview()
-//                scrollView.addSubview(matchContainerView)
-//                onMatches = true
-//            }
-//        }
-//        else {
-//            //check if the user is on the match page
-//            if onMatches == true {
-//                boughtButton.selected = true
-//                matchesButton.selected = false
-//                matchesBar.backgroundColor = UIColor.whiteColor()
-//                boughtBar.backgroundColor = UIColorFromHex(0x3498db, alpha: 1)
-//                //add the correct subview and remove the previous
-//                //MAY NEED TO BE CHANGED TO HIDDEN INSTEAD OF REMOVE maybe not TO BE DETERMIENRIDESD
-//                matchContainerView.removeFromSuperview()
-//                scrollView.addSubview(boughtContainerView)
-//                onMatches = false
-//            }
-//        }
-//    }
     
     func none(sender: UIButton) {
         
     }
+    
+    func messageSeller(sender: UIButton) {
+        print("Message tapped!")
+        let container = sender.superview as! ItemContainer
+        let match = container.match
+        if (messageComposer.canSendText()) {
+            // Obtain a configured MFMessageComposeViewController
+            let messageComposeVC = messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) \(LocalUser.lastName) wants to buy your item \(match.itemName) for $\(match.matchedPrice)")
+            
+            presentViewController(messageComposeVC, animated: true, completion: nil)
+        } else {
+            // Let the user know if his/her device isn't able to send text messages
+            let errorAlert = UIAlertView(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", delegate: self, cancelButtonTitle: "OK")
+            errorAlert.show()
+        }
+    }
+    
     func calculateDistanceFromLocation(latitude: Double, longitude: Double, myLocation: CLLocation){
         
         let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
@@ -393,26 +394,9 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                 }
                 
             }
+            
         }
         task.resume()
     }
-
-//    //control for the gesture to allow swipingleft and right for the menu
-//    func respondToSwipeGesture(gesture: UIGestureRecognizer) {
-//        
-//        if let swipeGesture = gesture as? UISwipeGestureRecognizer {
-//            switch swipeGesture.direction {
-//            //switch case to distinguish the direction of swiping
-//            case UISwipeGestureRecognizerDirection.Right:
-//                print("Swiped right")
-//                toggleView(true)
-//            case UISwipeGestureRecognizerDirection.Left:
-//                print("Swiped left")
-//                toggleView(false)
-//            default:
-//                break
-//            }
-//        }
-//    }
     
 }

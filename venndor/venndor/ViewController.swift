@@ -38,11 +38,11 @@ extension UIViewController: SWRevealViewControllerDelegate {
         return button
     }
     
-    func makeTextButton(text: String, frame: CGRect, target: Selector, circle: Bool = false, textColor: UIColor = UIColor.blackColor(), tinted: Bool = true, backgroundColor: UIColor = UIColor.clearColor()) -> UIButton {
+    func makeTextButton(text: String, frame: CGRect, target: Selector, circle: Bool = false, textColor: UIColor = UIColor.blackColor(), tinted: Bool = true, backgroundColor: UIColor = UIColor.clearColor(), textSize: CGFloat = 12) -> UIButton {
         let button = UIButton(frame: frame)
         button.addTarget(self, action: target, forControlEvents: .TouchUpInside)
         button.setTitle(text, forState: .Normal)
-        button.titleLabel?.font = UIFont(name: "Avenir", size: 12)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: textSize)
         button.setTitleColor(textColor, forState: UIControlState.Normal)
         if tinted == true {
             button.setTitleColor(UIColorFromHex(0x3498db, alpha: 1), forState: UIControlState.Selected)
@@ -54,9 +54,26 @@ extension UIViewController: SWRevealViewControllerDelegate {
         return button
     }
     
-    func makeIndicatorButton(frame: CGRect, color: UIColor) -> UIButton {
+    func makeTextButtonWithTarget(text: String, frame: CGRect, target: UIViewController, action: Selector, circle: Bool = false, textColor: UIColor = UIColor.blackColor(), tinted: Bool = true, backgroundColor: UIColor = UIColor.clearColor(), textSize: CGFloat = 12) -> UIButton {
+        let button = UIButton(frame: frame)
+        button.addTarget(target, action: action, forControlEvents: .TouchUpInside)
+        button.setTitle(text, forState: .Normal)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: textSize)
+        button.setTitleColor(textColor, forState: UIControlState.Normal)
+        if tinted == true {
+            button.setTitleColor(UIColorFromHex(0x3498db, alpha: 1), forState: UIControlState.Selected)
+        }
+        if circle == true {
+            button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        }
+        button.backgroundColor = backgroundColor
+        return button
+    }
+    
+    func makeIndicatorButton(frame: CGRect, color: UIColor, target: Selector) -> UIButton {
         let button = UIButton (frame: frame)
         button.layer.cornerRadius = 0.5*button.bounds.size.width
+        button.addTarget(self, action: target, forControlEvents: .TouchDown)
         createBorder(button, color: color, circle: true)
         button.backgroundColor = UIColor.clearColor()
         return button
@@ -141,10 +158,13 @@ extension UIViewController: SWRevealViewControllerDelegate {
         promptView.backgroundColor = UIColor.whiteColor()
         let imageView = UIImageView(frame: CGRect(x: 0, y: 0, width: frame.height, height: frame.height))
         imageView.image = item.photos![0]
-        let promptText = UILabel(frame: CGRect(x: frame.width*0.47, y: frame.height*0.3, width: frame.width*0.4, height: frame.height*0.4))
+        imageView.contentMode = .ScaleAspectFill
+        imageView.clipsToBounds = true
+        let promptText = UILabel(frame: CGRect(x: frame.height, y: 0, width: frame.width - frame.height, height: frame.height))
         promptText.textAlignment = .Center
         promptText.text = text
         promptText.numberOfLines = 2
+        
         promptView.addSubview(promptText)
         promptView.addSubview(imageView)
         self.view.addSubview(promptView)
@@ -166,7 +186,9 @@ extension UIViewController: SWRevealViewControllerDelegate {
     func deactivate() {
         removeViewIfPresent(100)
         let deactivateView = UIView(frame: CGRectMake(0, UIScreen.mainScreen().bounds.height*0.1, UIScreen.mainScreen().bounds.width, UIScreen.mainScreen().bounds.height*0.9))
-        deactivateView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+//        UIView.animateWithDuration(30, animations: {
+            deactivateView.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.5)
+//        })
         deactivateView.tag = 100
 //        let tap = UITapGestureRecognizer(target: deactivateView, action: #selector(UIViewController.activate))
 //        deactivateView.addGestureRecognizer(tap)
@@ -181,164 +203,80 @@ extension UIViewController: SWRevealViewControllerDelegate {
         for view in self.view.subviews {
             if (view.tag == tag) {
                 view.removeFromSuperview()
+//                print("view removed")
             }
         }
     }
     
-//    //calculate your distance away from the item
-//    func calculateDistance(item: Item, myLocation: CLLocation) -> String {
-//        
-//        var distText: String!
-//        
-//        let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
-//        let itemLatitude = CLLocationDegrees(item.latitude)
-//        let itemLongitude = CLLocationDegrees(item.longitude)
-//        let myLatitude = myLocation.coordinate.latitude
-//        let myLongitude = myLocation.coordinate.longitude
-//        
-//        let origins = "origins=\(myLatitude),\(myLongitude)&"
-//        let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
-//        let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
-//        let url = baseURL+origins+destinations+key
-//        
-//        let requestURL: NSURL = NSURL(string: url)!
-//        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-//        let session = NSURLSession.sharedSession()
-//        let task = session.dataTaskWithRequest(urlRequest) {
-//            (data, response, error) -> Void in
-//            
-//            let httpResponse = response as! NSHTTPURLResponse
-//            let statusCode = httpResponse.statusCode
-//            
-//            if (statusCode == 200) {
-//                
-//                do {
-//                    
-//                    
-//                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
-//                    if let rows = json["rows"] as? [[String:AnyObject]] {
-//                        let first = rows[0]
-//                        let elements = first["elements"] as! Array<AnyObject>
-//                        let firstElement = elements[0]
-//                        if let distDict = firstElement["distance"] as? [String:AnyObject] {
-//                            distText = String(distDict["text"]!)
-//                        }
-//                        else {
-//                            distText = "none"
-//                        }
-//                    }
-//                } catch {
-//                    print("Error with Json: \(error)")
-//                }
-//                
-//            }
-//        }
-//        task.resume()
-//        return distText
-//    }
-//    
-//    func calculateDistanceFromItem(item: Item, myLocation: CLLocation) -> String {
-//        
-//        var distText: String!
-//        
-//        let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
-//        let itemLatitude = CLLocationDegrees(item.latitude)
-//        let itemLongitude = CLLocationDegrees(item.longitude)
-//        let myLatitude = myLocation.coordinate.latitude
-//        let myLongitude = myLocation.coordinate.longitude
-//        
-//        let origins = "origins=\(myLatitude),\(myLongitude)&"
-//        let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
-//        let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
-//        let url = baseURL+origins+destinations+key
-//        
-//        let requestURL: NSURL = NSURL(string: url)!
-//        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-//        let session = NSURLSession.sharedSession()
-//        let task = session.dataTaskWithRequest(urlRequest) {
-//            (data, response, error) -> Void in
-//            
-//            let httpResponse = response as! NSHTTPURLResponse
-//            let statusCode = httpResponse.statusCode
-//            
-//            if (statusCode == 200) {
-//
-//                do {
-//                    
-//                    
-//                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
-//                    if let rows = json["rows"] as? [[String:AnyObject]] {
-//                        let first = rows[0]
-//                        let elements = first["elements"] as! Array<AnyObject>
-//                        let firstElement = elements[0]
-//                        if let distDict = firstElement["distance"] as? [String:AnyObject] {
-//                            distText = String(distDict["text"]!)
-//                        }
-//                        else {
-//                            distText = "none"
-//                        }
-//                    }
-//                } catch {
-//                    print("Error with Json: \(error)")
-//                }
-//                
-//            }
-//        }
-//        task.resume()
-//        return distText
-//    }
-//    
-//    func calculateDistanceFromLocation(latitude: Double, longitude: Double, myLocation: CLLocation) -> String {
-//        
-//        var distText: String!
-//        
-//        let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
-//        let itemLatitude = CLLocationDegrees(latitude)
-//        let itemLongitude = CLLocationDegrees(longitude)
-//        let myLatitude = myLocation.coordinate.latitude
-//        let myLongitude = myLocation.coordinate.longitude
-//        
-//        let origins = "origins=\(myLatitude),\(myLongitude)&"
-//        let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
-//        let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
-//        let url = baseURL+origins+destinations+key
-//        
-//        let requestURL: NSURL = NSURL(string: url)!
-//        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-//        let session = NSURLSession.sharedSession()
-//        let task = session.dataTaskWithRequest(urlRequest) {
-//            (data, response, error) -> Void in
-//            
-//            let httpResponse = response as! NSHTTPURLResponse
-//            let statusCode = httpResponse.statusCode
-//            
-//            if (statusCode == 200) {
-//                
-//                do {
-//                    
-//                    
-//                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
-//                    if let rows = json["rows"] as? [[String:AnyObject]] {
-//                        let first = rows[0]
-//                        let elements = first["elements"] as! Array<AnyObject>
-//                        let firstElement = elements[0]
-//                        if let distDict = firstElement["distance"] as? [String:AnyObject] {
-//                            distText = String(distDict["text"]!)
-//                        }
-//                        else {
-//                            distText = "none"
-//                        }
-//                    }
-//                } catch {
-//                    print("Error with Json: \(error)")
-//                }
-//                
-//            }
-//        }
-//        task.resume()
-//        return distText
-//    }
-//    
+    func toggleMatchItemInfo(sender: UITapGestureRecognizer){
+        let containerView: ItemContainer!
+        if let imgView = sender.view as? UIImageView {
+            containerView = imgView.superview as! ItemContainer
+        }
+        else {
+            containerView = sender.view as! ItemContainer
+        }
+        
+        ItemManager.globalManager.retrieveItemById(containerView.match.itemID) { item, error in
+            guard error == nil else {
+                print("error pulling item data from tapped match: \(error)")
+                return
+            }
+            if let item = item {
+                dispatch_async(dispatch_get_main_queue()) {
+                    let itemInfoController = ItemInfoViewController()
+                    itemInfoController.isPost = false
+                    let thing = itemInfoController.isPost
+                    itemInfoController.item = item
+                    itemInfoController.match = containerView.match
+                    itemInfoController.headerTitle = "Your Matches"
+                    self.presentViewController(itemInfoController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+    
+    func togglePostItemInfo(sender: UITapGestureRecognizer) {
+        let containerView: ItemContainer!
+        
+        if let imgView = sender.view as? UIImageView {
+            containerView = imgView.superview as! ItemContainer
+        }
+        else {
+            containerView = sender.view as! ItemContainer
+        }
+        
+        ItemManager.globalManager.retrieveItemById(containerView.post.itemID) { item, error in
+            guard error == nil else {
+                print("error pulling item data from tapped match: \(error)")
+                return
+            }
+            if let item = item {
+                dispatch_async(dispatch_get_main_queue()) {
+                    let itemInfoController = ItemInfoViewController()
+                    itemInfoController.isPost = true
+                    itemInfoController.post = containerView.post
+                    itemInfoController.item = item
+                    itemInfoController.headerTitle = "Your Posts"
+                    self.presentViewController(itemInfoController, animated: true, completion: nil)
+                }
+            }
+        }
+    }
+}
+extension UIButton {
+    func roundCorners(corners:UIRectCorner, radius: CGFloat) {
+        let borderLayer = CAShapeLayer()
+        borderLayer.frame = self.layer.bounds
+        borderLayer.strokeColor = UIColorFromHex(0x1abc9c, alpha: (1.0-0.3)).CGColor
+        borderLayer.fillColor = UIColor.clearColor().CGColor
+        borderLayer.lineWidth = 1.0
+        let path = UIBezierPath(roundedRect: self.bounds,
+                                byRoundingCorners: corners,
+                                cornerRadii: CGSize(width: radius, height: radius))
+        borderLayer.path = path.CGPath
+        self.layer.addSublayer(borderLayer);
+    }
 }
 class ViewController: UIViewController {
     

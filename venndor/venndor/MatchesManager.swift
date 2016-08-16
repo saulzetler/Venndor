@@ -13,12 +13,21 @@ class MatchesManager: NSObject {
     static let globalManager = MatchesManager()
     
     func createMatch(match: Match, completionHandler: (Match?, ErrorType?) -> () ) {
-        let params = ["itemID": match.itemID, "itemName": match.itemName, "itemDescription": match.itemDescription, "userID": match.sellerID, "sellerID": match.sellerID, "sellerName": match.sellerName, "matchedPrice":match.matchedPrice, "itemLongitude": match.itemLongitude, "itemLatitude": match.itemLatitude, "bought": match.bought, "dateMatched": TimeManager.formatter.stringFromDate(match.dateMatched)]
+        
+        let params = ["itemID": match.itemID, "itemName": match.itemName, "itemDescription": match.itemDescription, "userID": match.userID, "sellerID": match.sellerID, "sellerName": match.sellerName, "matchedPrice":match.matchedPrice, "itemLongitude": match.itemLongitude, "itemLatitude": match.itemLatitude, "bought": match.bought, "dateMatched": TimeManager.formatter.stringFromDate(match.dateMatched)]
         
         RESTEngine.sharedEngine.createMatchOnServer(params as! [String : AnyObject],
             success: { response in
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
                     match.id = id as? String
+                    
+                    //post the thumbnail to the server
+                    RESTEngine.sharedEngine.addImageById(match.id!, image:  match.thumbnail, imageName: "image0",
+                        success: { response in
+                        }, failure: { error in
+                            print("Error creating match thumbnail: \(error)")
+                    })
+                    
                     completionHandler(match, nil)
                 }
             }, failure: { error in
@@ -31,12 +40,46 @@ class MatchesManager: NSObject {
             success: { response in
                 if let response = response {
                     let match = Match(json: response)
+                    self.retrieveMatchThumbnail(match) { img, error in
+                        guard error == nil else {
+                            print("Error retrieving match thumbnail: \(error)")
+                            return
+                        }
+                        
+                        if let img = img {
+                            match.thumbnail = img
+                        }
+                        completionHandler(match, nil)
+                    }
+                    //completionHandler(match, nil)
+                }
+            }, failure: { error in
+                completionHandler(nil, error)
+        })
+    }
+    
+    func retrieveMatchByFilter(filter: String, completionHandler:(Match?, ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.getMatchesFromServer(nil, filter: filter, offset: nil, fields: nil,
+            success: { response in
+                if let response = response, matchArray = response["resource"] as? NSArray, matchData = matchArray[0] as? JSON {
+                    let match = Match(json: matchData)
+                    
+//                    //instantly pull the thumbnail too
+//                    self.retrieveMatchThumbnail(match) { img, error in
+//                        guard error == nil else {
+//                            print("Error retrieving match thumbnail: \(error)")
+//                            return
+//                        }
+//                        if let img = img {
+//                            match.thumbnail = img
+//                            
+//                        }
+//                    }
                     completionHandler(match, nil)
                 }
             }, failure: { error in
                 completionHandler(nil, error)
         })
-        
     }
     
     func retrieveUserMatches(user: User, completionHandler: ([Match]?, ErrorType?) -> () ){
@@ -46,6 +89,7 @@ class MatchesManager: NSObject {
             completionHandler([Match](), nil)
             return
         }
+        
         RESTEngine.sharedEngine.getMatchesFromServer(nil, filter: filterString, offset: nil, fields: nil,
             success: { response in
                 if let response = response, matchesData = response["resource"] as? NSArray {
@@ -54,19 +98,36 @@ class MatchesManager: NSObject {
                     for data in matchesData {
                         let data = data as! JSON
                         let match = Match(json: data)
+                        
+                        //instantly pull the thumbnail too
+                        self.retrieveMatchThumbnail(match) { img, error in
+                            guard error == nil else {
+                                print("Error retrieving match thumbnail: \(error)")
+                                return
+                            }
+                            if let img = img {
+                                match.thumbnail = img
+                            }
+                        }
+                        
                         matchesArray.append(match)
                     }
-                    
                     completionHandler(matchesArray, nil)
                 }
+                
             }, failure: {error in
                 completionHandler(nil, error)
         })
         
     }
     
+    func updateMatchById(id: String, update: JSON, completionHandler: (ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.updateMatchById(id, matchDetails: update,
+            success: { response in completionHandler(nil)}, failure: { error in completionHandler(error)})
+    }
+    
     func retrieveMatchThumbnail(match: Match, completionHandler: (UIImage?, ErrorType?) -> () ) {
-        RESTEngine.sharedEngine.getImageFromServerById(match.itemID, fileName: "image0",
+        RESTEngine.sharedEngine.getImageFromServerById(match.id!, fileName: "image0",
             success: { response in
                 if let content = response!["content"] as? NSString {
                     let fileData = NSData(base64EncodedString: content as String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
@@ -90,6 +151,11 @@ class MatchesManager: NSObject {
             failure: { error in completionHandler(error)})
     }
     
+    func deleteMultipleMatchesById(ids:[[String:AnyObject]]?, filter: String?, completionHandler: (ErrorType?) -> ()) {
+        RESTEngine.sharedEngine.deleteMultipleMatchesFromServer(ids, filter: filter,
+            success: { _ in completionHandler(nil) }, failure: { error in completionHandler(error)})
+    }
+    
     func createFilterString(matches: [String:AnyObject]) -> String {
         var filterString = ""
         var index = 0
@@ -98,6 +164,6 @@ class MatchesManager: NSObject {
             index += 1
         }
         
-        return filterString
+       return filterString
     }
 }

@@ -22,6 +22,8 @@ protocol DraggableViewDelegate {
 }
 
 public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDelegate {
+    var screenSize = UIScreen.mainScreen().bounds
+    
     var delegate: DraggableViewDelegate!
     var panGestureRecognizer: UIPanGestureRecognizer!
     var originPoint: CGPoint!
@@ -35,6 +37,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     var containerView = UIView()
     var pageControl: UIPageControl! = UIPageControl()
     var picNum: Int!
+    var prevPicNum: Int!
     var numberOfPics: Int!
     
     //save current item
@@ -50,12 +53,17 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     var mapView: GMSMapView!
     var distText: String!
     var distanceSet: Bool!
+    
+    //for seller
+    var sellerPic: UIImageView!
+    var sellerNameLabel: UILabel!
+    var sellerRatingLabel: UILabel!
 
     required public init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
     }
     
-    init(frame: CGRect, item: Item, myLocation: CLLocation) {
+    init(frame: CGRect, item: Item, myLocation: CLLocation?) {
         
         super.init(frame: frame)
 
@@ -80,7 +88,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     }
     
-    func setupItemInfo(item: Item, myLocation: CLLocation) {
+    func setupItemInfo(item: Item, myLocation: CLLocation?) {
         
         itemInfo = UIView(frame: CGRect(x: 0, y: self.frame.height*0.9, width: self.frame.width, height: self.frame.height*0.1))
         itemInfo.backgroundColor = UIColor.whiteColor()
@@ -95,7 +103,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
         itemDescription.text = item.details
         itemDescription.font = itemDescription.font.fontWithSize(10)
-        itemDescription.sizeToFit()
+//        itemDescription.sizeToFit()
         itemDescription.numberOfLines = 0
         itemInfo.addSubview(itemDescription)
         mapView = GMSMapView(frame: CGRect(x: 0, y: itemInfo.frame.height*3, width: itemInfo.frame.width, height: itemInfo.frame.height*3.5))
@@ -106,63 +114,129 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         itemInfo.addSubview(mapView)
         setupDistance(item, myLocation: myLocation)
         
+        UserManager.globalManager.retrieveUserById(item.owner) { user, error in
+            guard error == nil else {
+                print("Error retrieving item owner for item info: \(error)")
+                return
+            }
+            
+            if let user = user {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.sellerPic = self.setupSellerPic(user.profilePictureURL)
+                    self.itemInfo.addSubview(self.sellerPic)
+                    
+                    
+                    let lastInitial = user.lastName.substringToIndex(user.lastName.startIndex.advancedBy(1))
+                    let sellerName = "\(user.firstName) \(lastInitial)"
+                    let label = self.setupSellerNameLabel(sellerName)
+                    self.sellerNameLabel = label
+                    self.itemInfo.addSubview(self.sellerNameLabel)
+                    
+                    self.sellerRatingLabel = self.setupSellerRatingLabel(user.rating)
+                    self.itemInfo.addSubview(self.sellerRatingLabel)
+                    
+                    let star = UIImageView(frame: CGRect(x: self.itemInfo.frame.width*0.77, y: self.itemInfo.frame.height * 8.76, width: self.screenSize.width*0.05, height: self.screenSize.width*0.05))
+                    star.image = UIImage(named: "Star_Filled.png")
+                    // star.contentMode = .ScaleToFill
+                    self.itemInfo.addSubview(star)
+                    
+                }
+            }
+        }
         
         self.addSubview(itemInfo)
         self.bringSubviewToFront(itemInfo)
     }
     
-    func calculateDistance(item: Item, myLocation: CLLocation) {
+    func setupSellerNameLabel(name: String) -> UILabel {
+        let sellerNameLabel = UILabel(frame: CGRect(x: self.itemInfo.frame.width*0.65, y: self.itemInfo.frame.height * 6.7, width: self.screenSize.width*0.3, height: self.screenSize.width*0.45))
+        sellerNameLabel.text = name
+        sellerNameLabel.font = UIFont.boldSystemFontOfSize(20)
+        return sellerNameLabel
+    }
+    
+    func setupSellerRatingLabel(rating: Double) -> UILabel {
+        let sellerRatingLabel = UILabel(frame: CGRect(x: self.itemInfo.frame.width*0.71, y: self.itemInfo.frame.height * 7.3, width: self.screenSize.width*0.20, height: self.screenSize.width*0.45))
+        sellerRatingLabel.text = "\(Int(rating))"
+        sellerRatingLabel.adjustsFontSizeToFitWidth = true
+        return sellerRatingLabel
+    }
+    
+    func setupSellerPic(url: String) -> UIImageView {
+        let sellerPicView = UIImageView(frame: CGRect(x: self.itemInfo.frame.width*0.22, y: self.itemInfo.frame.height * 7.53, width: self.screenSize.width*0.30, height: self.screenSize.width*0.30))
+        let link = NSURL(string: url)
+        let pictureData = NSData(contentsOfURL: link!)
+        sellerPicView.image = UIImage(data: pictureData!)
+        sellerPicView.layer.masksToBounds = false
+        sellerPicView.layer.cornerRadius = (sellerPicView.frame.size.width)/2
+        sellerPicView.clipsToBounds = true
+        sellerPicView.contentMode = .ScaleAspectFill
+        return sellerPicView
         
-        let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
-        let itemLatitude = CLLocationDegrees(item.latitude)
-        let itemLongitude = CLLocationDegrees(item.longitude)
-        let myLatitude = myLocation.coordinate.latitude
-        let myLongitude = myLocation.coordinate.longitude
+    }
+    
+    func calculateDistance(item: Item, myLocation: CLLocation?) {
         
-        let origins = "origins=\(myLatitude),\(myLongitude)&"
-        let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
-        let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
-        let url = baseURL+origins+destinations+key
-        
-        let requestURL: NSURL = NSURL(string: url)!
-        let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(urlRequest) {
-            (data, response, error) -> Void in
+        if let myLocation = myLocation  {
+            let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
+            let itemLatitude = CLLocationDegrees(item.latitude)
+            let itemLongitude = CLLocationDegrees(item.longitude)
+            let myLatitude = myLocation.coordinate.latitude
+            let myLongitude = myLocation.coordinate.longitude
             
-            let httpResponse = response as! NSHTTPURLResponse
-            let statusCode = httpResponse.statusCode
+            let origins = "origins=\(myLatitude),\(myLongitude)&"
+            let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
+            let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
+            let url = baseURL+origins+destinations+key
             
-            if (statusCode == 200) {
+            let requestURL: NSURL = NSURL(string: url)!
+            let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+            let session = NSURLSession.sharedSession()
+            let task = session.dataTaskWithRequest(urlRequest) {
+                (data, response, error) -> Void in
                 
-                do {
+                let httpResponse = response as! NSHTTPURLResponse
+                let statusCode = httpResponse.statusCode
+                
+                if (statusCode == 200) {
                     
-                    
-                    let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
-                    if let rows = json["rows"] as? [[String:AnyObject]] {
-                        let first = rows[0]
-                        let elements = first["elements"] as! Array<AnyObject>
-                        let firstElement = elements[0]
-                        if let distDict = firstElement["distance"] as? [String:AnyObject] {
-                            self.distText = String(distDict["text"]!)
-                            self.distanceSet = true
+                    do {
+                        
+                        
+                        let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+                        if let rows = json["rows"] as? [[String:AnyObject]] {
+                            let first = rows[0]
+                            let elements = first["elements"] as! Array<AnyObject>
+                            let firstElement = elements[0]
+                            if let distDict = firstElement["distance"] as? [String:AnyObject] {
+                                self.distText = String(distDict["text"]!)
+                                self.distanceSet = true
+                            }
+                            else {
+                                self.distText = "none"
+                                self.distanceSet = true
+                            }
                         }
-                        else {
-                            self.distText = "none"
-                            self.distanceSet = true
-                        }
+                    } catch {
+                        print("Error with Json: \(error)")
                     }
-                } catch {
-                    print("Error with Json: \(error)")
+                    
                 }
-                
             }
+            task.resume()
         }
-        task.resume()
+            
+        else {
+            self.distText = "none"
+            self.distanceSet = true
+            return
+        }
+        
+        
     }
     
     // called from setup item info
-    func setupDistance(item: Item, myLocation: CLLocation) {
+    func setupDistance(item: Item, myLocation: CLLocation?) {
         distanceSet = false
         let distIcon = UIImage(named: "Marker Filled-100.png")
         let distIconView = UIImageView(frame: CGRect(x: itemInfo.frame.width*0.65, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.1, height: itemInfo.frame.height*0.6))
@@ -196,7 +270,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         let scrollViewHeight:CGFloat = self.scrollView.frame.height
         let temp = ItemManager()
         for x in 0..<item.photoCount {
-            temp.retrieveItemImageById(item.id, imageIndex: x) { img, error in
+            temp.retrieveItemImage(item, imageIndex: x) { img, error in
                 guard error == nil else {
                     print("Error getting the image from the server: \(error)")
                     return
@@ -210,6 +284,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
                         let temp2 = UIImageView(frame: CGRectMake(0, scrollViewHeight*CGFloat(x),scrollViewWidth, scrollViewHeight))
                         temp2.image = phonto
                         temp2.contentMode = .ScaleAspectFill
+                        temp2.clipsToBounds = true
                         self.containerView.addSubview(temp2)
                     }
                 }
@@ -222,6 +297,9 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView){
         adjustPage()
+        if picNum == numberOfPics-1 && prevPicNum == picNum {
+            openInfo()
+        }
     }
 
     
@@ -235,6 +313,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         let pageHeight:CGFloat = CGRectGetHeight(scrollView.frame)
         let currentPage:CGFloat = floor((scrollView.contentOffset.y-pageHeight/2)/pageHeight)+1
         // Change the indicator
+        prevPicNum = picNum
         picNum = Int(currentPage)
         self.pageControl.currentPage = picNum
         
@@ -244,8 +323,6 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
                 self.scrollView.setContentOffset(yOffset, animated: true)
             }
         }
-        
-        
     }
 
     func setupView() -> Void {
@@ -266,7 +343,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     }
     
     func openInfo() {
-        UIView.animateWithDuration(1, animations: { () -> Void in
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.itemInfo.frame = CGRect(x: 0, y: 0, width: self.frame.width, height: self.frame.height)
             self.itemInfo.backgroundColor = UIColor.whiteColor().colorWithAlphaComponent(0.95)
         }) { (finished: Bool) -> Void in
@@ -275,7 +352,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     }
     
     func closeInfo() {
-        UIView.animateWithDuration(1, animations: { () -> Void in
+        UIView.animateWithDuration(0.4, animations: { () -> Void in
             self.itemInfo.frame = CGRect(x: 0, y: self.frame.height*0.9, width: self.frame.width, height: self.frame.height*0.1)
             self.itemInfo.backgroundColor = UIColor.whiteColor()
         }) { (finished: Bool) -> Void in
@@ -354,11 +431,14 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     func upAction() -> Void {
         //use this function to go to next picture
-        adjustPage()
-        resetView()
+        print("picNum: \(picNum)")
+        print("numberOfPics: \(numberOfPics)")
+        
         if picNum == numberOfPics-1 {
             openInfo()
         }
+        adjustPage()
+        resetView()
     }
     
     func downAction() -> Void {
@@ -374,7 +454,9 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
 //        let offerViewController = OfferViewController()
 //        offerViewController.setupBackground(firstPhoto)
         
-        self.parentViewController!.performSegueWithIdentifier("toOfferScreen", sender: self.parentViewController!)
+        let bvc = self.parentViewController as! BrowseViewController
+        
+        bvc.performSegueWithIdentifier("toOfferScreen", sender: self.parentViewController!)
         
         let finishPoint: CGPoint = CGPointMake(500, 2 * CGFloat(yFromCenter) + self.originPoint.y)
         UIView.animateWithDuration(0.3,

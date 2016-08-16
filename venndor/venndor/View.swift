@@ -19,9 +19,9 @@ extension UIView {
         }
         return nil
     }
-    func makeImageButton(imageName: String, frame: CGRect, target: Selector, tinted: Bool, circle: Bool, backgroundColor: UInt32, backgroundAlpha: Double) -> UIButton {
+    func makeImageButton(imageName: String, frame: CGRect, action: Selector, tinted: Bool, circle: Bool, backgroundColor: UInt32, backgroundAlpha: Double) -> UIButton {
         let button = UIButton(frame: frame)
-        button.addTarget(self, action: target, forControlEvents: UIControlEvents.TouchUpInside)
+        button.addTarget(self, action: action, forControlEvents: UIControlEvents.TouchUpInside)
         if imageName != "" {
             let buttonImage = UIImage(named: imageName)
             button.setImage(buttonImage, forState: .Normal)
@@ -47,6 +47,65 @@ extension UIView {
         return UIColor(red:red, green:green, blue:blue, alpha:CGFloat(alpha))
     }
     
+    func makeTextButton(text: String, frame: CGRect, action: Selector, circle: Bool = false, textColor: UIColor = UIColor.blackColor(), tinted: Bool = true, backgroundColor: UIColor = UIColor.clearColor(), textSize: CGFloat = 12) -> UIButton {
+        let button = UIButton(frame: frame)
+        button.addTarget(self, action: action, forControlEvents: .TouchUpInside)
+        button.setTitle(text, forState: .Normal)
+        button.titleLabel?.font = UIFont(name: "Avenir", size: textSize)
+        button.setTitleColor(textColor, forState: UIControlState.Normal)
+        if tinted == true {
+            button.setTitleColor(UIColorFromHex(0x3498db, alpha: 1), forState: UIControlState.Selected)
+        }
+        if circle == true {
+            button.layer.cornerRadius = 0.5 * button.bounds.size.width
+        }
+        button.backgroundColor = backgroundColor
+        return button
+    }
+    
+    //generic scroll view functions
+    func createBorder(view: UIView, color: UIColor = UIColor.blackColor(), circle: Bool = false) {
+        let boarderColor : UIColor = color
+        view.layer.borderColor = boarderColor.CGColor
+        view.layer.borderWidth = 2.0
+        if circle == false {
+            view.layer.cornerRadius = 8.0
+        }
+        view.layer.masksToBounds = true
+    }
+    
+    func createImgView(frame: CGRect, action: Selector, superView: UIView, boarderColor: UIColor = UIColor.blackColor(), boardered: Bool = false) -> UIImageView {
+        let imgView = UIImageView(frame: frame)
+        let tapGestureRecognizer = UITapGestureRecognizer(target: self, action: action)
+        imgView.userInteractionEnabled = true
+        imgView.addGestureRecognizer(tapGestureRecognizer)
+        imgView.layer.masksToBounds = true
+        imgView.contentMode = .ScaleAspectFill
+        if boardered {
+            createBorder(imgView, color: boarderColor)
+        }
+        superView.addSubview(imgView)
+        return imgView
+    }
+    
+    func customLabel(frame: CGRect, text: String, color: UIColor, fontSize: CGFloat) -> UILabel {
+        let label = UILabel(frame: frame)
+        label.text = text
+        label.textColor = color
+        label.font = UIFont(name: "Avenir", size: fontSize)
+        label.textAlignment = .Center
+        return label
+    }
+    
+    func makeIndicatorButton(frame: CGRect, color: UIColor, target: Selector) -> UIButton {
+        let button = UIButton (frame: frame)
+        button.layer.cornerRadius = 0.5*button.bounds.size.width
+        button.addTarget(self, action: target, forControlEvents: .TouchDown)
+        createBorder(button, color: color, circle: true)
+        button.backgroundColor = UIColor.clearColor()
+        return button
+    }
+
 }
 
 class View: UIView {

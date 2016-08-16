@@ -9,11 +9,13 @@
 import Foundation
 class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
     
-    
+    var isLoggedIn: Bool!
     let loginButton : FBSDKLoginButton = FBSDKLoginButton()
     
     override func viewDidLoad() {
         super.viewDidLoad()
+        
+        
         let screenSize: CGRect = UIScreen.mainScreen().bounds
         let background = UIImage(named: "match background.png")
         let backgroundView = UIImageView(frame: CGRect(x: -20, y: -20, width: screenSize.width*1.2, height: screenSize.height*1.1))
@@ -28,8 +30,10 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
         slogan2.text = "Save time and hassle."
         slogan.textColor = UIColor.whiteColor()
         slogan2.textColor = UIColor.whiteColor()
-        slogan.font = UIFont(name: "Avenir", size: 30)
-        slogan2.font = UIFont(name: "Avenir", size: 28)
+        slogan.font = UIFont(name: "Avenir", size: 26)
+        slogan2.font = UIFont(name: "Avenir", size: 24)
+        slogan.adjustsFontSizeToFitWidth = true
+        slogan2.adjustsFontSizeToFitWidth = true
         
         self.view.addSubview(slogan)
         self.view.addSubview(slogan2)
@@ -41,6 +45,7 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         //app loads for the first time reset the category to all
         GlobalItems.currentCategory = nil
+        isLoggedIn = false
         
         if (FBSDKAccessToken.currentAccessToken() != nil)
         {
@@ -49,6 +54,7 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
             for subView in subViews {
                 subView.removeFromSuperview()
             }
+            isLoggedIn = true
             fetchProfile()
         }
         else
@@ -84,13 +90,16 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
                 LocalUser.gender = gender
                 LocalUser.ageRange = "\(ageRange["min"])-\(ageRange["max"])"
                 LocalUser.profilePictureURL = "https://graph.facebook.com/\(userID)/picture?type=large"
-                LocalUser.facebookID = userID as String
-                
                 
                 //transition when great success
-                self.performSegueWithIdentifier("showSplash", sender: self)
+                if self.isLoggedIn == true {
+                    self.performSegueWithIdentifier("toSplash", sender: self)
+                } else {
+                    self.performSegueWithIdentifier("toNumber", sender: self)
+                }
             }
         }
+        
     }
 
     override func didReceiveMemoryWarning() {

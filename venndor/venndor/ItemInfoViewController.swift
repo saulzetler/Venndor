@@ -11,16 +11,25 @@ import UIKit
 class ItemInfoViewController: UIViewController {
     
     var item: Item!
+    var match: Match!
+    var post: Post!
     var sessionStart: NSDate!
     
     //view attributes
     var header: UIView!
+    var headerTitle: String! 
     var backButton: UIButton!
     var buyButton: UIButton!
+    var messageButton: UIButton!
+    var editButton: UIButton!
+    
+    var isPost: Bool!
     
     let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.77
     let CARD_WIDTH: CGFloat = UIScreen.mainScreen().bounds.width*0.9
     let screenSize: CGRect = UIScreen.mainScreen().bounds
+    
+    let messageComposer = TextMessageComposer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -30,10 +39,24 @@ class ItemInfoViewController: UIViewController {
         let itemInfoView = createItemInfoView(item)
         self.view.addSubview(itemInfoView)
         
-        setupHeaderFrame()
-        setupHeaderLogo()
-        setupBackButton()
-        setupBuyButton()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.setupHeaderFrame()
+            self.setupHeaderTitle()
+            self.setupBackButton()
+//            let booThing = self.isPost
+            
+            if self.isPost == true {
+                self.setupEditButton()
+            }
+            else {
+                if self.match.bought == 1 {
+                    self.setupMessageButton()
+                } else {
+                    self.setupBuyButton()
+                }
+            }
+            
+        }
         
         self.view.backgroundColor = UIColorFromHex(0xecf0f1)
         sessionStart = NSDate()
@@ -59,9 +82,12 @@ class ItemInfoViewController: UIViewController {
         self.view.addSubview(header)
     }
     
-    func setupHeaderLogo() {
-        let logoView = UIView(frame: CGRectMake(screenSize.width*0.25, 24, screenSize.width*0.5, 30))
-        logoView.backgroundColor = UIColor.redColor()
+    func setupHeaderTitle() {
+        let logoView = UILabel(frame: CGRectMake(screenSize.width*0.11, 26, screenSize.width*0.8, 30))
+        logoView.text = self.headerTitle
+        logoView.textAlignment = .Center
+        logoView.font = logoView.font.fontWithSize(20)
+        logoView.textColor = UIColor.whiteColor()
         self.header.addSubview(logoView)
     }
     
@@ -70,7 +96,7 @@ class ItemInfoViewController: UIViewController {
         let backImage = UIImage(named: "Back-50.png")
 
         backButton = UIButton(type: UIButtonType.Custom) as UIButton
-        backButton.frame = CGRectMake(20, 27, screenSize.width*0.1, 20)
+        backButton.frame = CGRectMake(17, 24, screenSize.width*0.15, 25)
         backButton.setImage(backImage, forState: .Normal)
         backButton.imageView?.contentMode = UIViewContentMode.Center
         backButton.addTarget(self, action: #selector(ItemInfoViewController.dismissController(_:)), forControlEvents: UIControlEvents.TouchUpInside)
@@ -85,7 +111,91 @@ class ItemInfoViewController: UIViewController {
         buyButton.backgroundColor = UIColorFromHex(0x34495e)
         buyButton.setTitle("BUY", forState: UIControlState.Normal)
         buyButton.titleLabel?.textColor = UIColor.whiteColor()
+        buyButton.addTarget(self, action: #selector(ItemInfoViewController.toggleBuy), forControlEvents: UIControlEvents.TouchUpInside)
         self.view.addSubview(buyButton)
+    }
+    func setupMessageButton() {
+        let buttonY = self.view.frame.size.height - self.header.frame.size.height
+        let frame = CGRectMake(0, buttonY, self.header.frame.size.width, self.header.frame.size.height)
+        messageButton = UIButton(frame: frame)
+        messageButton.backgroundColor = UIColorFromHex(0x34495e)
+        messageButton.setTitle("MESSAGE SELLER", forState: UIControlState.Normal)
+        messageButton.titleLabel?.textColor = UIColor.whiteColor()
+        messageButton.addTarget(self, action: #selector(ItemInfoViewController.messageSeller), forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(messageButton)
+    }
+    
+    func setupEditButton() {
+        let buttonY = self.view.frame.size.height - self.header.frame.size.height
+        let frame = CGRectMake(0, buttonY, self.header.frame.size.width, self.header.frame.size.height)
+        editButton = UIButton(frame: frame)
+        editButton.backgroundColor = UIColorFromHex(0x34495e)
+        editButton.setTitle("EDIT", forState: UIControlState.Normal)
+        editButton.titleLabel?.textColor = UIColor.whiteColor()
+        editButton.addTarget(self, action: #selector(ItemInfoViewController.editTapped), forControlEvents: UIControlEvents.TouchUpInside)
+        self.view.addSubview(editButton)
+    }
+    
+    func editTapped() {
+        print("Edit Tapped")
+        let editViewController = EditViewControllerTest()
+        editViewController.item = self.item
+        editViewController.post = self.post
+        editViewController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+        editViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+        self.presentViewController(editViewController, animated: true, completion: nil)
+        
+//        self.performSegueWithIdentifier("ToEditPage", sender: self)
+    }
+    
+//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
+//        if (segue.identifier == "ToEditPage") {
+//            // pass data to next view
+//            let evc = segue.destinationViewController as! EditViewController
+//            evc.itemToBeEdited = self.item
+//        }
+//    }
+    
+    func toggleBuy() {
+
+        self.definesPresentationContext = true
+        
+        UserManager.globalManager.retrieveUserById(item.owner) { user, error in
+            guard error == nil else {
+                print("Error retrieving seller in Buy screen: \(error)")
+                return
+            }
+            
+            if let user = user {
+                let bvc = BuyViewController()
+                bvc.match = self.match
+                bvc.seller = user
+                bvc.item = self.item
+                bvc.fromInfo = true
+                bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+                bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+                self.presentViewController(bvc, animated: true, completion: nil)
+            }
+            else {
+                print("Error with parsing user in buy screen. Returning now.")
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+        
+    }
+    func messageSeller() {
+        print("Message tapped!")
+        
+        if (messageComposer.canSendText()) {
+            // Obtain a configured MFMessageComposeViewController
+            let messageComposeVC = messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) \(LocalUser.lastName) wants to buy your item \(match.itemName) for $\(match.matchedPrice)")
+            
+            presentViewController(messageComposeVC, animated: true, completion: nil)
+        } else {
+            // Let the user know if his/her device isn't able to send text messages
+            let errorAlert = UIAlertView(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", delegate: self, cancelButtonTitle: "OK")
+            errorAlert.show()
+        }
     }
     
     func dismissController(sender: AnyObject) {

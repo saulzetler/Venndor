@@ -14,13 +14,13 @@ struct ItemManager {
     
     func createItem(item: Item, completionHandler: (ErrorType?) -> () ) {
 
-        let params = ["name": item.name, "details": item.details, "photoCount": item.photoCount, "owner": item.owner, "ownerName": item.ownerName, "category": item.category,  "condition": item.condition, "latitude": item.latitude, "longitude": item.longitude, "question1": item.question1, "question2": item.question2, "minPrice": item.minPrice, "nuSwipesLeft": item.nuSwipesLeft, "nuSwipesRight": item.nuSwipesRight, "nuMatches": item.nuMatches, "offersMade": item.offersMade, "avgOffer": item.avgOffer, "geoHash": item.geoHash] as JSON
+        let params = ["name": item.name, "details": item.details, "photoCount": item.photoCount, "owner": item.owner, "ownerName": item.ownerName, "category": item.category,  "condition": item.condition, "latitude": item.latitude, "longitude": item.longitude, "itemAge": item.itemAge, "minPrice": item.minPrice, "matches": item.matches, "nuSwipesLeft": item.nuSwipesLeft, "nuSwipesRight": item.nuSwipesRight, "nuMatches": item.nuMatches, "offersMade": item.offersMade, "avgOffer": item.avgOffer, "geoHash": item.geoHash] as JSON
     
         RESTEngine.sharedEngine.addItemToServerWithDetails(params,
             success: { response in
                 if let response = response, result = response["resource"], id = result[0]["_id"] {
                     item.id = id as! String
-                    RESTEngine.sharedEngine.altAddItemImagesById(item.id, images: item.photos!, success: { success in }, failure: { error in })
+                    RESTEngine.sharedEngine.addItemImagesById(item.id, images: item.photos!, success: { success in }, failure: { error in })
                 }
                 completionHandler(nil)
             }, failure: { error in
@@ -50,17 +50,6 @@ struct ItemManager {
                     for data in arr {
                         let data = data as! JSON
                         let item = Item(json: data)
-                        
-                        self.retrieveItemImageById(item.id, imageIndex: 0) { img, error in
-                            guard error == nil else {
-                                print("Error pulling item image: \(error)")
-                                return
-                            }
-                            
-                            if let img = img {
-                                item.photos = [img]
-                            }
-                        }
                         itemsArray.append(item)
                     }
                     completionHandler(itemsArray, nil)
@@ -71,30 +60,22 @@ struct ItemManager {
         })
     }
     
-    func retrieveItemIds(count: Int, offset: Int, filter: String?, completionHandler: ([String]?, ErrorType?) -> () ) {
-        RESTEngine.sharedEngine.getItemsFromServer(count, offset: offset, filter: filter, fields: ["_id"],
-            success: { response in
-                if let ids = response!["resource"] as? Array<Dictionary<String, String>> {
-                    var arr = [String]()
-                    for data in ids {
-                        arr.append(data["_id"]!)
-                    }
-                    
-                    completionHandler(arr, nil)
-                }
-            }, failure: { error in
-                    completionHandler(nil, error)
-        })
-    }
     
-    func retrieveItemImageById(id: String, imageIndex: Int, completionHandler: (UIImage?, ErrorType?) -> () ) {
-        RESTEngine.sharedEngine.getImageFromServerById(id, fileName: "image\(imageIndex)",
+    func retrieveItemImage(item: Item, imageIndex: Int, completionHandler: (UIImage?, ErrorType?) -> () ) {
+        RESTEngine.sharedEngine.getImageFromServerById(item.id, fileName: "image\(imageIndex)",
             success: { response in
                
                 if let response = response, content = response["content"] as? NSString {
                     let fileData = NSData(base64EncodedString: content as String, options: NSDataBase64DecodingOptions.IgnoreUnknownCharacters)
-                    if let data = fileData {
-                        let img = UIImage(data: data)
+                    if let data = fileData, img = UIImage(data: data) {
+                        
+                        if item.photos != nil {
+                            item.photos?.append(img)
+                        }
+                        else {
+                            item.photos = [img]
+                        }
+                        
                         completionHandler(img, nil)
                     }
                         

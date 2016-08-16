@@ -13,6 +13,7 @@ struct LocalUser {
     static var firstName: String!
     static var lastName: String!
     static var email: String!
+    static var phoneNumber: String!
     static var gender: String! 
     static var education: String!
     static var ageRange: String!
@@ -20,18 +21,20 @@ struct LocalUser {
     static var matches: [Match]!
     static var posts: [Post]! 
     static var profilePictureURL: String!
-    static var facebookID: String!
     static var myLocation: CLLocation!
+    static var pushID: String!
 }
 
 class User: NSObject {
     var id: String!
     var email: String!
+    var phoneNumber: String!
     var firstName: String!
     var lastName: String!
     var gender: String!
     var ageRange: String!
     var profilePictureURL: String!
+    var pushID: String!
     
     var university: String!  //NI
     var howTheyFoundVenndor: String!  //NI
@@ -56,23 +59,33 @@ class User: NSObject {
     //key: Controller name, Value: Time Spent
     var timePerController: [String:Double]!
     
-    //key: itemID, Value: Maybe matched/sold price?
+    //key: PostObject ID, Value: buyerID
     var soldItems : [String:AnyObject]!    //NI
-    var boughtItems: [String:AnyObject]!   //NI
+    
+    //key: Match Object ID, value: sellerID 
+    var boughtItems: [String:AnyObject]!   
+    
+    //key: Post Object ID, value: Item Object ID
     var posts: [String:AnyObject]!
     
-    //key: matchID, value: item in the match
-    var matches: [String:AnyObject]!
-    let parseManager = ParserManager()
+    //key: Match Object ID, value: Item object ID
+    var matches: [String:AnyObject]! {
+        willSet {
+            print("About to set matches to:  \(newValue), for user: \(self.firstName)")
+        }
+    }
+    
     
     init(json:JSON) {
         id = json["_id"] as! String
         email = json["email"] as! String
+        phoneNumber = json["phoneNumber"] as! String
         firstName = json["first_name"] as! String
         lastName = json["last_name"] as! String
         gender = json["gender"] as! String
         ageRange = json["ageRange"] as! String
         profilePictureURL = json["profilePictureURL"] as! String
+        pushID = json["pushID"] as! String 
         university = json["university"] as! String
         howTheyFoundVenndor = json["howTheyFoundVenndor"] as! String
         rating = json["rating"] as! Double
@@ -86,11 +99,11 @@ class User: NSObject {
         nuVisits = json["nuVisits"] as! Int
         moneySaved = json["moneySaved"] as! Double
         mostRecentAction = json["mostRecentAction"] as! String
-        timeOnAppPerSession = parseManager.getDoubleDict(json["timeOnAppPerSession"]!)
-        timePerController = parseManager.getDoubleDict(json["timePerController"]!) 
-        soldItems = parseManager.getDict(json["soldItems"]!)
-        boughtItems = parseManager.getDict(json["boughtItems"]!)
-        posts = parseManager.getDict(json["posts"]!)
-        matches = parseManager.getDict(json["matches"]!) 
+        timeOnAppPerSession = ParserManager.globalManager.getDoubleDict(json["timeOnAppPerSession"]!)
+        timePerController = ParserManager.globalManager.getDoubleDict(json["timePerController"]!)
+        soldItems = ParserManager.globalManager.getDict(json["soldItems"]!)
+        boughtItems = ParserManager.globalManager.getDict(json["boughtItems"]!)
+        posts = ParserManager.globalManager.getDict(json["posts"]!)
+        matches = ParserManager.globalManager.getDict(json["matches"]!)
     }
 }
