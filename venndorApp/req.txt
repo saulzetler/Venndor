@@ -1,0 +1,16 @@
+# This file may be used to create an environment using:
+# $ conda create --name <env> --file <this file>
+# platform: win-64
+anaconda-client=1.4.0=py35_0
+anaconda-navigator=1.1.0=py35_0
+conda-build=1.20.0=py35_0
+conda-env=2.5.2=py35_0
+conda-manager=0.3.1=py35_0
+dynd-python=0.7.2=py35_0
+flask-cors=2.1.2=py35_0
+futures-compat=1.0=py3_0
+mkl-service=1.1.2=py35_1
+python-dateutil=2.5.1=py35_0
+scikit-image=0.12.3=np110py35_0
+scikit-learn=0.17.1=np111py35_1
+sockjs-tornado=1.0.1=py35_0
