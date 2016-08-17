@@ -55,6 +55,8 @@ class phoneViewController: UIViewController, UITextFieldDelegate {
         phoneField.keyboardType = .NumberPad
         phoneField.delegate = self
         phoneField.adjustsFontSizeToFitWidth = true
+        phoneField.text = "Phone Number"
+        phoneField.textColor = UIColorFromHex(0xFFFFFF).CGColor
         
         //Add done button to numeric pad keyboard
         let toolbarDone = UIToolbar.init()
@@ -95,13 +97,17 @@ class phoneViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textViewDidBeginEditing(textView: UITextView) {
-        if textView.text == "Additional Info" {
-            textView.text = ""
+        if textView.textColor == UIColorFromHex(0xFFFFFF).CGColor {
+            textView.text = nil
+            textView.textColor = UIColor.blackColor()
         }
     }
     
     func textViewDidEndEditing(textView: UITextView) {
-        textView.resignFirstResponder()
+        if textView.text.isEmpty {
+            textView.text = "Phone Number"
+            textView.textColor = UIColorFromHex(0xFFFFFF).CGColor
+        }
         
     }
     
