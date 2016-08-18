@@ -114,6 +114,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
     func sideMenuGestureSetup() {
         if revealViewController() != nil {
             view.addGestureRecognizer(self.revealViewController().panGestureRecognizer())
+            
         }
     }
     

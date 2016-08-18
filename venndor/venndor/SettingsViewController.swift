@@ -34,7 +34,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         setUpTableView()
         setupPhoneNumInput()
-        hideKeyboardWhenTappedAround()
+//        hideKeyboardWhenTappedAround()
         setupPhonePrompt()
         
         //add the generic views of each page ie. header and side menu
@@ -108,7 +108,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
             return false
         }
         let newLength = currentCharacterCount + string.characters.count - range.length
-        return newLength <= 9
+        return newLength <= 10
     }
     
     func setUpTableView() {
@@ -132,11 +132,10 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     func tableView(tableView: UITableView, cellForRowAtIndexPath indexPath: NSIndexPath) -> UITableViewCell {
         
-        let cell:UITableViewCell=UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
+        let cell = UITableViewCell(style: UITableViewCellStyle.Subtitle, reuseIdentifier: "cell")
         cell.accessoryType = .DisclosureIndicator
         
         cell.selectionStyle = UITableViewCellSelectionStyle.None
-        
         cell.textLabel!.text = tableViewItems[indexPath.row]
         cell.textLabel!.font = UIFont(name: "Avenir", size: 16)
         
@@ -144,7 +143,11 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
     }
     
+    
+    
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
+        print(indexPath.row)
+        
         switch indexPath.row {
         case 0:
             toAbout()
@@ -155,11 +158,6 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         default:
             break
         }
-        if indexPath.row == 2 {
-            logOut()
-        }
-        
-//        print("You selected cell #\(indexPath.row)!")
     }
     
     
