@@ -161,7 +161,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     func setupSellButton() {
         let bottomBar = CGRect(x: screenSize.width*0.02, y: screenSize.height*0.89, width: screenSize.width*0.96, height: screenSize.height*0.09)
-        let bottomBarButton = makeTextButton("Sell", frame: bottomBar, target: #selector(BrowseViewController.toSellPage), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x1abc9c), textSize: 28)
+        let bottomBarButton = makeTextButton("POST AN ITEM", frame: bottomBar, target: #selector(BrowseViewController.toSellPage), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x1abc9c), textSize: 28)
         bottomBarButton.layer.cornerRadius = 10
         bottomBarButton.layer.masksToBounds = true
         mainView.addSubview(bottomBarButton)
@@ -361,6 +361,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         loadAnotherCard()
         nextCard()
+//        self.performSegueWithIdentifier("toOfferScreen", sender: self)
     }
     
     //inserts a new card to the back of the view

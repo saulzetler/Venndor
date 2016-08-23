@@ -39,6 +39,11 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         setupPrompt("How much would you pay?", item: offeredItem, screenSize: screenSize, frame: promptFrame)
 //        setupPrompt()
     }
+    override func viewDidAppear(animated: Bool) {
+        super.viewDidAppear(true)
+//        let temp = self.parentViewController as! BrowseViewController
+//        temp.dismissViewControllerAnimated(false, completion: nil)
+    }
     //to setup the page background to be the items image TO BE DONE
     func setupBackground() {
         let imageViewBackground = UIImageView(frame: CGRectMake(0, 0, screenSize.width, screenSize.height))
@@ -118,6 +123,8 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         else {
             LocalUser.seenPosts[offeredItem.id] = NSDate()
             LocalUser.user.mostRecentAction = "Made an offer on an item."
+            let popup = PopoverViewController()
+            popup.showInView(self.view, message: "No match, item will reappear in an hour!")
             self.performSegueWithIdentifier("offerToBrowse", sender: self)
         }
     }

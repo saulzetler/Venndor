@@ -106,13 +106,17 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
 //        itemDescription.sizeToFit()
         itemDescription.numberOfLines = 0
         itemInfo.addSubview(itemDescription)
-        mapView = GMSMapView(frame: CGRect(x: 0, y: itemInfo.frame.height*3, width: itemInfo.frame.width, height: itemInfo.frame.height*3.5))
-        let location = CLLocationCoordinate2DMake(CLLocationDegrees(item.latitude), CLLocationDegrees(item.longitude))
-        mapView.camera = GMSCameraPosition(target: location, zoom: 15, bearing: 0, viewingAngle: 0)
-        let pin = GMSMarker(position: location)
-        pin.map = mapView
-        itemInfo.addSubview(mapView)
-        setupDistance(item, myLocation: myLocation)
+        
+//        mapView = GMSMapView(frame: CGRect(x: 0, y: itemInfo.frame.height*3, width: itemInfo.frame.width, height: itemInfo.frame.height*3.5))
+//        let location = CLLocationCoordinate2DMake(CLLocationDegrees(item.latitude), CLLocationDegrees(item.longitude))
+//        mapView.camera = GMSCameraPosition(target: location, zoom: 15, bearing: 0, viewingAngle: 0)
+//        let pin = GMSMarker(position: location)
+//        pin.map = mapView
+//        itemInfo.addSubview(mapView)
+        
+        infoOpen = false
+        
+//        setupDistance(item, myLocation: myLocation)
         
         UserManager.globalManager.retrieveUserById(item.owner) { user, error in
             guard error == nil else {
@@ -249,7 +253,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         itemDist.text = distText
         itemDist.textAlignment = .Center
         itemInfo.addSubview(itemDist)
-        infoOpen = false
+        
     }
 
     //scroll view funcs
