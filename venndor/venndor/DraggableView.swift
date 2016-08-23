@@ -179,82 +179,83 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         
     }
     
-    func calculateDistance(item: Item, myLocation: CLLocation?) {
-        
-        if let myLocation = myLocation  {
-            let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
-            let itemLatitude = CLLocationDegrees(item.latitude)
-            let itemLongitude = CLLocationDegrees(item.longitude)
-            let myLatitude = myLocation.coordinate.latitude
-            let myLongitude = myLocation.coordinate.longitude
-            
-            let origins = "origins=\(myLatitude),\(myLongitude)&"
-            let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
-            let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
-            let url = baseURL+origins+destinations+key
-            
-            let requestURL: NSURL = NSURL(string: url)!
-            let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
-            let session = NSURLSession.sharedSession()
-            let task = session.dataTaskWithRequest(urlRequest) {
-                (data, response, error) -> Void in
-                
-                let httpResponse = response as! NSHTTPURLResponse
-                let statusCode = httpResponse.statusCode
-                
-                if (statusCode == 200) {
-                    
-                    do {
-                        
-                        
-                        let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
-                        if let rows = json["rows"] as? [[String:AnyObject]] {
-                            let first = rows[0]
-                            let elements = first["elements"] as! Array<AnyObject>
-                            let firstElement = elements[0]
-                            if let distDict = firstElement["distance"] as? [String:AnyObject] {
-                                self.distText = String(distDict["text"]!)
-                                self.distanceSet = true
-                            }
-                            else {
-                                self.distText = "none"
-                                self.distanceSet = true
-                            }
-                        }
-                    } catch {
-                        print("Error with Json: \(error)")
-                    }
-                    
-                }
-            }
-            task.resume()
-        }
-            
-        else {
-            self.distText = "none"
-            self.distanceSet = true
-            return
-        }
-        
-        
-    }
+//    func calculateDistance(item: Item, myLocation: CLLocation?) {
+//        
+//        if let myLocation = myLocation  {
+//            let baseURL = "https://maps.googleapis.com/maps/api/distancematrix/json?"
+//            let itemLatitude = CLLocationDegrees(item.latitude)
+//            let itemLongitude = CLLocationDegrees(item.longitude)
+//            let myLatitude = myLocation.coordinate.latitude
+//            let myLongitude = myLocation.coordinate.longitude
+//            
+//            let origins = "origins=\(myLatitude),\(myLongitude)&"
+//            let destinations = "destinations=\(itemLatitude),\(itemLongitude)&"
+//            let key = "KEY=AIzaSyBGJFI_sQFJZUpVu4cHd7bD5zlV5lra-FU"
+//            let url = baseURL+origins+destinations+key
+//            
+//            let requestURL: NSURL = NSURL(string: url)!
+//            let urlRequest: NSMutableURLRequest = NSMutableURLRequest(URL: requestURL)
+//            let session = NSURLSession.sharedSession()
+//            let task = session.dataTaskWithRequest(urlRequest) {
+//                (data, response, error) -> Void in
+//                
+//                let httpResponse = response as! NSHTTPURLResponse
+//                let statusCode = httpResponse.statusCode
+//                
+//                if (statusCode == 200) {
+//                    
+//                    do {
+//                        
+//                        
+//                        let json = try NSJSONSerialization.JSONObjectWithData(data!, options:.AllowFragments)
+//                        if let rows = json["rows"] as? [[String:AnyObject]] {
+//                            let first = rows[0]
+//                            let elements = first["elements"] as! Array<AnyObject>
+//                            let firstElement = elements[0]
+//                            if let distDict = firstElement["distance"] as? [String:AnyObject] {
+//                                self.distText = String(distDict["text"]!)
+//                                self.distanceSet = true
+//                            }
+//                            else {
+//                                self.distText = "none"
+//                                self.distanceSet = true
+//                            }
+//                        }
+//                    } catch {
+//                        print("Error with Json: \(error)")
+//                    }
+//                    
+//                }
+//            }
+//            task.resume()
+//        }
+//            
+//        else {
+//            self.distText = "none"
+//            self.distanceSet = true
+//            return
+//        }
+//        
+//        
+//    }
     
     // called from setup item info
-    func setupDistance(item: Item, myLocation: CLLocation?) {
-        distanceSet = false
-        let distIcon = UIImage(named: "Marker Filled-100.png")
-        let distIconView = UIImageView(frame: CGRect(x: itemInfo.frame.width*0.65, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.1, height: itemInfo.frame.height*0.6))
-        distIconView.image = distIcon
-        itemInfo.addSubview(distIconView)
-        calculateDistance(item, myLocation: myLocation)
-        while (!distanceSet) {
-        }
-        let itemDist = UILabel(frame: CGRect(x: itemInfo.frame.width*0.75, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.25, height: itemInfo.frame.height*0.6))
-        itemDist.text = distText
-        itemDist.textAlignment = .Center
-        itemInfo.addSubview(itemDist)
-        
-    }
+//    func setupDistance(item: Item, myLocation: CLLocation?) {
+//        distanceSet = false
+//        let distIcon = UIImage(named: "Marker Filled-100.png")
+//        let distIconView = UIImageView(frame: CGRect(x: itemInfo.frame.width*0.65, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.1, height: itemInfo.frame.height*0.6))
+//        distIconView.image = distIcon
+//        itemInfo.addSubview(distIconView)
+////        calculateDistance(item, myLocation: myLocation)
+//        while (!distanceSet) {
+//        }
+//        let itemDist = UILabel(frame: CGRect(x: itemInfo.frame.width*0.75, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.25, height: itemInfo.frame.height*0.6))
+////        itemDist.text = distText
+//        itemDist.text = "HI TEST"
+//        itemDist.textAlignment = .Center
+//        itemInfo.addSubview(itemDist)
+//        
+//    }
 
     //scroll view funcs
     func setupScrollView(item: Item) {
