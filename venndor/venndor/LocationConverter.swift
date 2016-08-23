@@ -71,4 +71,11 @@ struct LocationConverter {
         }
         return temp
     }
+    func distanceApart(geoHash1: String, geoHash2: String) -> String {
+        let distanceApart = 0
+//        for char in geoHash1 {
+//
+//        }
+        return "\(distanceApart)" + " km"
+    }
 }
