@@ -17,6 +17,8 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
 
     var offer: Double!
     var sessionStart: NSDate!
+    
+    var wheelslider: WheelSlider!
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -34,6 +36,8 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         setupBackground()
         setupHint()
         
+        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(OfferViewController.handlePan(_:)))
+        self.view.addGestureRecognizer(gestureRecognizer)
         
         let promptFrame = CGRect(x: 0, y: screenSize.height*0.2, width: screenSize.width, height: screenSize.height*0.2)
         setupPrompt("How much would you pay?", item: offeredItem, screenSize: screenSize, frame: promptFrame)
@@ -156,11 +160,39 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     func toBuy() {
         
     }
+    
+    func handlePan(gestureRecognizer: UIPanGestureRecognizer) {
+        if gestureRecognizer.state == UIGestureRecognizerState.Began || gestureRecognizer.state == UIGestureRecognizerState.Changed {
+            
+//            let translation = gestureRecognizer.translationInView(self.view)
+            let location = gestureRecognizer.locationInView(self.view)
+            
+            let wheelCenter = CGPointMake(wheelslider.frame.origin.x + wheelslider.frame.width/2, wheelslider.frame.origin.y + wheelslider.frame.height/2)
+            
+            let xPos = location.x - wheelCenter.x
+            let yPos = location.y - wheelCenter.y
+            
+            let newLocation = CGPointMake(xPos, yPos)
+                
+            wheelslider.beganTouchPosition = wheelslider.moveTouchPosition
+            wheelslider.moveTouchPosition = newLocation
+            
+//            print("BTP: \(wheelslider.beganTouchPosition)")
+//            print("MTB: \(wheelslider.moveTouchPosition)")
+            
+//            let wheelRadius = wheelslider.frame.width
+            
+            
+            // note: 'view' is optional and need to be unwrapped
+//            gestureRecognizer.view!.center = CGPointMake(gestureRecognizer.view!.center.x + translation.x, gestureRecognizer.view!.center.y + translation.y)
+//            gestureRecognizer.setTranslation(CGPointMake(0,0), inView: self.view)
+        }
+    }
 
     //function to set up the wheel slider and control.
     func setupWheelSlider() {
         let wheelFrame = CGRectMake(screenSize.width*0.2, screenSize.height*0.6, screenSize.width*0.6, screenSize.width*0.6)
-        let wheelslider = WheelSlider(frame: wheelFrame)
+        wheelslider = WheelSlider(frame: wheelFrame)
         wheelslider.delegate = self
         wheelslider.callback = {(value:Double) in
         }
