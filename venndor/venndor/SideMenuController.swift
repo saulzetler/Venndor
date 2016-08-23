@@ -16,6 +16,8 @@ class SideMenuController: UIViewController {
     var myMatchesButton: UIButton!
     var myPostsButton: UIButton!
     var settingsButton: UIButton!
+    var myPostsCount: UILabel!
+    var myMatchesCount: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -70,11 +72,26 @@ class SideMenuController: UIViewController {
         self.view.addSubview(myMatchesButton)
         myMatchesButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         myMatchesButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
+        if LocalUser.matches.count > 0 {
+            myMatchesCount = UILabel(frame: CGRect(x: screenSize.width*0.46, y: screenSize.height*0.45, width: screenSize.width*0.1, height: screenSize.width*0.1))
+            myMatchesCount.text = "( \(LocalUser.matches.count) )"
+            myMatchesCount.font = UIFont(name: "Avenir", size: 18)
+            myMatchesCount.textColor = UIColor.redColor()
+            self.view.addSubview(myMatchesCount)
+        }
         
         myPostsButton = makeTextButton("MY POSTS", frame: CGRect(x: screenSize.width*0.1, y: screenSize.height*0.55, width: screenSize.width*0.4, height: screenSize.width*0.1), target: #selector(SideMenuController.myPostsPage(_:)))
-        self.view.addSubview(myPostsButton)
         myPostsButton.setTitleColor(UIColor.whiteColor(), forState: .Normal)
         myPostsButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
+        self.view.addSubview(myPostsButton)
+        
+        if LocalUser.posts.count > 0 {
+            myPostsCount = UILabel(frame: CGRect(x: screenSize.width*0.46, y: screenSize.height*0.55, width: screenSize.width*0.1, height: screenSize.width*0.1))
+            myPostsCount.text = "( \(LocalUser.posts.count) )"
+            myPostsCount.font = UIFont(name: "Avenir", size: 18)
+            myPostsCount.textColor = UIColor.redColor()
+            self.view.addSubview(myPostsCount)
+        }
         
         settingsButton = makeTextButton("SETTINGS", frame: CGRect(x: screenSize.width*0.1, y: screenSize.height*0.65, width: screenSize.width*0.4, height: screenSize.width*0.1), target: #selector(SideMenuController.settingsPage(_:)))
         self.view.addSubview(settingsButton)

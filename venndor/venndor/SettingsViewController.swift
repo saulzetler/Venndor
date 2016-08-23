@@ -32,16 +32,18 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         LocalUser.user.mostRecentAction = "Went to Settings"
         sessionStart = NSDate()
         
-        setUpTableView()
+        
         setupPhoneNumInput()
 //        hideKeyboardWhenTappedAround()
         setupPhonePrompt()
+        setUpTableView()
         
         //add the generic views of each page ie. header and side menu
         addHeaderOther("Settings")
         sideMenuGestureSetup()
         revealViewController().rightViewController = nil
         self.revealViewController().delegate = self
+        self.view.bringSubviewToFront(containerView)
         
     }
     
@@ -150,10 +152,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         
         switch indexPath.row {
         case 0:
+            print("0")
             toAbout()
         case 1:
+            print("1")
             deleteAccount()
         case 2:
+            print("2")
             logOut()
         default:
             break

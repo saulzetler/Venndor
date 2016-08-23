@@ -178,10 +178,12 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
 //        setupButtons()
         
     }
-    override func viewDidAppear(animated: Bool) {
-        super.viewDidAppear(true)
-        self.viewDidLoad()
-    }
+//    override func viewWillAppear(animated: Bool) {
+//        super.viewWillAppear(true)
+//        self.view.subviews.forEach({$0.removeFromSuperview()})
+//        self.viewDidLoad()
+//        print ("loaded")
+//    }
     func DropdownAction() {
         
     }
@@ -219,7 +221,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         let distanceLabel = UILabel(frame: CGRect(x: matchContainer.frame.width - 45, y: 5, width:45, height: imgHeight * 0.15))
         calculateDistanceFromLocation(match.itemLatitude, longitude: match.itemLongitude, myLocation: LocalUser.myLocation)
-        print("is trying to get distances")
+//        print("is trying to get distances")
         while(distSet == false){
 //            print("im stuck")
         }
@@ -370,7 +372,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             let statusCode = httpResponse.statusCode
             
             if (statusCode == 200) {
-                print("Everyone is fine, file downloaded successfully.")
+//                print("Everyone is fine, file downloaded successfully.")
                 
                 do {
                     

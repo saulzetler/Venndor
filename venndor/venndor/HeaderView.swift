@@ -26,7 +26,7 @@ class HeaderView: UIView, UITextFieldDelegate {
     override init(frame: CGRect) {
         super.init(frame: frame)
         setUpViewFrame()
-        setUpViewText()
+        setUpName()
         setUpViewMenu()
         setUpViewCategory()
         setUpViewCancel()
@@ -66,7 +66,14 @@ class HeaderView: UIView, UITextFieldDelegate {
         sampleTextField.addSubview(imageView)
         sampleTextField.bringSubviewToFront(imageView)
     }
-    
+    func setUpName() -> Void {
+        let title = UIImageView(frame: CGRectMake(screenSize.width*0.32, 26, screenSize.width*0.36, 30))
+        title.image = UIImage(named: "title.png")
+//        title.textColor = UIColor.whiteColor()
+//        title.font = UIFont(name: title.font.fontName, size: 20)
+//        title.textAlignment = .Center
+        self.addSubview(title)
+    }
     func setUpViewMenu() -> Void {
         //setup menu button
         menuButton   = UIButton(type: UIButtonType.Custom) as UIButton
