@@ -46,7 +46,16 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         sessionStart = NSDate()
         
         self.revealViewController().delegate = self
+        setupMatchesScrollContent()
         
+        
+        addHeaderItems("My Matches")
+        sideMenuGestureSetup()
+        revealViewController().rightViewController = nil
+        
+    }
+    
+    func setupMatchesScrollContent() {
         //set up prelimenary variables to make for-loop more readable
         var index:CGFloat = 0.0
         let yOrigin = screenSize.height * 0.1
@@ -104,7 +113,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             }
             
             //matchtitle to distinguis the shit fuck shit
-            let matchLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.09 + (index * containerHeight) + boughtTitle - screenSize.height*0.016, width: screenSize.width, height: matchTitle))
+            let matchLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.10 + (index * containerHeight) + boughtTitle - screenSize.height*0.016, width: screenSize.width, height: matchTitle))
             matchLabel.text = "Match Items"
             matchLabel.backgroundColor = UIColorFromHex(0x2c3e50)
             matchLabel.font = UIFont(name: "Avenir", size: 22)
@@ -130,7 +139,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                         if let item = item {
                             matchContainer.item = item
                         }
-
+                        
                     }
                     
                     dispatch_async(dispatch_get_main_queue()) {
@@ -149,7 +158,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             let emptyView = UIView(frame: CGRect(x: 0, y: screenSize.height*0.1, width: screenSize.width, height: screenSize.height-screenSize.height*0.1))
             let emptyLogo = UIImageView(frame: CGRect(x: screenSize.width*0.35, y: screenSize.height*0.15, width: screenSize.width*0.3, height: screenSize.width*0.3))
             emptyLogo.image = UIImage(named: "iphone-icon.png")
-//            emptyLogo.contentMode = .ScaleAspectFit
+            //            emptyLogo.contentMode = .ScaleAspectFit
             emptyLogo.layer.cornerRadius = emptyLogo.bounds.size.width * 0.5
             emptyLogo.layer.masksToBounds = true
             emptyView.addSubview(emptyLogo)
@@ -167,23 +176,11 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             emptyLabel2.textColor = UIColorFromHex(0x2c3e50)
             emptyLabel2.textAlignment = .Center
             emptyView.addSubview(emptyLabel2)
-
+            
             self.view.addSubview(emptyView)
         }
         
-        addHeaderItems("Your Matches")
-        sideMenuGestureSetup()
-        revealViewController().rightViewController = nil
-//        addGestureRecognizer()
-//        setupButtons()
-        
     }
-//    override func viewWillAppear(animated: Bool) {
-//        super.viewWillAppear(true)
-//        self.view.subviews.forEach({$0.removeFromSuperview()})
-//        self.viewDidLoad()
-//        print ("loaded")
-//    }
     func DropdownAction() {
         
     }
@@ -220,36 +217,41 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         matchContainer.addSubview(nameLabel)
         
         let distanceLabel = UILabel(frame: CGRect(x: matchContainer.frame.width - 45, y: 5, width:45, height: imgHeight * 0.15))
+        
         calculateDistanceFromLocation(match.itemLatitude, longitude: match.itemLongitude, myLocation: LocalUser.myLocation)
 //        print("is trying to get distances")
+        
         while(distSet == false){
 //            print("im stuck")
         }
         
         distanceLabel.text = "\(self.distText)"
-        distanceLabel.font = UIFont(name: "Avenir", size: 10)
+        distanceLabel.font = UIFont(name: "Avenir", size: 14)
         matchContainer.addSubview(distanceLabel)
         
         matchContainer.addSubview(descriptionLabel)
         
         if match.bought == 0 {
-            let buyButton = makeTextButton("Buy", frame: CGRect(x: imgWidth+42, y: 20+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.toggleBuy(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
+            let buyButton = makeTextButton("Buy", frame: CGRect(x: imgWidth+42, y: 34+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.toggleBuy(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
+            buyButton.titleLabel?.font = UIFont(name: "Avenir", size: 14)
             buyButton.layer.cornerRadius = 5
             matchContainer.addSubview(buyButton)
         } else {
-            let messageButton = makeTextButton("Message Seller", frame: CGRect(x: imgWidth+42, y: 20+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.messageSeller(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
+            let messageButton = makeTextButton("Message Seller", frame: CGRect(x: imgWidth+42, y: 34+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.messageSeller(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
             messageButton.layer.cornerRadius = 5
+            messageButton.titleLabel?.font = UIFont(name: "Avenir", size: 14)
             matchContainer.addSubview(messageButton)
         }
         
         
         
         //create the price container + label
+        
         let priceContainer = UIImageView(frame: CGRect(x: screenSize.width*0.27, y: screenSize.width*0.27, width: screenSize.width*0.22, height: screenSize.width*0.15))
         priceContainer.image = UIImage(named: "venn.png")
 //        priceContainer.backgroundColor = UIColorFromHex(0x2ecc71)
         
-        let priceLabel = UILabel(frame: CGRect(x: 0, y: 2, width: priceContainer.frame.width - 5, height: priceContainer.frame.height))
+        let priceLabel = UILabel(frame: CGRect(x: 0, y: 0, width: priceContainer.frame.width - 5, height: priceContainer.frame.height))
         let temp = Int(match.matchedPrice)
         priceLabel.text = "$\(temp)"
         priceLabel.textAlignment = .Center
