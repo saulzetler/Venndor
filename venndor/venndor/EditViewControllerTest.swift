@@ -392,11 +392,11 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         getAddressFromGeocodeCoordinate(itemLocation)
 
         
-        let currentLocationButton = makeImageButton("sell_currentlocation_button.png", frame: CGRectMake(screenSize.width*0.25, screenSize.height*5.65, screenSize.width*0.5, screenSize.height*0.1), target: #selector(PostViewController.curLocationClicked(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0.0)
+        let currentLocationButton = makeImageButton("sell_currentlocation_button.png", frame: CGRectMake(screenSize.width*0.25, screenSize.height*5.65, screenSize.width*0.5, screenSize.height*0.1), target: #selector(EditViewControllerTest.curLocationClicked(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0.0)
         
         containerView.addSubview(currentLocationButton)
         
-        let searchImageButton = makeImageButton("Search Filled-100.png", frame: CGRectMake(screenSize.width*0.27, screenSize.height*5.28, screenSize.width*0.13, screenSize.width*0.13), target: #selector(PostViewController.searchClicked(_:)), tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.0)
+        let searchImageButton = makeImageButton("Search Filled-100.png", frame: CGRectMake(screenSize.width*0.27, screenSize.height*5.28, screenSize.width*0.13, screenSize.width*0.13), target: #selector(EditViewControllerTest.searchClicked(_:)), tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.0)
         
         containerView.addSubview(searchImageButton)
         
@@ -602,7 +602,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         //        let locationLabel = customLabel(CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), text: "Location", color: UIColorFromHex(0x34495e), fontSize: 30)
         //        containerView.addSubview(locationLabel)
         
-        let locationButton = makeTextButton("Location", frame: CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), target: #selector(PostViewController.searchClicked(_:)), textColor: UIColorFromHex(0x34495e), textSize: 30)
+        let locationButton = makeTextButton("Location", frame: CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), target: #selector(EditViewControllerTest.searchClicked(_:)), textColor: UIColorFromHex(0x34495e), textSize: 30)
         containerView.addSubview(locationButton)
         
         let priceLabelFrame = CGRectMake(screenSize.width*0.15, screenSize.height*6.3, self.screenSize.width*0.7, screenSize.height*0.1)

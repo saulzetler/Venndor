@@ -17,7 +17,7 @@ class PopUpViewControllerSwift : UIViewController {
     var matchedPrice: Int!
     var sessionStart: NSDate!
 
-    var ovc = OfferViewController()
+    var ovc = NewOfferViewController()
 
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
