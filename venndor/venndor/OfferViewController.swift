@@ -8,7 +8,7 @@
 
 import Foundation
 
-class OfferViewController: UIViewController, WheelSliderDelegate {
+class OfferViewController: UIViewController {
 
     //screen size for future reference
     let screenSize: CGRect = UIScreen.mainScreen().bounds
@@ -32,17 +32,17 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         backgroundImage = offeredItem.photos![0]
         
         setupBackButton()
-        setupWheelSlider()
         setupBackground()
         setupHint()
         
-        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(OfferViewController.handlePan(_:)))
-        self.view.addGestureRecognizer(gestureRecognizer)
+//        let gestureRecognizer = UIPanGestureRecognizer(target: self, action: #selector(OfferViewController.handlePan(_:)))
+//        self.view.addGestureRecognizer(gestureRecognizer)
         
         let promptFrame = CGRect(x: 0, y: screenSize.height*0.2, width: screenSize.width, height: screenSize.height*0.2)
         setupPrompt("How much would you pay?", item: offeredItem, screenSize: screenSize, frame: promptFrame)
 //        setupPrompt()
     }
+    
     override func viewDidAppear(animated: Bool) {
         super.viewDidAppear(true)
 //        let temp = self.parentViewController as! BrowseViewController
@@ -119,7 +119,7 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
         
         if temp[0] != 0.00 {
             let matchControllerView = PopUpViewControllerSwift()
-            matchControllerView.ovc = self
+//            matchControllerView.ovc = self
             matchControllerView.matchedItem = offeredItem
             matchControllerView.matchedPrice = Int(temp[0] + temp[1])
             matchControllerView.showInView(self.view, price: Int(temp[0] + temp[1]), item: offeredItem)
@@ -166,16 +166,9 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
             
 //            let translation = gestureRecognizer.translationInView(self.view)
             let location = gestureRecognizer.locationInView(self.view)
-            
-            let wheelCenter = CGPointMake(wheelslider.frame.origin.x + wheelslider.frame.width/2, wheelslider.frame.origin.y + wheelslider.frame.height/2)
-            
-            let xPos = location.x - wheelCenter.x
-            let yPos = location.y - wheelCenter.y
-            
-            let newLocation = CGPointMake(xPos, yPos)
                 
             wheelslider.beganTouchPosition = wheelslider.moveTouchPosition
-            wheelslider.moveTouchPosition = newLocation
+            wheelslider.moveTouchPosition = location
             
 //            print("BTP: \(wheelslider.beganTouchPosition)")
 //            print("MTB: \(wheelslider.moveTouchPosition)")
@@ -190,6 +183,8 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     }
 
     //function to set up the wheel slider and control.
+    
+/*
     func setupWheelSlider() {
         let wheelFrame = CGRectMake(screenSize.width*0.2, screenSize.height*0.6, screenSize.width*0.6, screenSize.width*0.6)
         wheelslider = WheelSlider(frame: wheelFrame)
@@ -208,4 +203,5 @@ class OfferViewController: UIViewController, WheelSliderDelegate {
     func updateSliderValue(value: Double, sender: WheelSlider) {
         self.offer = value
     }
+ */
 }
