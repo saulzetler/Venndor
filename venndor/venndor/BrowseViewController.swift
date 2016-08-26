@@ -114,7 +114,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
         switch segue.identifier! {
         case "toOfferScreen":
-            let ovc = segue.destinationViewController as! OfferViewController
+            let ovc = segue.destinationViewController as! NewOfferViewController
             ovc.offeredItem = itemList[currentCardIndex]
             
         default:

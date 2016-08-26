@@ -30,6 +30,8 @@ public enum WSKnobLineCap{
 
 @IBDesignable
 public class WheelSlider: UIView {
+    
+    var totalTheta: CGFloat = 0
 
     private let wheelView:UIView
     
@@ -43,8 +45,9 @@ public class WheelSlider: UIView {
             callback?(calcCurrentValue())
         }
     }
-    private var beganTouchPosition = CGPointMake(0, 0)
-    private var moveTouchPosition = CGPointMake(0, 0){
+    
+    public var beganTouchPosition = CGPointMake(0, 0)
+    public var moveTouchPosition = CGPointMake(0, 0){
         didSet{
             calcCurrentPoint()
         }
@@ -70,7 +73,7 @@ public class WheelSlider: UIView {
  
     @IBInspectable public var minVal:Int = 0
     @IBInspectable public var maxVal:Int = 50
-    @IBInspectable public var speed:Int = 80
+    @IBInspectable public var speed:Int = 100
     @IBInspectable public var isLimited:Bool = false
     @IBInspectable public var allowNegativeNumber:Bool = false
     @IBInspectable public var isValueText:Bool = true
@@ -159,10 +162,11 @@ public class WheelSlider: UIView {
         anim.fillMode = kCAFillModeForwards;
         anim.removedOnCompletion = false
         return anim
-    
     }
     
     private func calcCurrentValue() -> Double{
+        
+        
         let normalization = Double(maxVal) / Double(speed)
         var val = currentPoint*normalization/2.0
         if(isLimited && val > Double(maxVal)){
@@ -177,67 +181,106 @@ public class WheelSlider: UIView {
     
     private func calcCurrentPoint(){
         
+        let centerX = bounds.size.width/2.0
+        let centerY = bounds.size.height/2.0
+        
+        let xPosNew = moveTouchPosition.x - centerX
+        let yPosNew = moveTouchPosition.y - centerY
+        let xPosOld = beganTouchPosition.x - centerX
+        let yPosOld = beganTouchPosition.y - centerY
+        
+//        print("xNew: \(xPosNew)")
+//        print("yNew: \(yPosNew)")
+//        print("xOld: \(xPosOld)")
+//        print("yOld: \(yPosOld)")
+        
+        
+        
+        let deltaX = xPosNew - xPosOld
+        let deltaY = yPosNew - yPosOld
+        
+        print("deltaX: \(deltaX)")
+        print("deltaY: \(deltaY)")
+        
+        var dTheta: CGFloat
+        
+//        if deltaY >= 0 {
+//            dTheta = CGFloat(M_PI/2) - atan(deltaY/deltaX)
+//        } else {
+//            dTheta = CGFloat(M_PI/2) + atan(deltaY/deltaX)
+//        }
+        
+        if deltaX != 0 {
+            dTheta = atan(abs(deltaY)/abs(deltaX))
+        } else {
+            dTheta = 0
+        }
+        print("Delta: \(dTheta)")
+
+        
         let displacementY = abs(beganTouchPosition.y - moveTouchPosition.y)
         let displacementX = abs(beganTouchPosition.x - moveTouchPosition.x)
-        
-        let distance = Double(sqrt(displacementX + displacementY)*0.8)
+//        let distance = Double(sqrt(displacementX + displacementY)*0.8)
         
 //        guard(max(displacementX,displacementY) > 1.0)else{
 //            return
 //        }
-        guard(allowNegativeNumber || calcCurrentValue() > 0)else{
-            currentPoint += distance
+        
+        if(calcCurrentValue() < 0){
             return
         }
         
-        let centerX = bounds.size.width/2.0
-        let centerY = bounds.size.height/2.0
-        beforePoint = currentPoint
-        
-        if(displacementX > displacementY){
-            if(centerY > beganTouchPosition.y){
-                if(moveTouchPosition.x >= beganTouchPosition.x){
-                    currentPoint += distance
-                }else{
-                    currentPoint -= distance
+        if(displacementX > displacementY){ // moving side to side
+            if(centerY > beganTouchPosition.y){ //below center
+                if(moveTouchPosition.x >= beganTouchPosition.x){ //moving to right
+                    totalTheta = totalTheta + dTheta
+                }else{ // moving to left
+                    totalTheta = totalTheta - dTheta
                 }
-            }else{
-                if(moveTouchPosition.x > beganTouchPosition.x){
-                    currentPoint -= distance
-                }else{
-                    currentPoint += distance
+            }else{ // above center
+                if(moveTouchPosition.x > beganTouchPosition.x){ //moving to right
+                    totalTheta = totalTheta + dTheta
+                }else{ // moving left
+                    totalTheta = totalTheta - dTheta
                 }
             }
-        }else{
-            if(centerX <= beganTouchPosition.x){
-                if(moveTouchPosition.y >= beganTouchPosition.y){
-                    currentPoint += distance
-                }else{
-                    currentPoint -= distance
+        }else{ // moving up/down
+            if(centerX <= beganTouchPosition.x){ // on the right of center
+                if(moveTouchPosition.y >= beganTouchPosition.y){ // moving up
+                    totalTheta = totalTheta + dTheta
+                }else{ // moving down
+                    totalTheta = totalTheta - dTheta
                 }
-            }else{
-                if(moveTouchPosition.y > beganTouchPosition.y){
-                    currentPoint -= distance
-                }else{
-                    currentPoint += distance
+            }else{ // on the left
+                if(moveTouchPosition.y > beganTouchPosition.y){ // moving up
+                    totalTheta = totalTheta - dTheta
+                }else{ // moving down
+                    totalTheta = totalTheta + dTheta
                 }
             }
         }
+        
+        print("Total: \(totalTheta)")
+        beforePoint = currentPoint
+        currentPoint = (Double(totalTheta)*10/(2*M_PI))
+        
+        
     }
     
-    override public func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
-        let touch = touches.first as UITouch?
-        if let t = touch{
-            let pos = t.locationInView(self)
-//            print(pos)
-            
-            beganTouchPosition = moveTouchPosition
-            moveTouchPosition = pos
-//            print("BTP: \(beganTouchPosition)")
-//            print("MTB: \(moveTouchPosition)")
-            
-        }
-    }
+//    override public func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {
+//        let touch = touches.first as UITouch?
+//        if let t = touch{
+//            let pos = t.locationInView(self)
+//            print("Touches Moved")
+////            print(pos)
+//            
+//            beganTouchPosition = moveTouchPosition
+//            moveTouchPosition = pos
+////            print("BTP: \(beganTouchPosition)")
+////            print("MTB: \(moveTouchPosition)")
+//            
+//        }
+//    }
  
 
     

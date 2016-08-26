@@ -399,6 +399,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
 //        let searchImageButton = makeImageButton("Search Filled-100.png", frame: CGRectMake(screenSize.width*0.27, screenSize.height*5.28, screenSize.width*0.13, screenSize.width*0.13), target: #selector(PostViewController.searchClicked(_:)), tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.0)
 //        
 //        containerView.addSubview(searchImageButton)
+
         
         //to get the users location
         locationManager.delegate = self
@@ -604,6 +605,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         
 //        let locationButton = makeTextButton("Location", frame: CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), target: #selector(PostViewController.searchClicked(_:)), textColor: UIColorFromHex(0x34495e), textSize: 30)
 //        containerView.addSubview(locationButton)
+
         
         let priceLabelFrame = CGRectMake(screenSize.width*0.15, screenSize.height*6.3, self.screenSize.width*0.7, screenSize.height*0.1)
         let priceLabel = customLabel(priceLabelFrame, text: "I want to sell this for", color: UIColorFromHex(0x34495e), fontSize: 25)

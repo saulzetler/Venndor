@@ -137,6 +137,7 @@
 		E4CD3A2C1D5B904300834ADD /* Step2.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CD3A281D5B904300834ADD /* Step2.png */; };
 		E4CD3A2D1D5B904300834ADD /* Step3.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CD3A291D5B904300834ADD /* Step3.png */; };
 		E4CD3A2E1D5B904300834ADD /* Step4.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CD3A2A1D5B904300834ADD /* Step4.png */; };
+		E4FA5A581D6F73C300734321 /* NewOfferViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4FA5A571D6F73C300734321 /* NewOfferViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -300,6 +301,7 @@
 		E4CD3A281D5B904300834ADD /* Step2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step2.png; sourceTree = "<group>"; };
 		E4CD3A291D5B904300834ADD /* Step3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step3.png; sourceTree = "<group>"; };
 		E4CD3A2A1D5B904300834ADD /* Step4.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step4.png; sourceTree = "<group>"; };
+		E4FA5A571D6F73C300734321 /* NewOfferViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = NewOfferViewController.swift; sourceTree = "<group>"; };
 		FFD7DAC17D30907788729F4A /* Pods-venndorTests.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-venndorTests.release.xcconfig"; path = "Pods/Target Support Files/Pods-venndorTests/Pods-venndorTests.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -355,6 +357,7 @@
 				E44C152C1D11CC300006EBAD /* MyMatchesViewController.swift */,
 				E44C152E1D11D7410006EBAD /* CategoriesMenuController.swift */,
 				E43070E51D2312B00035BCF4 /* OfferViewController.swift */,
+				E4FA5A571D6F73C300734321 /* NewOfferViewController.swift */,
 				E478AB131D2D5DDB00F00D60 /* PopUpViewControllerSwift.swift */,
 				E48002071D2FFAF7009C90E2 /* PopoverViewController.swift */,
 				109D93531D3E9BEB00A14616 /* Splash2ViewController.swift */,
@@ -932,6 +935,7 @@
 			files = (
 				10FC75E51D3FC48D002A7F63 /* LoginPageViewController.swift in Sources */,
 				E42E04C31D2563330043779F /* WheelSlider.swift in Sources */,
+				E4FA5A581D6F73C300734321 /* NewOfferViewController.swift in Sources */,
 				63220ED01D47C77B006D02C9 /* PostManager.swift in Sources */,
 				E49051B61D0B245C0045D5C0 /* PostViewController.swift in Sources */,
 				102806D71D22F11D0019C7FF /* RatingControl.swift in Sources */,
