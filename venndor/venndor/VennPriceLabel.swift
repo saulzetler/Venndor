@@ -9,8 +9,26 @@
 import UIKit
 
 class VennPriceLabel: UIImageView {
+    var priceLabel : UILabel!
+    
     required init?(coder aDecoder: NSCoder) {
         super.init(coder: aDecoder)
+    }
+    
+    init(frame: CGRect, price: Int) {
+        super.init(frame: frame)
+        //create the price container
+        self.image = UIImage(named: "venn.png")
+        
+        //create the price label
+        let priceFrame = CGRect(x: frame.width * 0.15, y: frame.origin.y * 0.15 - 2, width: frame.width * 0.6, height: frame.height * 0.8)
+        priceLabel = UILabel(frame:priceFrame)
+        
+        priceLabel.text = "$\(price)"
+        priceLabel.textColor = UIColor.whiteColor()
+        priceLabel.font = priceLabel.font.fontWithSize(30)
+        priceLabel.textAlignment = .Center
+        self.addSubview(priceLabel)
     }
     
     init(containerView: UIView, price: Int, adjustment: Int?) {

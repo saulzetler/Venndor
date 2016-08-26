@@ -125,7 +125,6 @@ class SideMenuController: UIViewController {
     }
     
     func profilePictureTapped() {
-        print ("wtfisthishsit")
         self.performSegueWithIdentifier("showProfile", sender: self)
     }
     

@@ -43,7 +43,6 @@ class ItemInfoViewController: UIViewController {
             self.setupHeaderFrame()
             self.setupHeaderTitle()
             self.setupBackButton()
-//            let booThing = self.isPost
             
             if self.isPost == true {
                 self.setupEditButton()
@@ -54,6 +53,7 @@ class ItemInfoViewController: UIViewController {
                 } else {
                     self.setupBuyButton()
                 }
+                self.setupVennLabel()
             }
             
         }
@@ -72,8 +72,25 @@ class ItemInfoViewController: UIViewController {
         let infoView = ItemInfoView(frame: frame, item: item, myLocation: LocalUser.myLocation)
         infoView.layer.cornerRadius = 20
         infoView.layer.masksToBounds = true
+        
+        
         return infoView
     }
+    
+    func setupVennLabel() {
+        
+        let frameX = self.view.frame.size.width * 0.71
+        let frameY = (self.view.frame.size.height - CARD_HEIGHT)/2 - 12
+        
+        let vennFrame = CGRectMake(frameX, frameY, self.view.frame.size.width * 0.30, self.view.frame.size.height * 0.12)
+        
+        let vennView = VennPriceLabel(frame: vennFrame, price: self.match.matchedPrice)
+        
+        self.view.addSubview(vennView)
+    }
+
+        
+    
     
     func setupHeaderFrame() {
         let frame = CGRectMake(0, 0, screenSize.width, screenSize.height*0.1)
@@ -96,7 +113,7 @@ class ItemInfoViewController: UIViewController {
         let backImage = UIImage(named: "Back-50.png")
 
         backButton = UIButton(type: UIButtonType.Custom) as UIButton
-        backButton.frame = CGRectMake(17, 24, screenSize.width*0.15, 25)
+        backButton.frame = CGRectMake(screenSize.width*0, 31, screenSize.width*0.2, 20)
         backButton.setImage(backImage, forState: .Normal)
         backButton.imageView?.contentMode = UIViewContentMode.Center
         backButton.addTarget(self, action: #selector(ItemInfoViewController.dismissController(_:)), forControlEvents: UIControlEvents.TouchUpInside)
@@ -145,16 +162,9 @@ class ItemInfoViewController: UIViewController {
         editViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         self.presentViewController(editViewController, animated: true, completion: nil)
         
-//        self.performSegueWithIdentifier("ToEditPage", sender: self)
+
     }
     
-//    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject!) {
-//        if (segue.identifier == "ToEditPage") {
-//            // pass data to next view
-//            let evc = segue.destinationViewController as! EditViewController
-//            evc.itemToBeEdited = self.item
-//        }
-//    }
     
     func toggleBuy() {
 

@@ -74,6 +74,7 @@ class HeaderView: UIView, UITextFieldDelegate {
 //        title.textAlignment = .Center
         self.addSubview(title)
     }
+    
     func setUpViewMenu() -> Void {
         //setup menu button
         menuButton   = UIButton(type: UIButtonType.Custom) as UIButton
