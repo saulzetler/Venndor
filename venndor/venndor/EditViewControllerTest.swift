@@ -10,7 +10,8 @@ import Foundation
 import UIKit
 
 //class to control the post/sell page in the application requires many delegates
-class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ImagePickerDelegate, CLLocationManagerDelegate, GMSAutocompleteViewControllerDelegate, RatingControlDelegate {
+class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ImagePickerDelegate, CLLocationManagerDelegate, RatingControlDelegate {
+    //GMSAutocompleteViewControllerDelegate,
     
     //declare the needed variables for the page to work.
     
@@ -111,7 +112,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         setupHeaderTitle()
         setupBackButton()
         setupArrows()
-        setupMap()
+//        setupMap()
         setPreviewItemName()
         setCategoryPreview()
         updateCategoryPreview(item.category)
@@ -376,138 +377,138 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
      ALL GOOGLE MAPS IMPLEMENTATION IS HERE
      ***********************************************************/
     
-    func setupMap() {
-        mapView = GMSMapView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*5.37, screenSize.width*0.8, screenSize.height*0.25))
-        mapView.backgroundColor = UIColorFromHex(0xecf0f1)
-        containerView.addSubview(mapView)
-        
-        let itemLocation = CLLocationCoordinate2DMake(item.latitude, item.longitude)
-        didChangeLocation = false
-        mapView.camera = GMSCameraPosition(target: itemLocation, zoom: 15, bearing: 0, viewingAngle: 0)
-        
-        let pin = GMSMarker(position: itemLocation)
-        pin.appearAnimation = kGMSMarkerAnimationPop
-        pin.map = mapView
-        
-        getAddressFromGeocodeCoordinate(itemLocation)
-
-        
-        let currentLocationButton = makeImageButton("sell_currentlocation_button.png", frame: CGRectMake(screenSize.width*0.25, screenSize.height*5.65, screenSize.width*0.5, screenSize.height*0.1), target: #selector(PostViewController.curLocationClicked(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0.0)
-        
-        containerView.addSubview(currentLocationButton)
-        
-        let searchImageButton = makeImageButton("Search Filled-100.png", frame: CGRectMake(screenSize.width*0.27, screenSize.height*5.28, screenSize.width*0.13, screenSize.width*0.13), target: #selector(PostViewController.searchClicked(_:)), tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.0)
-        
-        containerView.addSubview(searchImageButton)
-        
-        //to get the users location
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
-        
-        useMyLocation = false
-    }
-    
-    func getAddressFromGeocodeCoordinate(coordinate: CLLocationCoordinate2D) {
-        var curAddress: String = ""
-        let geocoder = GMSGeocoder()
-        geocoder.reverseGeocodeCoordinate(coordinate) { response , error in
-            
-            //Add this line
-            if let address = response!.firstResult() {
-                curAddress = address.thoroughfare!
-                print("made it")
-                self.itemLocationName = curAddress
-                self.previewLocation.setTitle(curAddress, forState: .Normal)
-            }
-        }
-    }
-    
-    func curLocationClicked(sender: UIButton) {
-        mapView.clear()
-        mapView.animateToLocation(LocalUser.myLocation.coordinate)
-        //        mapView.camera = GMSCameraPosition(target: myLocation.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-        let pin = GMSMarker(position: LocalUser.myLocation.coordinate)
-        pin.appearAnimation = kGMSMarkerAnimationPop
-        pin.map = mapView
-        useMyLocation = true
-        didChangeLocation = true
-        updateLocationPreview(true)
-    }
-    
-    func searchClicked(sender: UIButton) {
-        let acController = GMSAutocompleteViewController()
-        acController.delegate = self
-        self.presentViewController(acController, animated: true, completion: nil)
-    }
-    
-    //delegate functions
-    
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            
-            LocalUser.myLocation = location
-            
-            // 7
-//            mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-            
-            mapView.myLocationEnabled = true
-            mapView.settings.myLocationButton = true
-            
-            // 8
-            locationManager.stopUpdatingLocation()
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        // 3
-        if status == .AuthorizedWhenInUse {
-            
-            // 4
-            locationManager.startUpdatingLocation()
-            
-            //5
-            mapView.myLocationEnabled = true
-            mapView.settings.myLocationButton = true
-        }
-    }
-    
-    // Handle the user's selection.
-    func viewController(viewController: GMSAutocompleteViewController, didAutocompleteWithPlace place: GMSPlace) {
-        currentPlace = place
-        useMyLocation = false
-        didChangeLocation = true
-        mapView.clear()
-        print("Place name: ", place.name)
-        print("Place address: ", place.formattedAddress)
-        print("Place attributions: ", place.attributions)
-        self.dismissViewControllerAnimated(true, completion: nil)
-        mapView.animateToLocation(place.coordinate)
-        //        mapView.camera = GMSCameraPosition(target: place.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
-        let pin = GMSMarker(position: place.coordinate)
-        pin.appearAnimation = kGMSMarkerAnimationPop
-        pin.map = mapView
-        updateLocationPreview(false)
-    }
-    
-    func viewController(viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: NSError) {
-        // TODO: handle the error.
-        print("Error: ", error.description)
-    }
-    
-    // User canceled the operation.
-    func wasCancelled(viewController: GMSAutocompleteViewController) {
-        self.dismissViewControllerAnimated(true, completion: nil)
-    }
-    
-    // Turn the network activity indicator on and off again.
-    func didRequestAutocompletePredictions(viewController: GMSAutocompleteViewController) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
-    }
-    
-    func didUpdateAutocompletePredictions(viewController: GMSAutocompleteViewController) {
-        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
-    }
+//    func setupMap() {
+//        mapView = GMSMapView(frame: CGRectMake(screenSize.width*0.2, screenSize.height*5.37, screenSize.width*0.8, screenSize.height*0.25))
+//        mapView.backgroundColor = UIColorFromHex(0xecf0f1)
+//        containerView.addSubview(mapView)
+//        
+//        let itemLocation = CLLocationCoordinate2DMake(item.latitude, item.longitude)
+//        didChangeLocation = false
+//        mapView.camera = GMSCameraPosition(target: itemLocation, zoom: 15, bearing: 0, viewingAngle: 0)
+//        
+//        let pin = GMSMarker(position: itemLocation)
+//        pin.appearAnimation = kGMSMarkerAnimationPop
+//        pin.map = mapView
+//        
+//        getAddressFromGeocodeCoordinate(itemLocation)
+//
+//        
+//        let currentLocationButton = makeImageButton("sell_currentlocation_button.png", frame: CGRectMake(screenSize.width*0.25, screenSize.height*5.65, screenSize.width*0.5, screenSize.height*0.1), target: #selector(PostViewController.curLocationClicked(_:)), tinted: false, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0.0)
+//        
+//        containerView.addSubview(currentLocationButton)
+//        
+//        let searchImageButton = makeImageButton("Search Filled-100.png", frame: CGRectMake(screenSize.width*0.27, screenSize.height*5.29, screenSize.width*0.11, screenSize.width*0.11), target: #selector(PostViewController.searchClicked(_:)), tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.0)
+//        
+//        containerView.addSubview(searchImageButton)
+//        
+//        //to get the users location
+//        locationManager.delegate = self
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.startUpdatingLocation()
+//        
+//        useMyLocation = false
+//    }
+//    
+//    func getAddressFromGeocodeCoordinate(coordinate: CLLocationCoordinate2D) {
+//        var curAddress: String = ""
+//        let geocoder = GMSGeocoder()
+//        geocoder.reverseGeocodeCoordinate(coordinate) { response , error in
+//            
+//            //Add this line
+//            if let address = response!.firstResult() {
+//                curAddress = address.thoroughfare!
+//                print("made it")
+//                self.itemLocationName = curAddress
+//                self.previewLocation.setTitle(curAddress, forState: .Normal)
+//            }
+//        }
+//    }
+//    
+//    func curLocationClicked(sender: UIButton) {
+//        mapView.clear()
+//        mapView.animateToLocation(LocalUser.myLocation.coordinate)
+//        //        mapView.camera = GMSCameraPosition(target: myLocation.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+//        let pin = GMSMarker(position: LocalUser.myLocation.coordinate)
+//        pin.appearAnimation = kGMSMarkerAnimationPop
+//        pin.map = mapView
+//        useMyLocation = true
+//        didChangeLocation = true
+//        updateLocationPreview(true)
+//    }
+//    
+//    func searchClicked(sender: UIButton) {
+//        let acController = GMSAutocompleteViewController()
+//        acController.delegate = self
+//        self.presentViewController(acController, animated: true, completion: nil)
+//    }
+//    
+//    //delegate functions
+//    
+//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        if let location = locations.first {
+//            
+//            LocalUser.myLocation = location
+//            
+//            // 7
+////            mapView.camera = GMSCameraPosition(target: location.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+//            
+//            mapView.myLocationEnabled = true
+//            mapView.settings.myLocationButton = true
+//            
+//            // 8
+//            locationManager.stopUpdatingLocation()
+//        }
+//    }
+//    
+//    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+//        // 3
+//        if status == .AuthorizedWhenInUse {
+//            
+//            // 4
+//            locationManager.startUpdatingLocation()
+//            
+//            //5
+//            mapView.myLocationEnabled = true
+//            mapView.settings.myLocationButton = true
+//        }
+//    }
+//    
+//    // Handle the user's selection.
+//    func viewController(viewController: GMSAutocompleteViewController, didAutocompleteWithPlace place: GMSPlace) {
+//        currentPlace = place
+//        useMyLocation = false
+//        didChangeLocation = true
+//        mapView.clear()
+//        print("Place name: ", place.name)
+//        print("Place address: ", place.formattedAddress)
+//        print("Place attributions: ", place.attributions)
+//        self.dismissViewControllerAnimated(true, completion: nil)
+//        mapView.animateToLocation(place.coordinate)
+//        //        mapView.camera = GMSCameraPosition(target: place.coordinate, zoom: 15, bearing: 0, viewingAngle: 0)
+//        let pin = GMSMarker(position: place.coordinate)
+//        pin.appearAnimation = kGMSMarkerAnimationPop
+//        pin.map = mapView
+//        updateLocationPreview(false)
+//    }
+//    
+//    func viewController(viewController: GMSAutocompleteViewController, didFailAutocompleteWithError error: NSError) {
+//        // TODO: handle the error.
+//        print("Error: ", error.description)
+//    }
+//    
+//    // User canceled the operation.
+//    func wasCancelled(viewController: GMSAutocompleteViewController) {
+//        self.dismissViewControllerAnimated(true, completion: nil)
+//    }
+//    
+//    // Turn the network activity indicator on and off again.
+//    func didRequestAutocompletePredictions(viewController: GMSAutocompleteViewController) {
+//        UIApplication.sharedApplication().networkActivityIndicatorVisible = true
+//    }
+//    
+//    func didUpdateAutocompletePredictions(viewController: GMSAutocompleteViewController) {
+//        UIApplication.sharedApplication().networkActivityIndicatorVisible = false
+//    }
     
     //END OF GOOGLE MAPS IMPLEMENTATION
     
@@ -602,8 +603,8 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         //        let locationLabel = customLabel(CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), text: "Location", color: UIColorFromHex(0x34495e), fontSize: 30)
         //        containerView.addSubview(locationLabel)
         
-        let locationButton = makeTextButton("Location", frame: CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), target: #selector(PostViewController.searchClicked(_:)), textColor: UIColorFromHex(0x34495e), textSize: 30)
-        containerView.addSubview(locationButton)
+//        let locationButton = makeTextButton("Location", frame: CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), target: #selector(PostViewController.searchClicked(_:)), textColor: UIColorFromHex(0x34495e), textSize: 30)
+//        containerView.addSubview(locationButton)
         
         let priceLabelFrame = CGRectMake(screenSize.width*0.15, screenSize.height*6.3, self.screenSize.width*0.7, screenSize.height*0.1)
         let priceLabel = customLabel(priceLabelFrame, text: "I want to sell this for", color: UIColorFromHex(0x34495e), fontSize: 25)

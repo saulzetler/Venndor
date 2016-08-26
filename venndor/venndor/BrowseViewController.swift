@@ -54,7 +54,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        LocalUser.CurrentPage = "Browse"
         LocalUser.user.mostRecentAction = "Browsed Item Feed."
         sessionStart = NSDate()
         
