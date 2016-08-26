@@ -105,12 +105,14 @@ class CategoriesMenuController: UITableViewController {
     //create the buttons for the menu
     func setupButtons() {
         //declare the button sizes for the refactored methods to create the buttons
-        let buttonSize = CGRect(x: allCell.frame.width*0.165, y: screenSize.height * 0.007, width: screenSize.width * 0.3, height: screenSize.width * 0.15)
+        let buttonSize = CGRect(x: allCell.frame.width*0.155, y: screenSize.height * 0.007, width: screenSize.width * 0.3, height: screenSize.width * 0.15)
+        let buttonSizeFirst = CGRect(x: allCell.frame.width*0.155, y: screenSize.height * 0.03, width: screenSize.width * 0.3, height: screenSize.width * 0.15)
         
-        allButton = makeTextButton("All", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), circle: false, textColor: UIColorFromHex(0xFFFFFF), tinted: true, backgroundColor: UIColorFromHex(0x2c3e50, alpha: 0.8))
+        allButton = makeTextButton("All", frame: buttonSizeFirst, target: #selector(CategoriesMenuController.toggleSelected(_:)), circle: false, textColor: UIColorFromHex(0xFFFFFF), tinted: true, backgroundColor: UIColorFromHex(0x2c3e50, alpha: 0.8))
 //        allButton = makeImageButton("Home.png", frame: buttonSize, target: #selector(CategoriesMenuController.toggleSelected(_:)), tinted: true, circle: false, backgroundColor: 0x000000, backgroundAlpha: 0)
         allButton.tag = 1
         allButton.titleLabel?.font = UIFont(name: "Avenir", size: 18)
+        
 //        allButton.titleLabel?.textAlignment = .Center
         allCell.addSubview(allButton)
         

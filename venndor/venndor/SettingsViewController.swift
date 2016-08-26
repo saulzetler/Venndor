@@ -29,6 +29,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         containerView.backgroundColor = UIColorFromHex(0xecf0f1)
         self.view.addSubview(containerView)
         
+        LocalUser.CurrentPage = "Settings"
         LocalUser.user.mostRecentAction = "Went to Settings"
         sessionStart = NSDate()
         

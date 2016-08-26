@@ -36,7 +36,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     }
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+        LocalUser.CurrentPage = "My Posts"
         LocalUser.user.mostRecentAction = "Browsed MyPost"
         sessionStart = NSDate()
         
@@ -70,7 +70,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             let soldLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.08, width: screenSize.width, height: soldTitle))
             soldLabel.text = "Sold Items"
             soldLabel.backgroundColor = UIColorFromHex(0x2c3e50)
-            soldLabel.font = UIFont(name: "Avenir", size: 22)
+            soldLabel.font = UIFont(name: "Avenir", size: 20)
             soldLabel.textColor = UIColor.whiteColor()
             soldLabel.textAlignment = .Center
             self.postContainerView.addSubview(soldLabel)
@@ -101,7 +101,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             let postLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.09 + (index * containerHeight) + soldTitle - screenSize.height*0.016, width: screenSize.width, height: postTitle))
             postLabel.text = "Posted Items"
             postLabel.backgroundColor = UIColorFromHex(0x2c3e50)
-            postLabel.font = UIFont(name: "Avenir", size: 22)
+            postLabel.font = UIFont(name: "Avenir", size: 20)
             postLabel.textColor = UIColor.whiteColor()
             postLabel.textAlignment = .Center
             self.postContainerView.addSubview(postLabel)
@@ -142,12 +142,13 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             emptyLabel.textAlignment = .Center
             emptyView.addSubview(emptyLabel)
             let emptyLabel2 = UILabel(frame: CGRect(x: screenSize.width*0.05, y: screenSize.height*0.25, width: screenSize.width*0.9, height: screenSize.height*0.3))
-            emptyLabel2.text = "Start browsing and start matching!"
+            emptyLabel2.text = "Post an item and make a sale today!"
             emptyLabel2.font = UIFont(name: "Avenir", size: 22)
             emptyLabel2.adjustsFontSizeToFitWidth = true
             emptyLabel2.textColor = UIColorFromHex(0x2c3e50)
             emptyLabel2.textAlignment = .Center
             emptyView.addSubview(emptyLabel2)
+//            let emptyButton = 
             
             self.view.addSubview(emptyView)
         }
@@ -179,7 +180,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         
         let descriptionLabel = UILabel(frame: CGRect(x: 10, y: 5+imgHeight * 0.20, width: postContainer.frame.width - imgWidth - 5, height: imgHeight * 0.30))
         descriptionLabel.text = post.itemDescription
-        descriptionLabel.font = UIFont(name: "Avenir", size: 14)
+        descriptionLabel.font = UIFont(name: "Avenir", size: 20)
         descriptionLabel.textColor = self.UIColorFromHex(0x808080)
         descriptionLabel.numberOfLines = 2
         
@@ -189,10 +190,10 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         postContainer.addSubview(blueLine)
         
         //create the match info labels
-        let nameLabel = UILabel(frame: CGRect(x: 10, y: 5, width: postContainer.frame.width - imgWidth - 20, height: imgHeight * 0.15))
+        let nameLabel = UILabel(frame: CGRect(x: 10, y: 5, width: postContainer.frame.width - imgWidth - 20, height: imgHeight * 0.19))
         nameLabel.text = post.itemName
         nameLabel.textColor = UIColor.blackColor()
-        nameLabel.font = UIFont(name: "Avenir", size: 16)
+        nameLabel.font = UIFont(name: "Avenir", size: 20)
         //        nameLabel.textAlignment = .Center
         postContainer.addSubview(nameLabel)
         
@@ -200,11 +201,11 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         //        descriptionLabel.textAlignment = .Center
         postContainer.addSubview(descriptionLabel)
         
-        let priceLabel = UILabel(frame: CGRect(x: 10, y: screenSize.width*0.27, width: postContainer.frame.width - imgWidth - 20, height: screenSize.width*0.15))
+        let priceLabel = UILabel(frame: CGRect(x: 10, y: screenSize.width*0.29, width: postContainer.frame.width - imgWidth - 20, height: screenSize.width*0.15))
         let temp = Int(post.minPrice)
         priceLabel.text = "$\(temp)"
         priceLabel.textAlignment = .Center
-        priceLabel.font = UIFont(name: "Avenir", size: 22)
+        priceLabel.font = UIFont(name: "Avenir", size: 24)
         priceLabel.textColor = UIColor.blackColor()
         priceLabel.numberOfLines = 1
         priceLabel.adjustsFontSizeToFitWidth = true

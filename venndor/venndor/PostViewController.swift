@@ -79,6 +79,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     override func viewDidLoad() {
         super.viewDidLoad()
         sessionStart = NSDate()
+        LocalUser.CurrentPage = "Posts"
 
         setupCategoryPickerView()
         setupYearsPickerView()
@@ -122,9 +123,9 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     //setup functions
     
     func setupArrows() {
-        var downArrowFrame = CGRect(x: screenSize.width*0.4, y: screenSize.height*0.85, width: screenSize.width*0.2, height: screenSize.height*0.1)
+        var downArrowFrame = CGRect(x: screenSize.width*0.4, y: screenSize.height*0.83, width: screenSize.width*0.2, height: screenSize.height*0.1)
         let downArrowOrigin = downArrowFrame.origin.y
-        var upArrowFrame = CGRect(x: screenSize.width*0.4, y: screenSize.height*0.15, width: screenSize.width*0.2, height: screenSize.height*0.1)
+        var upArrowFrame = CGRect(x: screenSize.width*0.4, y: screenSize.height*0.17, width: screenSize.width*0.2, height: screenSize.height*0.1)
         let upArrowOrigin = upArrowFrame.origin.y
         
         for page in 0...7 {
@@ -332,7 +333,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 //        
 //        containerView.addSubview(currentLocationButton)
 //        
-//        let searchImageButton = makeImageButton("Search Filled-100.png", frame: CGRectMake(screenSize.width*0.27, screenSize.height*5.28, screenSize.width*0.13, screenSize.width*0.13), target: #selector(PostViewController.searchClicked(_:)), tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.0)
+//        let searchImageButton = makeImageButton("Search Filled-100.png", frame: CGRectMake(screenSize.width*0.27, screenSize.height*5.29, screenSize.width*0.11, screenSize.width*0.11), target: #selector(PostViewController.searchClicked(_:)), tinted: false, circle: true, backgroundColor: 0x000000, backgroundAlpha: 0.0)
 //        
 //        containerView.addSubview(searchImageButton)
 //        

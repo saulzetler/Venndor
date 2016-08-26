@@ -41,7 +41,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         super.viewDidLoad()
         
         print("has been reloaded")
-        
+        LocalUser.CurrentPage = "My Matches"
         LocalUser.user.mostRecentAction = "Browsed MyMatches"
         sessionStart = NSDate()
         
@@ -83,7 +83,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             let boughtLabel = UILabel(frame: CGRect(x: 0, y: screenSize.height * 0.08, width: screenSize.width, height: boughtTitle))
             boughtLabel.text = "Bought Items"
             boughtLabel.backgroundColor = UIColorFromHex(0x2c3e50)
-            boughtLabel.font = UIFont(name: "Avenir", size: 22)
+            boughtLabel.font = UIFont(name: "Avenir", size: 20)
             boughtLabel.textColor = UIColor.whiteColor()
             boughtLabel.textAlignment = .Center
             self.matchContainerView.addSubview(boughtLabel)
@@ -201,7 +201,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         let descriptionLabel = UILabel(frame: CGRect(x: imgWidth+10, y: 5+imgHeight * 0.15, width: matchContainer.frame.width - imgWidth - 5, height: imgHeight * 0.30))
  
         descriptionLabel.text = match.itemDescription
-        descriptionLabel.font = UIFont(name: "Avenir", size: 14)
+        descriptionLabel.font = UIFont(name: "Avenir", size: 20)
         descriptionLabel.textColor = self.UIColorFromHex(0x808080)
         descriptionLabel.numberOfLines = 2
         
@@ -213,21 +213,20 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         let nameLabel = UILabel(frame: CGRect(x: imgWidth+10, y: 5, width: matchContainer.frame.width - imgWidth - 40, height: imgHeight * 0.15))
         nameLabel.text = match.itemName
         nameLabel.textColor = UIColor.blackColor()
-        nameLabel.font = UIFont(name: "Avenir", size: 16)
+        nameLabel.font = UIFont(name: "Avenir", size: 20)
         matchContainer.addSubview(nameLabel)
         
-        let distanceLabel = UILabel(frame: CGRect(x: matchContainer.frame.width - 45, y: 5, width:45, height: imgHeight * 0.15))
-        
-        calculateDistanceFromLocation(match.itemLatitude, longitude: match.itemLongitude, myLocation: LocalUser.myLocation)
-//        print("is trying to get distances")
-        
-        while(distSet == false){
-//            print("im stuck")
-        }
-        
-        distanceLabel.text = "\(self.distText)"
-        distanceLabel.font = UIFont(name: "Avenir", size: 14)
-        matchContainer.addSubview(distanceLabel)
+//        let distanceLabel = UILabel(frame: CGRect(x: matchContainer.frame.width - 45, y: 5, width:45, height: imgHeight * 0.15))
+//        calculateDistanceFromLocation(match.itemLatitude, longitude: match.itemLongitude, myLocation: LocalUser.myLocation)
+////        print("is trying to get distances")
+//        while(distSet == false){
+////            print("im stuck")
+//        }
+//        
+//        distanceLabel.text = "\(self.distText)"
+//        distanceLabel.font = UIFont(name: "Avenir", size: 16)
+//        matchContainer.addSubview(distanceLabel)
+
         
         matchContainer.addSubview(descriptionLabel)
         
@@ -255,7 +254,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         let temp = Int(match.matchedPrice)
         priceLabel.text = "$\(temp)"
         priceLabel.textAlignment = .Center
-        priceLabel.font = UIFont(name: "Avenir", size: 22)
+        priceLabel.font = UIFont(name: "Avenir", size: 20)
         priceLabel.textColor = UIColor.whiteColor()
         priceLabel.numberOfLines = 1
         priceLabel.adjustsFontSizeToFitWidth = true

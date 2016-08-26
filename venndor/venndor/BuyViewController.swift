@@ -79,7 +79,7 @@ class BuyViewController: UIViewController {
         confirmButton.setTitle("Confirm Purchase", forState: .Normal)
         confirmButton.titleLabel?.textColor = UIColor.whiteColor()
 //        confirmButton.titleLabel?.textAlignment = .Center
-        confirmButton.titleEdgeInsets = UIEdgeInsets(top: 5, left: 20, bottom: -5, right: 60)
+        confirmButton.titleEdgeInsets = UIEdgeInsets(top: 5, left: 48, bottom: -5, right: 41)
         
         //create the rounded button image
         
@@ -90,7 +90,7 @@ class BuyViewController: UIViewController {
         confirmButton.imageView?.layer.masksToBounds = false
         confirmButton.imageView?.layer.cornerRadius = confirmButton.imageView!.frame.height / 2
         
-        confirmButton.imageEdgeInsets = UIEdgeInsets(top: 15, left: 45, bottom: 5, right: 200)
+        confirmButton.imageEdgeInsets = UIEdgeInsets(top: 15, left: 48, bottom: 5, right: 217)
 
         confirmButton.addTarget(self, action: #selector(BuyViewController.itemBought), forControlEvents: .TouchUpInside)
         
