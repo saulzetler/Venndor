@@ -603,8 +603,10 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         //        let locationLabel = customLabel(CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), text: "Location", color: UIColorFromHex(0x34495e), fontSize: 30)
         //        containerView.addSubview(locationLabel)
         
+
 //        let locationButton = makeTextButton("Location", frame: CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), target: #selector(PostViewController.searchClicked(_:)), textColor: UIColorFromHex(0x34495e), textSize: 30)
 //        containerView.addSubview(locationButton)
+
         
         let priceLabelFrame = CGRectMake(screenSize.width*0.15, screenSize.height*6.3, self.screenSize.width*0.7, screenSize.height*0.1)
         let priceLabel = customLabel(priceLabelFrame, text: "I want to sell this for", color: UIColorFromHex(0x34495e), fontSize: 25)
