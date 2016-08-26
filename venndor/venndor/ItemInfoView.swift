@@ -58,6 +58,7 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         setupItemInfo(item, myLocation: myLocation)
         
         self.backgroundColor = UIColor.whiteColor()
+        infoOpen = false
         
     }
     
@@ -65,13 +66,13 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         
         itemInfo = UIView(frame: CGRect(x: 0, y: self.frame.height*0.9, width: self.frame.width, height: self.frame.height*0.1))
         itemInfo.backgroundColor = UIColor.whiteColor()
-        itemInfo.layer.cornerRadius = 20
+        itemInfo.layer.cornerRadius = 10
         itemInfo.layer.masksToBounds = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(ItemInfoView.handleTap(_:)))
         itemInfo.addGestureRecognizer(tap)
        
-        itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.7, height: itemInfo.frame.height*0.6))
+        itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.20, width: itemInfo.frame.width*0.7, height: itemInfo.frame.height*0.6))
         itemName.text = item.name
         itemInfo.addSubview(itemName)
         
@@ -245,7 +246,6 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
 //        itemDist.text = distText
 //        itemDist.textAlignment = .Center
 //        itemInfo.addSubview(itemDist)
-//        infoOpen = false
 //    }
 //    
     //scroll view funcs

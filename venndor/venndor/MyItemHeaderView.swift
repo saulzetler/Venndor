@@ -46,7 +46,11 @@ class MyItemHeaderView: UIView, UITextFieldDelegate {
         self.addSubview(menuButton)
     }
     func setUpName(page: String) -> Void {
-        let title = UILabel(frame: CGRectMake(screenSize.width*0.2, 26, screenSize.width*0.6, 30))
+
+
+        let title = UILabel(frame: CGRectMake(screenSize.width*0.32, 26, screenSize.width*0.6, 30))
+        
+
         title.text = page
         title.textColor = UIColor.whiteColor()
         title.textAlignment = .Center

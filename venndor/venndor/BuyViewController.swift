@@ -149,7 +149,7 @@ class BuyViewController: UIViewController {
     func itemBought() {
         print("Confirm tapped!")
         BoughtController.globalController.sendSellerNotification(seller, match: match)
-        BoughtController.globalController.updateBuyer(self.item, buyer: LocalUser.user)
+        BoughtController.globalController.updateBuyer(self.item, buyer: LocalUser.user, match: self.match)
         BoughtController.globalController.updateMarket(self.item, match: self.match)
         BoughtController.globalController.updateSeller(self.item, seller: seller, soldPrice: self.match.matchedPrice)
         
@@ -163,7 +163,10 @@ class BuyViewController: UIViewController {
         }
             
         else {
-            self.presentingViewController?.viewDidLoad()
+            self.dismissViewControllerAnimated(true) {
+                let mmvc = self.presentingViewController as! MyMatchesViewController
+                mmvc.setupMatchesScrollContent()
+            }
         }
         
         dismissController()

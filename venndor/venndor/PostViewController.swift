@@ -170,13 +170,14 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         var downButtonFrame = CGRect(x: screenSize.width*0.4, y: screenSize.height*0.9, width: screenSize.width*0.2, height: screenSize.height*0.1)
         let downButtonOrigin = downButtonFrame.origin.y
         var button: UIButton!
+        
         if page != 0 {
-            upButtonFrame.origin.y = upButtonOrigin + CGFloat(page)*screenSize.height
+            upButtonFrame.origin.y = upButtonOrigin + CGFloat(page)*screenSize.height - 5
             button = makeTextButton(upTitle, frame: upButtonFrame, target: #selector(PostViewController.prevPage(_:)), textColor: UIColorFromHex(0x34495e))
             containerView.addSubview(button)
         }
         if page != 7 {
-            downButtonFrame.origin.y = downButtonOrigin + CGFloat(page)*screenSize.height
+            downButtonFrame.origin.y = downButtonOrigin + CGFloat(page)*screenSize.height + 5
             button = makeTextButton(downTitle, frame: downButtonFrame, target: #selector(PostViewController.nextPage(_:)), textColor: UIColorFromHex(0x34495e))
             containerView.addSubview(button)
         }
@@ -517,6 +518,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         containerView.addSubview(itemIs)
         let yearsOld = customLabel(CGRectMake(screenSize.width*0.6, screenSize.height*3.357, self.screenSize.width*0.3, screenSize.height*0.08), text: "years old", color: UIColorFromHex(0x34495e), fontSize: 20)
         containerView.addSubview(yearsOld)
+        
 //        let locationLabel = customLabel(CGRectMake(screenSize.width*0.3, screenSize.height*5.27, screenSize.width*0.6, screenSize.height*0.1), text: "Location", color: UIColorFromHex(0x34495e), fontSize: 30)
 //        containerView.addSubview(locationLabel)
         
@@ -920,6 +922,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
           
             let condition = ratingControl.rating
+            
             if useMyLocation == true {
                 coordinate = LocalUser.myLocation.coordinate
             }
@@ -928,6 +931,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             }
             let latitude = Double(coordinate.latitude)
             let longitude = Double(coordinate.longitude)
+            
             let minPrice = Int(priceField.text!)
             
             var conversion = LocationConverter()

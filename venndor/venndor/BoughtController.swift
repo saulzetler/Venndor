@@ -71,32 +71,18 @@ struct BoughtController {
     }
 
     
-    func updateBuyer(item: Item, buyer: User) {
+    func updateBuyer(item: Item, buyer: User, match: Match) {
 
         //function should update the buyer, move the item from matched to bought
         
         let filter = "itemID = \(item.id)"
-        MatchesManager.globalManager.retrieveMatchByFilter(filter) { match, error in
-            guard error == nil else {
-                print("Error retrieving match in Buy screen for update: \(error)")
-                return
-            }
-            
-            if let match = match {
-    
-                var arr = LocalUser.matches.filter(({ $0.id != match.id }))
-                match.bought = 1
-                match.dateBought = NSDate()
-                arr.append(match)
-                LocalUser.matches = arr
-                
-                buyer.boughtItems[item.id] = item.owner
-                buyer.nuItemsBought! += 1
-                
-                self.updateMatchOnPurchase(match)
-                self.updateBuyerOnPurchase(buyer)
-            }
-        }
+        match.bought = 1
+        match.dateBought = NSDate()
+        buyer.boughtItems[item.id] = item.owner
+        buyer.nuItemsBought! += 1
+        
+        self.updateMatchOnPurchase(match)
+        self.updateBuyerOnPurchase(buyer)
         
     }
     

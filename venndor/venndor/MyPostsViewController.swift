@@ -153,7 +153,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             self.view.addSubview(emptyView)
         }
         
-        addHeaderItems("Your Posts")
+        addHeaderItems("My Posts")
         sideMenuGestureSetup()
         revealViewController().rightViewController = nil
         

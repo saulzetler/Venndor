@@ -104,6 +104,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
         self.view.bringSubviewToFront(headerView)
     }
     func addHeaderItems(page: String) {
+        
         let headerView: MyItemHeaderView = MyItemHeaderView(frame: self.view.frame, page: page)
         headerView.menuButton.addTarget(self.revealViewController(), action: #selector(SWRevealViewController.revealToggle(_:)), forControlEvents: UIControlEvents.TouchUpInside)
         
@@ -230,7 +231,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
                     let thing = itemInfoController.isPost
                     itemInfoController.item = item
                     itemInfoController.match = containerView.match
-                    itemInfoController.headerTitle = "Your Matches"
+                    itemInfoController.headerTitle = "My Matches"
                     self.presentViewController(itemInfoController, animated: true, completion: nil)
                 }
             }
@@ -258,7 +259,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
                     itemInfoController.isPost = true
                     itemInfoController.post = containerView.post
                     itemInfoController.item = item
-                    itemInfoController.headerTitle = "Your Posts"
+                    itemInfoController.headerTitle = "My Posts"
                     self.presentViewController(itemInfoController, animated: true, completion: nil)
                 }
             }
