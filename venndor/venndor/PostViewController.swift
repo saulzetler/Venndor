@@ -310,7 +310,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //setup rating control
     func setupRatingControl() {
-        ratingControl = RatingControl(frame: CGRectMake(screenSize.width*0.2, screenSize.height*3.65, screenSize.width*0.6, screenSize.height*0.07))
+        ratingControl = RatingControl(frame: CGRectMake(screenSize.width*0.25, screenSize.height*3.65, screenSize.width*0.5, screenSize.height*0.07))
         containerView.addSubview(ratingControl)
     }
     
@@ -512,7 +512,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         containerView.addSubview(photosLabel)
         let categoryLabel = customLabel(CGRectMake(screenSize.width*0.15, screenSize.height*2.3, self.screenSize.width*0.7, screenSize.height*0.1), text: "Pick a category", color: UIColorFromHex(0x34495e), fontSize: 25)
         containerView.addSubview(categoryLabel)
-        let conditionLabel = customLabel(CGRectMake(screenSize.width*0.2, screenSize.height*3.55, self.screenSize.width*0.6, screenSize.height*0.1), text: "Condition", color: UIColorFromHex(0x34495e), fontSize: 30)
+        let conditionLabel = customLabel(CGRectMake(screenSize.width*0.2, screenSize.height*3.55, self.screenSize.width*0.6, screenSize.height*0.1), text: "Condition", color: UIColorFromHex(0x34495e), fontSize: 20)
         containerView.addSubview(conditionLabel)
         let itemIs = customLabel(CGRectMake(screenSize.width*0.2, screenSize.height*3.357, self.screenSize.width*0.2, screenSize.height*0.08), text: "Item is", color: UIColorFromHex(0x34495e), fontSize: 20)
         containerView.addSubview(itemIs)

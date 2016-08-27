@@ -46,7 +46,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     var itemInfo: UIView!
     var itemName: UILabel!
-    var itemDescription: UILabel!
+    var itemDescription: UITextView!
     var infoOpen: Bool!
     
     //for map
@@ -71,7 +71,8 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         currentItem = item
         
         setupScrollView(item)
-        setupItemInfo(item, myLocation: myLocation)
+//        setupItemInfo(item, myLocation: myLocation)
+        setupItemInfo(item)
 
         self.backgroundColor = UIColor.whiteColor()
 
@@ -85,27 +86,34 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         
         xFromCenter = 0
         yFromCenter = 0
-    
+        
+        let tap = UITapGestureRecognizer(target: self, action: #selector(DraggableView.handleTap(_:)))
+        tap.delegate = self
+        self.addGestureRecognizer(tap)
     }
     
-    func setupItemInfo(item: Item, myLocation: CLLocation?) {
+    func setupItemInfo(item: Item) {
         
         itemInfo = UIView(frame: CGRect(x: 0, y: self.frame.height*0.9, width: self.frame.width, height: self.frame.height*0.1))
         itemInfo.backgroundColor = UIColor.whiteColor()
-        itemInfo.layer.cornerRadius = 20
+        itemInfo.layer.cornerRadius = 10
         itemInfo.layer.masksToBounds = true
-        let tap = UITapGestureRecognizer(target: self, action: #selector(DraggableView.handleTap(_:)))
-        tap.delegate = self
-        itemInfo.addGestureRecognizer(tap)
-        itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.1, width: itemInfo.frame.width*0.7, height: itemInfo.frame.height*0.6))
-        itemName.text = item.name
+        
+        let nameFrame = CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.20, width: itemInfo.frame.width*0.7, height: itemInfo.frame.height*0.6)
+        itemName = customLabel(nameFrame, text: item.name, color: UIColor.blackColor(), fontSize: 20)
+        itemName.font = UIFont(name: "Avenir-Heavy", size: 20)
+        itemName.textAlignment = .Left
+        itemName.adjustsFontSizeToFitWidth = true
         itemInfo.addSubview(itemName)
-        itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
-        itemDescription.text = item.details
-        itemDescription.font = itemDescription.font.fontWithSize(10)
-//        itemDescription.sizeToFit()
-        itemDescription.numberOfLines = 0
+        
+        let descriptionFrame = CGRect(x: itemInfo.frame.width*0.04, y: itemInfo.frame.height*1.1, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6)
+        itemDescription = customTextView(descriptionFrame, text: item.details, color: UIColor.blackColor(), fontSize: 18, bold: false)
+        itemDescription.userInteractionEnabled = false
         itemInfo.addSubview(itemDescription)
+        
+        let grayBar = UIView(frame: CGRect(x: itemInfo.frame.origin.x, y: itemInfo.frame.height, width: itemInfo.frame.width, height: 1))
+        grayBar.backgroundColor = UIColor.lightGrayColor()
+        itemInfo.addSubview(grayBar)
         
 //        mapView = GMSMapView(frame: CGRect(x: 0, y: itemInfo.frame.height*3, width: itemInfo.frame.width, height: itemInfo.frame.height*3.5))
 //        let location = CLLocationCoordinate2DMake(CLLocationDegrees(item.latitude), CLLocationDegrees(item.longitude))
@@ -136,13 +144,13 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
                     self.sellerNameLabel = label
                     self.itemInfo.addSubview(self.sellerNameLabel)
                     
-                    self.sellerRatingLabel = self.setupSellerRatingLabel(user.rating)
-                    self.itemInfo.addSubview(self.sellerRatingLabel)
+//                    self.sellerRatingLabel = self.setupSellerRatingLabel(user.rating)
+//                    self.itemInfo.addSubview(self.sellerRatingLabel)
                     
-                    let star = UIImageView(frame: CGRect(x: self.itemInfo.frame.width*0.77, y: self.itemInfo.frame.height * 8.76, width: self.screenSize.width*0.05, height: self.screenSize.width*0.05))
-                    star.image = UIImage(named: "Star_Filled.png")
-                    // star.contentMode = .ScaleToFill
-                    self.itemInfo.addSubview(star)
+//                    let star = UIImageView(frame: CGRect(x: self.itemInfo.frame.width*0.77, y: self.itemInfo.frame.height * 8.76, width: self.screenSize.width*0.05, height: self.screenSize.width*0.05))
+//                    star.image = UIImage(named: "Star_Filled.png")
+//                    // star.contentMode = .ScaleToFill
+//                    self.itemInfo.addSubview(star)
                     
                 }
             }
@@ -302,9 +310,9 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     
     public func scrollViewDidEndDecelerating(scrollView: UIScrollView){
         adjustPage()
-        if picNum == numberOfPics-1 && prevPicNum == picNum {
-            openInfo()
-        }
+//        if picNum == numberOfPics-1 && prevPicNum == picNum {
+//            openInfo()
+//        }
     }
 
     

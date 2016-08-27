@@ -97,6 +97,22 @@ extension UIView {
         return label
     }
     
+    func customTextView(frame: CGRect, text: String, color: UIColor, fontSize: CGFloat, bold: Bool) -> UITextView {
+        let textView = UITextView(frame: frame)
+        textView.text = text
+        textView.textColor = color
+        if bold {
+            textView.font = UIFont(name: "Avenir-Heavy", size: fontSize)
+        }
+        else {
+            textView.font = UIFont(name: "Avenir", size: fontSize)
+        }
+        textView.textAlignment = .Left
+        textView.editable = false
+        textView.scrollEnabled = false
+        return textView
+    }
+    
     func makeIndicatorButton(frame: CGRect, color: UIColor, target: Selector) -> UIButton {
         let button = UIButton (frame: frame)
         button.layer.cornerRadius = 0.5*button.bounds.size.width
