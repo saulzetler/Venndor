@@ -127,12 +127,12 @@
 		E495BB2E1D49400200CC1EEC /* Search Filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = E495BB2D1D49400200CC1EEC /* Search Filled-100.png */; };
 		E495BB301D4940D500CC1EEC /* sell_currentlocation_button.png in Resources */ = {isa = PBXBuildFile; fileRef = E495BB2F1D4940D500CC1EEC /* sell_currentlocation_button.png */; };
 		E4992DFF1D2C38D200032221 /* go.png in Resources */ = {isa = PBXBuildFile; fileRef = E4992DFE1D2C38D200032221 /* go.png */; };
-		E4992E041D2C4DB300032221 /* match background.png in Resources */ = {isa = PBXBuildFile; fileRef = E4992E031D2C4DB300032221 /* match background.png */; };
 		E4A550D51D3D52BB001EAAB3 /* Marker Filled-100.png in Resources */ = {isa = PBXBuildFile; fileRef = E4A550D41D3D52BB001EAAB3 /* Marker Filled-100.png */; };
 		E4AB1FF21D30437F00CC7400 /* ImagePicker.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = E4AB1FF11D30437F00CC7400 /* ImagePicker.framework */; };
 		E4B6D3871D5514080016775C /* TextMessageComposer.swift in Sources */ = {isa = PBXBuildFile; fileRef = E4B6D3861D5514080016775C /* TextMessageComposer.swift */; };
 		E4B6D3891D551A5C0016775C /* Speech Bubble.png in Resources */ = {isa = PBXBuildFile; fileRef = E4B6D3881D551A5C0016775C /* Speech Bubble.png */; };
 		E4C148511D5BCB52006A7F13 /* Right-50.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C148501D5BCB52006A7F13 /* Right-50.png */; };
+		E4C677F91D70BD3800FE4DA8 /* match IPHONE6.png in Resources */ = {isa = PBXBuildFile; fileRef = E4C677F81D70BD3800FE4DA8 /* match IPHONE6.png */; };
 		E4CD3A2B1D5B904300834ADD /* Step1.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CD3A271D5B904300834ADD /* Step1.png */; };
 		E4CD3A2C1D5B904300834ADD /* Step2.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CD3A281D5B904300834ADD /* Step2.png */; };
 		E4CD3A2D1D5B904300834ADD /* Step3.png in Resources */ = {isa = PBXBuildFile; fileRef = E4CD3A291D5B904300834ADD /* Step3.png */; };
@@ -291,12 +291,12 @@
 		E495BB2D1D49400200CC1EEC /* Search Filled-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Search Filled-100.png"; sourceTree = "<group>"; };
 		E495BB2F1D4940D500CC1EEC /* sell_currentlocation_button.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = sell_currentlocation_button.png; sourceTree = "<group>"; };
 		E4992DFE1D2C38D200032221 /* go.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = go.png; sourceTree = "<group>"; };
-		E4992E031D2C4DB300032221 /* match background.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "match background.png"; sourceTree = "<group>"; };
 		E4A550D41D3D52BB001EAAB3 /* Marker Filled-100.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Marker Filled-100.png"; sourceTree = "<group>"; };
 		E4AB1FF11D30437F00CC7400 /* ImagePicker.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = ImagePicker.framework; path = "../../../Library/Developer/Xcode/DerivedData/venndor-cjexyuheznflryetuxeryodhnzpo/Build/Products/Debug-iphonesimulator/ImagePicker/ImagePicker.framework"; sourceTree = "<group>"; };
 		E4B6D3861D5514080016775C /* TextMessageComposer.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TextMessageComposer.swift; sourceTree = "<group>"; };
 		E4B6D3881D551A5C0016775C /* Speech Bubble.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Speech Bubble.png"; sourceTree = "<group>"; };
 		E4C148501D5BCB52006A7F13 /* Right-50.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "Right-50.png"; sourceTree = "<group>"; };
+		E4C677F81D70BD3800FE4DA8 /* match IPHONE6.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = "match IPHONE6.png"; sourceTree = "<group>"; };
 		E4CD3A271D5B904300834ADD /* Step1.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step1.png; sourceTree = "<group>"; };
 		E4CD3A281D5B904300834ADD /* Step2.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step2.png; sourceTree = "<group>"; };
 		E4CD3A291D5B904300834ADD /* Step3.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = Step3.png; sourceTree = "<group>"; };
@@ -607,7 +607,7 @@
 				E4CD3A291D5B904300834ADD /* Step3.png */,
 				E4CD3A2A1D5B904300834ADD /* Step4.png */,
 				106E96221D3582C600DBBED0 /* background.jpg */,
-				E4992E031D2C4DB300032221 /* match background.png */,
+				E4C677F81D70BD3800FE4DA8 /* match IPHONE6.png */,
 			);
 			name = Backgrounds;
 			sourceTree = "<group>";
@@ -756,9 +756,9 @@
 				106E96251D35896700DBBED0 /* iphone-icon.png in Resources */,
 				100264531D4155C6009349CA /* venn_price_image.png in Resources */,
 				E495BB2E1D49400200CC1EEC /* Search Filled-100.png in Resources */,
-				E4992E041D2C4DB300032221 /* match background.png in Resources */,
 				E44C15191D11B5D00006EBAD /* Megaphone-50.png in Resources */,
 				10CAD5DC1D3955B800147F66 /* title.png in Resources */,
+				E4C677F91D70BD3800FE4DA8 /* match IPHONE6.png in Resources */,
 				E48002061D2FEEEE009C90E2 /* Expand Arrow.png in Resources */,
 				109452C61D47E6FF00931DA8 /* Generic Book File Type Filled.png in Resources */,
 				109452C41D47E6FF00931DA8 /* Clothes Filled.png in Resources */,

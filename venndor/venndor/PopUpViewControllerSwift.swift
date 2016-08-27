@@ -16,6 +16,8 @@ class PopUpViewControllerSwift : UIViewController {
     var matchedItem: Item!
     var matchedPrice: Int!
     var sessionStart: NSDate!
+    
+    var backgroundImageView: UIImageView!
 
     var ovc = NewOfferViewController()
 
@@ -79,8 +81,11 @@ class PopUpViewControllerSwift : UIViewController {
     func setupBackground() {
         self.view.frame = screenSize
         self.view.backgroundColor = UIColor.blackColor().colorWithAlphaComponent(0.7)
-        let backgroundImage = UIImage(named: "match background.png")
-        let backgroundImageView = UIImageView(frame: screenSize)
+        let backgroundImage = UIImage(named: "match IPHONE6.png")
+        let backgroundFrame = CGRect(x: screenSize.width*0.02, y: screenSize.height*0.01, width: screenSize.width*0.96, height: screenSize.height*0.98)
+        backgroundImageView = UIImageView(frame: backgroundFrame)
+        backgroundImageView.layer.cornerRadius = 8
+        backgroundImageView.layer.masksToBounds = true
         backgroundImageView.image = backgroundImage
         self.view.addSubview(backgroundImageView)
     }
@@ -99,8 +104,7 @@ class PopUpViewControllerSwift : UIViewController {
         matchPrice.font = message.font.fontWithSize(60)
         matchPrice.text = "$\(price)"
         self.view.addSubview(matchPrice)
-        let widthFactor: CGFloat = 0.033
-        let promptFrame = CGRectMake(screenSize.width*widthFactor, screenSize.height*0.55, screenSize.width*(1-2*widthFactor), screenSize.height*0.15)
+        let promptFrame = CGRect(x: backgroundImageView.frame.origin.x, y: screenSize.height*0.55, width: backgroundImageView.frame.width, height: screenSize.height*0.15)
         setupPrompt(item.name, item: item, screenSize: screenSize, frame: promptFrame)
         createButtons()
         aView.addSubview(self.view)
