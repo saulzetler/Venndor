@@ -17,6 +17,7 @@ class OfferViewController: UIViewController {
 
     var offer: Double!
     var sessionStart: NSDate!
+    var matchedPrice: Int!
     
     var wheelslider: WheelSlider!
 
@@ -121,6 +122,7 @@ class OfferViewController: UIViewController {
             let matchControllerView = PopUpViewControllerSwift()
 //            matchControllerView.ovc = self
             matchControllerView.matchedItem = offeredItem
+            matchedPrice = Int(temp[0]+temp[1])
             matchControllerView.matchedPrice = Int(temp[0] + temp[1])
             matchControllerView.showInView(self.view, price: Int(temp[0] + temp[1]), item: offeredItem)
         }
@@ -158,7 +160,41 @@ class OfferViewController: UIViewController {
     }
     
     func toBuy() {
-        
+        print("Buy tapped!")
+//            let matchContainer = sender.superview as! ItemContainer
+        var match: Match!
+        for matches in LocalUser.matches {
+            if matches.itemID == self.offeredItem.id {
+                match = matches
+            }
+        }
+            
+        let boughtItem = self.offeredItem
+            
+        self.definesPresentationContext = true
+        UserManager.globalManager.retrieveUserById(match.sellerID) { user, error in
+            guard error == nil else {
+                print("Error retrieving seller in Buy screen: \(error)")
+                return
+            }
+                
+            if let user = user {
+                let bvc = BuyViewController()
+                bvc.item = boughtItem
+                bvc.match = match
+                bvc.seller = user
+                bvc.item = self.offeredItem
+                bvc.fromInfo = false
+                bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+                bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+                self.presentViewController(bvc, animated: true, completion: nil)
+            }
+            else {
+                print("Error with parsing user in buy screen. Returning now.")
+                self.dismissViewControllerAnimated(true, completion: nil)
+            }
+        }
+        self.performSegueWithIdentifier("offerToMatches", sender: self)
     }
     
     func handlePan(gestureRecognizer: UIPanGestureRecognizer) {

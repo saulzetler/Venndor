@@ -9,6 +9,7 @@
 import UIKit
 import CoreData
 import FBSDKCoreKit
+//import Amplitude
 //import GoogleMaps
 
 var currentUser: String!
