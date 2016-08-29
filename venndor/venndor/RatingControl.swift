@@ -30,6 +30,15 @@ class RatingControl: UIView {
         rating = 0
     }
     
+    init(frame: CGRect, rating: Int) {
+        super.init(frame: frame)
+        buttonArray = []
+        setUpViewFrame(frame)
+        self.rating = rating
+        presetUpTo(rating)
+        self.userInteractionEnabled = false
+    }
+    
     func setUpViewFrame(frame: CGRect) -> Void {
         //initial view frame
         var buttonFrame: CGRect!

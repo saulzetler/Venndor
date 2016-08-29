@@ -106,14 +106,68 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         itemName.adjustsFontSizeToFitWidth = true
         itemInfo.addSubview(itemName)
         
-        let descriptionFrame = CGRect(x: itemInfo.frame.width*0.04, y: itemInfo.frame.height*1.1, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6)
+        let descriptionFrame = CGRect(x: itemInfo.frame.width*0.04, y: itemInfo.frame.height, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*3)
         itemDescription = customTextView(descriptionFrame, text: item.details, color: UIColor.blackColor(), fontSize: 18, bold: false)
+        itemDescription.backgroundColor = UIColor.clearColor()
         itemDescription.userInteractionEnabled = false
         itemInfo.addSubview(itemDescription)
         
-        let grayBar = UIView(frame: CGRect(x: itemInfo.frame.origin.x, y: itemInfo.frame.height, width: itemInfo.frame.width, height: 1))
-        grayBar.backgroundColor = UIColor.lightGrayColor()
-        itemInfo.addSubview(grayBar)
+        let grayBar1 = UIView(frame: CGRect(x: itemInfo.frame.origin.x, y: itemInfo.frame.height, width: itemInfo.frame.width, height: 1))
+        grayBar1.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.9)
+        itemInfo.addSubview(grayBar1)
+        
+        let infoTitleContainer = UIView(frame: CGRect(x: 0, y: descriptionFrame.origin.y + descriptionFrame.height, width: itemInfo.frame.width/3.5, height: itemInfo.frame.height*2.7))
+        infoTitleContainer.backgroundColor = UIColor.clearColor()
+        itemInfo.addSubview(infoTitleContainer)
+        
+        let infoDetailsContainer = UIView(frame: CGRect(x: itemInfo.frame.width/3.5, y: descriptionFrame.origin.y + descriptionFrame.height, width: itemInfo.frame.width*(2/3), height: itemInfo.frame.height*2.7))
+        infoDetailsContainer.backgroundColor = UIColor.clearColor()
+        itemInfo.addSubview(infoDetailsContainer)
+        
+        let grayBar2 = UIView(frame: CGRect(x: itemInfo.frame.origin.x, y: descriptionFrame.origin.y + descriptionFrame.height, width: itemInfo.frame.width, height: 1))
+        grayBar2.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.9)
+        itemInfo.addSubview(grayBar2)
+        
+        //title labels
+        let locationTitleLabelFrame = CGRect(x: itemInfo.frame.width*0.05, y: 0, width: infoTitleContainer.frame.width, height: infoTitleContainer.frame.height/3)
+        let locationTitleLabel = customLabel(locationTitleLabelFrame, text: "Location:", color: UIColor.blackColor(), fontSize: 16)
+        locationTitleLabel.textAlignment = .Left
+        infoTitleContainer.addSubview(locationTitleLabel)
+        
+        let conditionTitleLabelFrame = CGRect(x: itemInfo.frame.width*0.05, y: infoTitleContainer.frame.height/3, width: infoTitleContainer.frame.width, height: infoTitleContainer.frame.height/3)
+        let conditionTitleLabel = customLabel(conditionTitleLabelFrame, text: "Condition:", color: UIColor.blackColor(), fontSize: 16)
+        conditionTitleLabel.textAlignment = .Left
+        infoTitleContainer.addSubview(conditionTitleLabel)
+        
+        let ageTitleLabelFrame = CGRect(x: itemInfo.frame.width*0.05, y: infoTitleContainer.frame.height*(2/3), width: infoTitleContainer.frame.width, height: infoTitleContainer.frame.height/3)
+        let ageTitleLabel = customLabel(ageTitleLabelFrame, text: "Age:", color: UIColor.blackColor(), fontSize: 16)
+        ageTitleLabel.textAlignment = .Left
+        infoTitleContainer.addSubview(ageTitleLabel)
+        
+        
+        //actual descriptions of information
+        let locationDetailsFrame = CGRect(x: itemInfo.frame.width*0.05, y: 0, width: infoDetailsContainer.frame.width, height: infoTitleContainer.frame.height/3)
+        let locationDetails = customLabel(locationDetailsFrame, text: "Location Information", color: UIColor.blackColor(), fontSize: 16)
+        locationDetails.textAlignment = .Left
+        locationDetails.adjustsFontSizeToFitWidth = true
+        infoDetailsContainer.addSubview(locationDetails)
+        
+        let conditionFrame = CGRect(x: itemInfo.frame.width*0.05, y: infoTitleContainer.frame.height/3, width: infoDetailsContainer.frame.width*0.9, height: infoTitleContainer.frame.height/3)
+        let conditionDisplay = RatingControl(frame: conditionFrame, rating: item.condition)
+        infoDetailsContainer.addSubview(conditionDisplay)
+        
+        let ageDetailsFrame = CGRect(x: itemInfo.frame.width*0.05, y: infoTitleContainer.frame.height*(2/3), width: infoDetailsContainer.frame.width, height: infoTitleContainer.frame.height/3)
+        let ageDetails = customLabel(ageDetailsFrame, text: "\(item.itemAge) years old", color: UIColor.blackColor(), fontSize: 16)
+        ageDetails.textAlignment = .Left
+//        ageDetails.adjustsFontSizeToFitWidth = true
+        infoDetailsContainer.addSubview(ageDetails)
+        
+        
+        let grayBar3 = UIView(frame: CGRect(x: itemInfo.frame.origin.x, y: infoTitleContainer.frame.origin.y + infoTitleContainer.frame.height, width: itemInfo.frame.width, height: 1))
+        grayBar3.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.9)
+        itemInfo.addSubview(grayBar3)
+        
+        
         
 //        mapView = GMSMapView(frame: CGRect(x: 0, y: itemInfo.frame.height*3, width: itemInfo.frame.width, height: itemInfo.frame.height*3.5))
 //        let location = CLLocationCoordinate2DMake(CLLocationDegrees(item.latitude), CLLocationDegrees(item.longitude))
@@ -161,9 +215,9 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     }
     
     func setupSellerNameLabel(name: String) -> UILabel {
-        let sellerNameLabel = UILabel(frame: CGRect(x: self.itemInfo.frame.width*0.65, y: self.itemInfo.frame.height * 6.7, width: self.screenSize.width*0.3, height: self.screenSize.width*0.45))
-        sellerNameLabel.text = name
-        sellerNameLabel.font = UIFont.boldSystemFontOfSize(20)
+        let sellerNameLabelFrame = CGRect(x: 0, y: self.frame.height*0.93, width: self.frame.width, height: self.frame.height*0.07)
+        let sellerNameLabel = customLabel(sellerNameLabelFrame, text: name, color: UIColor.blackColor(), fontSize: 20)
+        sellerNameLabel.font = UIFont(name: "Avenir-Heavy", size: 20)
         return sellerNameLabel
     }
     
@@ -175,7 +229,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     }
     
     func setupSellerPic(url: String) -> UIImageView {
-        let sellerPicView = UIImageView(frame: CGRect(x: self.itemInfo.frame.width*0.22, y: self.itemInfo.frame.height * 7.53, width: self.screenSize.width*0.30, height: self.screenSize.width*0.30))
+        let sellerPicView = UIImageView(frame: CGRect(x: self.itemInfo.frame.width*0.35, y: self.itemInfo.frame.height*7, width: self.screenSize.width*0.30, height: self.screenSize.width*0.30))
         let link = NSURL(string: url)
         let pictureData = NSData(contentsOfURL: link!)
         sellerPicView.image = UIImage(data: pictureData!)
@@ -184,7 +238,6 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         sellerPicView.clipsToBounds = true
         sellerPicView.contentMode = .ScaleAspectFill
         return sellerPicView
-        
     }
     
 //    func calculateDistance(item: Item, myLocation: CLLocation?) {
