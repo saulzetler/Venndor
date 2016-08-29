@@ -929,6 +929,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 //            else {
 //                coordinate = currentPlace.coordinate
 //            }
+
             
             let latitude = 10.0
             let longitude = 10.0
