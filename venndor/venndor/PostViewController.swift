@@ -923,14 +923,15 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
           
             let condition = ratingControl.rating
             
-            if useMyLocation == true {
-                coordinate = LocalUser.myLocation.coordinate
-            }
-            else {
-                coordinate = currentPlace.coordinate
-            }
-            let latitude = Double(coordinate.latitude)
-            let longitude = Double(coordinate.longitude)
+//            if useMyLocation == true {
+//                coordinate = LocalUser.myLocation.coordinate
+//            }
+//            else {
+//                coordinate = currentPlace.coordinate
+//            }
+            
+            let latitude = 10.0
+            let longitude = 10.0
             
             let minPrice = Int(priceField.text!)
             
