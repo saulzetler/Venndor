@@ -28,7 +28,7 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
     //infoVariables
     var itemInfo: UIView!
     var itemName: UILabel!
-    var itemDescription: UILabel!
+    var itemDescription: UITextView!
     var itemCondition: UIView!
     var itemConditionLabel: UILabel!
     var itemAge: UILabel! 
@@ -70,10 +70,13 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         itemInfo.layer.masksToBounds = true
         
         let tap = UITapGestureRecognizer(target: self, action: #selector(ItemInfoView.handleTap(_:)))
-        itemInfo.addGestureRecognizer(tap)
+        self.addGestureRecognizer(tap)
        
-        itemName = UILabel(frame: CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.20, width: itemInfo.frame.width*0.7, height: itemInfo.frame.height*0.6))
-        itemName.text = item.name
+        let nameFrame = CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.20, width: itemInfo.frame.width*0.7, height: itemInfo.frame.height*0.6)
+        itemName = customLabel(nameFrame, text: item.name, color: UIColor.blackColor(), fontSize: 24)
+        itemName.textAlignment = .Left
+        itemName.font = UIFont(name: "Avenir-Heavy", size: 20)
+        itemName.adjustsFontSizeToFitWidth = true
         itemInfo.addSubview(itemName)
         
         let grayBar = UIView(frame: CGRect(x: itemInfo.frame.origin.x, y: itemInfo.frame.height, width: itemInfo.frame.width, height: 1))
@@ -81,22 +84,19 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         itemInfo.addSubview(grayBar)
         
         
-        itemCondition = UIView(frame: CGRect(x: itemInfo.frame.width*0.27, y: itemInfo.frame.height * 1.2, width: itemInfo.frame.width*0.30, height: itemInfo.frame.height*0.45))
-        itemCondition.userInteractionEnabled = false
-        itemInfo.addSubview(itemCondition)
-        //self.setupItemCondition()
-        
-        itemConditionLabel = UILabel(frame:CGRect(x: itemInfo.frame.width*0.03, y: itemInfo.frame.height * 1.2, width: itemInfo.frame.width*0.22, height: itemInfo.frame.height*0.37))
-        itemConditionLabel.text = "Condition"
-        itemConditionLabel.adjustsFontSizeToFitWidth = true
-        itemInfo.addSubview(itemConditionLabel)
+//        itemCondition = UIView(frame: CGRect(x: itemInfo.frame.width*0.27, y: itemInfo.frame.height * 1.2, width: itemInfo.frame.width*0.30, height: itemInfo.frame.height*0.45))
+//        itemCondition.userInteractionEnabled = false
+//        itemInfo.addSubview(itemCondition)
+//        //self.setupItemCondition()
+//        
+//        itemConditionLabel = UILabel(frame:CGRect(x: itemInfo.frame.width*0.03, y: itemInfo.frame.height * 1.2, width: itemInfo.frame.width*0.22, height: itemInfo.frame.height*0.37))
+//        itemConditionLabel.text = "Condition"
+//        itemConditionLabel.adjustsFontSizeToFitWidth = true
+//        itemInfo.addSubview(itemConditionLabel)
 
-        
-        itemDescription = UILabel(frame: CGRect(x: itemInfo.frame.width*0.04, y: itemInfo.frame.height * 1.8, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6))
-        itemDescription.text = item.details
-        itemDescription.font = itemDescription.font.fontWithSize(10)
-//        itemDescription.sizeToFit()
-        itemDescription.numberOfLines = 0
+        let descriptionFrame = CGRect(x: itemInfo.frame.width*0.04, y: itemInfo.frame.height*1.1, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6)
+        itemDescription = customTextView(descriptionFrame, text: item.details, color: UIColor.blackColor(), fontSize: 18, bold: false)
+        itemInfo.addSubview(itemDescription)
         itemInfo.addSubview(itemDescription)
         
 //        mapView = GMSMapView(frame: CGRect(x: 0, y: itemInfo.frame.height*3.7, width: itemInfo.frame.width, height: itemInfo.frame.height*3.5))
@@ -125,13 +125,13 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
                     self.sellerNameLabel = label
                     self.itemInfo.addSubview(self.sellerNameLabel)
                     
-                    self.sellerRatingLabel = self.setupSellerRatingLabel(user.rating)
-                    self.itemInfo.addSubview(self.sellerRatingLabel)
-                    
-                    let star = UIImageView(frame: CGRect(x: self.itemInfo.frame.width*0.77, y: self.itemInfo.frame.height * 8.76, width: self.screenSize.width*0.05, height: self.screenSize.width*0.05))
-                    star.image = UIImage(named: "Star_Filled.png")
-                    // star.contentMode = .ScaleToFill
-                    self.itemInfo.addSubview(star)
+//                    self.sellerRatingLabel = self.setupSellerRatingLabel(user.rating)
+//                    self.itemInfo.addSubview(self.sellerRatingLabel)
+//                    
+//                    let star = UIImageView(frame: CGRect(x: self.itemInfo.frame.width*0.77, y: self.itemInfo.frame.height * 8.76, width: self.screenSize.width*0.05, height: self.screenSize.width*0.05))
+//                    star.image = UIImage(named: "Star_Filled.png")
+//                    // star.contentMode = .ScaleToFill
+//                    self.itemInfo.addSubview(star)
                     
                 }
             }
@@ -293,9 +293,9 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
     
     internal func scrollViewDidEndDecelerating(scrollView: UIScrollView){
         adjustPage()
-        if picNum == numberOfPics-1 && prevPicNum == picNum {
-            openInfo()
-        }
+//        if picNum == numberOfPics-1 && prevPicNum == picNum {
+//            openInfo()
+//        }
     }
     
     internal func scrollViewDidEndDragging(scrollView: UIScrollView, willDecelerate decelerate: Bool) {

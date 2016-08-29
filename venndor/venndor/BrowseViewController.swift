@@ -14,7 +14,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var itemList: [Item]!
     
     let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.77
-    let CARD_WIDTH: CGFloat = UIScreen.mainScreen().bounds.width*0.9
+    let CARD_WIDTH: CGFloat = UIScreen.mainScreen().bounds.width*0.96
     var MAX_BUFFER_SIZE: Int!
     
     var cardsLoadedIndex: Int!
@@ -135,8 +135,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     func setupSellButton() {
-        let bottomBar = CGRect(x: screenSize.width*0.02, y: screenSize.height*0.89, width: screenSize.width*0.96, height: screenSize.height*0.09)
-        let bottomBarButton = makeTextButton("POST AN ITEM", frame: bottomBar, target: #selector(BrowseViewController.toSellPage), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x1abc9c), textSize: 28)
+        let bottomBar = CGRect(x: screenSize.width*0.02, y: screenSize.height*0.9, width: screenSize.width*0.96, height: screenSize.height*0.08)
+        let bottomBarButton = makeTextButton("POST AN ITEM", frame: bottomBar, target: #selector(BrowseViewController.toSellPage), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x1abc9c), textSize: 22)
         bottomBarButton.layer.cornerRadius = 10
         bottomBarButton.layer.masksToBounds = true
         mainView.addSubview(bottomBarButton)

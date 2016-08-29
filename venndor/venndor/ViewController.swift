@@ -17,6 +17,22 @@ extension UIViewController: SWRevealViewControllerDelegate {
         return label
     }
     
+    func customTextView(frame: CGRect, text: String, color: UIColor, fontSize: CGFloat, bold: Bool) -> UITextView {
+        let textView = UITextView(frame: frame)
+        textView.text = text
+        textView.textColor = color
+        if bold {
+           textView.font = UIFont(name: "Avenir-Heavy", size: fontSize)
+        }
+        else {
+            textView.font = UIFont(name: "Avenir", size: fontSize)
+        }
+        textView.textAlignment = .Left
+        textView.editable = false
+        textView.scrollEnabled = false
+        return textView
+    }
+    
     func makeImageButton(imageName: String, frame: CGRect, target: Selector, tinted: Bool, circle: Bool, backgroundColor: UInt32, backgroundAlpha: Double) -> UIButton {
         
         let button = UIButton(frame: frame)

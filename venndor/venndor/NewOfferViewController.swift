@@ -46,7 +46,7 @@ class NewOfferViewController: UIViewController, UITextFieldDelegate {
     func setupBackground() {
         self.view.backgroundColor = UIColorFromHex(0x1abc9c)
         
-        //setup profile picture frame
+        
         let frame = CGRect(x: self.view.frame.width / 2 - 50, y: self.view.frame.height * 0.2, width: 100, height: 100)
         let imageView = UIImageView(frame: frame)
         
@@ -54,6 +54,7 @@ class NewOfferViewController: UIViewController, UITextFieldDelegate {
         imageView.image = itemImage
         imageView.layer.cornerRadius = imageView.frame.size.width/2
         imageView.clipsToBounds = true
+        imageView.contentMode = .ScaleAspectFill
         self.view.addSubview(imageView)
         
     }
