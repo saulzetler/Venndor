@@ -104,39 +104,51 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
             else {
                 if let firstName = result["first_name"] as? String {
                     print(firstName)
+                    LocalUser.firstName = firstName
                 }
                 else {
                     print("Didn't get first name")
+                    LocalUser.firstName = "Ricky"
                 }
                 if let lastName = result["last_name"] as? String {
                     print(lastName)
+                    LocalUser.lastName = lastName
                 }
                 else {
                     print("Didn't get last name")
+                    LocalUser.lastName = "Bobby"
                 }
                 if let email = result["email"] as? String {
                     print(email)
+                    LocalUser.email = email
                 }
                 else {
                     print("Didn't get email")
+                    LocalUser.email = "tfl@getvenndor.com"
                 }
                 if let userID = result["id"] as? NSString {
                     print(userID)
+                    LocalUser.profilePictureURL = "https://graph.facebook.com/\(userID)/picture?type=large"
                 }
                 else {
                     print("Didn't get userID")
+                    LocalUser.profilePictureURL = "https://graph.facebook.com/707849349/picture?type=large"
                 }
                 if let gender = result["gender"] as? String {
                     print(gender)
+                    LocalUser.gender = gender
                 }
                 else {
                     print("Didn't get gender")
+                    LocalUser.gender = "Unknown"
                 }
                 if let ageRange = result["age_range"] {
                     print(ageRange)
+                    LocalUser.ageRange = "\(ageRange["min"])-\(ageRange["max"])"
                 }
                 else {
                     print("Didn't get age range")
+                    LocalUser.ageRange = "Unknown"
                 }
             }
         }
