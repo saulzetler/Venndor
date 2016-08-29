@@ -14,7 +14,7 @@ class MatchesManager: NSObject {
     
     func createMatch(match: Match, completionHandler: (Match?, ErrorType?) -> () ) {
         
-        let params = ["itemID": match.itemID, "itemName": match.itemName, "itemDescription": match.itemDescription, "userID": match.userID, "sellerID": match.sellerID, "sellerName": match.sellerName, "matchedPrice":match.matchedPrice, "itemLongitude": match.itemLongitude, "itemLatitude": match.itemLatitude, "bought": match.bought, "dateMatched": TimeManager.formatter.stringFromDate(match.dateMatched)]
+        let params = ["itemID": match.itemID, "itemName": match.itemName, "itemDescription": match.itemDescription, "itemPickupLocation":match.itemPickupLocation, "userID": match.userID, "sellerID": match.sellerID, "sellerName": match.sellerName, "matchedPrice":match.matchedPrice, "bought": match.bought, "dateMatched": TimeManager.formatter.stringFromDate(match.dateMatched)]
         
         RESTEngine.sharedEngine.createMatchOnServer(params as! [String : AnyObject],
             success: { response in

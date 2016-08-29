@@ -70,6 +70,7 @@ class phoneViewController: UIViewController, UITextFieldDelegate {
         
         self.view.addSubview(phoneField)
     }
+    
     override func didReceiveMemoryWarning() {
         super.didReceiveMemoryWarning()
         // Dispose of any resources that can be recreated.

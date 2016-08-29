@@ -1008,28 +1008,29 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
             
             let condition = ratingControl.rating
             
-            if didChangeLocation == true {
-                if useMyLocation == true {
-                    coordinate = LocalUser.myLocation.coordinate
-                }
-                else {
-                    coordinate = currentPlace.coordinate
-                }
-            }
-            else {
-                coordinate = CLLocationCoordinate2DMake(self.item.latitude, self.item.longitude)
-            }
+//            if didChangeLocation == true {
+//                if useMyLocation == true {
+//                    coordinate = LocalUser.myLocation.coordinate
+//                }
+//                else {
+//                    coordinate = currentPlace.coordinate
+//                }
+//            }
+//            else {
+//                coordinate = CLLocationCoordinate2DMake(self.item.latitude, self.item.longitude)
+//            }
+//            
+//            
+//            let latitude = Double(coordinate.latitude)
+//            let longitude = Double(coordinate.longitude)
             
+//            var conversion = LocationConverter()
+//            let geoHash = conversion.coordToGeo(latitude, longitudeInput: longitude)
+//            print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
             
-            let latitude = Double(coordinate.latitude)
-            let longitude = Double(coordinate.longitude)
             let minPrice = Int(priceField.text!)
-            var conversion = LocationConverter()
-            let geoHash = conversion.coordToGeo(latitude, longitudeInput: longitude)
-            print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
-            
-            
-            let itemUpdate = ["name" : name, "details" : details, "photoCount" : filledImagesArray.count, "category" : category, "latitude" : latitude, "longitude" : longitude, "itemAge" : age, "minPrice" : minPrice!, "geoHash" : geoHash, "condition" : condition!] as JSON
+           
+            let itemUpdate = ["name" : name, "details" : details, "photoCount" : filledImagesArray.count, "category" : category, "itemAge" : age, "minPrice" : minPrice!, "condition" : condition!] as JSON
             
             ItemManager.globalManager.updateItemById(item.id, update: itemUpdate) { error in
                 guard error == nil else {
@@ -1039,7 +1040,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
                 
                 print("Succesfully updated item")
                 
-                let postUpdate = ["itemName" : name, "itemDescription" : details, "minPrice" : minPrice!, "itemLongitude" : longitude, "itemLatitude" : latitude] as JSON
+                let postUpdate = ["itemName" : name, "itemDescription" : details, "minPrice" : minPrice!] as JSON
                 
                 PostManager.globalManager.updatePostById(self.post.id, update: postUpdate) { error in
                     guard error == nil else {
@@ -1050,8 +1051,6 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
                     self.post.itemName = name
                     self.post.itemDescription = details
                     self.post.minPrice = minPrice!
-                    self.post.itemLongitude = longitude
-                    self.post.itemLatitude = latitude
                     newItems.append(self.post)
                     LocalUser.posts = newItems
                     self.updatingPopup.updateText("Updated!")

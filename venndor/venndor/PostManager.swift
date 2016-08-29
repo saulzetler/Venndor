@@ -15,7 +15,7 @@ class PostManager: NSObject {
     func createPost(post: Post, completionHandler: (Post?, ErrorType?) -> () ) {
         
         //parameters to be posted
-        let params = ["itemID": post.itemID, "itemName": post.itemName, "itemDescription": post.itemDescription, "userID": post.userID, "minPrice": post.minPrice, "itemLongitude": post.itemLongitude, "itemLatitude": post.itemLatitude, "sold": post.sold]
+        let params = ["itemID": post.itemID, "itemName": post.itemName, "itemDescription": post.itemDescription, "itemPickupLocation": post.itemPickupLocation, "userID": post.userID, "minPrice": post.minPrice, "sold": post.sold]
         
         //post the data to the server
         RESTEngine.sharedEngine.createPostOnServer(params as! [String : AnyObject],
