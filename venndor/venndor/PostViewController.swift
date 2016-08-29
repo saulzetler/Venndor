@@ -26,6 +26,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var itemDescription: UITextView!
     var itemName: UITextField!
     var priceField: UITextField!
+    var pickupLocationField: UITextField!
    
     //imgViews
     var imageView1: UIImageView!
@@ -97,6 +98,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         addHeaderOther("Sell")
         setupArrows()
 //        setupMap()
+        setupLocationInput()
         setPreviewItemName()
         setCategoryPreview()
         setYearsPreview()
@@ -172,12 +174,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         var button: UIButton!
         
         if page != 0 {
-            upButtonFrame.origin.y = upButtonOrigin + CGFloat(page)*screenSize.height - 5
+            upButtonFrame.origin.y = upButtonOrigin + CGFloat(page)*screenSize.height + 2
             button = makeTextButton(upTitle, frame: upButtonFrame, target: #selector(PostViewController.prevPage(_:)), textColor: UIColorFromHex(0x34495e))
             containerView.addSubview(button)
         }
         if page != 7 {
-            downButtonFrame.origin.y = downButtonOrigin + CGFloat(page)*screenSize.height + 5
+            downButtonFrame.origin.y = downButtonOrigin + CGFloat(page)*screenSize.height
             button = makeTextButton(downTitle, frame: downButtonFrame, target: #selector(PostViewController.nextPage(_:)), textColor: UIColorFromHex(0x34495e))
             containerView.addSubview(button)
         }
@@ -217,6 +219,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         itemName.clearsOnBeginEditing = true
         itemName.textAlignment = .Center
         itemName.adjustsFontSizeToFitWidth = true
+        itemName.tag = 100
         containerView.addSubview(itemName)
         
         let border = CALayer()
@@ -240,6 +243,38 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         containerView.addSubview(itemDescription)
         createBorder(itemDescription, color: UIColorFromHex(0x34495e))
         itemDescription.returnKeyType = .Done
+    }
+    
+    func setupLocationInput() {
+        pickupLocationField = ItemNameTextField (frame: CGRectMake(screenSize.width*0.2, screenSize.height*5.37, screenSize.width*0.7, screenSize.height*0.15))
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColorFromHex(0x34495e).CGColor
+        border.frame = CGRect(x: 0, y: pickupLocationField.frame.size.height - width, width:  pickupLocationField.frame.size.width, height: pickupLocationField.frame.size.height)
+        border.borderWidth = width
+        pickupLocationField.layer.addSublayer(border)
+
+        pickupLocationField.layer.masksToBounds = true
+        pickupLocationField.returnKeyType = .Done
+        pickupLocationField.tag = 125
+        
+        pickupLocationField.textAlignment = .Center
+        pickupLocationField.clearsOnBeginEditing = true
+        pickupLocationField.font = UIFont(name: "Avenir", size: 30)
+        
+        pickupLocationField.keyboardType = .ASCIICapable
+        pickupLocationField.delegate = self
+        pickupLocationField.adjustsFontSizeToFitWidth = true
+        pickupLocationField.text = "Enter pickup location"
+        pickupLocationField.textColor = UIColorFromHex(0x34495e)
+        
+        containerView.addSubview(pickupLocationField)
+        
+        let hintLabel = UILabel(frame: CGRectMake(screenSize.width*0.2, screenSize.height*5.53, screenSize.width*0.7, screenSize.height*0.05))
+        hintLabel.text = "(E.g. 'Milton and Durocher' or '555 Lorne Ave')"
+        hintLabel.adjustsFontSizeToFitWidth = true
+        hintLabel.textColor = UIColorFromHex(0x34495e)
+        containerView.addSubview(hintLabel)
     }
     
     //create the input for the user to access their camera roll to upload a maximum of 5 photos
@@ -588,7 +623,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //text field editing delegates
     func textFieldShouldClear(textField: UITextField) -> Bool {
-        if textField.text == "Item Name" {
+        if textField.text == "Item Name" || textField.text == "Enter pickup location" {
             return true
         } else {
             return false
@@ -600,12 +635,15 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         if textField.tag == 30 {
             previewPrice.setTitle("Minimmum price is: $\(String(textField.text!))", forState: .Normal)
         }
-        else {
-            if textField.text == "" {
+        else if textField.text == "" {
+            if textField.tag == 100 {
                 textField.text = "Item Name"
             }
-            updatePreviewName()
+            if textField.tag == 125 {
+                textField.text = "Enter pickup location"
+            }
         }
+        updatePreviewName()
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
@@ -658,6 +696,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func updatePreviewName() {
         previewName.setTitle(itemName.text, forState: .Normal)
+        previewLocation.setTitle(pickupLocationField.text, forState: .Normal)
     }
     
     func setCategoryPreview() {
@@ -748,7 +787,14 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     func setLocationPreview() {
         let locationPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height, screenSize.width*0.6, screenSize.height*0.05)
-        previewLocation = makeTextButton("Using current location", frame: locationPreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        var locationPreview = "Location not set."
+        
+        if let location = pickupLocationField.text {
+            locationPreview = location
+        }
+        
+        print(locationPreview)
+        previewLocation = makeTextButton(locationPreview, frame: locationPreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewLocation.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewLocation.tag = 5
         containerView.addSubview(previewLocation)
@@ -920,6 +966,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             let category = categoryPickerData[row]
             let age = yearsPickerData[yearsPicker.selectedRowInComponent(0)]
             let ownerName = "\(LocalUser.user.firstName) \(LocalUser.user.lastName)"
+            let pickupLocation = pickupLocationField.text!
           
             let condition = ratingControl.rating
             
@@ -931,18 +978,17 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 //            }
 //            let latitude = Double(coordinate.latitude)
 //            let longitude = Double(coordinate.longitude)
-            
-            let latitude = 10.0
-            let longitude = 10.0
+
+//            
+//            var conversion = LocationConverter()
+//            let geoHash = conversion.coordToGeo(latitude, longitudeInput: longitude)
+//            print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
+
             
             let minPrice = Int(priceField.text!)
             
-            var conversion = LocationConverter()
-            let geoHash = conversion.coordToGeo(latitude, longitudeInput: longitude)
-            print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
-            
             //create an item object to past to the manager to create the item
-            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, latitude: latitude, longitude: longitude, geoHash: geoHash, photos: images, itemAge: age, minPrice: minPrice!)
+            let item = Item(name: name, description: details, owner: LocalUser.user.id, ownerName: ownerName, category: category, condition: condition, photos: images, itemAge: age, minPrice: minPrice!, pickupLocation: pickupLocation)
             
             //create the item object on the server
             ItemManager.globalManager.createItem(item) { error in
@@ -952,7 +998,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
                 }
             
                 //create the post object on the server
-                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, userID: item.owner, minPrice: item.minPrice, thumbnail: self.imageView1.image!, itemLongitude: item.longitude, itemLatitude: item.latitude)
+                let post = Post(itemID: item.id!, itemName: item.name, itemDescription: item.details, itemPickupLocation: pickupLocation, userID: item.owner, minPrice: item.minPrice, thumbnail: self.imageView1.image!)
                 
                 PostManager.globalManager.createPost(post) { post, error in
                     LocalUser.user.posts[post!.id] = item.id

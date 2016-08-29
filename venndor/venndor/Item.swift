@@ -26,10 +26,9 @@ class Item: NSObject {
     var ownerName: String
     var category: String
     var condition: Int
-    var latitude: Double
-    var longitude: Double
     var itemAge: String
     var minPrice: Int
+    var pickupLocation: String!
     
     //key: match object id, value: user who owns match object
     var matches: [String:AnyObject]!
@@ -42,7 +41,6 @@ class Item: NSObject {
     var nuMatches: Int!
     var offersMade: [Double]!
     var avgOffer: Double!
-    var geoHash: String!
     
     var formatter: NSDateFormatter {
         let formatter = NSDateFormatter()
@@ -63,10 +61,9 @@ class Item: NSObject {
         ownerName =  json["ownerName"] as! String
         category = json["category"] as! String
         condition = json["condition"] as! Int
-        latitude = json["latitude"] as! Double
-        longitude = json["longitude"] as! Double
         itemAge = json["itemAge"] as! String
         minPrice = json["minPrice"] as! Int
+        pickupLocation = json["pickupLocation"] as! String
         matches = ParserManager.globalManager.getDict(json["matches"]!)
         timeMatched = json["timeMatched"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeMatched"] as! String)
         timeBought = json["timeBought"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeBought"]! as! String)
@@ -75,11 +72,10 @@ class Item: NSObject {
         nuMatches =  json["nuMatches"] as! Int
         offersMade = ParserManager.globalManager.getDoubleArray(json["offersMade"]!)
         avgOffer = json["avgOffer"] as! Double
-        geoHash = json["geoHash"] as! String
     }
     
     //init from the app
-    init(name: String, description: String, owner: String, ownerName: String, category: String, condition: Int, latitude: Double, longitude: Double, geoHash: String, photos: [UIImage], itemAge: String, minPrice: Int) {
+    init(name: String, description: String, owner: String, ownerName: String, category: String, condition: Int, photos: [UIImage], itemAge: String, minPrice: Int, pickupLocation: String) {
         self.name = name
         self.details = description
         self.owner = owner
@@ -88,10 +84,9 @@ class Item: NSObject {
         self.photoCount = photos.count
         self.category = category
         self.condition = condition
-        self.latitude = latitude
-        self.longitude = longitude
         self.itemAge = itemAge
         self.minPrice = minPrice
+        self.pickupLocation = pickupLocation
         self.matches = [String:AnyObject]()
         self.timeMatched = nil
         self.timeBought = nil
@@ -100,8 +95,6 @@ class Item: NSObject {
         self.nuMatches = 0
         self.offersMade = [Double]()
         self.avgOffer = 0
-        self.geoHash = geoHash
-
     }
     
     func setAverageOffer() {
