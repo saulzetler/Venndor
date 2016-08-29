@@ -40,7 +40,8 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
         setUpTableView()
         
         //add the generic views of each page ie. header and side menu
-        addHeaderOther("Settings")
+//        addHeaderOther("Settings")
+        addHeaderItems("Settings")
         sideMenuGestureSetup()
         revealViewController().rightViewController = nil
         self.revealViewController().delegate = self
