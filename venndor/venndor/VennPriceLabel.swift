@@ -25,6 +25,7 @@ class VennPriceLabel: UIImageView {
         priceLabel = UILabel(frame:priceFrame)
         
         priceLabel.text = "$\(price)"
+        priceLabel.adjustsFontSizeToFitWidth = true
         priceLabel.textColor = UIColor.whiteColor()
         priceLabel.font = priceLabel.font.fontWithSize(30)
         priceLabel.textAlignment = .Center

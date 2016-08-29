@@ -47,7 +47,7 @@ class MyItemHeaderView: UIView, UITextFieldDelegate {
     }
     func setUpName(page: String) -> Void {
         
-        let frame = CGRectMake(0, self.frame.height*0.4, self.frame.width, self.frame.height)
+        let frame = CGRectMake(0, self.frame.height*0.2, self.frame.width, self.frame.height)
 
         let title = customLabel(frame, text: page, color: UIColor.whiteColor(), fontSize: 20)
         self.addSubview(title)

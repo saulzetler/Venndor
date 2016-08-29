@@ -691,6 +691,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         previewName = makeTextButton(itemName.text!, frame: previewNameFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewName.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewName.tag = 1
+        previewName.titleLabel?.adjustsFontSizeToFitWidth = true
         containerView.addSubview(previewName)
     }
     
@@ -776,6 +777,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         previewDescription = makeTextButton("Description", frame: labelFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
 //        previewDescription.backgroundColor = UIColor.whiteColor()
         previewDescription.tag = 3
+        previewDescription.titleLabel?.adjustsFontSizeToFitWidth = true
         previewDescription.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewDescription.contentVerticalAlignment = UIControlContentVerticalAlignment.Top
         previewDescription.titleLabel?.lineBreakMode = .ByWordWrapping
@@ -797,6 +799,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         previewLocation = makeTextButton(locationPreview, frame: locationPreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewLocation.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewLocation.tag = 5
+        previewLocation.titleLabel?.adjustsFontSizeToFitWidth = true
         containerView.addSubview(previewLocation)
     }
     
@@ -815,6 +818,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         previewPrice = makeTextButton("No minimum price set", frame: pricePreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewPrice.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewPrice.tag = 6
+        previewPrice.titleLabel?.adjustsFontSizeToFitWidth = true
         containerView.addSubview(previewPrice)
     }
     

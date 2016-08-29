@@ -71,6 +71,7 @@ class SideMenuController: UIViewController {
         browseButton.selected = false
         myMatchesButton.selected = false
         myPostsButton.selected = false
+        settingsButton.selected = false
 //        settingsButton.titleLabel?.textColor = UIColor.whiteColor()
         if LocalUser.CurrentPage == "Browse" {
             browseButton.selected = true
