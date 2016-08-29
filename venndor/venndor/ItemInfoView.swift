@@ -60,6 +60,9 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         self.backgroundColor = UIColor.whiteColor()
         infoOpen = false
         
+        let tap = UITapGestureRecognizer(target: self, action: #selector(ItemInfoView.handleTap(_:)))
+        self.addGestureRecognizer(tap)
+        
     }
     
     func setupItemInfo(item: Item, myLocation: CLLocation) {
@@ -69,19 +72,73 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         itemInfo.layer.cornerRadius = 10
         itemInfo.layer.masksToBounds = true
         
-        let tap = UITapGestureRecognizer(target: self, action: #selector(ItemInfoView.handleTap(_:)))
-        self.addGestureRecognizer(tap)
-       
         let nameFrame = CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.20, width: itemInfo.frame.width*0.7, height: itemInfo.frame.height*0.6)
-        itemName = customLabel(nameFrame, text: item.name, color: UIColor.blackColor(), fontSize: 24)
-        itemName.textAlignment = .Left
+        itemName = customLabel(nameFrame, text: item.name, color: UIColor.blackColor(), fontSize: 20)
         itemName.font = UIFont(name: "Avenir-Heavy", size: 20)
+        itemName.textAlignment = .Left
         itemName.adjustsFontSizeToFitWidth = true
         itemInfo.addSubview(itemName)
         
-        let grayBar = UIView(frame: CGRect(x: itemInfo.frame.origin.x, y: itemInfo.frame.height, width: itemInfo.frame.width, height: 1))
-        grayBar.backgroundColor = UIColor.lightGrayColor()
-        itemInfo.addSubview(grayBar)
+        let descriptionFrame = CGRect(x: itemInfo.frame.width*0.04, y: itemInfo.frame.height, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*3)
+        itemDescription = customTextView(descriptionFrame, text: item.details, color: UIColor.blackColor(), fontSize: 18, bold: false)
+        itemDescription.backgroundColor = UIColor.clearColor()
+        itemDescription.userInteractionEnabled = false
+        itemInfo.addSubview(itemDescription)
+        
+        let grayBar1 = UIView(frame: CGRect(x: itemInfo.frame.origin.x, y: itemInfo.frame.height, width: itemInfo.frame.width, height: 1))
+        grayBar1.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.9)
+        itemInfo.addSubview(grayBar1)
+        
+        let infoTitleContainer = UIView(frame: CGRect(x: 0, y: descriptionFrame.origin.y + descriptionFrame.height, width: itemInfo.frame.width/3.5, height: itemInfo.frame.height*2.7))
+        infoTitleContainer.backgroundColor = UIColor.clearColor()
+        itemInfo.addSubview(infoTitleContainer)
+        
+        let infoDetailsContainer = UIView(frame: CGRect(x: itemInfo.frame.width/3.5, y: descriptionFrame.origin.y + descriptionFrame.height, width: itemInfo.frame.width*(2/3), height: itemInfo.frame.height*2.7))
+        infoDetailsContainer.backgroundColor = UIColor.clearColor()
+        itemInfo.addSubview(infoDetailsContainer)
+        
+        let grayBar2 = UIView(frame: CGRect(x: itemInfo.frame.origin.x, y: descriptionFrame.origin.y + descriptionFrame.height, width: itemInfo.frame.width, height: 1))
+        grayBar2.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.9)
+        itemInfo.addSubview(grayBar2)
+        
+        //title labels
+        let locationTitleLabelFrame = CGRect(x: itemInfo.frame.width*0.05, y: 0, width: infoTitleContainer.frame.width, height: infoTitleContainer.frame.height/3)
+        let locationTitleLabel = customLabel(locationTitleLabelFrame, text: "Location:", color: UIColor.blackColor(), fontSize: 16)
+        locationTitleLabel.textAlignment = .Left
+        infoTitleContainer.addSubview(locationTitleLabel)
+        
+        let conditionTitleLabelFrame = CGRect(x: itemInfo.frame.width*0.05, y: infoTitleContainer.frame.height/3, width: infoTitleContainer.frame.width, height: infoTitleContainer.frame.height/3)
+        let conditionTitleLabel = customLabel(conditionTitleLabelFrame, text: "Condition:", color: UIColor.blackColor(), fontSize: 16)
+        conditionTitleLabel.textAlignment = .Left
+        infoTitleContainer.addSubview(conditionTitleLabel)
+        
+        let ageTitleLabelFrame = CGRect(x: itemInfo.frame.width*0.05, y: infoTitleContainer.frame.height*(2/3), width: infoTitleContainer.frame.width, height: infoTitleContainer.frame.height/3)
+        let ageTitleLabel = customLabel(ageTitleLabelFrame, text: "Age:", color: UIColor.blackColor(), fontSize: 16)
+        ageTitleLabel.textAlignment = .Left
+        infoTitleContainer.addSubview(ageTitleLabel)
+        
+        
+        //actual descriptions of information
+        let locationDetailsFrame = CGRect(x: itemInfo.frame.width*0.05, y: 0, width: infoDetailsContainer.frame.width, height: infoTitleContainer.frame.height/3)
+        let locationDetails = customLabel(locationDetailsFrame, text: "Location Information", color: UIColor.blackColor(), fontSize: 16)
+        locationDetails.textAlignment = .Left
+        locationDetails.adjustsFontSizeToFitWidth = true
+        infoDetailsContainer.addSubview(locationDetails)
+        
+        let conditionFrame = CGRect(x: itemInfo.frame.width*0.05, y: infoTitleContainer.frame.height/3, width: infoDetailsContainer.frame.width*0.9, height: infoTitleContainer.frame.height/3)
+        let conditionDisplay = RatingControl(frame: conditionFrame, rating: item.condition)
+        infoDetailsContainer.addSubview(conditionDisplay)
+        
+        let ageDetailsFrame = CGRect(x: itemInfo.frame.width*0.05, y: infoTitleContainer.frame.height*(2/3), width: infoDetailsContainer.frame.width, height: infoTitleContainer.frame.height/3)
+        let ageDetails = customLabel(ageDetailsFrame, text: "\(item.itemAge) years old", color: UIColor.blackColor(), fontSize: 16)
+        ageDetails.textAlignment = .Left
+        //        ageDetails.adjustsFontSizeToFitWidth = true
+        infoDetailsContainer.addSubview(ageDetails)
+        
+        
+        let grayBar3 = UIView(frame: CGRect(x: itemInfo.frame.origin.x, y: infoTitleContainer.frame.origin.y + infoTitleContainer.frame.height, width: itemInfo.frame.width, height: 1))
+        grayBar3.backgroundColor = UIColor.lightGrayColor().colorWithAlphaComponent(0.9)
+        itemInfo.addSubview(grayBar3)
         
         
 //        itemCondition = UIView(frame: CGRect(x: itemInfo.frame.width*0.27, y: itemInfo.frame.height * 1.2, width: itemInfo.frame.width*0.30, height: itemInfo.frame.height*0.45))
@@ -93,11 +150,6 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
 //        itemConditionLabel.text = "Condition"
 //        itemConditionLabel.adjustsFontSizeToFitWidth = true
 //        itemInfo.addSubview(itemConditionLabel)
-
-        let descriptionFrame = CGRect(x: itemInfo.frame.width*0.04, y: itemInfo.frame.height*1.1, width: itemInfo.frame.width*0.95, height: itemInfo.frame.height*1.6)
-        itemDescription = customTextView(descriptionFrame, text: item.details, color: UIColor.blackColor(), fontSize: 18, bold: false)
-        itemInfo.addSubview(itemDescription)
-        itemInfo.addSubview(itemDescription)
         
 //        mapView = GMSMapView(frame: CGRect(x: 0, y: itemInfo.frame.height*3.7, width: itemInfo.frame.width, height: itemInfo.frame.height*3.5))
 //        let location = CLLocationCoordinate2DMake(CLLocationDegrees(item.latitude), CLLocationDegrees(item.longitude))

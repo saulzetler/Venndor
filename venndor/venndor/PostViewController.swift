@@ -978,10 +978,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
 //            }
 //            let latitude = Double(coordinate.latitude)
 //            let longitude = Double(coordinate.longitude)
+
 //            
 //            var conversion = LocationConverter()
 //            let geoHash = conversion.coordToGeo(latitude, longitudeInput: longitude)
 //            print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
+
             
             let minPrice = Int(priceField.text!)
             

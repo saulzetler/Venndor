@@ -17,7 +17,7 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
         
         
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-        let background = UIImage(named: "match background.png")
+        let background = UIImage(named: "match IPHONE6.png")
         let backgroundView = UIImageView(frame: CGRect(x: -20, y: -20, width: screenSize.width*1.2, height: screenSize.height*1.1))
         backgroundView.image = background
         
@@ -91,11 +91,52 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
                 LocalUser.ageRange = "\(ageRange["min"])-\(ageRange["max"])"
                 LocalUser.profilePictureURL = "https://graph.facebook.com/\(userID)/picture?type=large"
                 
+                print("Made it in")
+                
                 //transition when great success
                 if self.isLoggedIn == true {
                     self.performSegueWithIdentifier("toSplash", sender: self)
                 } else {
                     self.performSegueWithIdentifier("toNumber", sender: self)
+                }
+            }
+            //goes here if info from facebook can't be obtained
+            else {
+                if let firstName = result["first_name"] as? String {
+                    print(firstName)
+                }
+                else {
+                    print("Didn't get first name")
+                }
+                if let lastName = result["last_name"] as? String {
+                    print(lastName)
+                }
+                else {
+                    print("Didn't get last name")
+                }
+                if let email = result["email"] as? String {
+                    print(email)
+                }
+                else {
+                    print("Didn't get email")
+                }
+                if let userID = result["id"] as? NSString {
+                    print(userID)
+                }
+                else {
+                    print("Didn't get userID")
+                }
+                if let gender = result["gender"] as? String {
+                    print(gender)
+                }
+                else {
+                    print("Didn't get gender")
+                }
+                if let ageRange = result["age_range"] {
+                    print(ageRange)
+                }
+                else {
+                    print("Didn't get age range")
                 }
             }
         }
