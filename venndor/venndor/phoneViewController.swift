@@ -15,7 +15,7 @@ class phoneViewController: UIViewController, UITextFieldDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         let screenSize: CGRect = UIScreen.mainScreen().bounds
-        let background = UIImage(named: "match background.png")
+        let background = UIImage(named: "match IPHONE6.png")
         let backgroundView = UIImageView(frame: CGRect(x: -20, y: -20, width: screenSize.width*1.2, height: screenSize.height*1.1))
         backgroundView.image = background
         
