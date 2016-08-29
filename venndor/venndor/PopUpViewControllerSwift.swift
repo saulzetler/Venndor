@@ -17,6 +17,8 @@ class PopUpViewControllerSwift : UIViewController {
     var matchedPrice: Int!
     var sessionStart: NSDate!
     
+    var buyButton: UIButton!
+    
     var backgroundImageView: UIImageView!
 
     var ovc = NewOfferViewController()
@@ -121,7 +123,7 @@ class PopUpViewControllerSwift : UIViewController {
         self.view.addSubview(matchesButton)
        
         buttonFrame.origin.x = screenSize.width*0.4
-        let buyButton = makeTextButtonWithTarget("BUY NOW", frame: buttonFrame, target: ovc, action: #selector(OfferViewController.toBuy), circle: true, textColor: UIColorFromHex(0x1abc9c), tinted: false, backgroundColor: UIColor.whiteColor())
+        buyButton = makeTextButtonWithTarget("BUY NOW", frame: buttonFrame, target: ovc, action: #selector(OfferViewController.toBuy), circle: true, textColor: UIColorFromHex(0x1abc9c), tinted: false, backgroundColor: UIColor.whiteColor())
         createBorder(buyButton, color: UIColor.whiteColor(), circle: true)
         titleSet(buyButton)
         self.view.addSubview(buyButton)

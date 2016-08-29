@@ -17,8 +17,11 @@ class NewOfferViewController: UIViewController, UITextFieldDelegate {
     
     var offerInput: UITextField!
     
+//    let matchControllerView = PopUpViewControllerSwift()
+    
     var offer: Double!
     var sessionStart: NSDate!
+    var matchControllerView: PopUpViewControllerSwift!
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
@@ -31,7 +34,7 @@ class NewOfferViewController: UIViewController, UITextFieldDelegate {
         sessionStart = NSDate()
         
         itemImage = offeredItem.photos![0]
-        
+        matchControllerView = PopUpViewControllerSwift()
         setupBackButton()
         setupBackground()
         setupHint()
@@ -151,7 +154,7 @@ class NewOfferViewController: UIViewController, UITextFieldDelegate {
         //temp for initial release matching controller
         
         if temp[0] != 0.00 {
-            let matchControllerView = PopUpViewControllerSwift()
+            
             matchControllerView.ovc = self
             matchControllerView.matchedItem = offeredItem
             matchControllerView.matchedPrice = Int(temp[0] + temp[1])
@@ -191,7 +194,46 @@ class NewOfferViewController: UIViewController, UITextFieldDelegate {
     }
     
     func toBuy() {
-        
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            print("Buy tapped!")
+            //            let matchContainer = sender.superview as! ItemContainer
+            var match: Match!
+            for matches in LocalUser.matches {
+                if matches.itemID == self.offeredItem.id {
+                    match = matches
+                }
+            }
+            
+            let boughtItem = self.offeredItem
+            
+            self.definesPresentationContext = true
+            UserManager.globalManager.retrieveUserById(match.sellerID) { user, error in
+                guard error == nil else {
+                    print("Error retrieving seller in Buy screen: \(error)")
+                    return
+                }
+                
+                if let user = user {
+                    let bvc = BuyViewController()
+                    bvc.item = boughtItem
+                    bvc.match = match
+                    bvc.seller = user
+                    bvc.item = self.offeredItem
+                    bvc.fromInfo = false
+                    bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
+                    bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
+                    self.presentViewController(bvc, animated: true, completion: nil)
+                }
+                else {
+                    print("Error with parsing user in buy screen. Returning now.")
+                    self.dismissViewControllerAnimated(true, completion: nil)
+                }
+            }
+            //get rid of buy button
+            
+            self.matchControllerView.buyButton.removeFromSuperview()
+        }
+
     }
     
 }

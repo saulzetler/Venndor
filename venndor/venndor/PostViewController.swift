@@ -970,19 +970,12 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
           
             let condition = ratingControl.rating
             
-//            if useMyLocation == true {
-//                coordinate = LocalUser.myLocation.coordinate
-//            }
-//            else {
-//                coordinate = currentPlace.coordinate
-//            }
-//            let latitude = Double(coordinate.latitude)
-//            let longitude = Double(coordinate.longitude)
 
 //            
 //            var conversion = LocationConverter()
 //            let geoHash = conversion.coordToGeo(latitude, longitudeInput: longitude)
 //            print ("THIS IS THE CURRENT GEOHASH YOU GETTING DAWG: " + geoHash)
+
 
             
             let minPrice = Int(priceField.text!)
