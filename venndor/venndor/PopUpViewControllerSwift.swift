@@ -36,7 +36,7 @@ class PopUpViewControllerSwift : UIViewController {
         sessionStart = NSDate()
 
         //create the match on the server
-        let newMatch = Match(itemID: self.matchedItem.id, itemName: self.matchedItem.name, itemDescription: self.matchedItem.details, userID: LocalUser.user.id, sellerID: self.matchedItem.owner, sellerName: self.matchedItem.ownerName, matchedPrice: self.matchedPrice, thumbnail: matchedItem.photos![0], itemLongitude: self.matchedItem.longitude, itemLatitude: self.matchedItem.latitude, dateMatched: NSDate())
+        let newMatch = Match(itemID: self.matchedItem.id, itemName: self.matchedItem.name, itemDescription: self.matchedItem.details, itemPickupLocation: self.matchedItem.pickupLocation, userID: LocalUser.user.id, sellerID: self.matchedItem.owner, sellerName: self.matchedItem.ownerName, matchedPrice: self.matchedPrice, thumbnail: matchedItem.photos![0], dateMatched: NSDate())
                 
         MatchesManager.globalManager.createMatch(newMatch) { match, error in
             guard error == nil else {
