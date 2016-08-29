@@ -34,7 +34,7 @@ class NewOfferViewController: UIViewController, UITextFieldDelegate {
         sessionStart = NSDate()
         
         itemImage = offeredItem.photos![0]
-        
+        matchControllerView = PopUpViewControllerSwift()
         setupBackButton()
         setupBackground()
         setupHint()
