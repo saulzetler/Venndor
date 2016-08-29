@@ -72,7 +72,7 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         itemInfo.layer.cornerRadius = 10
         itemInfo.layer.masksToBounds = true
         
-        let nameFrame = CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.20, width: itemInfo.frame.width*0.7, height: itemInfo.frame.height*0.6)
+        let nameFrame = CGRect(x: itemInfo.frame.width*0.05, y: itemInfo.frame.height*0.20, width: itemInfo.frame.width, height: itemInfo.frame.height*0.6)
         itemName = customLabel(nameFrame, text: item.name, color: UIColor.blackColor(), fontSize: 20)
         itemName.font = UIFont(name: "Avenir-Heavy", size: 20)
         itemName.textAlignment = .Left

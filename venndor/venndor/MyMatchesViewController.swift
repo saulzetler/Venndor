@@ -201,6 +201,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         let descriptionLabel = UILabel(frame: CGRect(x: imgWidth+10, y: 5+imgHeight * 0.15, width: matchContainer.frame.width - imgWidth - 5, height: imgHeight * 0.30))
  
         descriptionLabel.text = match.itemDescription
+        descriptionLabel.adjustsFontSizeToFitWidth = true
         descriptionLabel.font = UIFont(name: "Avenir", size: 20)
         descriptionLabel.textColor = self.UIColorFromHex(0x808080)
         descriptionLabel.numberOfLines = 2
@@ -212,6 +213,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         //create the match info labels
         let nameLabel = UILabel(frame: CGRect(x: imgWidth+10, y: 5, width: matchContainer.frame.width - imgWidth - 40, height: imgHeight * 0.15))
         nameLabel.text = match.itemName
+        nameLabel.adjustsFontSizeToFitWidth = true
         nameLabel.textColor = UIColor.blackColor()
         nameLabel.font = UIFont(name: "Avenir", size: 20)
         matchContainer.addSubview(nameLabel)

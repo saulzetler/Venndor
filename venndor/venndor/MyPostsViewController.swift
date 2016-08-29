@@ -178,11 +178,12 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         let tap = UITapGestureRecognizer(target: self, action: #selector(MyPostsViewController.togglePostItemInfo(_:)))
         imgView.addGestureRecognizer(tap)
         
-        let descriptionLabel = UILabel(frame: CGRect(x: 10, y: 5+imgHeight * 0.20, width: postContainer.frame.width - imgWidth - 5, height: imgHeight * 0.30))
+        let descriptionLabel = UILabel(frame: CGRect(x: 10, y: 5+imgHeight * 0.20, width: postContainer.frame.width - imgWidth - 5, height: imgHeight * 0.50))
         descriptionLabel.text = post.itemDescription
         descriptionLabel.font = UIFont(name: "Avenir", size: 20)
         descriptionLabel.textColor = self.UIColorFromHex(0x808080)
-        descriptionLabel.numberOfLines = 2
+        descriptionLabel.numberOfLines = 0
+        descriptionLabel.adjustsFontSizeToFitWidth = true
         
         
         let blueLine = UIView(frame: CGRectMake(15, screenSize.height * 0.245, postContainer.frame.width-30, 1))
@@ -192,6 +193,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         //create the match info labels
         let nameLabel = UILabel(frame: CGRect(x: 10, y: 5, width: postContainer.frame.width - imgWidth - 20, height: imgHeight * 0.19))
         nameLabel.text = post.itemName
+        nameLabel.adjustsFontSizeToFitWidth = true
         nameLabel.textColor = UIColor.blackColor()
         nameLabel.font = UIFont(name: "Avenir", size: 20)
         //        nameLabel.textAlignment = .Center
