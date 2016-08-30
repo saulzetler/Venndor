@@ -31,9 +31,12 @@ struct ItemManager {
     func retrieveItemById(id: String, completionHandler: (Item?, ErrorType?) -> () ) {
         RESTEngine.sharedEngine.getItemById(id,
             success: { response in
-                if let response = response {
+                if let response = response, _ = response["_id"] {
                     let item = Item(json: response)
                     completionHandler(item, nil)
+                }
+                else {
+                    completionHandler(nil, nil)
                 }
             }, failure: { error in
                 completionHandler(nil, error)
@@ -87,6 +90,20 @@ struct ItemManager {
             }, failure: { error in
                 completionHandler(nil, error)
         })
+    }
+    
+    func deleteMultipleItemsById(ids:[String]?, filter: String?, completionHandler: (ErrorType?) -> ()) {
+        var resourceArray = [[String:AnyObject]]()
+        
+        if let ids = ids {
+            for id in ids {
+                let dict = ["_id": id]
+                resourceArray.append(dict)
+            }
+        }
+        
+        RESTEngine.sharedEngine.deleteMultipleItemsFromServer(resourceArray,
+                                                                success: { _ in completionHandler(nil) }, failure: { error in completionHandler(error)})
     }
     
     func updateItemById(id: String, update: [String:AnyObject], completionHandler: (ErrorType?) -> () ) {

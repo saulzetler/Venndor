@@ -153,9 +153,16 @@ final class RESTEngine {
             }, failure: { _ in })
     }
 
-    func deleteMultiplePostsFromServer(ids: [[String:AnyObject]], success: SuccessClosure, failure: ErrorClosure) {
+    func deleteMultiplePostsFromServer(body: [[String:AnyObject]]?, success: SuccessClosure, failure: ErrorClosure) {
+        var requestBody: [String: AnyObject]?
+
         
-        let requestBody = ["resource": ids]
+        if let body = body {
+            requestBody = ["resource":body]
+        } else {
+            requestBody = nil
+        }
+    
         callApiWithPath(Routing.Service(tableName: "posts").path, method: "DELETE", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
     }
     
@@ -218,11 +225,11 @@ final class RESTEngine {
             }, failure: { _ in })
     }
     
-    func deleteMultipleMatchesFromServer(ids: [[String:AnyObject]]?, filter: String?, success: SuccessClosure, failure: ErrorClosure) {
-        let requestBody: [String: AnyObject]?
-        let queryParams: [String: AnyObject]?
-        if let ids = ids {
-            requestBody = ["resource":ids]
+    func deleteMultipleMatchesFromServer(body: [[String:AnyObject]]?, filter: String?, success: SuccessClosure, failure: ErrorClosure) {
+        var requestBody: [String: AnyObject]?
+        var queryParams: [String: AnyObject]?
+        if let body = body {
+            requestBody = ["resource":body]
         } else {
             requestBody = nil
         }
@@ -232,7 +239,6 @@ final class RESTEngine {
         } else {
             queryParams = nil
         }
-        
         
         callApiWithPath(Routing.Service(tableName: "matches").path, method: "DELETE", queryParams: queryParams, body: requestBody, headerParams: headerParams, success: success, failure: failure)
         
@@ -431,6 +437,19 @@ final class RESTEngine {
     func updateItems(update: [[String:AnyObject]], success: SuccessClosure, failure: ErrorClosure) {
         let requestBody: [String:AnyObject] = ["resource": update]
         callApiWithPath(Routing.Service(tableName: "items").path, method: "PATCH", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
+    }
+    
+    func deleteMultipleItemsFromServer(body: [[String:AnyObject]]?, success: SuccessClosure, failure: ErrorClosure) {
+        var requestBody: [String: AnyObject]?
+        
+        
+        if let body = body {
+            requestBody = ["resource":body]
+        } else {
+            requestBody = nil
+        }
+        
+        callApiWithPath(Routing.Service(tableName: "items").path, method: "DELETE", queryParams: nil, body: requestBody, headerParams: headerParams, success: success, failure: failure)
     }
     
     

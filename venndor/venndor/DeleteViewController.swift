@@ -13,15 +13,54 @@ class DeleteViewController: UIViewController {
     
     override func viewDidLoad() {
         FBSDKLoginManager().logOut()
-        let manager = UserManager()
-        let spManager = SeenPostsManager()
-        manager.deleteUserById(LocalUser.user.id) { error in
+        var matches = [String]()
+        var posts = [String]()
+        var items = [String]()
+        
+        for match in LocalUser.matches {
+            matches.append(match.id!)
+        }
+
+        
+        for post in LocalUser.posts {
+            posts.append(post.id)
+            items.append(post.itemID)
+        }
+
+        
+        MatchesManager.globalManager.deleteMultipleMatchesById(matches, filter: nil) { error in
+            guard error == nil else {
+                print("Error deleting users's matches: \(error)")
+                return
+            }
+        }
+        
+        
+        ItemManager.globalManager.deleteMultipleItemsById(items, filter: nil) { error in
+            guard error == nil else {
+                print("Error deleting users's items: \(error)")
+                return
+            }
+        }
+        
+        
+        
+        PostManager.globalManager.deleteMultiplePostsById(posts, filter: nil) { error in
+            guard error == nil else {
+                print("Error deleting users's posts: \(error)")
+                return
+            }
+        }
+
+        UserManager.globalManager.deleteUserById(LocalUser.user.id) { error in
             guard error == nil else {
                 print("Error deleting user from database: \(error)")
                 return
             }
+            
             print("Succesfully deleted user from server")
-            spManager.deleteSeenPostsById(LocalUser.user.id) { error in
+            
+            SeenPostsManager.globalManager.deleteSeenPostsById(LocalUser.user.id) { error in
                 guard error == nil else {
                     print("Error deleting user's seen posts.")
                     return
