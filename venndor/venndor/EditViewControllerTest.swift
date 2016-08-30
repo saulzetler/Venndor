@@ -37,6 +37,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
     var itemDescription: UITextView!
     var itemName: UITextField!
     var priceField: UITextField!
+    var pickupLocationField: UITextField!
     
     //imgViews
     var imageView1: UIImageView!
@@ -112,6 +113,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         setupHeaderTitle()
         setupBackButton()
         setupArrows()
+        setupLocationInput()
 //        setupMap()
         setPreviewItemName()
         setCategoryPreview()
@@ -322,6 +324,38 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
             
         }
         
+    }
+    
+    func setupLocationInput() {
+        pickupLocationField = ItemNameTextField (frame: CGRectMake(screenSize.width*0.2, screenSize.height*5.37, screenSize.width*0.7, screenSize.height*0.15))
+        let border = CALayer()
+        let width = CGFloat(2.0)
+        border.borderColor = UIColorFromHex(0x34495e).CGColor
+        border.frame = CGRect(x: 0, y: pickupLocationField.frame.size.height - width, width:  pickupLocationField.frame.size.width, height: pickupLocationField.frame.size.height)
+        border.borderWidth = width
+        pickupLocationField.layer.addSublayer(border)
+        
+        pickupLocationField.layer.masksToBounds = true
+        pickupLocationField.returnKeyType = .Done
+        pickupLocationField.tag = 125
+        
+        pickupLocationField.textAlignment = .Center
+        pickupLocationField.clearsOnBeginEditing = true
+        pickupLocationField.font = UIFont(name: "Avenir", size: 30)
+        
+        pickupLocationField.keyboardType = .ASCIICapable
+        pickupLocationField.delegate = self
+        pickupLocationField.adjustsFontSizeToFitWidth = true
+        pickupLocationField.text = "Enter pickup location"
+        pickupLocationField.textColor = UIColorFromHex(0x34495e)
+        
+        containerView.addSubview(pickupLocationField)
+        
+        let hintLabel = UILabel(frame: CGRectMake(screenSize.width*0.2, screenSize.height*5.53, screenSize.width*0.7, screenSize.height*0.05))
+        hintLabel.text = "(E.g. 'Milton and Durocher' or '555 Lorne Ave')"
+        hintLabel.adjustsFontSizeToFitWidth = true
+        hintLabel.textColor = UIColorFromHex(0x34495e)
+        containerView.addSubview(hintLabel)
     }
     
     //function to allow the user to pick from a certain list of categories to assign the item.
@@ -832,11 +866,27 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         containerView.addSubview(descriptionContainer)
     }
     
+//    func setLocationPreview() {
+//        let locationPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height, screenSize.width*0.75, screenSize.height*0.05)
+//        previewLocation = makeTextButton("", frame: locationPreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+//        previewLocation.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
+//        previewLocation.tag = 5
+//        containerView.addSubview(previewLocation)
+//    }
+    
     func setLocationPreview() {
-        let locationPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height, screenSize.width*0.75, screenSize.height*0.05)
-        previewLocation = makeTextButton("", frame: locationPreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
+        let locationPreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height, screenSize.width*0.6, screenSize.height*0.05)
+        var locationPreview = "Location not set."
+        
+        if let location = pickupLocationField.text {
+            locationPreview = location
+        }
+        
+        print(locationPreview)
+        previewLocation = makeTextButton(locationPreview, frame: locationPreviewFrame, target: #selector(EditViewControllerTest.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewLocation.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewLocation.tag = 5
+        previewLocation.titleLabel?.adjustsFontSizeToFitWidth = true
         containerView.addSubview(previewLocation)
     }
     
