@@ -152,9 +152,18 @@ class PostManager: NSObject {
         RESTEngine.sharedEngine.deletePostFromServerById(id, success: { _ in completionHandler(nil)}, failure: { error in completionHandler(error)})
     }
     
-    func deleteMultiplePostsById(ids:[[String:AnyObject]], completionHandler: (ErrorType?) -> ()) {
-        RESTEngine.sharedEngine.deleteMultiplePostsFromServer(ids,
-            success: { _ in completionHandler(nil) }, failure: { error in completionHandler(error)})
+    func deleteMultiplePostsById(ids:[String]?, filter: String?, completionHandler: (ErrorType?) -> ()) {
+        var resourceArray = [[String:AnyObject]]()
+        
+        if let ids = ids {
+            for id in ids {
+                let dict = ["_id": id]
+                resourceArray.append(dict)
+            }
+        }
+        
+        RESTEngine.sharedEngine.deleteMultiplePostsFromServer(resourceArray,
+                success: { _ in completionHandler(nil) }, failure: { error in completionHandler(error)})
     }
     
     func createFilterString(posts: [String:AnyObject]) -> String {

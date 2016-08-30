@@ -97,7 +97,27 @@ class MatchesManager: NSObject {
     
                     for data in matchesData {
                         let data = data as! JSON
+                        
                         let match = Match(json: data)
+                        
+                        //check if item exists on server- if not, remove this match locally and on the server 
+                        ItemManager.globalManager.retrieveItemById(match.itemID) { item, error in
+                            guard error == nil else {
+                                print("Error pulling item for matches and things.")
+                                return
+                            }
+                            
+                            if item == nil {
+                                
+                                LocalUser.matches = LocalUser.matches.filter({ $0.id != match.id})
+                                MatchesManager.globalManager.deleteMatchById(match.id!) { error in
+                                    guard error == nil else {
+                                        print("Error deleting match from server: \(error)")
+                                        return
+                                    }
+                                }
+                            }
+                        }
                         
                         //instantly pull the thumbnail too
                         self.retrieveMatchThumbnail(match) { img, error in
@@ -151,8 +171,17 @@ class MatchesManager: NSObject {
             failure: { error in completionHandler(error)})
     }
     
-    func deleteMultipleMatchesById(ids:[[String:AnyObject]]?, filter: String?, completionHandler: (ErrorType?) -> ()) {
-        RESTEngine.sharedEngine.deleteMultipleMatchesFromServer(ids, filter: filter,
+    func deleteMultipleMatchesById(ids:[String]?, filter: String?, completionHandler: (ErrorType?) -> ()) {
+        var resourceArray = [[String:AnyObject]]()
+
+        if let ids = ids {
+            for id in ids {
+                let dict = ["_id": id]
+                resourceArray.append(dict)
+            }
+        }
+        
+        RESTEngine.sharedEngine.deleteMultipleMatchesFromServer(resourceArray, filter: filter,
             success: { _ in completionHandler(nil) }, failure: { error in completionHandler(error)})
     }
     
