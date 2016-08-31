@@ -13,7 +13,7 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     var containerView: UIView!
     let screenSize = UIScreen.mainScreen().bounds
-    var tableViewItems = ["About Venndor", "Delete Account", "Log Out"]
+    var tableViewItems = ["Contact Us", "Delete Account", "Log Out"]
     var tableView: UITableView!
     
     var phoneNumber: UITextField!
