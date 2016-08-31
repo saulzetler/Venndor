@@ -150,6 +150,12 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
                     print("Didn't get age range")
                     LocalUser.ageRange = "Unknown"
                 }
+                //transition when great success
+                if self.isLoggedIn == true {
+                    self.performSegueWithIdentifier("toSplash", sender: self)
+                } else {
+                    self.performSegueWithIdentifier("toNumber", sender: self)
+                }
             }
         }
         
