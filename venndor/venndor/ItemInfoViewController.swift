@@ -35,6 +35,26 @@ class ItemInfoViewController: UIViewController {
         super.viewDidLoad()
         LocalUser.user.mostRecentAction = "Entered ItemInfo Page."
         
+        loadViews()
+        
+        self.view.backgroundColor = UIColorFromHex(0xecf0f1)
+        sessionStart = NSDate()
+    }
+    
+//    override func viewWillAppear(animated: Bool) {
+//        dispatch_async(dispatch_get_main_queue()) {
+//            self.view.subviews.forEach({ $0.removeFromSuperview() })
+//            self.loadViews()
+//        }
+//        
+//    }
+
+    override func viewWillDisappear(animated: Bool) {
+        super.viewWillDisappear(animated)
+        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "ItemInfoViewController")
+    }
+    
+    func loadViews() {
         //setup the item info card
         let itemInfoView = createItemInfoView(item)
         self.view.addSubview(itemInfoView)
@@ -59,12 +79,8 @@ class ItemInfoViewController: UIViewController {
         }
         
         self.view.backgroundColor = UIColorFromHex(0xecf0f1)
-        sessionStart = NSDate()
-    }
 
-    override func viewWillDisappear(animated: Bool) {
-        super.viewWillDisappear(animated)
-        TimeManager.globalManager.setSessionDuration(sessionStart, controller: "ItemInfoViewController")
+        
     }
     
     func createItemInfoView(item: Item) -> ItemInfoView {
@@ -161,8 +177,6 @@ class ItemInfoViewController: UIViewController {
         editViewController.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
         editViewController.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
         self.presentViewController(editViewController, animated: true, completion: nil)
-        
-
     }
     
     

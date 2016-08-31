@@ -1106,7 +1106,6 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
                     self.updatingPopup.updateText("Updated!")
                     print("Succesfully updated item and post.")
                 }
-//                self.presentingViewController?.view.setNeedsDisplay()
                 self.dismissViewControllerAnimated(true, completion: nil)
             }
         }
