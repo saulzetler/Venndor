@@ -351,14 +351,15 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                 }
                 
                 if let user = user {
+                    print("user number found")
                     self.messageComposer.setRecipients([user.phoneNumber])
                 }
+                
+                // Obtain a configured MFMessageComposeViewController
+                let messageComposeVC = self.messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) \(LocalUser.lastName) wants to buy your item \(match.itemName) for $\(match.matchedPrice)")
+                
+                self.presentViewController(messageComposeVC, animated: true, completion: nil)
             })
-            
-            // Obtain a configured MFMessageComposeViewController
-            let messageComposeVC = messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) \(LocalUser.lastName) wants to buy your item \(match.itemName) for $\(match.matchedPrice)")
-            
-            presentViewController(messageComposeVC, animated: true, completion: nil)
         } else {
             // Let the user know if his/her device isn't able to send text messages
             let errorAlert = UIAlertView(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", delegate: self, cancelButtonTitle: "OK")
