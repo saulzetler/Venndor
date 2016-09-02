@@ -10,4 +10,5 @@ import Foundation
 
 protocol RefreshViewDelegate: class {
     func buyCompleted(sender: BuyViewController)
+    func buyCompletedFromItemInfo()
 }

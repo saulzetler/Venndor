@@ -23,6 +23,8 @@ class ItemInfoViewController: UIViewController {
     var messageButton: UIButton!
     var editButton: UIButton!
     
+    weak var delegate: RefreshViewDelegate?
+    
     var isPost: Bool!
     
     let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.77
@@ -208,6 +210,7 @@ class ItemInfoViewController: UIViewController {
         }
         
     }
+    
     func messageSeller() {
         print("Message tapped!")
         
@@ -239,7 +242,16 @@ class ItemInfoViewController: UIViewController {
     }
     
     func dismissController(sender: AnyObject) {
-        self.dismissViewControllerAnimated(true, completion: nil)
+        if (self.isPost) != nil {
+            if self.isPost == true {
+                print("Back to posts!")
+                self.performSegueWithIdentifier("toPosts", sender: self)
+            }
+            else {
+                print("Back to matches!")
+               self.performSegueWithIdentifier("toMatches", sender: self) 
+            }
+        }
     }
 
 }
@@ -247,6 +259,10 @@ class ItemInfoViewController: UIViewController {
 
 extension ItemInfoViewController: RefreshViewDelegate {
     func buyCompleted(sender: BuyViewController) {
-        print("Boo yah!!!")
+        self.performSegueWithIdentifier("toSplash", sender: self)
+    }
+    
+    func buyCompletedFromItemInfo() {
+        
     }
 }

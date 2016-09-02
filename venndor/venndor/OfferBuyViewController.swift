@@ -8,14 +8,11 @@
 
 import Foundation
 
-class BuyViewController: UIViewController {
+class OfferBuyViewController: UIViewController {
     var seller: User!
     var match: Match!
-
-    var item: Item! 
-
-    var fromInfo: Bool!
-    var cancel: Bool!
+    
+    var item: Item!
     
     var popupView: UIView!
     var confirmButton: UIButton!
@@ -23,26 +20,20 @@ class BuyViewController: UIViewController {
     var sellerNameLabel : UILabel!
     var itemLabel: UILabel!
     var sellerPhotoView: UIImageView!
-    //var del: ViewRefreshDelegate?
-    weak var delegate: RefreshViewDelegate?
     
     let messageComposer = TextMessageComposer()
     
     override func viewDidLoad() {
-    
+        
         print("Buy Presented!")
         
-        //self.del = self.presentingViewController
-        
-        
         dispatch_async(dispatch_get_main_queue()) {
-
+            
             self.view.backgroundColor = UIColor.clearColor()
             self.view.alpha = 0.5
             let view = UIView(frame: self.view.frame)
             view.backgroundColor = UIColor.blackColor()
             view.alpha = 0.5
-            self.cancel = true
             self.view.addSubview(view)
             self.setupPopupView()
             self.setupCloseButton()
@@ -51,20 +42,20 @@ class BuyViewController: UIViewController {
             self.setupSellerPhoto()
             self.setupSellerLabel()
         }
-       
+        
     }
     
     func setupPopupView() {
-       popupView = UIView(frame: CGRect(x: self.view.frame.width / 2 - 150, y: self.view.frame.height / 2 - 150, width: 300, height: 240))
-       popupView.layer.cornerRadius = 10
-       popupView.backgroundColor = UIColor.whiteColor()
-       popupView.layer.shadowColor = UIColor.blackColor().CGColor
-       popupView.layer.shadowOpacity = 0.6
-       popupView.layer.shadowRadius = 15
-       popupView.layer.shadowOffset = CGSize(width: 5, height: 5)
-       popupView.layer.masksToBounds = false
-    
-       self.view.addSubview(popupView)
+        popupView = UIView(frame: CGRect(x: self.view.frame.width / 2 - 150, y: self.view.frame.height / 2 - 150, width: 300, height: 240))
+        popupView.layer.cornerRadius = 10
+        popupView.backgroundColor = UIColor.whiteColor()
+        popupView.layer.shadowColor = UIColor.blackColor().CGColor
+        popupView.layer.shadowOpacity = 0.6
+        popupView.layer.shadowRadius = 15
+        popupView.layer.shadowOffset = CGSize(width: 5, height: 5)
+        popupView.layer.masksToBounds = false
+        
+        self.view.addSubview(popupView)
     }
     
     func setupConfirmButton() {
@@ -83,7 +74,7 @@ class BuyViewController: UIViewController {
         confirmButton.backgroundColor = UIColorFromHex(0x1abc9c)
         confirmButton.setTitle("Confirm Purchase", forState: .Normal)
         confirmButton.titleLabel?.textColor = UIColor.whiteColor()
-//        confirmButton.titleLabel?.textAlignment = .Center
+        //        confirmButton.titleLabel?.textAlignment = .Center
         confirmButton.titleEdgeInsets = UIEdgeInsets(top: 5, left: 48, bottom: -5, right: 41)
         
         //create the rounded button image
@@ -96,10 +87,10 @@ class BuyViewController: UIViewController {
         confirmButton.imageView?.layer.cornerRadius = confirmButton.imageView!.frame.height / 2
         
         confirmButton.imageEdgeInsets = UIEdgeInsets(top: 15, left: 48, bottom: 5, right: 217)
-
+        
         confirmButton.addTarget(self, action: #selector(BuyViewController.itemBought), forControlEvents: .TouchUpInside)
         
-        //round the bottom 2 corners 
+        //round the bottom 2 corners
         
         popupView.addSubview(confirmButton)
     }
@@ -123,7 +114,7 @@ class BuyViewController: UIViewController {
         sellerPhotoView.clipsToBounds = true
         sellerPhotoView.contentMode = .ScaleAspectFill
         popupView.addSubview(sellerPhotoView)
-
+        
     }
     
     func setupSellerLabel() {
@@ -157,10 +148,9 @@ class BuyViewController: UIViewController {
         BoughtController.globalController.updateBuyer(self.item, buyer: LocalUser.user, match: self.match)
         BoughtController.globalController.updateMarket(self.item, match: self.match)
         BoughtController.globalController.updateSeller(self.item, seller: seller, soldPrice: self.match.matchedPrice)
-                
-        self.cancel = false
-        delegate?.buyCompleted(self)
-        self.dismissController()
         
-    }
+        dispatch_async(dispatch_get_main_queue()) { () -> Void in
+            self.presentingViewController?.performSegueWithIdentifier("offerToMatches", sender: self)
+        }
+        }
 }
