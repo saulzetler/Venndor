@@ -196,6 +196,7 @@ class ItemInfoViewController: UIViewController {
                 bvc.seller = user
                 bvc.item = self.item
                 bvc.fromInfo = true
+                bvc.delegate = self
                 bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                 bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
                 self.presentViewController(bvc, animated: true, completion: nil)
@@ -241,4 +242,11 @@ class ItemInfoViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
+}
+
+
+extension ItemInfoViewController: RefreshViewDelegate {
+    func buyCompleted(sender: BuyViewController) {
+        print("Boo yah!!!")
+    }
 }

@@ -8,6 +8,6 @@
 
 import Foundation
 
-protocol ViewRefreshDelegate {
-    func viewWillBeDismissed()
+protocol RefreshViewDelegate: class {
+    func buyCompleted(sender: BuyViewController)
 }

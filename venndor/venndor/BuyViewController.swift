@@ -24,6 +24,7 @@ class BuyViewController: UIViewController {
     var itemLabel: UILabel!
     var sellerPhotoView: UIImageView!
     //var del: ViewRefreshDelegate?
+    weak var delegate: RefreshViewDelegate?
     
     let messageComposer = TextMessageComposer()
     
@@ -159,18 +160,8 @@ class BuyViewController: UIViewController {
         
         self.cancel = false
 
-        if self.fromInfo == true {
-                
-            self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-        }
-        
-            
-        else {
-            self.dismissViewControllerAnimated(true) {
-                let mmvc = self.presentingViewController as! MyMatchesViewController
-                mmvc.setupMatchesScrollContent()
-            }
-        }
+        delegate?.buyCompleted(self)
+        self.dismissController()
         
     }
 }

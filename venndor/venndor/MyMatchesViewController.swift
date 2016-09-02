@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MyMatchesViewController: UIViewController, UIScrollViewDelegate, ViewRefreshDelegate {
+class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     //declaring screen size for future reference
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var tappedItem: Item!
@@ -50,9 +50,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate, ViewRefre
         LocalUser.CurrentPage = "My Matches"
         LocalUser.user.mostRecentAction = "Browsed MyMatches"
         sessionStart = NSDate()
-        
-        self.revealViewController().delegate = self
         setupMatchesScrollContent()
+        self.revealViewController().delegate = self
         revealViewController().rightViewController = nil
         
     }
@@ -63,7 +62,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate, ViewRefre
     
     func setupMatchesScrollContent() {
         
-        //self.view.subviews.forEach({ $0.removeFromSuperview() })
+        self.view.subviews.forEach({ $0.removeFromSuperview() })
         
         //set up prelimenary variables to make for-loop more readable
         var index:CGFloat = 0.0
@@ -191,7 +190,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate, ViewRefre
         
         addHeaderItems("My Matches")
         sideMenuGestureSetup()
-        
     }
     
     func DropdownAction() {
@@ -332,6 +330,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate, ViewRefre
                 bvc.seller = user
                 bvc.item = matchContainer.item
                 bvc.fromInfo = false
+                bvc.delegate = self
                 bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                 bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
                 self.presentViewController(bvc, animated: true, completion: nil)
@@ -428,5 +427,22 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate, ViewRefre
         }
         task.resume()
     }
-    
 }
+
+extension MyMatchesViewController: RefreshViewDelegate {
+    func buyCompleted(sender: BuyViewController) {
+        dispatch_async(dispatch_get_main_queue()) {
+           self.setupMatchesScrollContent()
+        }
+        //self.viewDidLoad()
+    }
+}
+
+
+
+
+
+
+
+
+
