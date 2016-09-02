@@ -85,7 +85,7 @@ class ItemInfoViewController: UIViewController {
     
     func createItemInfoView(item: Item) -> ItemInfoView {
         let frame = CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT)
-        let infoView = ItemInfoView(frame: frame, item: item, myLocation: LocalUser.myLocation)
+        let infoView = ItemInfoView(frame: frame, item: item)
         infoView.layer.cornerRadius = 20
         infoView.layer.masksToBounds = true
         
@@ -211,10 +211,25 @@ class ItemInfoViewController: UIViewController {
         print("Message tapped!")
         
         if (messageComposer.canSendText()) {
-            // Obtain a configured MFMessageComposeViewController
-            let messageComposeVC = messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) \(LocalUser.lastName) wants to buy your item \(match.itemName) for $\(match.matchedPrice)")
+            //set recipient
             
-            presentViewController(messageComposeVC, animated: true, completion: nil)
+            UserManager.globalManager.retrieveUserById(item.owner, completionHandler: { user, error in
+                guard error == nil else {
+                    print("Error retrieving seller when messaging: \(error)")
+                    return
+                }
+                
+                if let user = user {
+                    self.messageComposer.setRecipients([user.phoneNumber])
+                }
+                // Obtain a configured MFMessageComposeViewController
+                let messageComposeVC = self.messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) \(LocalUser.lastName) wants to buy your item \(self.match.itemName) for $\(self.match.matchedPrice)")
+                
+                self.presentViewController(messageComposeVC, animated: true, completion: nil)
+                
+            })
+            
+            
         } else {
             // Let the user know if his/her device isn't able to send text messages
             let errorAlert = UIAlertView(title: "Cannot Send Text Message", message: "Your device is not able to send text messages.", delegate: self, cancelButtonTitle: "OK")

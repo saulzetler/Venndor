@@ -48,14 +48,14 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         super.init(coder: aDecoder)
     }
     
-    init(frame: CGRect, item: Item, myLocation: CLLocation) {
+    init(frame: CGRect, item: Item) {
         
         super.init(frame: frame)
         
         self.setupView()
         
         setupScrollView(item)
-        setupItemInfo(item, myLocation: myLocation)
+        setupItemInfo(item)
         
         self.backgroundColor = UIColor.whiteColor()
         infoOpen = false
@@ -65,7 +65,7 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         
     }
     
-    func setupItemInfo(item: Item, myLocation: CLLocation) {
+    func setupItemInfo(item: Item) {
         
         itemInfo = UIView(frame: CGRect(x: 0, y: self.frame.height*0.9, width: self.frame.width, height: self.frame.height*0.1))
         itemInfo.backgroundColor = UIColor.whiteColor()
@@ -120,7 +120,7 @@ class ItemInfoView: UIView, UIScrollViewDelegate {
         
         //actual descriptions of information
         let locationDetailsFrame = CGRect(x: itemInfo.frame.width*0.05, y: 0, width: infoDetailsContainer.frame.width, height: infoTitleContainer.frame.height/3)
-        let locationDetails = customLabel(locationDetailsFrame, text: "Location Information", color: UIColor.blackColor(), fontSize: 16)
+        let locationDetails = customLabel(locationDetailsFrame, text: item.pickupLocation, color: UIColor.blackColor(), fontSize: 16)
         locationDetails.textAlignment = .Left
         locationDetails.adjustsFontSizeToFitWidth = true
         infoDetailsContainer.addSubview(locationDetails)
