@@ -218,10 +218,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         loadAnotherCard()
         nextCard()
-        
-        dispatch_async(dispatch_get_main_queue()) {
-            self.performSegueWithIdentifier("toOfferScreen", sender: self.parentViewController!)
-        }
 
 
 //        self.performSegueWithIdentifier("toOfferScreen", sender: self)
@@ -231,18 +227,18 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     func nextCard() {
         currentCardIndex = currentCardIndex + 1
         //to avoid that backgroung thread autolayout error
-        self.insertNewCard()
+        dispatch_async(dispatch_get_main_queue()) {
+         self.insertNewCard()
+        }
+       
     }
     
     func insertNewCard() {
-        dispatch_async(dispatch_get_main_queue()) {
             if self.cardsLoadedIndex - self.currentCardIndex > 0 {
                 let newCard = self.loadedCards[self.cardsLoadedIndex - self.currentCardIndex - 1]
                 self.mainView.addSubview(newCard)
                 self.mainView.sendSubviewToBack(newCard)
             }
-   
-        }
     }
     
     //loading cards
