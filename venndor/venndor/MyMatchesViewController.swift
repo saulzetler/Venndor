@@ -54,10 +54,15 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         revealViewController().rightViewController = nil
         
     }
+    override func viewDidDisappear(animated: Bool) {
+        for view in self.view.subviews {
+            view.removeFromSuperview()
+        }
+    }
     
     func setupMatchesScrollContent() {
         
-        self.view.subviews.forEach({ $0.removeFromSuperview() })
+//        self.view.subviews.forEach({ $0.removeFromSuperview() })
         //set up prelimenary variables to make for-loop more readable
         var index:CGFloat = 0.0
         let yOrigin = screenSize.height * 0.1
