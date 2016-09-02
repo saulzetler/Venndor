@@ -29,6 +29,7 @@ class Item: NSObject {
     var itemAge: String
     var minPrice: Int
     var pickupLocation: String!
+    var bought: Int
     
     //key: match object id, value: user who owns match object
     var matches: [String:AnyObject]!
@@ -65,6 +66,7 @@ class Item: NSObject {
         minPrice = json["minPrice"] as! Int
         pickupLocation = json["pickupLocation"] as! String
         matches = ParserManager.globalManager.getDict(json["matches"]!)
+        bought = json["bought"] as! Int
         timeMatched = json["timeMatched"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeMatched"] as! String)
         timeBought = json["timeBought"] == nil ? nil : TimeManager.formatter.dateFromString(json["timeBought"]! as! String)
         nuSwipesLeft = json["nuSwipesLeft"] as! Int
@@ -88,6 +90,7 @@ class Item: NSObject {
         self.minPrice = minPrice
         self.pickupLocation = pickupLocation
         self.matches = [String:AnyObject]()
+        self.bought = 0 
         self.timeMatched = nil
         self.timeBought = nil
         self.nuSwipesLeft = 0
