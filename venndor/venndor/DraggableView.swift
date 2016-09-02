@@ -63,7 +63,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         super.init(coder: aDecoder)
     }
     
-    init(frame: CGRect, item: Item, myLocation: CLLocation?) {
+    init(frame: CGRect, item: Item) {
         
         super.init(frame: frame)
 
@@ -147,7 +147,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         
         //actual descriptions of information
         let locationDetailsFrame = CGRect(x: itemInfo.frame.width*0.05, y: 0, width: infoDetailsContainer.frame.width, height: infoTitleContainer.frame.height/3)
-        let locationDetails = customLabel(locationDetailsFrame, text: "Location Information", color: UIColor.blackColor(), fontSize: 16)
+        let locationDetails = customLabel(locationDetailsFrame, text: item.pickupLocation, color: UIColor.blackColor(), fontSize: 16)
         locationDetails.textAlignment = .Left
         locationDetails.adjustsFontSizeToFitWidth = true
         infoDetailsContainer.addSubview(locationDetails)

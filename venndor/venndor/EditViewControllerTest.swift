@@ -340,13 +340,13 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         pickupLocationField.tag = 125
         
         pickupLocationField.textAlignment = .Center
-        pickupLocationField.clearsOnBeginEditing = true
+        pickupLocationField.clearsOnBeginEditing = false
         pickupLocationField.font = UIFont(name: "Avenir", size: 30)
         
         pickupLocationField.keyboardType = .ASCIICapable
         pickupLocationField.delegate = self
         pickupLocationField.adjustsFontSizeToFitWidth = true
-        pickupLocationField.text = "Enter pickup location"
+        pickupLocationField.text = item.pickupLocation
         pickupLocationField.textColor = UIColorFromHex(0x34495e)
         
         containerView.addSubview(pickupLocationField)
@@ -888,6 +888,10 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         previewLocation.tag = 5
         previewLocation.titleLabel?.adjustsFontSizeToFitWidth = true
         containerView.addSubview(previewLocation)
+    }
+    
+    func updateLocation() {
+        
     }
     
     func updateLocationPreview(useLocation: Bool) {
