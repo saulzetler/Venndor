@@ -241,4 +241,7 @@ class ItemInfoViewController: UIViewController {
         self.dismissViewControllerAnimated(true, completion: nil)
     }
 
+    func triggerSegue() {
+        self.performSegueWithIdentifier("toSplash", sender: self)
+    }
 }

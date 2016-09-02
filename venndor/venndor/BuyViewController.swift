@@ -156,15 +156,15 @@ class BuyViewController: UIViewController {
         
         
         if self.fromInfo == true {
-            self.presentingViewController?.viewDidLoad()
+            let iivc = self.presentingViewController as! ItemInfoViewController
+//            iivc.viewDidLoad()
+            iivc.triggerSegue()
         }
             
         else {
 //            self.presentingViewController?.viewDidLoad()
             let mmvc = self.presentingViewController as! MyMatchesViewController
-            mmvc.view.subviews.forEach({ $0.removeFromSuperview() })
-            
-            mmvc.viewDidLoad()
+            mmvc.performSegueWithIdentifier("toSplash", sender: self)
         }
         
         dismissController()

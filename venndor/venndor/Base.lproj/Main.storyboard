@@ -413,6 +413,7 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
+                    <navigationItem key="navigationItem" id="hCn-w7-dCU"/>
                     <connections>
                         <segue destination="q8m-ke-uIK" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="YQC-W7-xKJ"/>
                         <segue destination="7zN-o7-jvw" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="rJe-8o-Yiu"/>
@@ -458,11 +459,33 @@
                     </view>
                     <connections>
                         <segue destination="fCk-qF-h28" kind="presentation" identifier="showItemInfo" id="fha-wf-r2g"/>
+                        <segue destination="h1v-35-a8b" kind="presentation" identifier="toSplash" id="8By-Nv-xle"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4iD-go-TVo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
             <point key="canvasLocation" x="725" y="2207"/>
+        </scene>
+        <!--Refresh Splash View Controller-->
+        <scene sceneID="cUb-YQ-VxS">
+            <objects>
+                <viewController id="h1v-35-a8b" customClass="RefreshSplashViewController" customModule="venndor" customModuleProvider="target" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="PJm-eo-Cob"/>
+                        <viewControllerLayoutGuide type="bottom" id="lrs-Oa-B99"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="dTI-ok-mVt">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="4v2-09-dkh" kind="show" identifier="toMatch" id="sBz-6q-xgi"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="eKB-2I-SvZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="356" y="3008"/>
         </scene>
         <!--Item Info View Controller-->
         <scene sceneID="q9a-XS-w7l">
@@ -479,6 +502,7 @@
                     </view>
                     <connections>
                         <segue destination="Qhy-od-Sr2" kind="show" identifier="ToEditPAge" id="k61-71-5nG"/>
+                        <segue destination="h1v-35-a8b" kind="presentation" identifier="toSplash" id="AbB-Jp-L4K"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rur-gZ-i6y" userLabel="First Responder" sceneMemberID="firstResponder"/>
@@ -508,13 +532,15 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="rhC-FE-wzr"/>
-        <segue reference="pMb-c4-TUY"/>
-        <segue reference="t3W-cW-8Zf"/>
+        <segue reference="sBz-6q-xgi"/>
+        <segue reference="AbB-Jp-L4K"/>
+        <segue reference="fha-wf-r2g"/>
         <segue reference="J63-VY-ZTI"/>
+        <segue reference="t3W-cW-8Zf"/>
+        <segue reference="pMb-c4-TUY"/>
+        <segue reference="iGi-df-zpV"/>
+        <segue reference="rhC-FE-wzr"/>
         <segue reference="OzI-1T-yzU"/>
         <segue reference="uT9-ID-WRv"/>
-        <segue reference="mUc-z2-b8r"/>
-        <segue reference="iGi-df-zpV"/>
     </inferredMetricsTieBreakers>
 </document>
