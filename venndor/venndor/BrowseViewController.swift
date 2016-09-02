@@ -45,8 +45,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var loaded: Bool!
     
     //location variables
-    let locationManager = CLLocationManager()
-    var locationAuthorized: Bool = false
+//    let locationManager = CLLocationManager()
+//    var locationAuthorized: Bool = false
     
     var sessionStart: NSDate!
     var itemsNeedingUpdates = [Item]()
@@ -67,9 +67,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         
         loaded = false
         
-        locationManager.delegate = self
-        locationManager.requestWhenInUseAuthorization()
-        locationManager.startUpdatingLocation()
+//        locationManager.delegate = self
+//        locationManager.requestWhenInUseAuthorization()
+//        locationManager.startUpdatingLocation()
         
         self.revealViewController().delegate = self
         
@@ -158,7 +158,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
    
     func createDraggableViewFromItem(item: Item) -> DraggableView {
-        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: item, myLocation: LocalUser.myLocation)
+        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: item)
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
         draggableView.delegate = self
@@ -169,7 +169,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
 //        while locationAuthorized == false {
 //            
 //        }
-        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index], myLocation: LocalUser.myLocation)
+        let draggableView = DraggableView(frame: CGRectMake((self.view.frame.size.width - CARD_WIDTH)/2, (self.view.frame.size.height - CARD_HEIGHT)/2, CARD_WIDTH, CARD_HEIGHT), item: GlobalItems.items[index])
         draggableView.layer.cornerRadius = 20
         draggableView.layer.masksToBounds = true
         draggableView.delegate = self
@@ -288,7 +288,6 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
             }
             loaded = true
         }
-        
     }
     
     override func viewWillDisappear(animated: Bool) {
@@ -314,24 +313,24 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     }
     
     //delegate functions
-    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
-        if let location = locations.first {
-            locationAuthorized = true
-            LocalUser.myLocation = location
-            locationManager.stopUpdatingLocation()
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
-        // 3
-        if status == .AuthorizedWhenInUse {            
-            locationManager.startUpdatingLocation()
-        }
-    }
-    
-    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
-        print("an error fucked this up: \(error)")
-    }
+//    func locationManager(manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
+//        if let location = locations.first {
+//            locationAuthorized = true
+//            LocalUser.myLocation = location
+//            locationManager.stopUpdatingLocation()
+//        }
+//    }
+//    
+//    func locationManager(manager: CLLocationManager, didChangeAuthorizationStatus status: CLAuthorizationStatus) {
+//        // 3
+//        if status == .AuthorizedWhenInUse {            
+//            locationManager.startUpdatingLocation()
+//        }
+//    }
+//    
+//    func locationManager(manager: CLLocationManager, didFailWithError error: NSError) {
+//        print("an error fucked this up: \(error)")
+//    }
     
     func revealController(revealController: SWRevealViewController, didMoveToPosition position: FrontViewPosition){
         if((position == FrontViewPosition.Left)) {

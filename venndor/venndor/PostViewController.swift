@@ -10,7 +10,7 @@ import Foundation
 import UIKit
 
 //class to control the post/sell page in the application requires many delegates
-class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ImagePickerDelegate, CLLocationManagerDelegate, RatingControlDelegate {
+class PostViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate, UITextViewDelegate, UITextFieldDelegate, UIScrollViewDelegate, UIPickerViewDataSource, UIPickerViewDelegate, ImagePickerDelegate, RatingControlDelegate {
     //GMSAutocompleteViewControllerDelegate,
     
     //declare the needed variables for the page to work.
@@ -65,8 +65,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var mapView: GMSMapView!
     var currentPlace: GMSPlace!
     var useMyLocation: Bool!
-    let locationManager = CLLocationManager()
-    var coordinate: CLLocationCoordinate2D!
+//    let locationManager = CLLocationManager()
+//    var coordinate: CLLocationCoordinate2D!
     var photoChoiceDisplayed = false
     var sessionStart: NSDate!
     
@@ -803,15 +803,15 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         containerView.addSubview(previewLocation)
     }
     
-    func updateLocationPreview(useLocation: Bool) {
-        if useLocation {
-            previewLocation.setTitle("Using current location", forState: .Normal)
-        }
-        else {
-            let placeName: String = currentPlace.name
-            previewLocation.setTitle(placeName, forState: .Normal)
-        }
-    }
+//    func updateLocationPreview(useLocation: Bool) {
+//        if useLocation {
+//            previewLocation.setTitle("Using current location", forState: .Normal)
+//        }
+//        else {
+//            let placeName: String = currentPlace.name
+//            previewLocation.setTitle(placeName, forState: .Normal)
+//        }
+//    }
     
     func setPricePreview() {
         let pricePreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height+previewLocation.frame.height, screenSize.width*0.75, screenSize.height*0.05)

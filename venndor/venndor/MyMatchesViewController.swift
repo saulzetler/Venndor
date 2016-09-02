@@ -341,6 +341,17 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         let container = sender.superview as! ItemContainer
         let match = container.match
         if (messageComposer.canSendText()) {
+            UserManager.globalManager.retrieveUserById(match.sellerID, completionHandler: { user, error in
+                guard error == nil else {
+                    print("Error retrieving seller when messaging: \(error)")
+                    return
+                }
+                
+                if let user = user {
+                    self.messageComposer.setRecipients([user.phoneNumber])
+                }
+            })
+            
             // Obtain a configured MFMessageComposeViewController
             let messageComposeVC = messageComposer.configuredMessageComposeViewController("\(LocalUser.firstName) \(LocalUser.lastName) wants to buy your item \(match.itemName) for $\(match.matchedPrice)")
             
