@@ -23,6 +23,7 @@ class BuyViewController: UIViewController {
     var sellerNameLabel : UILabel!
     var itemLabel: UILabel!
     var sellerPhotoView: UIImageView!
+    //var del: ViewRefreshDelegate?
     
     let messageComposer = TextMessageComposer()
     
@@ -30,8 +31,10 @@ class BuyViewController: UIViewController {
     
         print("Buy Presented!")
         
+        //self.del = self.presentingViewController
+        
+        
         dispatch_async(dispatch_get_main_queue()) {
-            
             self.view.backgroundColor = UIColor.clearColor()
             self.view.alpha = 0.5
             let view = UIView(frame: self.view.frame)
@@ -155,12 +158,12 @@ class BuyViewController: UIViewController {
         
         
         self.cancel = false
-        if self.cancel == false {
-            if self.fromInfo == true {
+
+        if self.fromInfo == true {
                 
-                self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-            }
+            self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
         }
+        
             
         else {
             self.dismissViewControllerAnimated(true) {
@@ -169,6 +172,5 @@ class BuyViewController: UIViewController {
             }
         }
         
-        dismissController()
     }
 }

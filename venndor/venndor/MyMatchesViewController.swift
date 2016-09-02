@@ -9,7 +9,7 @@
 import Foundation
 import UIKit
 
-class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
+class MyMatchesViewController: UIViewController, UIScrollViewDelegate, ViewRefreshDelegate {
     //declaring screen size for future reference
     let screenSize: CGRect = UIScreen.mainScreen().bounds
     var tappedItem: Item!
@@ -36,6 +36,12 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         super.viewWillDisappear(animated)
         TimeManager.globalManager.setSessionDuration(sessionStart, controller: "MyMatchesViewController")
         
+        
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        //self.view.subviews.forEach({ $0.removeFromSuperview() })
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -47,17 +53,18 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         
         self.revealViewController().delegate = self
         setupMatchesScrollContent()
-        
-        
-        addHeaderItems("My Matches")
-        sideMenuGestureSetup()
         revealViewController().rightViewController = nil
         
     }
     
+    func viewWillBeDismissed() {
+        self.setupMatchesScrollContent()
+    }
+    
     func setupMatchesScrollContent() {
         
-        self.view.subviews.forEach({ $0.removeFromSuperview() })
+        //self.view.subviews.forEach({ $0.removeFromSuperview() })
+        
         //set up prelimenary variables to make for-loop more readable
         var index:CGFloat = 0.0
         let yOrigin = screenSize.height * 0.1
@@ -181,6 +188,9 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             
             self.view.addSubview(emptyView)
         }
+        
+        addHeaderItems("My Matches")
+        sideMenuGestureSetup()
         
     }
     
