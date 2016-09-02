@@ -214,12 +214,11 @@ class NewOfferViewController: UIViewController, UITextFieldDelegate {
                 }
                 
                 if let user = user {
-                    let bvc = BuyViewController()
+                    let bvc = OfferBuyViewController()
                     bvc.item = boughtItem
                     bvc.match = match
                     bvc.seller = user
                     bvc.item = self.offeredItem
-                    bvc.fromInfo = false
                     bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                     bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
                     self.presentViewController(bvc, animated: true, completion: nil)
@@ -231,7 +230,7 @@ class NewOfferViewController: UIViewController, UITextFieldDelegate {
             }
             //get rid of buy button
             
-            self.matchControllerView.buyButton.removeFromSuperview()
+//            self.matchControllerView.buyButton.removeFromSuperview()
         }
 
     }
