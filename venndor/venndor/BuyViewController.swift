@@ -31,7 +31,7 @@ class BuyViewController: UIViewController {
         print("Buy Presented!")
         
         dispatch_async(dispatch_get_main_queue()) {
-            
+//            self.presentingViewController!.view.subviews.forEach({ $0.removeFromSuperview() } )
             self.view.backgroundColor = UIColor.clearColor()
             self.view.alpha = 0.5
             let view = UIView(frame: self.view.frame)
@@ -154,19 +154,17 @@ class BuyViewController: UIViewController {
         BoughtController.globalController.updateSeller(self.item, seller: seller, soldPrice: self.match.matchedPrice)
         
         
-        self.cancel = false
-        if self.cancel == false {
-            if self.fromInfo == true {
-                
-                self.presentingViewController?.dismissViewControllerAnimated(true, completion: nil)
-            }
+        
+        if self.fromInfo == true {
+            self.presentingViewController?.viewDidLoad()
         }
             
         else {
-            self.dismissViewControllerAnimated(true) {
-                let mmvc = self.presentingViewController as! MyMatchesViewController
-                mmvc.setupMatchesScrollContent()
-            }
+//            self.presentingViewController?.viewDidLoad()
+            let mmvc = self.presentingViewController as! MyMatchesViewController
+            mmvc.view.subviews.forEach({ $0.removeFromSuperview() })
+            
+            mmvc.viewDidLoad()
         }
         
         dismissController()
