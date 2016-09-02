@@ -23,6 +23,8 @@ class BuyViewController: UIViewController {
     var sellerNameLabel : UILabel!
     var itemLabel: UILabel!
     var sellerPhotoView: UIImageView!
+    //var del: ViewRefreshDelegate?
+    weak var delegate: RefreshViewDelegate?
     
     let messageComposer = TextMessageComposer()
     
@@ -30,8 +32,11 @@ class BuyViewController: UIViewController {
     
         print("Buy Presented!")
         
+        //self.del = self.presentingViewController
+        
+        
         dispatch_async(dispatch_get_main_queue()) {
-//            self.presentingViewController!.view.subviews.forEach({ $0.removeFromSuperview() } )
+
             self.view.backgroundColor = UIColor.clearColor()
             self.view.alpha = 0.5
             let view = UIView(frame: self.view.frame)
@@ -152,21 +157,10 @@ class BuyViewController: UIViewController {
         BoughtController.globalController.updateBuyer(self.item, buyer: LocalUser.user, match: self.match)
         BoughtController.globalController.updateMarket(self.item, match: self.match)
         BoughtController.globalController.updateSeller(self.item, seller: seller, soldPrice: self.match.matchedPrice)
+                
+        self.cancel = false
+        delegate?.buyCompleted(self)
+        self.dismissController()
         
-        
-        
-        if self.fromInfo == true {
-            let iivc = self.presentingViewController as! ItemInfoViewController
-//            iivc.viewDidLoad()
-            iivc.triggerSegue()
-        }
-            
-        else {
-//            self.presentingViewController?.viewDidLoad()
-            let mmvc = self.presentingViewController as! MyMatchesViewController
-            mmvc.performSegueWithIdentifier("toSplash", sender: self)
-        }
-        
-        dismissController()
     }
 }

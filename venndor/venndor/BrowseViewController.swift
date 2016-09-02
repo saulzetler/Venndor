@@ -228,17 +228,17 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         currentCardIndex = currentCardIndex + 1
         //to avoid that backgroung thread autolayout error
         dispatch_async(dispatch_get_main_queue()) {
-         self.insertNewCard()
+            self.insertNewCard()
         }
        
     }
     
     func insertNewCard() {
-            if self.cardsLoadedIndex - self.currentCardIndex > 0 {
-                let newCard = self.loadedCards[self.cardsLoadedIndex - self.currentCardIndex - 1]
-                self.mainView.addSubview(newCard)
-                self.mainView.sendSubviewToBack(newCard)
-            }
+        if self.cardsLoadedIndex - self.currentCardIndex > 0 {
+            let newCard = self.loadedCards[self.cardsLoadedIndex - self.currentCardIndex - 1]
+            self.mainView.addSubview(newCard)
+            self.mainView.sendSubviewToBack(newCard)
+        }
     }
     
     //loading cards

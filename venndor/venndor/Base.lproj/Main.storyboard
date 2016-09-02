@@ -357,6 +357,29 @@
             </objects>
             <point key="canvasLocation" x="3279" y="1342"/>
         </scene>
+        <!--Reveal View Controller-->
+        <scene sceneID="oUQ-f5-kw0">
+            <objects>
+                <viewController id="6B5-Zg-ZsQ" customClass="SWRevealViewController" sceneMemberID="viewController">
+                    <layoutGuides>
+                        <viewControllerLayoutGuide type="top" id="Ips-mt-LNN"/>
+                        <viewControllerLayoutGuide type="bottom" id="Yu5-G5-xDW"/>
+                    </layoutGuides>
+                    <view key="view" contentMode="scaleToFill" id="c4v-IO-ViW">
+                        <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
+                        <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
+                        <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                    </view>
+                    <connections>
+                        <segue destination="7zN-o7-jvw" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="ytj-5F-lZC"/>
+                        <segue destination="UaQ-m2-eNN" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSeguePushController" id="M8K-1D-krZ"/>
+                        <segue destination="7zN-o7-jvw" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSeguePushController" id="YOT-Us-Fy6"/>
+                    </connections>
+                </viewController>
+                <placeholder placeholderIdentifier="IBFirstResponder" id="vYW-bQ-ZCM" userLabel="First Responder" sceneMemberID="firstResponder"/>
+            </objects>
+            <point key="canvasLocation" x="2396" y="2200"/>
+        </scene>
         <!--Post View Controller-->
         <scene sceneID="654-hN-fOH">
             <objects>
@@ -376,7 +399,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="1EY-Q8-0hP" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2249" y="2202"/>
+            <point key="canvasLocation" x="2961" y="2162"/>
         </scene>
         <!--Settings View Controller-->
         <scene sceneID="La8-7z-czq">
@@ -485,7 +508,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eKB-2I-SvZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="356" y="3008"/>
+            <point key="canvasLocation" x="460" y="3774"/>
         </scene>
         <!--Item Info View Controller-->
         <scene sceneID="q9a-XS-w7l">
@@ -502,12 +525,14 @@
                     </view>
                     <connections>
                         <segue destination="Qhy-od-Sr2" kind="show" identifier="ToEditPAge" id="k61-71-5nG"/>
-                        <segue destination="h1v-35-a8b" kind="presentation" identifier="toSplash" id="AbB-Jp-L4K"/>
+                        <segue destination="h1v-35-a8b" kind="show" identifier="toSplash" id="AbB-Jp-L4K"/>
+                        <segue destination="6B5-Zg-ZsQ" kind="custom" identifier="toPosts" customClass="SWRevealViewControllerSegueSetController" id="mrG-YX-2Q6"/>
+                        <segue destination="4v2-09-dkh" kind="show" identifier="toMatches" id="rDW-EA-Jnw"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rur-gZ-i6y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1192" y="3004"/>
+            <point key="canvasLocation" x="1194" y="2994"/>
         </scene>
         <!--Edit View Controller Test-->
         <scene sceneID="ybV-Xs-0CG">
@@ -522,25 +547,23 @@
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
-                    <connections>
-                        <segue destination="5Q4-WU-6Zg" kind="show" identifier="updateToBrowse" id="QAe-PV-9Kk"/>
-                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="G2l-xO-pNj" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2016" y="3004"/>
+            <point key="canvasLocation" x="2688" y="3016"/>
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="sBz-6q-xgi"/>
-        <segue reference="AbB-Jp-L4K"/>
-        <segue reference="fha-wf-r2g"/>
-        <segue reference="J63-VY-ZTI"/>
-        <segue reference="t3W-cW-8Zf"/>
-        <segue reference="pMb-c4-TUY"/>
-        <segue reference="iGi-df-zpV"/>
-        <segue reference="rhC-FE-wzr"/>
         <segue reference="OzI-1T-yzU"/>
+        <segue reference="YOT-Us-Fy6"/>
+        <segue reference="fha-wf-r2g"/>
+        <segue reference="YQC-W7-xKJ"/>
+        <segue reference="rDW-EA-Jnw"/>
+        <segue reference="AbB-Jp-L4K"/>
+        <segue reference="M8K-1D-krZ"/>
+        <segue reference="No4-7w-fgQ"/>
+        <segue reference="Ib2-aj-cpW"/>
+        <segue reference="iGi-df-zpV"/>
         <segue reference="uT9-ID-WRv"/>
     </inferredMetricsTieBreakers>
 </document>

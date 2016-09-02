@@ -12,15 +12,11 @@ import UIKit
 class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     //declaring screen size for future reference
     let screenSize: CGRect = UIScreen.mainScreen().bounds
-    var tappedItem: Item!
     var distSet: Bool!
     var distText: String!
     
-    //declaring the buttons needed for the 2 views
-    //    var matchesButton: UIButton!
-    //    var boughtButton: UIButton!
-    //    var matchesBar: UIView!
-    //    var boughtBar: UIView!
+    var tappedItem: Item!
+    var tappedPost: Post!
     
     //variables needed for the scroll view
     var scrollView: UIScrollView!
@@ -29,6 +25,42 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
     var onPosts: Bool!
     var sessionStart: NSDate!
     
+    
+    override func togglePostItemInfo(sender: UITapGestureRecognizer){
+        let containerView: ItemContainer!
+        
+        if let imgView = sender.view as? UIImageView {
+            containerView = imgView.superview as! ItemContainer
+        }
+        else {
+            containerView = sender.view as! ItemContainer
+        }
+        
+        ItemManager.globalManager.retrieveItemById(containerView.match.itemID) { item, error in
+            guard error == nil else {
+                print("error pulling item data from tapped match: \(error)")
+                return
+            }
+            
+            if let item = item {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.tappedItem = item
+                    self.tappedPost = containerView.post
+                    self.performSegueWithIdentifier("showItemInfo", sender: self)
+                }
+            }
+        }
+    }
+    
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showItemInfo" {
+            let iivc = segue.destinationViewController as! ItemInfoViewController
+            iivc.isPost = true
+            iivc.item = tappedItem
+            iivc.post = tappedPost
+            iivc.headerTitle = "My Posts"
+        }
+    }
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         TimeManager.globalManager.setSessionDuration(sessionStart, controller: "MyPostsViewController")

@@ -12,7 +12,6 @@ import UIKit
 class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     //declaring screen size for future reference
     let screenSize: CGRect = UIScreen.mainScreen().bounds
-    var tappedItem: Item!
     var distSet: Bool!
     var distText: String!
     
@@ -21,6 +20,9 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
 //    var boughtButton: UIButton!
 //    var matchesBar: UIView!
 //    var boughtBar: UIView!
+    
+    var tappedItem: Item!
+    var tappedMatch: Match!
     
     //variables needed for the scroll view
     var scrollView: UIScrollView!
@@ -36,6 +38,12 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         super.viewWillDisappear(animated)
         TimeManager.globalManager.setSessionDuration(sessionStart, controller: "MyMatchesViewController")
         
+        
+    }
+    
+    override func viewDidDisappear(animated: Bool) {
+        super.viewDidDisappear(animated)
+        //self.view.subviews.forEach({ $0.removeFromSuperview() })
     }
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -44,25 +52,60 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         LocalUser.CurrentPage = "My Matches"
         LocalUser.user.mostRecentAction = "Browsed MyMatches"
         sessionStart = NSDate()
-        
-        self.revealViewController().delegate = self
         setupMatchesScrollContent()
-        
-        
         addHeaderItems("My Matches")
         sideMenuGestureSetup()
+        self.revealViewController().delegate = self
         revealViewController().rightViewController = nil
         
     }
-    override func viewDidDisappear(animated: Bool) {
-        for view in self.view.subviews {
-            view.removeFromSuperview()
+    
+    override func toggleMatchItemInfo(sender: UITapGestureRecognizer){
+        let containerView: ItemContainer!
+        if let imgView = sender.view as? UIImageView {
+            containerView = imgView.superview as! ItemContainer
         }
+        else {
+            containerView = sender.view as! ItemContainer
+        }
+        
+        ItemManager.globalManager.retrieveItemById(containerView.match.itemID) { item, error in
+            guard error == nil else {
+                print("error pulling item data from tapped match: \(error)")
+                return
+            }
+            
+            
+            
+            if let item = item {
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.tappedItem = item
+                    self.tappedMatch = containerView.match
+                    self.performSegueWithIdentifier("showItemInfo", sender: self)
+                }
+            }
+        }
+    }
+
+    override func prepareForSegue(segue: UIStoryboardSegue, sender: AnyObject?) {
+        if segue.identifier == "showItemInfo" {
+            let iivc = segue.destinationViewController as! ItemInfoViewController
+            iivc.isPost = false
+            iivc.item = tappedItem
+            iivc.match = tappedMatch
+            iivc.headerTitle = "My Matches"
+        }
+    }
+    
+    func viewWillBeDismissed() {
+        self.setupMatchesScrollContent()
     }
     
     func setupMatchesScrollContent() {
         
-//        self.view.subviews.forEach({ $0.removeFromSuperview() })
+
+        self.view.subviews.forEach({ $0.removeFromSuperview() })
+
         //set up prelimenary variables to make for-loop more readable
         var index:CGFloat = 0.0
         let yOrigin = screenSize.height * 0.1
@@ -327,6 +370,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
                 bvc.seller = user
                 bvc.item = matchContainer.item
                 bvc.fromInfo = false
+                bvc.delegate = self
                 bvc.modalTransitionStyle = UIModalTransitionStyle.CrossDissolve
                 bvc.modalPresentationStyle = UIModalPresentationStyle.OverCurrentContext
                 self.presentViewController(bvc, animated: true, completion: nil)
@@ -424,4 +468,31 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         task.resume()
     }
     
+    func toSplash() {
+        self.performSegueWithIdentifier("toSplash", sender: self)
+    }
 }
+
+extension MyMatchesViewController: RefreshViewDelegate {
+    func buyCompleted(sender: BuyViewController) {
+        dispatch_async(dispatch_get_main_queue()) {
+           self.performSegueWithIdentifier("toSplash", sender: self)
+        }
+        //self.viewDidLoad()
+    }
+    
+    func buyCompletedFromItemInfo() {
+        dispatch_async(dispatch_get_main_queue()) {
+            self.performSegueWithIdentifier("toSplash", sender: self)
+        }
+    }
+}
+
+
+
+
+
+
+
+
+
