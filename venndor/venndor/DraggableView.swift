@@ -524,10 +524,8 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
 //        let image: UIImage = currentItem.photos![0]
 //        let offerViewController = OfferViewController()
 //        offerViewController.setupBackground(firstPhoto)
-        
         let bvc = self.parentViewController as! BrowseViewController
-        
-        bvc.performSegueWithIdentifier("toOfferScreen", sender: self.parentViewController!)
+        bvc.performSegueWithIdentifier("toOfferScreen", sender: self.parentViewController)
         
         let finishPoint: CGPoint = CGPointMake(500, 2 * CGFloat(yFromCenter) + self.originPoint.y)
         UIView.animateWithDuration(0.3,

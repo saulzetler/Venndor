@@ -14,7 +14,7 @@ struct ItemManager {
     
     func createItem(item: Item, completionHandler: (ErrorType?) -> () ) {
 
-        let params = ["name": item.name, "details": item.details, "photoCount": item.photoCount, "owner": item.owner, "ownerName": item.ownerName, "category": item.category,  "condition": item.condition, "itemAge": item.itemAge, "minPrice": item.minPrice, "pickupLocation":item.pickupLocation, "matches": item.matches, "nuSwipesLeft": item.nuSwipesLeft, "nuSwipesRight": item.nuSwipesRight, "nuMatches": item.nuMatches, "offersMade": item.offersMade, "avgOffer": item.avgOffer] as JSON
+        let params = ["name": item.name, "details": item.details, "photoCount": item.photoCount, "owner": item.owner, "ownerName": item.ownerName, "category": item.category,  "condition": item.condition, "itemAge": item.itemAge, "minPrice": item.minPrice, "pickupLocation":item.pickupLocation, "matches": item.matches, "bought": item.bought, "nuSwipesLeft": item.nuSwipesLeft, "nuSwipesRight": item.nuSwipesRight, "nuMatches": item.nuMatches, "offersMade": item.offersMade, "avgOffer": item.avgOffer] as JSON
     
         RESTEngine.sharedEngine.addItemToServerWithDetails(params,
             success: { response in
@@ -157,6 +157,8 @@ struct ItemManager {
         if GlobalItems.currentCategory != nil {
             ids = ids == nil ? GlobalItems.currentCategory : "\(ids) and (category = \(GlobalItems.currentCategory!))"
         }
+        
+        ids = ids == nil ? "(bought != 1)" : "\(ids) and (bought != 1)"
         
         return ids
     }

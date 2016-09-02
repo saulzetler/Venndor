@@ -33,16 +33,20 @@ class NewOfferViewController: UIViewController, UITextFieldDelegate {
         LocalUser.user.mostRecentAction = "Entered the offer screen."
         sessionStart = NSDate()
         
-        itemImage = offeredItem.photos![0]
-        matchControllerView = PopUpViewControllerSwift()
-        setupBackButton()
-        setupBackground()
-        setupHint()
-        setupPriceInput()
-        setupQuestion()
-        setupOfferButton()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.itemImage = self.offeredItem.photos![0]
+            self.matchControllerView = PopUpViewControllerSwift()
+            self.setupBackButton()
+            self.setupBackground()
+            self.setupHint()
+            self.setupPriceInput()
+            self.setupQuestion()
+            self.setupOfferButton()
+            
+            self.hideKeyboardWhenTappedAround()
+        }
         
-        hideKeyboardWhenTappedAround()
+        
     }
 
     //to setup the page background to be the items image TO BE DONE

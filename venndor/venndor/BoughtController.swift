@@ -119,6 +119,9 @@ struct BoughtController {
         print("User array passed to update users: \(userArray)")
         updateUsers(userArray.filter({ $0 != LocalUser.user.id }), match: match)
         
+        //update the item in the market 
+        updateItemInMarket(item)
+        
         //remove all other match objects
         removeMatches(match)
         
@@ -127,7 +130,20 @@ struct BoughtController {
         removeMatchThumbnails(matchArray.filter({ $0 != match.id }))
         
     }
+    
+    func updateItemInMarket(item: Item) {
+        item.bought = 1
+        let update = ["bought": 1]
+        ItemManager.globalManager.updateItemById(item.id, update: update) { error in
+            guard error == nil else {
+                print("Error updating the item on the market: \(error)")
+                return
+            }
+            
+            print("Succesfully updated the item on the market.")
+        }
 
+    }
     
     func updateUsers(users: [String], match: Match) {
         print("User array recieved by updateUsers: \(users)")

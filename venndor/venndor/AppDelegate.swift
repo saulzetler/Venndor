@@ -110,9 +110,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
     
     
     func setSessionTime() {
-        let timeInterval = ((sessionStart.timeIntervalSinceNow) / 60 * -1)
-        let dateString = TimeManager.formatter.stringFromDate(sessionStart)
-        LocalUser.user.timeOnAppPerSession[dateString] = timeInterval
+        if let _ = LocalUser.user {
+            let timeInterval = ((sessionStart.timeIntervalSinceNow) / 60 * -1)
+            let dateString = TimeManager.formatter.stringFromDate(sessionStart)
+            LocalUser.user.timeOnAppPerSession[dateString] = timeInterval
+        }
+        
     }
 
     
