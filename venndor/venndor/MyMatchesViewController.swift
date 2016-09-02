@@ -56,6 +56,8 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func setupMatchesScrollContent() {
+        
+        self.view.subviews.forEach({ $0.removeFromSuperview() })
         //set up prelimenary variables to make for-loop more readable
         var index:CGFloat = 0.0
         let yOrigin = screenSize.height * 0.1
@@ -181,6 +183,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         }
         
     }
+    
     func DropdownAction() {
         
     }
