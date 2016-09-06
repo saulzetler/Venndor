@@ -64,6 +64,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         let loadingLabelFrame = CGRect(x: 0, y: screenSize.height*0.4, width: screenSize.width, height: screenSize.height*0.2)
         let loadingLabel = customLabel(loadingLabelFrame, text: "Loading...", color: UIColorFromHex(0x34495e), fontSize: 35)
         mainView.addSubview(loadingLabel)
+        mainView.sendSubviewToBack(loadingLabel)
         
         loaded = false
         
