@@ -355,7 +355,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="R9J-hJ-Fuf" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2635" y="1186"/>
+            <point key="canvasLocation" x="3279" y="1342"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="oUQ-f5-kw0">
@@ -372,12 +372,13 @@
                     </view>
                     <connections>
                         <segue destination="7zN-o7-jvw" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSegueSetController" id="ytj-5F-lZC"/>
-                        <segue destination="UaQ-m2-eNN" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSegueSetController" id="M8K-1D-krZ"/>
+                        <segue destination="UaQ-m2-eNN" kind="custom" identifier="sw_front" customClass="SWRevealViewControllerSeguePushController" id="M8K-1D-krZ"/>
+                        <segue destination="7zN-o7-jvw" kind="custom" identifier="sw_rear" customClass="SWRevealViewControllerSeguePushController" id="YOT-Us-Fy6"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="vYW-bQ-ZCM" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="2276" y="2168"/>
+            <point key="canvasLocation" x="2396" y="2200"/>
         </scene>
         <!--Post View Controller-->
         <scene sceneID="654-hN-fOH">
@@ -420,7 +421,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="7zY-uR-K97" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-1170" y="1197"/>
+            <point key="canvasLocation" x="-1982" y="1321"/>
         </scene>
         <!--Reveal View Controller-->
         <scene sceneID="MUf-Ly-qQ4">
@@ -486,7 +487,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="4iD-go-TVo" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="693" y="2255"/>
+            <point key="canvasLocation" x="725" y="2207"/>
         </scene>
         <!--Refresh Splash View Controller-->
         <scene sceneID="cUb-YQ-VxS">
@@ -507,7 +508,7 @@
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="eKB-2I-SvZ" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="-140" y="3242"/>
+            <point key="canvasLocation" x="460" y="3774"/>
         </scene>
         <!--Item Info View Controller-->
         <scene sceneID="q9a-XS-w7l">
@@ -523,15 +524,15 @@
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                     </view>
                     <connections>
-                        <segue destination="Qhy-od-Sr2" kind="show" identifier="toEditPage" id="k61-71-5nG"/>
+                        <segue destination="Qhy-od-Sr2" kind="show" identifier="ToEditPAge" id="k61-71-5nG"/>
                         <segue destination="h1v-35-a8b" kind="show" identifier="toSplash" id="AbB-Jp-L4K"/>
+                        <segue destination="6B5-Zg-ZsQ" kind="custom" identifier="toPosts" customClass="SWRevealViewControllerSegueSetController" id="mrG-YX-2Q6"/>
                         <segue destination="4v2-09-dkh" kind="show" identifier="toMatches" id="rDW-EA-Jnw"/>
-                        <segue destination="6B5-Zg-ZsQ" kind="show" identifier="toPosts" id="Vwk-v4-yAY"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="Rur-gZ-i6y" userLabel="First Responder" sceneMemberID="firstResponder"/>
             </objects>
-            <point key="canvasLocation" x="1134" y="3110"/>
+            <point key="canvasLocation" x="1194" y="2994"/>
         </scene>
         <!--Edit View Controller Test-->
         <scene sceneID="ybV-Xs-0CG">
@@ -553,16 +554,16 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="No4-7w-fgQ"/>
-        <segue reference="ytj-5F-lZC"/>
-        <segue reference="gbD-Lm-gkJ"/>
-        <segue reference="M8K-1D-krZ"/>
-        <segue reference="rDW-EA-Jnw"/>
-        <segue reference="AbB-Jp-L4K"/>
+        <segue reference="fha-wf-r2g"/>
         <segue reference="YQC-W7-xKJ"/>
+        <segue reference="sBz-6q-xgi"/>
+        <segue reference="AbB-Jp-L4K"/>
+        <segue reference="YOT-Us-Fy6"/>
+        <segue reference="M8K-1D-krZ"/>
+        <segue reference="No4-7w-fgQ"/>
         <segue reference="Ib2-aj-cpW"/>
+        <segue reference="iGi-df-zpV"/>
         <segue reference="OzI-1T-yzU"/>
         <segue reference="uT9-ID-WRv"/>
-        <segue reference="iGi-df-zpV"/>
     </inferredMetricsTieBreakers>
 </document>

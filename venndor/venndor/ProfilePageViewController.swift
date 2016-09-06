@@ -226,16 +226,16 @@ class ProfilePageViewController: UIViewController {
                 
                 let contentView = ItemContainer(frame: frame)
                 
-                if contentType == "sold" {
-                    contentView.post = content[index] as! Post
-                    let tap = UITapGestureRecognizer(target: MyPostsViewController.self, action: #selector(ProfilePageViewController.togglePostItemInfo(_:)))
-                    contentView.addGestureRecognizer(tap)
-                
-                } else {
-                    contentView.match = content[index] as! Match
-                    let tap = UITapGestureRecognizer(target: self, action: #selector(ProfilePageViewController.toggleMatchItemInfo(_:)))
-                    contentView.addGestureRecognizer(tap)
-                }
+//                if contentType == "sold" {
+//                    contentView.post = content[index] as! Post
+//                    let tap = UITapGestureRecognizer(target: MyPostsViewController.self, action: #selector(ProfilePageViewController.togglePostItemInfo(_:)))
+//                    contentView.addGestureRecognizer(tap)
+//                
+//                } else {
+//                    contentView.match = content[index] as! Match
+//                    let tap = UITapGestureRecognizer(target: self, action: #selector(ProfilePageViewController.toggleMatchItemInfo(_:)))
+//                    contentView.addGestureRecognizer(tap)
+//                }
                 
                 self.setContentView(contentView)
                 self.contentScroll.addSubview(contentView)
