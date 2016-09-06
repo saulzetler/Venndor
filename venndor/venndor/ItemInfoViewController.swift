@@ -134,7 +134,7 @@ class ItemInfoViewController: UIViewController {
         backButton.frame = CGRectMake(screenSize.width*0, 31, screenSize.width*0.2, 20)
         backButton.setImage(backImage, forState: .Normal)
         backButton.imageView?.contentMode = UIViewContentMode.Center
-        backButton.addTarget(self, action: #selector(ItemInfoViewController.dismissController(_:)), forControlEvents: UIControlEvents.TouchUpInside)
+        backButton.addTarget(self, action: #selector(ItemInfoViewController.dismissController), forControlEvents: .TouchUpInside)
         self.header.addSubview(backButton)
         self.header.bringSubviewToFront(backButton)
     }
@@ -205,7 +205,7 @@ class ItemInfoViewController: UIViewController {
             }
             else {
                 print("Error with parsing user in buy screen. Returning now.")
-                self.dismissViewControllerAnimated(true, completion: nil)
+                self.dismissController()
             }
         }
         
@@ -241,15 +241,20 @@ class ItemInfoViewController: UIViewController {
         }
     }
     
-    func dismissController(sender: AnyObject) {
+    func dismissController() {
         if (self.isPost) != nil {
             if self.isPost == true {
                 print("Back to posts!")
-                self.performSegueWithIdentifier("toPosts", sender: self)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.performSegueWithIdentifier("toPosts", sender: self)
+                }
+                
             }
             else {
                 print("Back to matches!")
-               self.performSegueWithIdentifier("toMatches", sender: self) 
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.performSegueWithIdentifier("toMatches", sender: self)
+                }
             }
         }
     }

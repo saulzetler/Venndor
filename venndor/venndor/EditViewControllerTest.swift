@@ -96,37 +96,41 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         filledImagesArray = []
         previewImageViewArray = []
         
-        setupCategoryPickerView()
-        setupYearsPickerView()
-        setupItemName()
-        setupItemDescription()
-        setupLabels()
-        setupPriceInput()
-        sideMenuGestureSetup()
-        setupImageViews()
-        setupScrollView()
-        setupDivide()
-        setupPageControll()
-        setupPostButton()
-        setupRatingControl()
-        setupHeaderFrame()
-        setupHeaderTitle()
-        setupBackButton()
-        setupArrows()
-        setupLocationInput()
-//        setupMap()
-        setPreviewItemName()
-        setCategoryPreview()
-        updateCategoryPreview(item.category)
-        setYearsPreview()
-        updateYearsPreview(item.itemAge)
-        setDescriptionPreview()
-        setInitialCondition()
-        setLocationPreview()
-        setPricePreview()
-        setConditionPreview()
-        updateImagePreviews()
-        hideKeyboardWhenTappedAround()
+        dispatch_async(dispatch_get_main_queue()) {
+            self.setupCategoryPickerView()
+            self.setupYearsPickerView()
+            self.setupItemName()
+            self.setupItemDescription()
+            self.setupLabels()
+            self.setupPriceInput()
+            self.sideMenuGestureSetup()
+            self.setupImageViews()
+            self.setupScrollView()
+            self.setupDivide()
+            self.setupPageControll()
+            self.setupPostButton()
+            self.setupRatingControl()
+            self.setupHeaderFrame()
+            self.setupHeaderTitle()
+            self.setupBackButton()
+            self.setupArrows()
+            self.setupLocationInput()
+            //        setupMap()
+            self.setPreviewItemName()
+            self.setCategoryPreview()
+            self.updateCategoryPreview(self.item.category)
+            self.setYearsPreview()
+            self.updateYearsPreview(self.item.itemAge)
+            self.setDescriptionPreview()
+            self.setInitialCondition()
+            self.setLocationPreview()
+            self.setPricePreview()
+            self.setConditionPreview()
+            self.updateImagePreviews()
+        }
+        
+        
+        self.hideKeyboardWhenTappedAround()
         self.ratingControl.delegate = self
     }
     
@@ -690,7 +694,11 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
             if y == Int(currentPage) {
                 let yOffset = CGPointMake(0, pageHeight*CGFloat(y));
                 self.scrollView.setContentOffset(yOffset, animated: true)
-                updateIndicators()
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.updateIndicators()
+                }
+                
             }
         }
     }
