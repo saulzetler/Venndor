@@ -32,6 +32,7 @@ class SplashViewController: UIViewController {
         /////////////////////////////////////// IF NOT GUEST //////////////////////////////////////
         
         //first pull the user/check he/she exist
+        print(LocalUser.email)
         UserManager.globalManager.retrieveUserByEmail(LocalUser.email) { user, error in
             guard error == nil else {
                 print("Error retrieving user from database: \(error)")

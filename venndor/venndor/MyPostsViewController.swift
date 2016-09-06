@@ -36,9 +36,9 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             containerView = sender.view as! ItemContainer
         }
         
-        ItemManager.globalManager.retrieveItemById(containerView.match.itemID) { item, error in
+        ItemManager.globalManager.retrieveItemById(containerView.post.itemID) { item, error in
             guard error == nil else {
-                print("error pulling item data from tapped match: \(error)")
+                print("error pulling item data from tapped post: \(error)")
                 return
             }
             
