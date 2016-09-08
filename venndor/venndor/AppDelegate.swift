@@ -69,7 +69,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
         //update user metrics
         setSessionTime()
-        UserManager.globalManager.updateLocalUserMetrics()
+        //UserManager.globalManager.updateLocalUserMetrics()
     }
 
     func applicationWillEnterForeground(application: UIApplication) {
@@ -105,7 +105,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
        
         //calculate the time of the current session
         setSessionTime()
-        UserManager.globalManager.updateLocalUserMetrics()
+        //UserManager.globalManager.updateLocalUserMetrics()
     }
     
     

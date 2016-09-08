@@ -554,7 +554,16 @@
         </scene>
     </scenes>
     <inferredMetricsTieBreakers>
-        <segue reference="fha-wf-r2g"/>
+
+        <segue reference="NQb-tI-6ve"/>
+        <segue reference="uT9-ID-WRv"/>
+        <segue reference="OzI-1T-yzU"/>
+        <segue reference="ytj-5F-lZC"/>
+        <segue reference="gbD-Lm-gkJ"/>
+        <segue reference="M8K-1D-krZ"/>
+        <segue reference="rDW-EA-Jnw"/>
+        <segue reference="AbB-Jp-L4K"/>
+
         <segue reference="YQC-W7-xKJ"/>
         <segue reference="sBz-6q-xgi"/>
         <segue reference="AbB-Jp-L4K"/>
@@ -563,7 +572,6 @@
         <segue reference="No4-7w-fgQ"/>
         <segue reference="Ib2-aj-cpW"/>
         <segue reference="iGi-df-zpV"/>
-        <segue reference="OzI-1T-yzU"/>
-        <segue reference="uT9-ID-WRv"/>
+
     </inferredMetricsTieBreakers>
 </document>
