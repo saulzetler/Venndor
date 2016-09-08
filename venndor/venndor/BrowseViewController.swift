@@ -131,7 +131,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         loadedCards = []
         currentCardIndex = 0
         cardsLoadedIndex = 0
-        loadCards(GlobalItems.items)
+        dispatch_async(dispatch_get_main_queue()) { self.loadCards(GlobalItems.items) }
+        
     }
     
     func setupSellButton() {
@@ -195,8 +196,9 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         //add the item to the array of items that need updating
         item.nuSwipesLeft! += 1
         GlobalItems.itemsToUpdate.append(item)
-        
-        loadAnotherCard()
+//        
+        dispatch_async(dispatch_get_main_queue()) { self.loadAnotherCard() }
+//        
         nextCard()
     }
     
@@ -216,7 +218,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
         //add the item to the array of items that need updating
         GlobalItems.itemsToUpdate.append(item)
         
-        loadAnotherCard()
+        dispatch_async(dispatch_get_main_queue()) { self.loadAnotherCard() }
         nextCard()
 
 
@@ -245,6 +247,8 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     
     //loads one new card
     func loadAnotherCard() -> Void {
+        
+    
         let itemManager = ItemManager()
 
         let feedFilter = itemManager.constructFeedFilter()
@@ -260,10 +264,13 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
                 
                 //check that item is returned before creating slide to avoid null pointer exceptions
                 if tempItem.count > 0 {
-                    self.itemList.append(tempItem[0])
-                    let newCard: DraggableView = self.createDraggableViewFromItem(tempItem[0])
-                    self.loadedCards.append(newCard)
-                    self.cardsLoadedIndex = self.cardsLoadedIndex + 1
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.itemList.append(tempItem[0])
+                        let newCard: DraggableView = self.createDraggableViewFromItem(tempItem[0])
+                        self.loadedCards.append(newCard)
+                        self.cardsLoadedIndex = self.cardsLoadedIndex + 1
+                    }
+                    
                 }
             }
         }
