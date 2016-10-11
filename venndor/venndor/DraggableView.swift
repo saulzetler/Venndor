@@ -496,11 +496,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
     }
     
     func upAction() -> Void {
-        //use this function to go to next picture
-        print("picNum: \(picNum)")
-        print("numberOfPics: \(numberOfPics)")
         
-        print("Swiped Up")
         if picNum == numberOfPics-1 {
             openInfo()
         }
@@ -512,7 +508,7 @@ public class DraggableView: UIView, UIScrollViewDelegate, UIGestureRecognizerDel
         //use this function to go to previous picture
         adjustPage()
         resetView()
-        print("Swiped Down")
+
         if infoOpen == true {
             closeInfo()
         }

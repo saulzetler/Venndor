@@ -26,6 +26,7 @@ class ItemInfoViewController: UIViewController {
     weak var delegate: RefreshViewDelegate?
     
     var isPost: Bool!
+    var isMatch: Bool!
     
     let CARD_HEIGHT: CGFloat = UIScreen.mainScreen().bounds.height*0.77
     let CARD_WIDTH: CGFloat = UIScreen.mainScreen().bounds.width*0.9
@@ -242,21 +243,25 @@ class ItemInfoViewController: UIViewController {
     }
     
     func dismissController() {
-        if (self.isPost) != nil {
-            if self.isPost == true {
-                print("Back to posts!")
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.performSegueWithIdentifier("toPosts", sender: self)
-                }
+        
+        if self.isPost != nil && self.isPost == true {
+            dispatch_async(dispatch_get_main_queue()) {
+                print("So did this.")
+                self.performSegueWithIdentifier("toPosts", sender: self)
+            }
                 
-            }
-            else {
-                print("Back to matches!")
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.performSegueWithIdentifier("toMatches", sender: self)
-                }
-            }
         }
+            
+        else if self.isMatch != nil && self.isMatch == true {
+            dispatch_async(dispatch_get_main_queue()) {
+                self.performSegueWithIdentifier("toMatches", sender: self)
+               }
+        }
+        
+        else {
+            self.dismissViewControllerAnimated(true, completion: nil)
+        }
+        
     }
 
 }

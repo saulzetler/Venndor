@@ -150,17 +150,13 @@ class SettingsViewController: UIViewController, UITableViewDelegate, UITableView
     
     
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        print(indexPath.row)
         
         switch indexPath.row {
         case 0:
-            print("0")
             toAbout()
         case 1:
-            print("1")
             deleteAccount()
         case 2:
-            print("2")
             logOut()
         default:
             break

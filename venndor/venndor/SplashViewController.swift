@@ -32,8 +32,7 @@ class SplashViewController: UIViewController {
         /////////////////////////////////////// IF NOT GUEST //////////////////////////////////////
         
         //first pull the user/check he/she exist
-        print(LocalUser.email)
-        UserManager.globalManager.retrieveUserByEmail(LocalUser.email) { user, error in
+        UserManager.globalManager.retrieveUserByFacebookID(LocalUser.facebookID) { user, error in
             guard error == nil else {
                 print("Error retrieving user from database: \(error)")
                 return
@@ -51,10 +50,10 @@ class SplashViewController: UIViewController {
             }
             else {
                 OneSignal.IdsAvailable({ (userId, pushToken) in
-                NSLog("UserId:%@", userId)
+
                     
                     if (pushToken != nil) {
-                        NSLog("pushToken:%@", pushToken)
+                       
                         LocalUser.pushID = userId
                        
                         //create the user on the server
@@ -97,7 +96,6 @@ class SplashViewController: UIViewController {
             
             if let posts = seenPosts {
                 LocalUser.seenPosts = posts
-                print("Dictionary loaded")
             }
         }
         

@@ -75,7 +75,6 @@ struct BoughtController {
 
         //function should update the buyer, move the item from matched to bought
         
-        let filter = "itemID = \(item.id)"
         match.bought = 1
         match.dateBought = NSDate()
         buyer.boughtItems[item.id] = item.owner
@@ -116,7 +115,6 @@ struct BoughtController {
         
         //update the users in the market
         let userArray = self.getArrayForUpdate(item.matches, keyOrValue: "value")
-        print("User array passed to update users: \(userArray)")
         updateUsers(userArray.filter({ $0 != LocalUser.user.id }), match: match)
         
         //update the item in the market 
@@ -146,7 +144,6 @@ struct BoughtController {
     }
     
     func updateUsers(users: [String], match: Match) {
-        print("User array recieved by updateUsers: \(users)")
         var filterString = ""
         var index = 0
         
@@ -158,9 +155,6 @@ struct BoughtController {
             filterString = index == 0 ? "(_id = \(user))" : "\(filterString) or (_id = \(user))"
             index += 1
         }
-        
-        print("Filter for updateUsers: \(filterString)")
-        print("Your user ID: \(LocalUser.user.id)")
         
         UserManager.globalManager.retrieveMultipleUsers(filterString) { users, error in
             guard error == nil else {

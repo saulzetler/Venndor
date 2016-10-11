@@ -99,7 +99,6 @@ public class STRatingControl: UIView {
   
   override public func touchesBegan(touches: Set<UITouch>, withEvent event: UIEvent?) {
     handleStarTouches(touches, withEvent: event)
-    print("touched")
   }
   
 //  override public func touchesMoved(touches: Set<UITouch>, withEvent event: UIEvent?) {

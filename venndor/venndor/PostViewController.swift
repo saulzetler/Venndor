@@ -63,7 +63,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     var ratingControl: RatingControl!
     var imagePickerController: ImagePickerController!
     var mapView: GMSMapView!
-    var currentPlace: GMSPlace!
+    //var currentPlace: GMSPlace!
     var useMyLocation: Bool!
 //    let locationManager = CLLocationManager()
 //    var coordinate: CLLocationCoordinate2D!
@@ -576,7 +576,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     //delegate functions that control parts of the view controller
     
     func didSelectRating(control: RatingControl, rating: Int) {
-        print(rating)
+
     }
     
     //2 funcitons are called when a user scrolls through a scroll view, either drag or accelerate as such both must be overwritten to auto adjust the page to the correct one when either is called
@@ -631,7 +631,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        print("ended")
+
         if textField.tag == 30 {
             previewPrice.setTitle("Minimmum price is: $\(String(textField.text!))", forState: .Normal)
         }
@@ -795,7 +795,6 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
             locationPreview = location
         }
         
-        print(locationPreview)
         previewLocation = makeTextButton(locationPreview, frame: locationPreviewFrame, target: #selector(PostViewController.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewLocation.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewLocation.tag = 5
@@ -826,8 +825,8 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //delegate image picker functions
     
-    func wrapperDidPress(images: [UIImage]){
-        print("cool")
+    func wrapperDidPress(imagePicker: ImagePickerController, images: [UIImage]){
+
     }
     
     func updateImagePreviews() {
@@ -850,7 +849,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         }
     }
     
-    func doneButtonDidPress(images: [UIImage]){
+    func doneButtonDidPress(imagePicker: ImagePickerController, images: [UIImage]){
         imagePickerController.dismissViewControllerAnimated(true, completion: nil)
         var i = 0
         var startIndex = currentImgView.tag
@@ -869,11 +868,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         }
         updateImagePreviews()
     }
-    func cancelButtonDidPress(){
+    func cancelButtonDidPress(imagePicker: ImagePickerController){
     }
     
     var imageAssets: [UIImage] {
-        return ImagePicker.resolveAssets(imagePickerController.stack.assets)
+        return AssetManager.resolveAssets(imagePickerController.stack.assets)
     }
     
     //function to control when an image view is tapped and access the camera roll

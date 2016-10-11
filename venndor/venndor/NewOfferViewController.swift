@@ -199,7 +199,6 @@ class NewOfferViewController: UIViewController, UITextFieldDelegate {
     
     func toBuy() {
         dispatch_async(dispatch_get_main_queue()) { () -> Void in
-            print("Buy tapped!")
             //            let matchContainer = sender.superview as! ItemContainer
             var match: Match!
             for matches in LocalUser.matches {

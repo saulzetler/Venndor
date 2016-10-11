@@ -86,7 +86,7 @@ class phoneViewController: UIViewController, UITextFieldDelegate {
     }
     
     func textView(textView: UITextView, shouldChangeTextInRange range: NSRange, replacementText text: String) -> Bool {
-        print("begin")
+
         if(text == "\n") {
             textView.resignFirstResponder()
             return false

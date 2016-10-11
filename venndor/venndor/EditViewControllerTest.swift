@@ -74,7 +74,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
     var ratingControl: RatingControl!
     var imagePickerController: ImagePickerController!
     var mapView: GMSMapView!
-    var currentPlace: GMSPlace!
+    //var currentPlace: GMSPlace!
     var useMyLocation: Bool!
     var didChangeLocation: Bool!
     let locationManager = CLLocationManager()
@@ -86,7 +86,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
     
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
-        print("PostViewController end: \(NSDate())")
+
         TimeManager.globalManager.setSessionDuration(sessionStart, controller: "PostViewController")
     }
     override func viewDidLoad() {
@@ -131,7 +131,6 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         
         
         self.hideKeyboardWhenTappedAround()
-        self.ratingControl.delegate = self
     }
     
     //setup functions
@@ -402,6 +401,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
     func setupRatingControl() {
         ratingControl = RatingControl(frame: CGRectMake(screenSize.width*0.2, screenSize.height*3.65, screenSize.width*0.6, screenSize.height*0.07))
         ratingControl.presetUpTo(item.condition)
+        self.ratingControl.delegate = self
         containerView.addSubview(ratingControl)
     }
     
@@ -665,7 +665,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
     //delegate functions that control parts of the view controller
     
     func didSelectRating(control: RatingControl, rating: Int) {
-        print(rating)
+
     }
     
     //2 funcitons are called when a user scrolls through a scroll view, either drag or accelerate as such both must be overwritten to auto adjust the page to the correct one when either is called
@@ -724,7 +724,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
     }
     
     func textFieldDidEndEditing(textField: UITextField) {
-        print("ended")
+
         if textField.tag == 30 {
             previewPrice.setTitle("Minimmum price is: $\(String(textField.text!))", forState: .Normal)
         }
@@ -890,7 +890,6 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
             locationPreview = location
         }
         
-        print(locationPreview)
         previewLocation = makeTextButton(locationPreview, frame: locationPreviewFrame, target: #selector(EditViewControllerTest.changePage(_:)), textColor: UIColorFromHex(0x34495e), textSize: 18)
         previewLocation.contentHorizontalAlignment = UIControlContentHorizontalAlignment.Left
         previewLocation.tag = 5
@@ -902,15 +901,15 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         
     }
     
-    func updateLocationPreview(useLocation: Bool) {
-        if useLocation {
-            previewLocation.setTitle("Using current location", forState: .Normal)
-        }
-        else {
-            let placeName: String = currentPlace.name
-            previewLocation.setTitle(placeName, forState: .Normal)
-        }
-    }
+//    func updateLocationPreview(useLocation: Bool) {
+//        if useLocation {
+//            previewLocation.setTitle("Using current location", forState: .Normal)
+//        }
+//        else {
+//            let placeName: String = currentPlace.name
+//            previewLocation.setTitle(placeName, forState: .Normal)
+//        }
+//    }
     
     func setPricePreview() {
         let pricePreviewFrame = CGRectMake(screenSize.width*0.2, screenSize.height*7.5+ratingPreviewContainer.frame.height+previewDescription.frame.height+previewLocation.frame.height, screenSize.width*0.75, screenSize.height*0.05)
@@ -924,8 +923,8 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
     
     //delegate image picker functions
     
-    func wrapperDidPress(images: [UIImage]){
-        print("cool")
+    func wrapperDidPress(imagePicker: ImagePickerController, images: [UIImage]){
+
     }
     
     func updateImagePreviews() {
@@ -948,7 +947,7 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         }
     }
     
-    func doneButtonDidPress(images: [UIImage]){
+    func doneButtonDidPress(imagePicker: ImagePickerController, images: [UIImage]){
         imagePickerController.dismissViewControllerAnimated(true, completion: nil)
         var i = 0
         var startIndex = currentImgView.tag
@@ -967,11 +966,11 @@ class EditViewControllerTest: UIViewController, UIImagePickerControllerDelegate,
         }
         updateImagePreviews()
     }
-    func cancelButtonDidPress(){
+    func cancelButtonDidPress(imagePicker: ImagePickerController){
     }
     
     var imageAssets: [UIImage] {
-        return ImagePicker.resolveAssets(imagePickerController.stack.assets)
+        return AssetManager.resolveAssets(imagePickerController.stack.assets)
     }
     
     //function to control when an image view is tapped and access the camera roll

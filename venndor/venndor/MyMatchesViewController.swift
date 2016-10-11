@@ -48,7 +48,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        print("has been reloaded")
         LocalUser.CurrentPage = "My Matches"
         LocalUser.user.mostRecentAction = "Browsed MyMatches"
         sessionStart = NSDate()
@@ -91,6 +90,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         if segue.identifier == "showItemInfo" {
             let iivc = segue.destinationViewController as! ItemInfoViewController
             iivc.isPost = false
+            iivc.isMatch = true
             iivc.item = tappedItem
             iivc.match = tappedMatch
             iivc.headerTitle = "My Matches"
@@ -350,7 +350,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func toggleBuy(sender: UIButton) {
-        print("Buy tapped!")
         let matchContainer = sender.superview as! ItemContainer
         
         let match = matchContainer.match
@@ -389,7 +388,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     }
     
     func messageSeller(sender: UIButton) {
-        print("Message tapped!")
         let container = sender.superview as! ItemContainer
         let match = container.match
         if (messageComposer.canSendText()) {
@@ -439,7 +437,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
             let statusCode = httpResponse.statusCode
             
             if (statusCode == 200) {
-//                print("Everyone is fine, file downloaded successfully.")
                 
                 do {
                     

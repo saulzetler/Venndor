@@ -237,14 +237,13 @@ extension UIViewController: SWRevealViewControllerDelegate {
         
         ItemManager.globalManager.retrieveItemById(containerView.match.itemID) { item, error in
             guard error == nil else {
-                print("error pulling item data from tapped match: \(error)")
+                print("Error pulling item data from tapped match: \(error)")
                 return
             }
             if let item = item {
                 dispatch_async(dispatch_get_main_queue()) {
                     let itemInfoController = ItemInfoViewController()
                     itemInfoController.isPost = false
-                    let thing = itemInfoController.isPost
                     itemInfoController.item = item
                     itemInfoController.match = containerView.match
                     itemInfoController.headerTitle = "My Matches"
@@ -266,7 +265,7 @@ extension UIViewController: SWRevealViewControllerDelegate {
         
         ItemManager.globalManager.retrieveItemById(containerView.post.itemID) { item, error in
             guard error == nil else {
-                print("error pulling item data from tapped match: \(error)")
+                print("Error pulling item data from tapped match: \(error)")
                 return
             }
             if let item = item {

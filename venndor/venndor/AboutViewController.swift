@@ -147,7 +147,7 @@ class AboutViewController: UIViewController, UITableViewDelegate, UITableViewDat
     }
     
     func submit(sender: UIButton) {
-        print("submit pressed")
+
         let mailComposeViewController = configuredMailComposeViewController()
         if MFMailComposeViewController.canSendMail() {
             self.presentViewController(mailComposeViewController, animated: true, completion: nil)

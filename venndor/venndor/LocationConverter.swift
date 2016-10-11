@@ -71,9 +71,10 @@ struct LocationConverter {
         }
         return temp
     }
+    
     func distanceApart(geoHash1: String, geoHash2: String) -> String {
         let distanceApart = 0
-        var count = 0
+        let count = 0
         while count < 9 {
 //            if geoHash2.characters[count] == geoHash1.characters[count] {
             

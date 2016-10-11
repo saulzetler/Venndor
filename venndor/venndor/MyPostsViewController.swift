@@ -56,6 +56,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         if segue.identifier == "showItemInfo" {
             let iivc = segue.destinationViewController as! ItemInfoViewController
             iivc.isPost = true
+            print("This got called...")
             iivc.item = tappedItem
             iivc.post = tappedPost
             iivc.headerTitle = "My Posts"
@@ -111,6 +112,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             //populate the postContainerView
             for post in LocalUser.posts {
                 if post.sold == 1 {
+                    
                     //create the match container view
                     let postContainer = ItemContainer(frame: CGRect(x: 0, y: yOrigin + (index * containerHeight) + soldTitle, width: screenSize.width, height: containerHeight))
                     
@@ -236,7 +238,7 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
         postContainer.addSubview(descriptionLabel)
         
         let priceLabel = UILabel(frame: CGRect(x: 10, y: screenSize.width*0.29, width: postContainer.frame.width - imgWidth - 20, height: screenSize.width*0.15))
-        let temp = Int(post.minPrice)
+        let temp = post.sold == 1 ? post.soldPrice : post.minPrice
         priceLabel.text = "$\(temp)"
         priceLabel.textAlignment = .Center
         priceLabel.font = UIFont(name: "Avenir", size: 24)
@@ -303,7 +305,6 @@ class MyPostsViewController: UIViewController, UIScrollViewDelegate {
             let statusCode = httpResponse.statusCode
             
             if (statusCode == 200) {
-                print("Everyone is fine, file downloaded successfully.")
                 
                 do {
                     

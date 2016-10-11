@@ -30,11 +30,6 @@ class BuyViewController: UIViewController {
     
     override func viewDidLoad() {
     
-        print("Buy Presented!")
-        
-        //self.del = self.presentingViewController
-        
-        
         dispatch_async(dispatch_get_main_queue()) {
 
             self.view.backgroundColor = UIColor.clearColor()
@@ -51,7 +46,6 @@ class BuyViewController: UIViewController {
             self.setupSellerPhoto()
             self.setupSellerLabel()
         }
-       
     }
     
     func setupPopupView() {
@@ -152,7 +146,6 @@ class BuyViewController: UIViewController {
     }
     
     func itemBought() {
-        print("Confirm tapped!")
         BoughtController.globalController.sendSellerNotification(seller, match: match)
         BoughtController.globalController.updateBuyer(self.item, buyer: LocalUser.user, match: self.match)
         BoughtController.globalController.updateMarket(self.item, match: self.match)

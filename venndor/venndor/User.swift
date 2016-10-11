@@ -23,6 +23,7 @@ struct LocalUser {
     static var profilePictureURL: String!
     static var myLocation: CLLocation!
     static var pushID: String!
+    static var facebookID: String! 
     
     static var CurrentPage: String!
 }
@@ -36,6 +37,7 @@ class User: NSObject {
     var gender: String!
     var ageRange: String!
     var profilePictureURL: String!
+    var facebookID: String!
     var pushID: String!
     
     var university: String!  //NI
@@ -71,12 +73,7 @@ class User: NSObject {
     var posts: [String:AnyObject]!
     
     //key: Match Object ID, value: Item object ID
-    var matches: [String:AnyObject]! {
-        willSet {
-            print("About to set matches to:  \(newValue), for user: \(self.firstName)")
-        }
-    }
-    
+    var matches: [String:AnyObject]!
     
     init(json:JSON) {
         id = json["_id"] as! String
@@ -87,6 +84,7 @@ class User: NSObject {
         gender = json["gender"] as! String
         ageRange = json["ageRange"] as! String
         profilePictureURL = json["profilePictureURL"] as! String
+        facebookID = json["facebookID"] as! String
         pushID = json["pushID"] as! String 
         university = json["university"] as! String
         howTheyFoundVenndor = json["howTheyFoundVenndor"] as! String

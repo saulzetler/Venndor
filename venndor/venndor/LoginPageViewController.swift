@@ -90,8 +90,8 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
                 LocalUser.gender = gender
                 LocalUser.ageRange = "\(ageRange["min"])-\(ageRange["max"])"
                 LocalUser.profilePictureURL = "https://graph.facebook.com/\(userID)/picture?type=large"
+                LocalUser.facebookID = userID as String 
                 
-                print("Made it in")
                 
                 //transition when great success
                 if self.isLoggedIn == true {
@@ -108,7 +108,7 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
                 }
                 else {
                     print("Didn't get first name")
-                    LocalUser.firstName = "Ricky"
+                    LocalUser.firstName = "Unknown"
                 }
                 if let lastName = result["last_name"] as? String {
                     print(lastName)
@@ -116,40 +116,48 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
                 }
                 else {
                     print("Didn't get last name")
-                    LocalUser.lastName = "Bobby"
+                    LocalUser.lastName = "Uknown"
                 }
+                
                 if let email = result["email"] as? String {
                     print(email)
                     LocalUser.email = email
                 }
-                else {
-                    print("Didn't get email")
-                    LocalUser.email = "tfl@getvenndor.com"
-                }
+                
                 if let userID = result["id"] as? NSString {
                     print(userID)
                     LocalUser.profilePictureURL = "https://graph.facebook.com/\(userID)/picture?type=large"
+                    LocalUser.facebookID = userID as String
+                    if LocalUser.email == nil {
+                        LocalUser.email = "\(userID)@getvenndor.com"
+                    }
                 }
+                    
                 else {
                     print("Didn't get userID")
                     LocalUser.profilePictureURL = "https://graph.facebook.com/707849349/picture?type=large"
                 }
+                
                 if let gender = result["gender"] as? String {
                     print(gender)
                     LocalUser.gender = gender
                 }
+                    
                 else {
                     print("Didn't get gender")
                     LocalUser.gender = "Unknown"
                 }
+                
                 if let ageRange = result["age_range"] {
                     print(ageRange)
                     LocalUser.ageRange = "\(ageRange["min"])-\(ageRange["max"])"
                 }
+                    
                 else {
                     print("Didn't get age range")
                     LocalUser.ageRange = "Unknown"
                 }
+                
                 //transition when great success
                 if self.isLoggedIn == true {
                     self.performSegueWithIdentifier("toSplash", sender: self)
@@ -193,6 +201,5 @@ class LoginPageViewController: UIViewController, FBSDKLoginButtonDelegate {
 
     //FACEBOOK LOGIN DELEGATES
     func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
-        print("logged out")
     }
 }

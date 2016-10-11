@@ -28,6 +28,7 @@ struct UserManager {
              "gender": gender,
              "ageRange": ageRange,
              "profilePictureURL": LocalUser.profilePictureURL,
+             "facebookID": LocalUser.facebookID,
              "pushID": pushID,
              "university": "",
              "howTheyFoundVenndor": "",
@@ -97,6 +98,32 @@ struct UserManager {
                     }
                 }
            
+            }, failure: { error in
+                completionHandler(nil, error)
+        })
+    }
+    
+    func retrieveUserByFacebookID(fbID: String, completionHandler: (User?, ErrorType?) ->() ) {
+
+        RESTEngine.sharedEngine.getUserByFacebookID(fbID,
+            success: { response in
+                                                
+               if let response = response, result = response["resource"] {
+                  let info = result as! NSArray
+                
+                  if (info.count>0) {
+                    
+                    let userData = info[0]
+                    let user = User(json: userData as! JSON)
+                    completionHandler(user, nil)
+                    
+                  }
+                  
+                  else {
+                       completionHandler(nil, nil)
+                    }
+                }
+                                                
             }, failure: { error in
                 completionHandler(nil, error)
         })

@@ -22,12 +22,13 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     var loadedCards: [DraggableView]!
     var loadedInfos: [DraggableView]!
 
-    //variables for miniMatches
-    var tappedItem: Item!
-    var miniAlertController: UIAlertController!
+//    //variables for miniMatches
+//    var tappedItem: Item!
+//    var miniAlertController: UIAlertController!
     
     //declare the current category so we know what cards we need to filter
     var currentCategory: String!
+    
     var itemInfo: UIView!
     var draggableInfo: DraggableView!
     var itemName: UILabel!

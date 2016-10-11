@@ -304,6 +304,13 @@ final class RESTEngine {
         callApiWithPath(Routing.Service(tableName: "users").path, method: "GET", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
     
+    func getUserByFacebookID(fbID: String, success: SuccessClosure, failure: ErrorClosure) {
+        
+        let queryParams = ["filter": "facebookID = '\(fbID)'"]
+
+        callApiWithPath(Routing.Service(tableName: "users").path, method: "GET", queryParams: queryParams, body: nil, headerParams: headerParams, success: success, failure: failure)
+    }
+    
     func getUserById(id: String, success: SuccessClosure, failure: ErrorClosure) {
         let path = "\(Routing.Service(tableName: "users").path)/\(id)"
         callApiWithPath(path, method: "GET", queryParams: nil, body: nil, headerParams: headerParams, success: success, failure: failure)

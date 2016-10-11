@@ -147,7 +147,7 @@ class MatchesManager: NSObject {
     }
     
     func retrieveMatchThumbnail(match: Match, completionHandler: (UIImage?, ErrorType?) -> () ) {
-        print(match.id)
+
         RESTEngine.sharedEngine.getImageFromServerById(match.id!, fileName: "image0",
             success: { response in
                 if let content = response!["content"] as? NSString {
