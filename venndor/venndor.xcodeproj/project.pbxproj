@@ -40,9 +40,6 @@
 		10ADC9B51D0749700028A999 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 10ADC9B31D0749700028A999 /* LaunchScreen.storyboard */; };
 		10ADC9C01D0749700028A999 /* venndorTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9BF1D0749700028A999 /* venndorTests.swift */; };
 		10ADC9CB1D0749700028A999 /* venndorUITests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10ADC9CA1D0749700028A999 /* venndorUITests.swift */; };
-		10ADC9DF1D074CA40028A999 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DC1D074CA40028A999 /* FBSDKCoreKit.framework */; };
-		10ADC9E01D074CA40028A999 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */; settings = {ATTRIBUTES = (Required, ); }; };
-		10ADC9E11D074CA40028A999 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */; };
 		10C7D12B1D5A444B00522F0E /* OneSignal.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10C7D12A1D5A444B00522F0E /* OneSignal.framework */; };
 		10CAD5DC1D3955B800147F66 /* title.png in Resources */ = {isa = PBXBuildFile; fileRef = 10CAD5DB1D3955B800147F66 /* title.png */; };
 		10F2CB401D3D1D38007C6477 /* SearchControl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F2CB3F1D3D1D38007C6477 /* SearchControl.swift */; };
@@ -50,6 +47,9 @@
 		10F6B3371D2D5ED8008B83A8 /* splashGif.gif in Resources */ = {isa = PBXBuildFile; fileRef = 10F6B3361D2D5ED8008B83A8 /* splashGif.gif */; };
 		10F6B3391D2D5F78008B83A8 /* MatchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10F6B3381D2D5F78008B83A8 /* MatchController.swift */; };
 		10FC75E51D3FC48D002A7F63 /* LoginPageViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FC75E41D3FC48D002A7F63 /* LoginPageViewController.swift */; };
+		10FD73EB1DBFF3EF00471F68 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10FD73E91DBFF3EF00471F68 /* FBSDKCoreKit.framework */; };
+		10FD73EC1DBFF3EF00471F68 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10FD73EA1DBFF3EF00471F68 /* FBSDKLoginKit.framework */; };
+		10FD73EE1DBFF3FC00471F68 /* FBSDKShareKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 10FD73ED1DBFF3FC00471F68 /* FBSDKShareKit.framework */; };
 		10FEC2361D79D13600385E2A /* OfferBuyViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FEC2351D79D13600385E2A /* OfferBuyViewController.swift */; };
 		10FEC2381D7A17EF00385E2A /* RefreshSplashViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 10FEC2371D7A17EF00385E2A /* RefreshSplashViewController.swift */; };
 		3232706811CD37BF1F3DFF79 /* Pods_venndorTests.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 8B75E2CD7F1AEC00B6B30F8B /* Pods_venndorTests.framework */; };
@@ -202,9 +202,6 @@
 		10ADC9C61D0749700028A999 /* venndorUITests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = venndorUITests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		10ADC9CA1D0749700028A999 /* venndorUITests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = venndorUITests.swift; sourceTree = "<group>"; };
 		10ADC9CC1D0749700028A999 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
-		10ADC9DC1D074CA40028A999 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
-		10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
-		10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		10ADC9E51D0750CA0028A999 /* venndor-Bridging-Header.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = "venndor-Bridging-Header.h"; sourceTree = "<group>"; };
 		10C7D12A1D5A444B00522F0E /* OneSignal.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = OneSignal.framework; path = Pods/OneSignal/iOS_SDK/Framework/OneSignal.framework; sourceTree = "<group>"; };
 		10CAD5DB1D3955B800147F66 /* title.png */ = {isa = PBXFileReference; lastKnownFileType = image.png; path = title.png; sourceTree = "<group>"; };
@@ -213,6 +210,9 @@
 		10F6B3361D2D5ED8008B83A8 /* splashGif.gif */ = {isa = PBXFileReference; lastKnownFileType = image.gif; path = splashGif.gif; sourceTree = "<group>"; };
 		10F6B3381D2D5F78008B83A8 /* MatchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MatchController.swift; sourceTree = "<group>"; };
 		10FC75E41D3FC48D002A7F63 /* LoginPageViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = LoginPageViewController.swift; sourceTree = "<group>"; };
+		10FD73E91DBFF3EF00471F68 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
+		10FD73EA1DBFF3EF00471F68 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		10FD73ED1DBFF3FC00471F68 /* FBSDKShareKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKShareKit.framework; sourceTree = "<group>"; };
 		10FEC2351D79D13600385E2A /* OfferBuyViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OfferBuyViewController.swift; sourceTree = "<group>"; };
 		10FEC2371D7A17EF00385E2A /* RefreshSplashViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = RefreshSplashViewController.swift; sourceTree = "<group>"; };
 		63088BA51D187CA900F67931 /* UserManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UserManager.swift; sourceTree = "<group>"; };
@@ -320,10 +320,10 @@
 				10C7D12B1D5A444B00522F0E /* OneSignal.framework in Frameworks */,
 				E43893D51D47AB7E00431E79 /* SlackTextViewController.framework in Frameworks */,
 				E4AB1FF21D30437F00CC7400 /* ImagePicker.framework in Frameworks */,
-				10ADC9E01D074CA40028A999 /* FBSDKLoginKit.framework in Frameworks */,
-				10ADC9DF1D074CA40028A999 /* FBSDKCoreKit.framework in Frameworks */,
-				10ADC9E11D074CA40028A999 /* FBSDKShareKit.framework in Frameworks */,
+				10FD73EB1DBFF3EF00471F68 /* FBSDKCoreKit.framework in Frameworks */,
+				10FD73EE1DBFF3FC00471F68 /* FBSDKShareKit.framework in Frameworks */,
 				62EE9C5B3FFF485FC1FC9F96 /* Pods_venndor.framework in Frameworks */,
+				10FD73EC1DBFF3EF00471F68 /* FBSDKLoginKit.framework in Frameworks */,
 				10395AAF1D5B7C5C00E6C132 /* OneSignal.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -444,12 +444,12 @@
 		10ADC9DB1D074C6F0028A999 /* Framework */ = {
 			isa = PBXGroup;
 			children = (
+				10FD73E91DBFF3EF00471F68 /* FBSDKCoreKit.framework */,
+				10FD73EA1DBFF3EF00471F68 /* FBSDKLoginKit.framework */,
 				E49051AE1D09C0C90045D5C0 /* SWRevealViewController.h */,
+				10FD73ED1DBFF3FC00471F68 /* FBSDKShareKit.framework */,
 				E49051AF1D09C0C90045D5C0 /* SWRevealViewController.m */,
 				10395AAE1D5B7C5C00E6C132 /* OneSignal.framework */,
-				10ADC9DC1D074CA40028A999 /* FBSDKCoreKit.framework */,
-				10ADC9DD1D074CA40028A999 /* FBSDKLoginKit.framework */,
-				10ADC9DE1D074CA40028A999 /* FBSDKShareKit.framework */,
 			);
 			name = Framework;
 			sourceTree = "<group>";
@@ -858,7 +858,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		678FBE7366130A85F04F602C /* [CP] Copy Pods Resources */ = {
@@ -918,7 +918,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		C5655C3079036FCFC30432A8 /* [CP] Check Pods Manifest.lock */ = {
@@ -933,7 +933,7 @@
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
-			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [ $? != 0 ] ; then\n    # print error to STDERR\n    echo \"error: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\" >&2\n    exit 1\nfi\n";
+			shellScript = "diff \"${PODS_ROOT}/../Podfile.lock\" \"${PODS_ROOT}/Manifest.lock\" > /dev/null\nif [[ $? != 0 ]] ; then\n    cat << EOM\nerror: The sandbox is not in sync with the Podfile.lock. Run 'pod install' or update your CocoaPods installation.\nEOM\n    exit 1\nfi\n";
 			showEnvVarsInLog = 0;
 		};
 		CC6A05A149C38351509E4670 /* [CP] Embed Pods Frameworks */ = {
