@@ -20,15 +20,14 @@ struct jonasBoettcherController {
         let stripePercent = 0.029
         let stripeFlat = 0.3
         let valueOfPrices: [Double]!
-        let TEMPARRAYOFPREVIOUSOFFERSTOSIMULATE3 = [11.00,12.00,9.00,14.00,8.00,10.00,20.00,11.00,9.00,8.00]
         averagePrice = (offered+posted)/2
-        if offered > posted + stripePercent*averagePrice + stripeFlat {
+        if offered >= posted {
             var temp = 0.00
-            for x in 0..<TEMPARRAYOFPREVIOUSOFFERSTOSIMULATE3.count {
-                temp = temp + TEMPARRAYOFPREVIOUSOFFERSTOSIMULATE3[x]
+            for x in 0..<item.matches.count {
+                temp = temp + item.matches[x]
             }
             if temp > 0 {
-                averagePreviousOffers = temp/Double(TEMPARRAYOFPREVIOUSOFFERSTOSIMULATE3.count)
+                averagePreviousOffers = temp/Double(item.matches.count)
             }
             else {
                 averagePreviousOffers = averagePrice

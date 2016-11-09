@@ -633,7 +633,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     func textFieldDidEndEditing(textField: UITextField) {
 
         if textField.tag == 30 {
-            previewPrice.setTitle("Minimmum price is: $\(String(textField.text!))", forState: .Normal)
+            previewPrice.setTitle("Minimum price is: $\(String(textField.text!))", forState: .Normal)
         }
         else if textField.text == "" {
             if textField.tag == 100 {
