@@ -17,14 +17,19 @@ struct jonasBoettcherController {
         var takeStripe: Double!
         let weight: Double!
         let averagePreviousOffers: Double!
+        
+        //FOR STRIPE
         let stripePercent = 0.029
         let stripeFlat = 0.3
+        
         let valueOfPrices: [Double]!
         averagePrice = (offered+posted)/2
+        
         if offered >= posted {
             var temp = 0.00
-            for x in 0..<item.matches.count {
-                temp = temp + item.matches[x]
+            
+            for x in 0..<item.offersMade.count {
+                temp = temp + item.offersMade[x]
             }
             if temp > 0 {
                 averagePreviousOffers = temp/Double(item.matches.count)

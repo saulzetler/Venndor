@@ -421,6 +421,8 @@ final class RESTEngine {
         if let fields = fields {
             queryParameters["fields"] = fields
         }
+        
+        
         callApiWithPath(Routing.Service(tableName: "items").path, method: "GET", queryParams: queryParameters, body: nil, headerParams: headerParams, success: success, failure: failure)
     }
     

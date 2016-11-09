@@ -825,7 +825,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
     
     //delegate image picker functions
     
-    func wrapperDidPress(imagePicker: ImagePickerController, images: [UIImage]){
+    func wrapperDidPress(images: [UIImage]){
 
     }
     
@@ -849,7 +849,7 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         }
     }
     
-    func doneButtonDidPress(imagePicker: ImagePickerController, images: [UIImage]){
+    func doneButtonDidPress(images: [UIImage]){
         imagePickerController.dismissViewControllerAnimated(true, completion: nil)
         var i = 0
         var startIndex = currentImgView.tag
@@ -868,11 +868,11 @@ class PostViewController: UIViewController, UIImagePickerControllerDelegate, UIN
         }
         updateImagePreviews()
     }
-    func cancelButtonDidPress(imagePicker: ImagePickerController){
+    func cancelButtonDidPress(){
     }
     
     var imageAssets: [UIImage] {
-        return AssetManager.resolveAssets(imagePickerController.stack.assets)
+        return ImagePicker.resolveAssets(imagePickerController.stack.assets)
     }
     
     //function to control when an image view is tapped and access the camera roll
