@@ -159,7 +159,7 @@ struct ItemManager {
         }
         
         ids = ids == nil ? "(bought != 1)" : "\(ids) and (bought != 1)"
-        
+
         return ids
     }
     

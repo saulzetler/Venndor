@@ -38,7 +38,6 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         super.viewWillDisappear(animated)
         TimeManager.globalManager.setSessionDuration(sessionStart, controller: "MyMatchesViewController")
         
-        
     }
     
     override func viewDidDisappear(animated: Bool) {
@@ -51,11 +50,31 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
         LocalUser.CurrentPage = "My Matches"
         LocalUser.user.mostRecentAction = "Browsed MyMatches"
         sessionStart = NSDate()
-        setupMatchesScrollContent()
-        addHeaderItems("My Matches")
-        sideMenuGestureSetup()
-        self.revealViewController().delegate = self
-        revealViewController().rightViewController = nil
+        
+        MatchesManager.globalManager.retrieveUserMatches(LocalUser.user) { matches, error in
+            guard error == nil else {
+                print("Error retrieving user matches from server: \(error)")
+                return
+            }
+            
+            if let matches = matches {
+                
+                LocalUser.matches = matches
+                print("Succesfully set the LocalUser's matches")
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.setupMatchesScrollContent()
+                    self.addHeaderItems("My Matches")
+                    self.sideMenuGestureSetup()
+                    self.revealViewController().delegate = self
+                    self.revealViewController().rightViewController = nil
+                }
+            }
+        }
+        
+        
+        
+        
         
     }
     

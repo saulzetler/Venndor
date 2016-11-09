@@ -34,8 +34,11 @@ struct SeenPostsManager {
     
     func updateSeenPostsById(id: String, completionHandler: (ErrorType?) -> () ) {
         let update = stringsFromDates(LocalUser.seenPosts)
+        print(update)
         RESTEngine.sharedEngine.updateSeenPostsById(id, update: update, success: { response in }, failure: { error in })
     }
+    
+    
     
     func patchSeenPostsById(id: String, completionHandler: (ErrorType?) -> () ) {
         let patch = stringsFromDates(LocalUser.seenPosts)

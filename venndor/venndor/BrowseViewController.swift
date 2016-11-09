@@ -305,6 +305,7 @@ class BrowseViewController: UIViewController, UIPopoverPresentationControllerDel
     override func viewWillDisappear(animated: Bool) {
         super.viewWillDisappear(animated)
         TimeManager.globalManager.setSessionDuration(sessionStart, controller: "BrowseViewController")
+        
         SeenPostsManager.globalManager.updateSeenPostsById(LocalUser.user.id) { error in
             guard error == nil else {
                 print("Error updating LocalUser's seen posts: \(error)")

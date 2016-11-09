@@ -422,6 +422,7 @@ final class RESTEngine {
             queryParameters["fields"] = fields
         }
         
+        queryParameters["order"] = "nuSwipesLeft, ASC"
         
         callApiWithPath(Routing.Service(tableName: "items").path, method: "GET", queryParams: queryParameters, body: nil, headerParams: headerParams, success: success, failure: failure)
     }

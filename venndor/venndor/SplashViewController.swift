@@ -24,7 +24,7 @@ class SplashViewController: UIViewController {
         
         self.view.addSubview(backgroundView)
         self.view.sendSubviewToBack(backgroundView)
-        
+        LocalUser.matches = [Match]()
         
         //declare managers to pull data of each object
         var seenPostsMade = false
@@ -103,7 +103,7 @@ class SplashViewController: UIViewController {
             continue
         }
         
-        updateSeenPosts()
+        
         
         //pull user's matches
         MatchesManager.globalManager.retrieveUserMatches(LocalUser.user) { matches, error in
@@ -117,23 +117,28 @@ class SplashViewController: UIViewController {
                 LocalUser.matches = matches
                 print("Succesfully set the LocalUser's matches")
                 
-                //pull user's posts
-                PostManager.globalManager.retrieveUserPosts(LocalUser.user) { posts, error in
-                    guard error == nil else {
-                        print("Error retrieving user posts from the server: \(error)")
-                        return
-                    }
-                    
-                    if let posts = posts {
-                        LocalUser.posts = posts
-                        print("Succesfully set the LocalUser's posts.")
-                        
-                        dispatch_async(dispatch_get_main_queue()) {
-//                            self.triggerSegueTutorial()
-                            self.performSegueWithIdentifier("showBrowse", sender: self)
-                        }
-                    }
+                self.updateSeenPosts()
+                
+                dispatch_async(dispatch_get_main_queue()) {
+                    //                            self.triggerSegueTutorial()
+                    self.performSegueWithIdentifier("showBrowse", sender: self)
                 }
+                
+            }
+        }
+        
+        //pull user's posts
+        PostManager.globalManager.retrieveUserPosts(LocalUser.user) { posts, error in
+            guard error == nil else {
+                print("Error retrieving user posts from the server: \(error)")
+                return
+            }
+            
+            if let posts = posts {
+                LocalUser.posts = posts
+                print("Succesfully set the LocalUser's posts.")
+                
+                
             }
         }
         
@@ -147,7 +152,7 @@ class SplashViewController: UIViewController {
             let postDate = value as! NSDate
             let timeInterval = ( (postDate.timeIntervalSinceNow) / 60 * -1)
             
-            if timeInterval >= 5 {
+            if timeInterval >= 2160 {
                LocalUser.seenPosts.removeValueForKey(key)
             }
         }
