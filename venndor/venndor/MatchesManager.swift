@@ -122,17 +122,7 @@ class MatchesManager: NSObject {
                         
                         
                         if match.dateMatched.timeIntervalSinceNow / 60 * -1 < 1440 {
-                            //instantly pull the thumbnail too
-                            self.retrieveMatchThumbnail(match) { img, error in
-                                guard error == nil else {
-                                    print("Error retrieving match thumbnail: \(error)")
-                                    return
-                                }
-                                if let img = img {
-                                    match.thumbnail = img
-                                }
-                            }
-                            
+                                                        
                             matchesArray.append(match)
                         }
                             

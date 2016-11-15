@@ -258,10 +258,31 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
     func addContainerContent(matchContainer: ItemContainer) {
         let match = matchContainer.match
         //create the match photo
-        let imgView = createImgView(CGRect(x: 0, y: 0, width: screenSize.width*0.4, height: screenSize.width*0.4), action: #selector(MyMatchesViewController.none(_:)), superView: matchContainer)
-
-        imgView.image = match.thumbnail
-
+        let imgView = createImgView(CGRect(x: 5, y: 0, width: screenSize.width*0.4, height: screenSize.width*0.4), action: #selector(MyMatchesViewController.none(_:)), superView: matchContainer)
+        //instantly pull the thumbnail too
+        if match.thumbnail == nil {
+            MatchesManager.globalManager.retrieveMatchThumbnail(match) { img, error in
+                guard error == nil else {
+                    print("Error retrieving match thumbnail: \(error)")
+                    return
+                }
+                if let img = img {
+                    match.thumbnail = img
+                    imgView.image = img
+//                    matchContainer.addSubview(imgView)
+//                    matchContainer.sendSubviewToBack(imgView)
+                    
+                }
+            }
+        }
+        else {
+            imgView.image = match.thumbnail
+            
+        }
+        
+        matchContainer.addSubview(imgView)
+        matchContainer.sendSubviewToBack(imgView)
+        
         let tap = UITapGestureRecognizer(target: self, action: #selector(MyMatchesViewController.toggleMatchItemInfo(_:)))
         imgView.addGestureRecognizer(tap)
         
@@ -301,6 +322,7 @@ class MyMatchesViewController: UIViewController, UIScrollViewDelegate {
 
         
         matchContainer.addSubview(descriptionLabel)
+        
         
         if match.bought == 0 {
             let buyButton = makeTextButton("Buy", frame: CGRect(x: imgWidth+42, y: 34+imgHeight * 0.45, width: matchContainer.frame.width*0.34, height: imgHeight * 0.28), target: #selector(MyMatchesViewController.toggleBuy(_:)), circle: false, textColor: UIColor.whiteColor(), tinted: false, backgroundColor: UIColorFromHex(0x404040))
