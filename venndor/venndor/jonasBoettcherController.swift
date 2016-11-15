@@ -32,7 +32,8 @@ struct jonasBoettcherController {
                 temp = temp + item.offersMade[x]
             }
             if temp > 0 {
-                averagePreviousOffers = temp/Double(item.matches.count)
+                let t2 = item.matches.count
+                averagePreviousOffers = temp/Double(item.offersMade.count)
             }
             else {
                 averagePreviousOffers = averagePrice
